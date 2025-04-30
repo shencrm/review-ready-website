@@ -14,6 +14,16 @@ import Resources from "./pages/Resources";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+// Import language pages
+import JavaScript from "./pages/languages/JavaScript";
+import Java from "./pages/languages/Java";
+import Python from "./pages/languages/Python";
+import CSharp from "./pages/languages/CSharp";
+import PHP from "./pages/languages/PHP";
+import NodeJs from "./pages/languages/NodeJs";
+import ReactPage from "./pages/languages/React";
+import GolangPage from "./pages/languages/Golang";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -31,6 +41,17 @@ const App = () => (
           <Route path="/tools" element={<Tools />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/contact" element={<Contact />} />
+          
+          {/* Language-specific routes */}
+          <Route path="/languages/javascript" element={<JavaScript />} />
+          <Route path="/languages/java" element={<Java />} />
+          <Route path="/languages/python" element={<Python />} />
+          <Route path="/languages/csharp" element={<CSharp />} />
+          <Route path="/languages/php" element={<PHP />} />
+          <Route path="/languages/nodejs" element={<NodeJs />} />
+          <Route path="/languages/react" element={<ReactPage />} />
+          <Route path="/languages/golang" element={<GolangPage />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
