@@ -300,7 +300,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 }
 
 // In Thymeleaf template:
-// <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+// <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
 // In JSP:
 // <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

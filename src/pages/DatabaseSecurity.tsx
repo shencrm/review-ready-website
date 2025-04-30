@@ -77,11 +77,11 @@ function getUserProfileSecure(username) {
                   title="MongoDB Injection Example"
                   code={`// VULNERABLE: Using string concatenation with JSON.parse
 app.post('/login', (req, res) => {
-  const usernameInput = req.body.username;
-  const passwordInput = req.body.password;
+  const username = req.body.username;
+  const password = req.body.password;
   
   // Vulnerable to NoSQL injection
-  const query = \`{"username": "${usernameInput}", "password": "${passwordInput}"}\`;
+  const query = \`{"username": "${username}", "password": "${password}"}\`;
   db.collection('users').find(JSON.parse(query)).toArray((err, result) => {
     // Handle login
   });
@@ -89,13 +89,13 @@ app.post('/login', (req, res) => {
 
 // SECURE: Using direct object literals
 app.post('/login', (req, res) => {
-  const usernameInput = req.body.username;
-  const passwordInput = req.body.password;
+  const username = req.body.username;
+  const password = req.body.password;
   
   // Safe from NoSQL injection
   db.collection('users').find({
-    username: usernameInput,
-    password: passwordInput
+    username: username,
+    password: password
   }).toArray((err, result) => {
     // Handle login
   });

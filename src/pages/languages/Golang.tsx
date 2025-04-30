@@ -1,10 +1,9 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
 import { Link } from 'react-router-dom';
-import { Golang } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const GolangPage = () => {
   return (
