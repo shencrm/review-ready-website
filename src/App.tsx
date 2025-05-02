@@ -13,6 +13,7 @@ import Tools from "./pages/Tools";
 import Resources from "./pages/Resources";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import WebPenetrationTesting from "./pages/WebPenetrationTesting";
 
 // Import language pages
 import JavaScript from "./pages/languages/JavaScript";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/methodology" element={<Methodology />} />
           <Route path="/languages" element={<Languages />} />
           <Route path="/database-security" element={<DatabaseSecurity />} />
+          <Route path="/web-penetration-testing" element={<WebPenetrationTesting />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/contact" element={<Contact />} />
