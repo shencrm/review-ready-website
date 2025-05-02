@@ -14,54 +14,54 @@ const NodeJs = () => {
       <main className="flex-grow py-12">
         <div className="container mx-auto px-4">
           <div className="mb-12">
-            <h1 className="text-4xl font-bold mb-6">אבטחת Node.js</h1>
+            <h1 className="text-4xl font-bold mb-6">Node.js Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              הבנה והפחתת פגיעויות אבטחה באפליקציות Node.js.
+              Understanding and mitigating security vulnerabilities in Node.js applications.
             </p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <section>
-                <h2 className="text-2xl font-bold mb-4">הזרקת פקודות (Command Injection)</h2>
+                <h2 className="text-2xl font-bold mb-4">Command Injection</h2>
                 <p className="mb-4">
-                  פגיעויות הזרקת פקודות מתרחשות כאשר אפליקציה מעבירה נתונים לא מאובטחים מהמשתמש למעטפת המערכת.
-                  ב-Node.js, זה קורה בדרך כלל בשימוש בפונקציות כמו child_process.exec() ללא חיטוי נאות.
+                  Command injection vulnerabilities occur when an application passes untrusted user data to a system shell.
+                  In Node.js, this typically happens when using functions like child_process.exec() without proper sanitization.
                 </p>
                 
                 <CodeExample
                   language="javascript"
-                  title="פגיעות הזרקת פקודות"
-                  code={`// פגיע: שימוש בקלט משתמש ישירות בהרצת פקודה
+                  title="Vulnerable Command Injection"
+                  code={`// VULNERABLE: Using user input directly in command execution
 const { exec } = require('child_process');
 
 app.get('/check-domain', (req, res) => {
   const domain = req.query.domain;
-  // המשתמש יכול להזריק פקודות באמצעות תווים כמו ; | && 
+  // Attacker can inject commands using characters like ; | && 
   exec('ping -c 1 ' + domain, (error, stdout, stderr) => {
     res.send(stdout);
   });
 });
 
-// קלט התוקף: "google.com && rm -rf /" יכול למחוק קבצים`}
+// Attacker input: "google.com && rm -rf /" could delete files`}
                 />
                 
                 <CodeExample
                   language="javascript"
-                  title="הרצת פקודה מאובטחת"
-                  code={`// מאובטח: שימוש ב-execFile עם ארגומנטים כמערך
+                  title="Secure Command Execution"
+                  code={`// SECURE: Using execFile with arguments as an array
 const { execFile } = require('child_process');
 
 app.get('/check-domain', (req, res) => {
   const domain = req.query.domain;
   
-  // אימות קלט תחילה (דוגמה פשוטה)
+  // Validate input first (simple example)
   if (!domain.match(/^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\\.[a-zA-Z]{2,})+$/)) {
-    return res.status(400).send('דומיין לא חוקי');
+    return res.status(400).send('Invalid domain');
   }
   
-  // execFile לא מפעיל מעטפת ומקבל ארגומנטים כמערך
+  // execFile doesn't spawn a shell and takes arguments as array
   execFile('ping', ['-c', '1', domain], (error, stdout, stderr) => {
     res.send(stdout);
   });
@@ -70,24 +70,24 @@ app.get('/check-domain', (req, res) => {
 
                 <CodeExample
                   language="javascript"
-                  title="דוגמה נוספת להזרקת פקודות עם חיטוי מתקדם"
-                  code={`// פתרון מתקדם יותר עם ספריית validator
+                  title="Advanced Command Injection Protection"
+                  code={`// More advanced solution with validator library
 const { exec } = require('child_process');
 const validator = require('validator');
 
 app.get('/dns-lookup', (req, res) => {
   let domain = req.query.domain;
   
-  // וידוא שהערך הוא דומיין תקף
+  // Ensure value is a valid domain
   if (!validator.isFQDN(domain)) {
-    return res.status(400).json({ error: 'דומיין לא חוקי סופק' });
+    return res.status(400).json({ error: 'Invalid domain supplied' });
   }
   
-  // בנייה מאובטחת של פקודה עם הארגומנט המאומת
+  // Build command securely with validated argument
   const command = 'nslookup';
   const args = [domain];
   
-  // שימוש בspawn במקום exec לשליטה טובה יותר
+  // Use spawn instead of exec for better control
   const { spawn } = require('child_process');
   const process = spawn(command, args);
   
@@ -104,7 +104,7 @@ app.get('/dns-lookup', (req, res) => {
   
   process.on('close', (code) => {
     if (code !== 0) {
-      return res.status(500).json({ error: 'הפקודה נכשלה', details: errorOutput });
+      return res.status(500).json({ error: 'Command failed', details: errorOutput });
     }
     res.json({ result: output });
   });
@@ -113,57 +113,57 @@ app.get('/dns-lookup', (req, res) => {
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">Path Traversal (טיול בנתיבים)</h2>
+                <h2 className="text-2xl font-bold mb-4">Path Traversal</h2>
                 <p className="mb-4">
-                  פגיעויות path traversal מאפשרות לתוקפים לגשת לקבצים מחוץ לתיקיות המיועדות,
-                  ועלולות לחשוף נתונים רגישים או קבצי תצורה.
+                  Path traversal vulnerabilities allow attackers to access files outside of intended directories,
+                  potentially exposing sensitive data or configuration files.
                 </p>
                 
                 <CodeExample
                   language="javascript"
-                  title="פגיעות Path Traversal"
-                  code={`// פגיע: קריאת קבצים עם קלט משתמש לא מחוטא
+                  title="Path Traversal Vulnerability"
+                  code={`// VULNERABLE: Reading files with unsanitized user input
 const fs = require('fs');
 const path = require('path');
 
 app.get('/download-file', (req, res) => {
   const filename = req.query.filename;
-  // פגיע ל-path traversal
+  // Vulnerable to path traversal
   const filePath = path.join(PUBLIC_FOLDER, filename);
   
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      return res.status(404).send('הקובץ לא נמצא');
+      return res.status(404).send('File not found');
     }
     res.send(data);
   });
 });
 
-// קלט התוקף: "../../../etc/passwd" יכול לקרוא קבצים רגישים`}
+// Attacker input: "../../../etc/passwd" could read sensitive files`}
                 />
                 
                 <CodeExample
                   language="javascript"
-                  title="גישה מאובטחת לקבצים"
-                  code={`// מאובטח: שימוש ב-path.normalize ובדיקה ל-path traversal
+                  title="Secure File Access"
+                  code={`// SECURE: Using path.normalize and checking for path traversal
 const fs = require('fs');
 const path = require('path');
 
 app.get('/download-file', (req, res) => {
   const filename = req.query.filename;
   
-  // נרמול הנתיב ובדיקה אם הוא מתחיל בתיקיית הציבור
+  // Normalize the path and check if it starts with the public folder
   const publicFolder = path.resolve(PUBLIC_FOLDER);
   const requestedPath = path.normalize(path.join(publicFolder, filename));
   
-  // בדיקה שהנתיב המבוקש נמצא בתוך תיקיית הציבור
+  // Check that requested path is inside the public folder
   if (!requestedPath.startsWith(publicFolder)) {
-    return res.status(403).send('הגישה נדחתה');
+    return res.status(403).send('Access denied');
   }
   
   fs.readFile(requestedPath, (err, data) => {
     if (err) {
-      return res.status(404).send('הקובץ לא נמצא');
+      return res.status(404).send('File not found');
     }
     res.send(data);
   });
@@ -172,45 +172,45 @@ app.get('/download-file', (req, res) => {
 
                 <CodeExample
                   language="javascript"
-                  title="פתרון מקיף לבעיית Path Traversal"
-                  code={`// גישה מקיפה יותר עם אימות קלט נוסף
+                  title="Comprehensive Path Traversal Solution"
+                  code={`// More comprehensive approach with additional input validation
 const fs = require('fs');
 const path = require('path');
 const sanitize = require('sanitize-filename');
 
 app.get('/serve-file', (req, res) => {
-  // קבל וחטא את שם הקובץ המבוקש - מנקה מתווים מסוכנים
+  // Get and sanitize the requested filename - cleans dangerous characters
   let requestedFileName = sanitize(req.query.filename || '');
   
   if (!requestedFileName || requestedFileName === '') {
-    return res.status(400).send('שם קובץ לא חוקי');
+    return res.status(400).send('Invalid filename');
   }
   
-  // מגביל לסוגי קבצים מותרים בלבד
+  // Limit to allowed file types only
   const allowedExtensions = ['.txt', '.pdf', '.png', '.jpg', '.jpeg', '.html'];
   const fileExt = path.extname(requestedFileName).toLowerCase();
   
   if (!allowedExtensions.includes(fileExt)) {
-    return res.status(403).send('סוג קובץ לא מורשה');
+    return res.status(403).send('Unauthorized file type');
   }
   
-  // בונה נתיב קובץ מאובטח
+  // Build secure file path
   const publicFolder = path.resolve('./public/files');
   const filePath = path.join(publicFolder, requestedFileName);
   const normalizedPath = path.normalize(filePath);
   
-  // וידוא שהנתיב הסופי עדיין בתוך התיקייה המותרת
+  // Verify final path is still within allowed directory
   if (!normalizedPath.startsWith(publicFolder)) {
-    return res.status(403).send('גישה אסורה');
+    return res.status(403).send('Access forbidden');
   }
   
-  // בדיקה שהקובץ קיים
+  // Check that the file exists
   fs.access(normalizedPath, fs.constants.F_OK, (err) => {
     if (err) {
-      return res.status(404).send('קובץ לא נמצא');
+      return res.status(404).send('File not found');
     }
     
-    // הגדרת סוג התוכן המתאים לפי סיומת הקובץ
+    // Set appropriate content type based on file extension
     const mimeTypes = {
       '.txt': 'text/plain',
       '.pdf': 'application/pdf',
@@ -221,7 +221,7 @@ app.get('/serve-file', (req, res) => {
     };
     
     res.setHeader('Content-Type', mimeTypes[fileExt] || 'application/octet-stream');
-    // משתמש בקריאת זרם במקום לקרוא את כל הקובץ לזיכרון
+    // Use stream reading instead of loading entire file into memory
     fs.createReadStream(normalizedPath).pipe(res);
   });
 });`}
@@ -229,23 +229,23 @@ app.get('/serve-file', (req, res) => {
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">כותרות אבטחה HTTP ותצורת HTTP</h2>
+                <h2 className="text-2xl font-bold mb-4">HTTP Security Headers & Configuration</h2>
                 <p className="mb-4">
-                  קביעת תצורה נכונה של כותרות HTTP היא חיונית לאפליקציות אינטרנט Node.js כדי למנוע מגוון התקפות.
+                  Proper configuration of HTTP headers is essential for Node.js web applications to prevent a variety of attacks.
                 </p>
                 
                 <CodeExample
                   language="javascript"
-                  title="יישום כותרות HTTP מאובטחות"
-                  code={`// כותרות HTTP מאובטחות עם Helmet
+                  title="Implementing Secure HTTP Headers"
+                  code={`// Secure HTTP headers with Helmet
 const express = require('express');
 const helmet = require('helmet');
 const app = express();
 
-// החלת כותרות אבטחה שונות
+// Apply various security headers
 app.use(helmet());
 
-// או קביעת תצורה של כותרות בנפרד
+// Or configure headers individually
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
@@ -268,8 +268,8 @@ app.use(helmet.frameguard({ action: 'deny' }));`}
 
                 <CodeExample
                   language="javascript"
-                  title="יישום מעמיק יותר של כותרות ואבטחת HTTP"
-                  code={`// קונפיגורציה מקיפה יותר של אבטחת HTTP
+                  title="Comprehensive HTTP Security Implementation"
+                  code={`// More comprehensive HTTP security configuration
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -277,10 +277,10 @@ const rateLimit = require('express-rate-limit');
 const slowDown = require('express-slow-down');
 const app = express();
 
-// הגדרות בסיסיות
-app.disable('x-powered-by'); // הסרת כותרת חשיפת מידע
+// Basic settings
+app.disable('x-powered-by'); // Remove information disclosure header
 
-// שימוש ב-Helmet לכותרות אבטחה
+// Use Helmet for security headers
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
@@ -313,120 +313,120 @@ app.use(helmet({
   xssFilter: true
 }));
 
-// הגדרות CORS מגבילות
+// Restrictive CORS settings
 app.use(cors({
-  origin: 'https://myapp.com', // רק מקור ספציפי
-  methods: ['GET', 'POST'], // רק שיטות מסוימות
+  origin: 'https://myapp.com', // specific origin only
+  methods: ['GET', 'POST'], // specific methods only
   allowedHeaders: ['Content-Type', 'Authorization'],
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
   credentials: true,
   maxAge: 3600
 }));
 
-// הגבלת קצב בקשות להגנה מפני Brute Force ו-DDoS
+// Rate limiting for brute force protection and DDoS
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 דקות
-  max: 100, // הגבל כל IP ל-100 בקשות בכל חלון
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
   standardHeaders: true,
   legacyHeaders: false,
-  message: 'יותר מדי בקשות מ-IP זה, אנא נסה שוב מאוחר יותר'
+  message: 'Too many requests from this IP, please try again later'
 });
 
-// האטת בקשות במקום לחסום אותן לגמרי
+// Request slowdown instead of blocking entirely
 const speedLimiter = slowDown({
   windowMs: 15 * 60 * 1000,
   delayAfter: 50,
-  delayMs: 500, // מוסיף 500ms עיכוב לכל בקשה אחרי 50 בקשות
+  delayMs: 500, // adds 500ms of delay to each request after 50 requests
 });
 
-// החל את המגבלות על נתיבי אימות רגישים
+// Apply limits to sensitive authentication routes
 app.use('/login', limiter);
 app.use('/register', limiter);
 app.use('/api/', speedLimiter);
 
-// הגדר עוגיות בטוחות
+// Set secure cookies
 app.use(session({
   secret: 'super-secret-key',
-  name: '__Secure-sessionId', // שם עוגיה מאובטח
+  name: '__Secure-sessionId', // secure cookie name
   cookie: {
-    secure: true, // דורש HTTPS
-    httpOnly: true, // לא נגיש ע"י JavaScript
+    secure: true, // requires HTTPS
+    httpOnly: true, // not accessible via JavaScript
     domain: 'example.com',
     path: '/',
-    maxAge: 60 * 60 * 1000, // שעה אחת
+    maxAge: 60 * 60 * 1000, // 1 hour
     sameSite: 'strict'
   },
   resave: false,
   saveUninitialized: false
 }));
 
-// הוספת נתיבים מאובטחים
+// Add secure routes
 app.get('/secure-data', (req, res) => {
-  // הוסף כותרות נוספות ספציפיות לבקשה
+  // Add additional request-specific headers
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Pragma', 'no-cache');
   
-  // השב תוכן מאובטח
-  res.json({ secureData: 'מידע מאובטח כאן' });
+  // Return secure content
+  res.json({ secureData: 'Sensitive information here' });
 });;`}
                 />
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">ניהול תלויות</h2>
+                <h2 className="text-2xl font-bold mb-4">Dependency Management</h2>
                 <p className="mb-4">
-                  אפליקציות Node.js לעתים קרובות כוללות תלויות רבות, שעלולות להכניס פגיעויות אבטחה.
+                  Node.js applications often include numerous dependencies, which can introduce security vulnerabilities.
                 </p>
                 
                 <CodeExample
                   language="bash"
-                  title="חיפוש ותיקון תלויות פגיעות"
-                  code={`# בדוק אם יש פגיעויות בתלויות
+                  title="Finding and Fixing Vulnerable Dependencies"
+                  code={`# Check for vulnerabilities in dependencies
 npm audit
 
-# תקן פגיעויות באופן אוטומטי כאשר אפשרי
+# Fix vulnerabilities automatically when possible
 npm audit fix
 
-# דו"ח מפורט
+# Detailed report
 npm audit --json
 
-# עדכן חבילה ספציפית
+# Update specific package
 npm update vulnerable-package
 
-# הרץ בדיקת אבטחה באמצעות כלים של צד שלישי
+# Run security check with third-party tools
 npx snyk test`}
                 />
 
                 <CodeExample
                   language="javascript"
-                  title="ניהול אבטחת תלויות בסביבת ייצור"
-                  code={`// דוגמה לתסריט המבטיח אבטחת תלויות לפני הפריסה
+                  title="Production Dependency Security Management"
+                  code={`// Example script to ensure dependency security before deployment
 // script: check-dependencies.js
 
 const { execSync } = require('child_process');
 const fs = require('fs');
 
 try {
-  // בדיקה עם npm audit
-  console.log('בודק תלויות עם npm audit...');
+  // Check with npm audit
+  console.log('Checking dependencies with npm audit...');
   const auditResults = execSync('npm audit --json').toString();
   const auditData = JSON.parse(auditResults);
   
-  // בדוק אם יש פגיעויות קריטיות או גבוהות
+  // Check for critical or high vulnerabilities
   const criticalVulns = Object.values(auditData.vulnerabilities || {})
     .filter(v => ['critical', 'high'].includes(v.severity));
   
   if (criticalVulns.length > 0) {
-    console.error('נמצאו פגיעויות קריטיות או גבוהות:');
+    console.error('Found critical or high vulnerabilities:');
     criticalVulns.forEach(v => {
       console.error(\`- \${v.name}: \${v.severity} - \${v.title}\`);
     });
     
-    // נסה לתקן באופן אוטומטי
-    console.log('מנסה לתקן פגיעויות באופן אוטומטי...');
+    // Try to fix automatically
+    console.log('Attempting to fix vulnerabilities automatically...');
     execSync('npm audit fix');
     
-    // בדוק שוב אם התיקונים פתרו את הבעיות
+    // Check again if fixes resolved the issues
     const postFixResults = execSync('npm audit --json').toString();
     const postFixData = JSON.parse(postFixResults);
     
@@ -434,72 +434,72 @@ try {
       .filter(v => ['critical', 'high'].includes(v.severity));
     
     if (remainingCriticalVulns.length > 0) {
-      console.error('פגיעויות נשארו אחרי ניסיון תיקון אוטומטי');
-      process.exit(1); // כישלון - יעצור תהליך CI/CD
+      console.error('Vulnerabilities remain after auto-fix attempt');
+      process.exit(1); // Failure - will stop CI/CD process
     }
   }
   
-  // בדיקת חבילות נטושות
-  console.log('בודק חבילות נטושות...');
+  // Check for abandoned packages
+  console.log('Checking for abandoned packages...');
   const outdatedResults = execSync('npm outdated --json').toString();
   const outdatedData = JSON.parse(outdatedResults);
   
-  // התראה על חבילות שלא עודכנו במשך זמן רב
+  // Alert on packages not updated for a long time
   const abandonedPackages = Object.keys(outdatedData)
     .filter(pkg => {
       const current = outdatedData[pkg].current;
       const latest = outdatedData[pkg].latest;
       const versionDiff = parseInt(latest.split('.')[0]) - parseInt(current.split('.')[0]);
-      return versionDiff >= 2; // שתי גרסאות עיקריות מאחורה או יותר
+      return versionDiff >= 2; // two or more major versions behind
     });
   
   if (abandonedPackages.length > 0) {
-    console.warn('חבילות עם פיגור עדכון משמעותי:');
+    console.warn('Packages with significant update lag:');
     abandonedPackages.forEach(pkg => console.warn(\`- \${pkg}: \${outdatedData[pkg].current} (latest: \${outdatedData[pkg].latest})\`));
-    console.warn('שקול עדכון או החלפת חבילות אלה');
+    console.warn('Consider updating or replacing these packages');
   }
   
-  // מידע נוסף על לייסנס
-  console.log('בודק רישיונות חבילות...');
+  // License information
+  console.log('Checking package licenses...');
   const licenseData = execSync('license-checker --json').toString();
   const licenses = JSON.parse(licenseData);
   
-  const restrictedLicenses = ['GPL', 'AGPL', 'LGPL']; // דוגמה לרישיונות שעשויים להיות מוגבלים
+  const restrictedLicenses = ['GPL', 'AGPL', 'LGPL']; // example of licenses that might be restricted
   const problematicPackages = Object.entries(licenses)
     .filter(([pkg, data]) => restrictedLicenses.some(l => data.licenses.includes(l)));
   
   if (problematicPackages.length > 0) {
-    console.warn('חבילות עם רישיונות פוטנציאליים בעייתיים:');
+    console.warn('Packages with potentially problematic licenses:');
     problematicPackages.forEach(([pkg, data]) => console.warn(\`- \${pkg}: \${data.licenses}\`));
   }
   
-  console.log('בדיקת תלויות הושלמה בהצלחה');
+  console.log('Dependency check completed successfully');
   process.exit(0);
 
 } catch (error) {
-  console.error('שגיאה בבדיקת תלויות:', error);
+  console.error('Error checking dependencies:', error);
   process.exit(1);
 }`}
                 />
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">קריפטוגרפיה ב-Node.js</h2>
+                <h2 className="text-2xl font-bold mb-4">Cryptography in Node.js</h2>
                 <p className="mb-4">
-                  יישום נכון של פונקציות קריפטוגרפיות הוא חיוני לאבטחת נתונים בNode.js.
+                  Proper implementation of cryptographic functions is essential for securing data in Node.js.
                 </p>
                 
                 <CodeExample
                   language="javascript"
-                  title="הצפנה לא מאובטחת"
-                  code={`// פגיע: שימוש באלגוריתם הצפנה מיושן ומפתח חלש
+                  title="Insecure Encryption"
+                  code={`// VULNERABLE: Using outdated encryption algorithm and weak key
 const crypto = require('crypto');
 
 function encryptData(data) {
-  // שגיאה: אלגוריתם מיושן (DES), גודל מפתח קצר מדי, וקטור התחלה קבוע
+  // Error: Outdated algorithm (DES), too short key size, fixed initialization vector
   const algorithm = 'des';
-  const key = 'short123'; // מפתח קצר מדי
-  const iv = Buffer.alloc(8, 0); // וקטור התחלה צפוי
+  const key = 'short123'; // Too short key
+  const iv = Buffer.alloc(8, 0); // Predictable IV
   
   const cipher = crypto.createCipheriv(algorithm, key, iv);
   let encrypted = cipher.update(data, 'utf8', 'hex');
@@ -507,39 +507,39 @@ function encryptData(data) {
   return encrypted;
 }
 
-// בעיות:
-// 1. אלגוריתם DES נחשב לא בטוח
-// 2. מפתח קצר מדי
-// 3. IV קבוע ולא רנדומלי
-// 4. אין אימות של הנתונים המוצפנים (אין MAC)`}
+// Issues:
+// 1. DES algorithm is considered insecure
+// 2. Key is too short
+// 3. Fixed, non-random IV
+// 4. No authentication of encrypted data (no MAC)`}
                 />
                 
                 <CodeExample
                   language="javascript"
-                  title="הצפנה מאובטחת"
-                  code={`// מאובטח: הצפנה מודרנית עם אימות
+                  title="Secure Encryption"
+                  code={`// SECURE: Modern encryption with authentication
 const crypto = require('crypto');
 
-// פונקציה להצפנה בטוחה עם AES-GCM (כולל אימות)
+// Function for secure encryption with AES-GCM (includes authentication)
 async function encryptData(plaintext, password) {
-  // צור מפתח מאובטח מהסיסמה באמצעות הנפקת מפתח מסוג PBKDF2
+  // Create secure key from password using PBKDF2 key derivation
   const salt = crypto.randomBytes(16);
   const key = crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha512');
   
-  // צור וקטור התחלה רנדומלי
-  const iv = crypto.randomBytes(12); // AES-GCM מומלץ 12 בתים
+  // Generate random initialization vector
+  const iv = crypto.randomBytes(12); // 12 bytes recommended for AES-GCM
   
-  // צור מצפין GCM (Galois/Counter Mode - כולל אימות)
+  // Create GCM cipher (Galois/Counter Mode - provides authentication)
   const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
   
-  // הצפן את הנתונים
+  // Encrypt the data
   let encrypted = cipher.update(plaintext, 'utf8', 'base64');
   encrypted += cipher.final('base64');
   
-  // קבל את תג האימות (Authentication Tag)
+  // Get authentication tag
   const authTag = cipher.getAuthTag().toString('base64');
   
-  // החזר את כל המידע הדרוש לפענוח
+  // Return all info needed for decryption
   return {
     encrypted,
     salt: salt.toString('base64'),
@@ -548,65 +548,65 @@ async function encryptData(plaintext, password) {
   };
 }
 
-// פונקציה לפענוח
+// Decryption function
 async function decryptData(encData, password) {
   try {
-    // קח את המידע המוצפן והמטא-נתונים
+    // Get the encrypted data and metadata
     const salt = Buffer.from(encData.salt, 'base64');
     const iv = Buffer.from(encData.iv, 'base64');
     const authTag = Buffer.from(encData.authTag, 'base64');
     const encryptedText = encData.encrypted;
     
-    // שחזר את המפתח משיטת הגזירה
+    // Derive key from derivation method
     const key = crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha512');
     
-    // צור מפענח
+    // Create decipher
     const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
-    decipher.setAuthTag(authTag); // הגדר את תג האימות
+    decipher.setAuthTag(authTag); // Set auth tag
     
-    // פענח
+    // Decrypt
     let decrypted = decipher.update(encryptedText, 'base64', 'utf8');
     decrypted += decipher.final('utf8');
     
     return decrypted;
   } catch (error) {
-    // אם יש שגיאה בפענוח, כנראה שהנתונים זויפו או נזק
-    throw new Error('אימות ההצפנה נכשל: הנתונים שונו או המפתח שגוי');
+    // If decryption error, likely data tampering or wrong key
+    throw new Error('Encryption authentication failed: Data has been tampered with or key is incorrect');
   }
 }
 
-// שימוש בפונקציות
+// Using the functions
 async function example() {
-  const password = 'סיסמה-חזקה-מאוד-ארוכה-113542637!';
-  const sensitiveData = 'מידע רגיש מאוד לאחסון';
+  const password = 'very-strong-long-password-113542637!';
+  const sensitiveData = 'Very sensitive information to store';
   
   try {
-    // הצפן את המידע
+    // Encrypt the data
     const encrypted = await encryptData(sensitiveData, password);
-    console.log('מידע מוצפן:', encrypted);
+    console.log('Encrypted data:', encrypted);
     
-    // פענח את המידע
+    // Decrypt the data
     const decrypted = await decryptData(encrypted, password);
-    console.log('מידע מפוענח:', decrypted);
+    console.log('Decrypted data:', decrypted);
     
-    // ניסיון פענוח עם סיסמה שגויה - צריך להיכשל
+    // Try decryption with wrong password - should fail
     try {
-      await decryptData(encrypted, 'סיסמה-שגויה');
+      await decryptData(encrypted, 'wrong-password');
     } catch (error) {
-      console.log('הפענוח נכשל כצפוי עם סיסמה שגויה:', error.message);
+      console.log('Decryption failed as expected with wrong password:', error.message);
     }
     
-    // ניסיון טמפור עם המידע המוצפן - צריך להיכשל
+    // Try tampering with encrypted data - should fail
     try {
       const tamperedData = {...encrypted};
       tamperedData.encrypted = tamperedData.encrypted.replace('a', 'b');
       await decryptData(tamperedData, password);
     } catch (error) {
-      console.log('הפענוח נכשל כצפוי עם מידע שטופל:', error.message);
+      console.log('Decryption failed as expected with tampered data:', error.message);
     }
     
   } catch (error) {
-    console.error('שגיאה:', error);
+    console.error('Error:', error);
   }
 }
 
@@ -615,18 +615,18 @@ example();`}
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">אבטחת גישה לבסיס נתונים בNode.js</h2>
+                <h2 className="text-2xl font-bold mb-4">Database Access Security in Node.js</h2>
                 <p className="mb-4">
-                  אבטחת חיבורי מסדי נתונים מפני התקפות הזרקה וטיפול נכון במידע רגיש.
+                  Securing database connections against injection attacks and properly handling sensitive information.
                 </p>
                 
                 <CodeExample
                   language="javascript"
-                  title="התחברות לא מאובטחת למסד נתונים"
-                  code={`// פגיע: אחסון פרטי התחברות בקוד ושימוש ישיר בשאילתות סטרינגים
+                  title="Insecure Database Connection"
+                  code={`// VULNERABLE: Hard-coded credentials and string query building
 const mysql = require('mysql');
 
-// מזהי התחברות קשיחים בקוד
+// Hard-coded credentials in code
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -634,10 +634,10 @@ const connection = mysql.createConnection({
   database: 'my_db'
 });
 
-// שימוש פגיע - הזרקת SQL
+// Vulnerable usage - SQL Injection
 app.get('/user', (req, res) => {
   const userId = req.query.id;
-  // פגיע: הכנסה ישירה של משתנה לשאילתה
+  // Vulnerable: directly inserting variable into query
   const query = 'SELECT * FROM users WHERE id = ' + userId;
   
   connection.query(query, (error, results) => {
@@ -646,32 +646,32 @@ app.get('/user', (req, res) => {
   });
 });
 
-// התוקף יכול לשלוח: ?id=1 OR 1=1 כדי להשיג את כל המשתמשים`}
+// Attacker can send: ?id=1 OR 1=1 to retrieve all users`}
                 />
                 
                 <CodeExample
                   language="javascript"
-                  title="התחברות מאובטחת וגישה לבסיס הנתונים"
-                  code={`// מאובטח: שימוש משתנים סביבתיים, מאגר חיבורים, ושאילתות מפורמטות
+                  title="Secure Database Connection & Access"
+                  code={`// SECURE: Using environment variables, connection pooling, and parameterized queries
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-// פרטי התחברות מאובטחים משתני סביבה
+// Secure connection credentials from environment variables
 const dbConfig = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   ssl: {
-    rejectUnauthorized: true // וודא שחיבור SSL מאובטח
+    rejectUnauthorized: true // Ensure secure SSL connection
   },
-  connectionLimit: 10 // הגבלת מאגר חיבורים
+  connectionLimit: 10 // Connection pool limit
 };
 
-// יצירת מאגר חיבורים במקום חיבור בודד
+// Create connection pool instead of single connection
 const pool = mysql.createPool(dbConfig);
 
-// פונקציית עזר לביצוע שאילתות מאובטחות
+// Helper function for secure query execution
 async function query(sql, params) {
   try {
     const conn = await pool.getConnection();
@@ -679,42 +679,42 @@ async function query(sql, params) {
       const [rows] = await conn.execute(sql, params);
       return rows;
     } finally {
-      conn.release(); // תמיד שחרר את החיבור בחזרה למאגר
+      conn.release(); // Always release connection back to pool
     }
   } catch (error) {
-    console.error('שגיאת שאילתת מסד נתונים:', error);
-    throw new Error('שגיאת מסד נתונים');
+    console.error('Database query error:', error);
+    throw new Error('Database error');
   }
 }
 
-// שימוש במערכים מפורמטים למניעת הזרקת SQL
+// Using parameterized arrays to prevent SQL Injection
 app.get('/user', async (req, res) => {
   try {
     const userId = req.query.id;
     
-    // בדוק שה-ID הוא מספר תקין
+    // Check that ID is a valid number
     if (!/^\\d+$/.test(userId)) {
-      return res.status(400).json({ error: 'מזהה משתמש לא חוקי' });
+      return res.status(400).json({ error: 'Invalid user ID' });
     }
     
-    // שימוש בשאילתות מפורמטות
+    // Use parameterized queries
     const users = await query(
       'SELECT id, username, email FROM users WHERE id = ?', 
       [userId]
     );
     
     if (users.length === 0) {
-      return res.status(404).json({ error: 'משתמש לא נמצא' });
+      return res.status(404).json({ error: 'User not found' });
     }
     
     res.json(users[0]);
   } catch (error) {
-    console.error('שגיאה בקבלת משתמש:', error);
-    res.status(500).json({ error: 'שגיאת שרת פנימית' });
+    console.error('Error fetching user:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// סגירת המאגר בעת סגירת האפליקציה
+// Close pool on application shutdown
 process.on('SIGINT', () => {
   pool.end();
   process.exit();
@@ -723,13 +723,13 @@ process.on('SIGINT', () => {
 
                 <CodeExample
                   language="javascript"
-                  title="אבטחת MongoDB עם Mongoose"
-                  code={`// מאובטח: שימוש ב-Mongoose עם אימות קלט וסינון פלט
+                  title="Securing MongoDB with Mongoose"
+                  code={`// SECURE: Using Mongoose with input validation and output sanitization
 const mongoose = require('mongoose');
 const express = require('express');
 require('dotenv').config();
 
-// התחברות מאובטחת עם משתני סביבה
+// Secure connection with environment variables
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -740,16 +740,16 @@ mongoose.connect(process.env.MONGO_URI, {
   authSource: 'admin',
 });
 
-// הגדרת סכמה עם אימות
+// Schema definition with validation
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
     unique: true,
     trim: true,
-    minlength: [3, 'שם משתמש חייב להיות לפחות 3 תווים'],
-    maxlength: [50, 'שם משתמש לא יכול לעבור 50 תווים'],
-    match: [/^[a-zA-Z0-9_-]+$/, 'שם משתמש יכול להכיל רק אותיות, ספרות, מקפים וקו תחתון'],
+    minlength: [3, 'Username must be at least 3 characters'],
+    maxlength: [50, 'Username cannot exceed 50 characters'],
+    match: [/^[a-zA-Z0-9_-]+$/, 'Username can only contain letters, numbers, dashes and underscores'],
   },
   email: {
     type: String,
@@ -757,13 +757,13 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    match: [/^\\S+@\\S+\\.\\S+$/, 'אנא הזן כתובת אימייל תקינה'],
+    match: [/^\\S+@\\S+\\.\\S+$/, 'Please enter a valid email address'],
   },
   password: {
     type: String,
     required: true,
-    minlength: [8, 'סיסמה חייבת להיות לפחות 8 תווים'],
-    // לעולם אל תחזיר סיסמאות בשאילתות
+    minlength: [8, 'Password must be at least 8 characters'],
+    // Never return passwords in queries
     select: false,
   },
   role: {
@@ -777,9 +777,9 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// הוסף hooks לפני שמירה
+// Add hooks before saving
 userSchema.pre('save', async function(next) {
-  // הצפן סיסמאות לפני שמירה
+  // Hash passwords before saving
   if (this.isModified('password')) {
     try {
       const bcrypt = require('bcryptjs');
@@ -791,7 +791,7 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-// אל תחזיר שדות רגישים
+// Don't return sensitive fields
 userSchema.methods.toJSON = function() {
   const userObject = this.toObject();
   delete userObject.password;
@@ -799,31 +799,31 @@ userSchema.methods.toJSON = function() {
   return userObject;
 };
 
-// הגדר מודל
+// Define model
 const User = mongoose.model('User', userSchema);
 
-// שימוש מאובטח עם mongoose
+// Secure usage with mongoose
 const app = express();
 app.use(express.json());
 
-// נתיב חיפוש משתמשים
+// User search route
 app.get('/api/users/search', async (req, res) => {
   try {
-    // שים לב: אין הזרקת NoSQL כאן בגלל שאנחנו בונים שאילתה מובנית
+    // Note: No NoSQL injection here because we're building structured query
     const { username, limit = 10, page = 1 } = req.query;
     
-    // וודא שהגבול הוא מספר ובטווח הגיוני
+    // Ensure limit is a number and within reasonable range
     const safeLimit = Math.min(parseInt(limit) || 10, 50);
     const safePage = parseInt(page) || 1;
     const skip = (safePage - 1) * safeLimit;
     
     const query = {};
     if (username) {
-      // חיפוש בטוח עם ביטוי רגולרי
+      // Safe search with regex
       query.username = { $regex: new RegExp('^' + username.replace(/[-\\/\\\\^$*+?.()|[\\]{}]/g, '\\\\$&')), $options: 'i' };
     }
     
-    // בצע את שאילתת הסינון, אבל הגבל את השדות המוחזרים
+    // Execute filtering query, but limit returned fields
     const users = await User.find(query)
       .select('username email role createdAt')
       .limit(safeLimit)
@@ -842,8 +842,8 @@ app.get('/api/users/search', async (req, res) => {
       }
     });
   } catch (err) {
-    console.error('שגיאת חיפוש משתמש:', err);
-    res.status(500).json({ error: 'אירעה שגיאה בעת חיפוש משתמשים' });
+    console.error('User search error:', err);
+    res.status(500).json({ error: 'An error occurred while searching for users' });
   }
 });`}
                 />
@@ -853,25 +853,25 @@ app.get('/api/users/search', async (req, res) => {
             <div className="lg:col-span-1">
               <div className="sticky top-24">
                 <div className="card">
-                  <h3 className="text-xl font-bold mb-4">בעיות אבטחה נפוצות ב-Node.js</h3>
+                  <h3 className="text-xl font-bold mb-4">Common Node.js Security Issues</h3>
                   <ul className="space-y-2 pl-4 text-cybr-foreground/80">
-                    <li>הזרקת פקודות (Command Injection)</li>
+                    <li>Command Injection</li>
                     <li>Path Traversal</li>
-                    <li>חריגות שלא טופלו (Unhandled Exceptions)</li>
-                    <li>תלויות לא מאובטחות (Insecure Dependencies)</li>
-                    <li>זיופי בקשת שרת (SSRF)</li>
-                    <li>טיפול שגוי בשגיאות (Improper Error Handling)</li>
-                    <li>הזרקת NoSQL</li>
-                    <li>בעיות הרשאות לקבצים</li>
-                    <li>הצפנה חלשה או חסרה</li>
-                    <li>פרטי התחברות בקוד קשיח</li>
-                    <li>חולשות בניהול סשן</li>
-                    <li>פונקציות דסריאליזציה לא מאובטחות</li>
+                    <li>Unhandled Exceptions</li>
+                    <li>Insecure Dependencies</li>
+                    <li>Server-Side Request Forgery (SSRF)</li>
+                    <li>Improper Error Handling</li>
+                    <li>NoSQL Injection</li>
+                    <li>File Permission Issues</li>
+                    <li>Weak or Missing Encryption</li>
+                    <li>Hard-coded Credentials</li>
+                    <li>Session Management Weaknesses</li>
+                    <li>Insecure Deserialization Functions</li>
                   </ul>
                 </div>
                 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">חבילות אבטחה חיוניות ל-Node.js</h3>
+                  <h3 className="text-xl font-bold mb-4">Essential Security Packages for Node.js</h3>
                   <ul className="space-y-3 text-cybr-foreground/80">
                     <li><a href="https://github.com/helmetjs/helmet" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">Helmet</a></li>
                     <li><a href="https://github.com/expressjs/csurf" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">csurf (CSRF Protection)</a></li>
@@ -884,16 +884,16 @@ app.get('/api/users/search', async (req, res) => {
                 </div>
                 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">טכנולוגיות קשורות</h3>
+                  <h3 className="text-xl font-bold mb-4">Related Technologies</h3>
                   <div className="space-y-3">
-                    <Link to="/languages/javascript" className="block text-cybr-primary hover:underline">אבטחת JavaScript</Link>
-                    <Link to="/languages/react" className="block text-cybr-primary hover:underline">אבטחת React</Link>
-                    <Link to="/languages/golang" className="block text-cybr-primary hover:underline">אבטחת Golang</Link>
+                    <Link to="/languages/javascript" className="block text-cybr-primary hover:underline">JavaScript Security</Link>
+                    <Link to="/languages/react" className="block text-cybr-primary hover:underline">React Security</Link>
+                    <Link to="/languages/golang" className="block text-cybr-primary hover:underline">Golang Security</Link>
                   </div>
                 </div>
 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">כלי סריקת אבטחה ל-Node.js</h3>
+                  <h3 className="text-xl font-bold mb-4">Node.js Security Scanning Tools</h3>
                   <ul className="space-y-3 text-cybr-foreground/80">
                     <li><a href="https://github.com/nodesecurity/nsp" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">Node Security Platform</a></li>
                     <li><a href="https://github.com/snyk/snyk" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">Snyk</a></li>
@@ -914,3 +914,4 @@ app.get('/api/users/search', async (req, res) => {
 };
 
 export default NodeJs;
+
