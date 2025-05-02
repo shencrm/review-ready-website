@@ -14,26 +14,26 @@ const ReactPage = () => {
       <main className="flex-grow py-12">
         <div className="container mx-auto px-4">
           <div className="mb-12">
-            <h1 className="text-4xl font-bold mb-6">אבטחת React</h1>
+            <h1 className="text-4xl font-bold mb-6">React Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              שיטות קידוד מאובטחות ומניעת פגיעויות ביישומי React.
+              Secure coding practices and vulnerability prevention in React applications.
             </p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <section>
-                <h2 className="text-2xl font-bold mb-4">XSS ביישומי React</h2>
+                <h2 className="text-2xl font-bold mb-4">XSS in React Applications</h2>
                 <p className="mb-4">
-                  למרות שעיצוב React מגן מפני רוב פגיעויות XSS באמצעות מנגנון escape אוטומטי,
-                  ישנן מספר דרכים בהן מפתחים יכולים בטעות ליצור פרצות אבטחה.
+                  While React's design protects against most XSS vulnerabilities through automatic escaping,
+                  there are several ways developers can inadvertently create security holes.
                 </p>
                 
                 <CodeExample
                   language="jsx"
-                  title="שימוש מסוכן ב-dangerouslySetInnerHTML"
-                  code={`// פגיע: שימוש לא נכון ב-dangerouslySetInnerHTML
+                  title="Dangerous Use of dangerouslySetInnerHTML"
+                  code={`// VULNERABLE: Incorrect use of dangerouslySetInnerHTML
 function UserProfile({ userProvidedHtml }) {
   return (
     <div className="profile-bio">
@@ -42,13 +42,13 @@ function UserProfile({ userProvidedHtml }) {
   );
 }
 
-// אם userProvidedHtml מכיל תגיות script זדוניות, הן יופעלו`}
+// If userProvidedHtml contains malicious script tags, they will execute`}
                 />
                 
                 <CodeExample
                   language="jsx"
-                  title="הצגת תוכן מאובטחת"
-                  code={`// מאובטח: שימוש בספריית סניטציה
+                  title="Secure Content Display"
+                  code={`// SECURE: Using a sanitization library
 import DOMPurify from 'dompurify';
 
 function UserProfile({ userProvidedHtml }) {
@@ -61,7 +61,7 @@ function UserProfile({ userProvidedHtml }) {
   );
 }
 
-// חלופה: להימנע לחלוטין מניתוח HTML
+// ALTERNATIVE: Avoid HTML parsing altogether
 function SaferUserProfile({ userProvidedText }) {
   return (
     <div className="profile-bio">
@@ -73,8 +73,8 @@ function SaferUserProfile({ userProvidedText }) {
 
                 <CodeExample
                   language="jsx"
-                  title="דוגמה מתקדמת להגנה מ-XSS ב-React"
-                  code={`// הגישה המקיפה ביותר - סניטציה מלאה עם הגבלת תגיות מותרות
+                  title="Advanced XSS Protection Example in React"
+                  code={`// Most comprehensive approach - full sanitization with allowlisted tags
 import DOMPurify from 'dompurify';
 import React, { useState, useEffect } from 'react';
 
@@ -82,22 +82,22 @@ function SecureContentRenderer({ content, allowedTags = ['b', 'i', 'em', 'strong
   const [sanitizedContent, setSanitizedContent] = useState('');
   
   useEffect(() => {
-    // הגדר את התצורה של DOMPurify להגבלת התגיות המותרות והתכונות
+    // Configure DOMPurify to restrict allowed tags and attributes
     DOMPurify.setConfig({
       ALLOWED_TAGS: allowedTags,
       ALLOWED_ATTR: ['href', 'target', 'rel', 'title', 'class'],
       ALLOW_DATA_ATTR: false,
-      ADD_ATTR: ['target'], // הוסף target="_blank" לקישורים
+      ADD_ATTR: ['target'], // Add target="_blank" to links
       FORBID_TAGS: ['script', 'style', 'iframe', 'form', 'object', 'embed'],
       FORBID_ATTR: ['onerror', 'onload', 'onclick']
     });
     
-    // נקה את התוכן
+    // Clean the content
     const cleaned = DOMPurify.sanitize(content, {
       USE_PROFILES: { html: true }
     });
     
-    // הוסף rel="noopener noreferrer" לכל הקישורים
+    // Add rel="noopener noreferrer" to all links
     const parser = new DOMParser();
     const doc = parser.parseFromString(cleaned, 'text/html');
     
@@ -107,7 +107,7 @@ function SecureContentRenderer({ content, allowedTags = ['b', 'i', 'em', 'strong
       link.setAttribute('target', '_blank');
     });
     
-    // המר בחזרה לסטרינג
+    // Convert back to string
     const safeContent = doc.body.innerHTML;
     setSanitizedContent(safeContent);
   }, [content, allowedTags]);
@@ -117,33 +117,33 @@ function SecureContentRenderer({ content, allowedTags = ['b', 'i', 'em', 'strong
       {sanitizedContent ? (
         <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
       ) : (
-        <p>טוען תוכן מאובטח...</p>
+        <p>Loading secure content...</p>
       )}
     </div>
   );
 }
 
 function UserContentExample() {
-  // דוגמה לשימוש
+  // Example usage
   const userContent = \`
-    <h2>הכותרת שלי</h2>
-    <p>פסקה <strong>עם</strong> <em>עיצוב</em></p>
-    <script>alert('XSS ניסיון');</script>
-    <a href="https://example.com" onclick="alert('XSS')">קישור לדוגמה</a>
+    <h2>My Heading</h2>
+    <p>Paragraph with <strong>bold</strong> <em>formatting</em></p>
+    <script>alert('XSS attempt');</script>
+    <a href="https://example.com" onclick="alert('XSS')">Example Link</a>
     <iframe src="https://malicious-site.com"></iframe>
-    <div data-custom="exploit">תג מותר אך עם תכונה אסורה</div>
+    <div data-custom="exploit">Allowed tag but with forbidden attribute</div>
   \`;
   
   return (
     <div className="user-content-container">
-      <h1>תוכן משתמש מאובטח</h1>
+      <h1>Secure User Content</h1>
       <SecureContentRenderer 
         content={userContent}
         allowedTags={['h2', 'h3', 'p', 'strong', 'em', 'a', 'ul', 'ol', 'li']}
       />
       
       <div className="mt-4 p-3 bg-yellow-100 border border-yellow-300 rounded">
-        <p>הערה: התוכן סונן והוסרו ממנו תגיות אסורות כמו script, iframe ותכונות אירועים.</p>
+        <p>Note: The content has been filtered and all forbidden tags like script, iframe and event attributes have been removed.</p>
       </div>
     </div>
   );
@@ -152,15 +152,15 @@ function UserContentExample() {
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">פגיעויות מבוססות URL</h2>
+                <h2 className="text-2xl font-bold mb-4">URL-based Vulnerabilities</h2>
                 <p className="mb-4">
-                  אפליקציות React לעתים קרובות משתמשות בפרמטרים של URL בשליטת המשתמש, מה שעלול להכניס סיכוני אבטחה.
+                  React applications often use URL parameters controlled by users, which can introduce security risks.
                 </p>
                 
                 <CodeExample
                   language="jsx"
-                  title="טיפול לא מאובטח ב-URL"
-                  code={`// פגיע: שימוש ב-URL שסופקו על-ידי המשתמש ללא אימות
+                  title="Insecure URL Handling"
+                  code={`// VULNERABLE: Using user-provided URLs without validation
 function ExternalLink({ url, children }) {
   return (
     <a href={url}>
@@ -169,19 +169,19 @@ function ExternalLink({ url, children }) {
   );
 }
 
-// עלול לשמש כך: <ExternalLink url="javascript:alert('XSS')">לחץ עליי</ExternalLink>
-// מה שיוצר קישור פרוטוקול JavaScript שמריץ קוד`}
+// Could be used like: <ExternalLink url="javascript:alert('XSS')">Click me</ExternalLink>
+// Which creates a JavaScript protocol link that executes code`}
                 />
                 
                 <CodeExample
                   language="jsx"
-                  title="טיפול מאובטח ב-URL"
-                  code={`// מאובטח: אימות וסניטציה של URL
+                  title="Secure URL Handling"
+                  code={`// SECURE: Validate and sanitize URLs
 function ExternalLink({ url, children }) {
-  // אימות URLs - אפשר רק http ו-https
+  // Validate URLs - only allow http and https
   const isSafeUrl = /^https?:\\/\\//.test(url);
   
-  // השתמש בברירת מחדל לכתובות לא בטוחות
+  // Use default for unsafe URLs
   const safeUrl = isSafeUrl ? url : '#';
   
   return (
@@ -191,7 +191,7 @@ function ExternalLink({ url, children }) {
       rel="noopener noreferrer"
     >
       {children}
-      {!isSafeUrl && <span> (כתובת לא חוקית)</span>}
+      {!isSafeUrl && <span> (Invalid URL)</span>}
     </a>
   );
 }`}
@@ -199,11 +199,11 @@ function ExternalLink({ url, children }) {
 
                 <CodeExample
                   language="jsx"
-                  title="ניהול מקיף יותר של URL"
-                  code={`// פתרון מתקדם לאימות וסינון URL
+                  title="More Comprehensive URL Management"
+                  code={`// Advanced solution for URL validation and filtering
 import { useState, useEffect } from 'react';
 
-// הוק מותאם לאימות בטיחות URL
+// Custom hook for URL safety validation
 function useSafeUrl(initialUrl) {
   const [url, setUrl] = useState('');
   const [isValid, setIsValid] = useState(false);
@@ -213,55 +213,55 @@ function useSafeUrl(initialUrl) {
     if (!initialUrl) {
       setUrl('#');
       setIsValid(false);
-      setError('URL לא סופק');
+      setError('No URL provided');
       return;
     }
     
     try {
-      // נסה לפרסר את ה-URL
+      // Try to parse the URL
       const parsedUrl = new URL(initialUrl);
       
-      // בדוק את הפרוטוקול
+      // Check protocol
       if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
         setUrl('#');
         setIsValid(false);
-        setError(\`פרוטוקול לא מורשה: \${parsedUrl.protocol}\`);
+        setError(\`Unauthorized protocol: \${parsedUrl.protocol}\`);
         return;
       }
       
-      // רשימה שחורה של דומיינים ידועים כזדוניים
+      // Blacklist of known malicious domains
       const blacklistedDomains = ['evil.com', 'malware.site', 'phishing.example'];
       if (blacklistedDomains.includes(parsedUrl.hostname)) {
         setUrl('#');
         setIsValid(false);
-        setError('דומיין חשוד זוהה');
+        setError('Suspicious domain detected');
         return;
       }
       
-      // בדיקות נוספות לפי הצורך (לדוגמה, אורך הכתובת)
+      // Additional checks as needed (e.g., URL length)
       if (initialUrl.length > 2000) {
         setUrl('#');
         setIsValid(false);
-        setError('URL ארוך מדי');
+        setError('URL too long');
         return;
       }
       
-      // URL בטוח
+      // URL is safe
       setUrl(initialUrl);
       setIsValid(true);
       setError('');
     } catch (error) {
-      // URL לא חוקי שלא ניתן לפרסר
+      // Invalid URL that couldn't be parsed
       setUrl('#');
       setIsValid(false);
-      setError('פורמט URL לא חוקי');
+      setError('Invalid URL format');
     }
   }, [initialUrl]);
   
   return { url, isValid, error };
 }
 
-// רכיב עטוף לקישורים חיצוניים בטוחים
+// Wrapper component for safe external links
 function SafeExternalLink({ url, children, className = '' }) {
   const { url: safeUrl, isValid, error } = useSafeUrl(url);
   
@@ -282,37 +282,37 @@ function SafeExternalLink({ url, children, className = '' }) {
             <line x1="12" y1="9" x2="12" y2="13"/>
             <line x1="12" y1="17" x2="12.01" y2="17"/>
           </svg>
-          <span className="ml-1">קישור לא בטוח</span>
+          <span className="ml-1">Unsafe link</span>
         </div>
       )}
     </div>
   );
 }
 
-// דוגמה לשימוש
+// Example usage
 function LinkDemo() {
   return (
     <div className="space-y-4">
-      <h2>דוגמאות לקישורים:</h2>
+      <h2>Link Examples:</h2>
       
       <div>
-        <h3>קישור תקין:</h3>
-        <SafeExternalLink url="https://example.com">אתר לדוגמה</SafeExternalLink>
+        <h3>Valid Link:</h3>
+        <SafeExternalLink url="https://example.com">Example Site</SafeExternalLink>
       </div>
       
       <div>
-        <h3>קישור עם פרוטוקול JavaScript (יחסם):</h3>
-        <SafeExternalLink url="javascript:alert('XSS')">קישור JavaScript זדוני</SafeExternalLink>
+        <h3>JavaScript Protocol Link (will be blocked):</h3>
+        <SafeExternalLink url="javascript:alert('XSS')">Malicious JavaScript Link</SafeExternalLink>
       </div>
       
       <div>
-        <h3>קישור לדומיין חשוד (יחסם):</h3>
-        <SafeExternalLink url="https://evil.com">אתר חשוד</SafeExternalLink>
+        <h3>Suspicious Domain Link (will be blocked):</h3>
+        <SafeExternalLink url="https://evil.com">Suspicious Site</SafeExternalLink>
       </div>
       
       <div>
-        <h3>קישור לא תקין (יחסם):</h3>
-        <SafeExternalLink url="not-a-valid-url">קישור שגוי</SafeExternalLink>
+        <h3>Invalid Link (will be blocked):</h3>
+        <SafeExternalLink url="not-a-valid-url">Invalid Link</SafeExternalLink>
       </div>
     </div>
   );
@@ -321,23 +321,23 @@ function LinkDemo() {
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">אבטחת Server-Side Rendering (SSR)</h2>
+                <h2 className="text-2xl font-bold mb-4">Server-Side Rendering (SSR) Security</h2>
                 <p className="mb-4">
-                  רינדור צד שרת (SSR) ב-React מציג סוגיות אבטחה ספציפיות שאינן קיימות באפליקציות צד לקוח בלבד.
+                  Server-side rendering in React introduces specific security concerns not present in client-side only applications.
                 </p>
                 
                 <CodeExample
                   language="jsx"
-                  title="דליפת מידע ב-SSR"
-                  code={`// פגיע: חשיפת מידע רגיש במצב התחלתי
+                  title="SSR Data Leakage"
+                  code={`// VULNERABLE: Exposing sensitive information in initial state
 function ServerComponent({ user }) {
-  // השרת מרנדר זאת עם כל נתוני המשתמש
+  // Server renders this with all user data
   return (
     <div>
       <script
         dangerouslySetInnerHTML={{
           __html: \`window.__INITIAL_STATE__ = \${JSON.stringify({
-            currentUser: user // עשוי לכלול מידע רגיש!
+            currentUser: user // May include sensitive info!
           })}\`
         }}
       />
@@ -346,15 +346,15 @@ function ServerComponent({ user }) {
   );
 }
 
-// גם שדות פרטיים באובייקט user נחשפים ללקוח`}
+// Even private fields in user object are exposed to client`}
                 />
                 
                 <CodeExample
                   language="jsx"
-                  title="טיפול מאובטח במצב התחלתי"
-                  code={`// מאובטח: סינון מידע רגיש לפני חשיפה
+                  title="Secure Initial State Handling"
+                  code={`// SECURE: Filter sensitive information before exposure
 function sanitizeUserData(user) {
-  // כלול רק שדות בטוחים לחשיפת לקוח
+  // Include only client-safe fields
   const { id, name, publicProfile } = user;
   return { id, name, publicProfile };
 }
@@ -379,34 +379,34 @@ function ServerComponent({ user }) {
 
                 <CodeExample
                   language="jsx"
-                  title="גישה מתקדמת לאבטחת SSR"
-                  code={`// גישה מקיפה לאבטחת SSR ב-Next.js
+                  title="Advanced SSR Security Approach"
+                  code={`// Comprehensive approach to SSR security in Next.js
 import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { serialize } from 'cookie';
 
-// פונקציית סניטציה מקיפה
+// Comprehensive sanitization function
 function sanitizeDataForClient(data) {
-  // פונקציה רקורסיבית לסינון מידע רגיש מכל מבנה נתונים
+  // Recursive function to filter sensitive info from any data structure
   function sanitizeObject(obj) {
     if (obj === null || typeof obj !== 'object') {
       return obj;
     }
     
-    // טיפול במערכים
+    // Handle arrays
     if (Array.isArray(obj)) {
       return obj.map(item => sanitizeObject(item));
     }
     
-    // טיפול באובייקטים
+    // Handle objects
     const sanitized = {};
     for (const [key, value] of Object.entries(obj)) {
-      // דלג על שדות רגישים
+      // Skip sensitive fields
       if (['password', 'token', 'secret', 'apiKey', 'ssn', 'creditCard'].includes(key)) {
         continue;
       }
       
-      // אם זה אובייקט, הפעל סניטציה רקורסיבית
+      // If it's an object, apply sanitization recursively
       sanitized[key] = sanitizeObject(value);
     }
     
@@ -416,11 +416,11 @@ function sanitizeDataForClient(data) {
   return sanitizeObject(data);
 }
 
-// הטמעת מצב התחלתי מאובטח
+// Safe initial state hydration
 function SafeStateHydration({ pageProps }) {
   return (
     <>
-      {/* העבר נתונים מאובטחים למצב התחלתי */}
+      {/* Pass sanitized data to initial state */}
       <script
         id="__NEXT_DATA_SANITIZED__"
         type="application/json"
@@ -434,24 +434,24 @@ function SafeStateHydration({ pageProps }) {
   );
 }
 
-// דוגמה לדף Next.js עם אבטחת SSR
+// Example Next.js page with SSR security
 function UserDashboard({ user, privateData, publicData }) {
-  // במקום לסמוך על נתוני שרת, נעשה בקשת API נוספת למידע רגיש לאחר האימות בצד לקוח
+  // Instead of relying on server data, make an additional API request for sensitive info after client-side authentication
   useEffect(() => {
-    // פעולה זו תתבצע רק בצד לקוח לאחר הרינדור הראשוני
+    // This will only run on the client after initial render
     const fetchSensitiveData = async () => {
       if (user && user.isAuthenticated) {
         try {
           const response = await fetch('/api/user/sensitive-data', {
-            credentials: 'include' // שלח עוגיות
+            credentials: 'include' // Send cookies
           });
           if (response.ok) {
             const sensitiveData = await response.json();
-            // עדכן את המצב עם המידע הרגיש
-            // משתמש רק ב-Client Side ולא מועבר ב-SSR
+            // Update state with sensitive info
+            // Used only on Client Side and not transmitted in SSR
           }
         } catch (error) {
-          console.error('שגיאה בטעינת מידע רגיש:', error);
+          console.error('Error loading sensitive data:', error);
         }
       }
     };
@@ -462,24 +462,24 @@ function UserDashboard({ user, privateData, publicData }) {
   return (
     <div>
       <SafeStateHydration pageProps={{ user, publicData }} />
-      <h1>לוח המחוונים של {user.name}</h1>
+      <h1>Dashboard for {user.name}</h1>
       <div className="public-data">
-        {/* הצג מידע ציבורי שהגיע מ-SSR */}
+        {/* Display public data from SSR */}
         <PublicProfile data={publicData} />
       </div>
       
-      {/* רכיבים רגישים יוצגו רק בצד הלקוח לאחר אימות נוסף */}
+      {/* Sensitive components only rendered client-side after additional verification */}
       <ClientSideSecureComponent userId={user.id} />
     </div>
   );
 }
 
-// דוגמה לGetServerSideProps עם אבטחה
+// Example of GetServerSideProps with security
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // אימות המשתמש עם עוגיות מאובטחות HttpOnly
+  // Authenticate user with secure HttpOnly cookies
   const authCookie = context.req.cookies.authToken;
   
-  // אם אין אימות, הפנה לדף הכניסה
+  // If no authentication, redirect to login
   if (!authCookie) {
     return {
       redirect: {
@@ -490,36 +490,36 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   
   try {
-    // אמת ואחזר נתוני משתמש בצד השרת
+    // Validate and fetch user data server-side
     const user = await validateUserSession(authCookie);
     
-    // הגדר עוגיית אימות חדשה עם חיי מדף קצרים
+    // Set a new auth cookie with short expiry
     context.res.setHeader('Set-Cookie', [
       serialize('authToken', refreshedToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
-        maxAge: 3600, // שעה אחת
+        maxAge: 3600, // One hour
         path: '/',
       })
     ]);
     
-    // אחזר מידע ציבורי ופרטי
+    // Fetch public and private data
     const publicData = await fetchPublicUserData(user.id);
     const privateData = await fetchPrivateUserData(user.id);
     
-    // החזר נתונים מסוננים לאחר הסינטזיה
+    // Return filtered data after sanitization
     return {
       props: {
         user: sanitizeDataForClient(user),
         publicData,
-        // לא מחזיר privateData בכוונה - יאוחזר בצד הלקוח עם API call
+        // Not returning privateData intentionally - will be fetched client-side with API call
       }
     };
   } catch (error) {
-    console.error('שגיאת SSR:', error);
+    console.error('SSR error:', error);
     
-    // בעת שגיאת אימות, הסר את העוגייה ושלח ללוגין
+    // On auth error, clear the cookie and send to login
     context.res.setHeader('Set-Cookie', [
       serialize('authToken', '', {
         httpOnly: true,
@@ -543,43 +543,43 @@ export default UserDashboard;`}
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">אבטחת ניהול מצב ב-React</h2>
+                <h2 className="text-2xl font-bold mb-4">React State Management Security</h2>
                 <p className="mb-4">
-                  מלכודות נפוצות בניהול מצב באפליקציות React שעלולות להוביל לפגיעויות אבטחה.
+                  Common pitfalls in state management for React applications that can lead to security vulnerabilities.
                 </p>
                 
                 <CodeExample
                   language="jsx"
-                  title="אחסון לא מאובטח של מידע רגיש"
-                  code={`// פגיע: אחסון מידע רגיש ב-localStorage
+                  title="Insecure Storage of Sensitive Information"
+                  code={`// VULNERABLE: Storing sensitive information in localStorage
 function LoginForm() {
   const handleLogin = async (credentials) => {
     const response = await api.login(credentials);
     
-    // אל תאחסן מידע רגיש ב-localStorage
+    // Don't store sensitive info in localStorage
     localStorage.setItem('authToken', response.token);
     localStorage.setItem('userDetails', JSON.stringify(response.user));
   };
   
-  // שאר הרכיב...
+  // Rest of component...
 }
 
-// localStorage חשוף להתקפות XSS - כל סקריפט יכול לגשת אליו`}
+// localStorage is exposed to XSS attacks - any script can access it`}
                 />
                 
                 <CodeExample
                   language="jsx"
-                  title="מצב אימות מאובטח"
-                  code={`// מאובטח: שימוש במצב זיכרון ובעוגיות HttpOnly
+                  title="Secure Authentication State"
+                  code={`// SECURE: Using memory state and HttpOnly cookies
 function LoginForm() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   
   const handleLogin = async (credentials) => {
-    // הגדרת עוגיות HttpOnly, Secure נעשית ע"י הבקאנד
+    // HttpOnly, Secure cookies are set by the backend
     const response = await api.login(credentials);
     
-    // אחסן רק מידע לא רגיש במצב
+    // Store only non-sensitive info in state
     setIsLoggedIn(true);
     setUser({
       id: response.user.id,
@@ -587,46 +587,46 @@ function LoginForm() {
       role: response.user.role
     });
     
-    // פרטי אימות רגישים נשארים בעוגיות HttpOnly
-    // מנוהלים על-ידי הדפדפן, לא נגישים ל-JavaScript
+    // Sensitive auth details remain in HttpOnly cookies
+    // Managed by browser, not accessible to JavaScript
   };
   
-  // שאר הרכיב...
+  // Rest of component...
 }`}
                 />
 
                 <CodeExample
                   language="jsx"
-                  title="יישום שלם של אבטחת מצב עם React Context API"
-                  code={`// auth-context.js - יישום מקיף של אבטחת אימות ב-React
+                  title="Full Implementation of Secure State with React Context API"
+                  code={`// auth-context.js - Comprehensive authentication security implementation in React
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import jwtDecode from 'jwt-decode';
 
-// יצירת הקונטקסט
+// Create context
 const AuthContext = createContext(null);
 
-// הוק להשתמש בקונטקסט האימות
+// Hook to use the auth context
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth חייב לשמש בתוך AuthProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }
 
-// ספק האימות
+// Auth provider
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // בדוק את מצב האימות כשהאפליקציה נטענת
+  // Check auth status when app loads
   const checkAuthStatus = useCallback(async () => {
     try {
       setLoading(true);
       
-      // בצע קריאת API לבדיקת תוקף האימות בהתבסס על עוגיות HttpOnly
-      // העוגיות נשלחות באופן אוטומטי ב-credentials: 'include'
+      // Make API call to verify auth based on HttpOnly cookies
+      // Cookies sent automatically with credentials: 'include'
       const response = await fetch('/api/auth/verify', {
         method: 'GET',
         credentials: 'include',
@@ -636,12 +636,12 @@ export function AuthProvider({ children }) {
       });
       
       if (!response.ok) {
-        throw new Error('פג תוקף הסשן');
+        throw new Error('Session expired');
       }
       
       const data = await response.json();
       
-      // אחסן רק את המידע הלא-רגיש במצב
+      // Store only non-sensitive info in state
       setUser({
         id: data.id,
         name: data.name,
@@ -654,28 +654,28 @@ export function AuthProvider({ children }) {
       
     } catch (err) {
       setUser(null);
-      setError('לא מחובר');
-      console.error('שגיאת אימות:', err);
+      setError('Not logged in');
+      console.error('Authentication error:', err);
     } finally {
       setLoading(false);
     }
   }, []);
   
-  // בדוק מצב אימות כשהרכיב נטען
+  // Check auth status when component loads
   useEffect(() => {
     checkAuthStatus();
     
-    // אופציונלי: רענון האימות בפרקי זמן קבועים
+    // Optional: refresh auth at regular intervals
     const refreshInterval = setInterval(() => {
-      if (user) { // רענן רק אם משתמש מחובר
+      if (user) { // Only refresh if user is logged in
         checkAuthStatus();
       }
-    }, 10 * 60 * 1000); // כל 10 דקות
+    }, 10 * 60 * 1000); // Every 10 minutes
     
     return () => clearInterval(refreshInterval);
   }, [checkAuthStatus, user]);
   
-  // פונקציית התחברות
+  // Login function
   const login = async (credentials) => {
     try {
       setLoading(true);
@@ -683,7 +683,7 @@ export function AuthProvider({ children }) {
       
       const response = await fetch('/api/auth/login', {
         method: 'POST',
-        credentials: 'include', // חיוני לקבלת עוגיות HttpOnly
+        credentials: 'include', // Required to receive HttpOnly cookies
         headers: {
           'Content-Type': 'application/json'
         },
@@ -692,12 +692,12 @@ export function AuthProvider({ children }) {
       
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'שגיאת התחברות');
+        throw new Error(errorData.message || 'Login error');
       }
       
       const data = await response.json();
       
-      // אחסן רק מידע לא-רגיש במצב
+      // Store only non-sensitive info in state
       setUser({
         id: data.user.id,
         name: data.user.name,
@@ -715,7 +715,7 @@ export function AuthProvider({ children }) {
     }
   };
   
-  // פונקציית התנתקות
+  // Logout function
   const logout = async () => {
     try {
       await fetch('/api/auth/logout', {
@@ -726,26 +726,26 @@ export function AuthProvider({ children }) {
         }
       });
     } catch (err) {
-      console.error('שגיאת התנתקות:', err);
+      console.error('Logout error:', err);
     } finally {
-      // גם אם הקריאה לשרת נכשלת, עדכן את המצב המקומי
+      // Even if server call fails, update local state
       setUser(null);
     }
   };
   
-  // בדוק אם למשתמש יש הרשאה מסוימת
+  // Check if user has a specific permission
   const hasPermission = (permission) => {
     if (!user || !user.permissions) return false;
     return user.permissions.includes(permission);
   };
   
-  // בדוק אם למשתמש יש תפקיד מסוים
+  // Check if user has a specific role
   const hasRole = (role) => {
     if (!user) return false;
     return user.role === role;
   };
   
-  // הערך המסופק לצרכני הקונטקסט
+  // Value provided to context consumers
   const contextValue = {
     user,
     isAuthenticated: !!user,
@@ -765,39 +765,39 @@ export function AuthProvider({ children }) {
   );
 }
 
-// רכיב מאובטח שדורש אימות
+// Secure route component that requires authentication
 export function ProtectedRoute({ children, requiredPermissions = [], requiredRoles = [] }) {
   const { isAuthenticated, user, hasPermission, hasRole, loading } = useAuth();
   
   if (loading) {
-    return <div>טוען...</div>;
+    return <div>Loading...</div>;
   }
   
-  // בדוק אם המשתמש מחובר
+  // Check if user is logged in
   if (!isAuthenticated) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
   
-  // בדוק הרשאות אם צוינו
+  // Check permissions if specified
   if (requiredPermissions.length > 0) {
     const hasAllPermissions = requiredPermissions.every(perm => hasPermission(perm));
     if (!hasAllPermissions) {
-      return <AccessDenied message="אין לך את ההרשאות הנדרשות לצפייה בעמוד זה" />;
+      return <AccessDenied message="You don't have the required permissions to view this page" />;
     }
   }
   
-  // בדוק תפקידים אם צוינו
+  // Check roles if specified
   if (requiredRoles.length > 0) {
     const hasRequiredRole = requiredRoles.some(role => hasRole(role));
     if (!hasRequiredRole) {
-      return <AccessDenied message="דרוש תפקיד גבוה יותר כדי לגשת לעמוד זה" />;
+      return <AccessDenied message="A higher role is required to access this page" />;
     }
   }
   
   return <>{children}</>;
 }
 
-// דוגמה לדף התחברות
+// Example login page
 function LoginPage() {
   const { login, error, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
@@ -823,11 +823,11 @@ function LoginPage() {
   
   return (
     <div className="login-page">
-      <h1>התחברות</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         {error && <div className="error-message">{error}</div>}
         <div>
-          <label htmlFor="email">אימייל:</label>
+          <label htmlFor="email">Email:</label>
           <input
             id="email"
             type="email"
@@ -837,7 +837,7 @@ function LoginPage() {
           />
         </div>
         <div>
-          <label htmlFor="password">סיסמה:</label>
+          <label htmlFor="password">Password:</label>
           <input
             id="password"
             type="password"
@@ -846,13 +846,13 @@ function LoginPage() {
             required
           />
         </div>
-        <button type="submit">התחבר</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
 }
 
-// שימוש במערכת האימות באפליקציה
+// Using auth system in application
 function App() {
   return (
     <AuthProvider>
@@ -885,25 +885,25 @@ function App() {
             <div className="lg:col-span-1">
               <div className="sticky top-24">
                 <div className="card">
-                  <h3 className="text-xl font-bold mb-4">סוגיות אבטחה ב-React</h3>
+                  <h3 className="text-xl font-bold mb-4">React Security Issues</h3>
                   <ul className="space-y-2 pl-4 text-cybr-foreground/80">
-                    <li>שימוש לא נכון ב-dangerouslySetInnerHTML</li>
-                    <li>URL לא מאומתים בקישורים</li>
-                    <li>חשיפת מידע רגיש ב-SSR</li>
-                    <li>ניהול מצב לא מאובטח</li>
-                    <li>אימות קלט לא מספק</li>
-                    <li>הכללת תלויות לא בטוחות</li>
-                    <li>זיוף בקשות צולבות (CSRF)</li>
-                    <li>חולשת וקטור DOM</li>
-                    <li>דליפת מידע רגיש</li>
-                    <li>היעדר בקרת גישה בקומפוננטות</li>
-                    <li>ניהול אסימונים (טוקנים) לא מאובטח</li>
-                    <li>רכיבים צד שלישי לא בטוחים</li>
+                    <li>Improper use of dangerouslySetInnerHTML</li>
+                    <li>Unvalidated URLs in links</li>
+                    <li>Sensitive data exposure in SSR</li>
+                    <li>Insecure state management</li>
+                    <li>Insufficient input validation</li>
+                    <li>Including unsafe dependencies</li>
+                    <li>Cross-Site Request Forgery (CSRF)</li>
+                    <li>DOM-based vector vulnerabilities</li>
+                    <li>Sensitive data leakage</li>
+                    <li>Lack of component access control</li>
+                    <li>Insecure token management</li>
+                    <li>Unsafe third-party components</li>
                   </ul>
                 </div>
                 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">כלי אבטחה ל-React</h3>
+                  <h3 className="text-xl font-bold mb-4">React Security Tools</h3>
                   <ul className="space-y-3 text-cybr-foreground/80">
                     <li><a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">DOMPurify</a></li>
                     <li><a href="https://github.com/snyk/snyk" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">Snyk</a></li>
@@ -911,12 +911,12 @@ function App() {
                     <li><a href="https://eslint.org/docs/latest/rules/" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">ESLint Rules</a></li>
                     <li><a href="https://www.npmjs.com/package/js-xss" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">js-xss</a></li>
                     <li><a href="https://www.npmjs.com/package/serialize-javascript" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">serialize-javascript</a></li>
-                    <li><a href="https://www.npmjs.com/package/@hapi/joi" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">joi (אימות)</a></li>
+                    <li><a href="https://www.npmjs.com/package/@hapi/joi" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">joi (validation)</a></li>
                   </ul>
                 </div>
                 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">משאבי אבטחת React</h3>
+                  <h3 className="text-xl font-bold mb-4">React Security Resources</h3>
                   <ul className="space-y-3 text-cybr-foreground/80">
                     <li><a href="https://reactjs.org/docs/security.html" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">React Security Docs</a></li>
                     <li><a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">OWASP Top 10</a></li>
@@ -925,10 +925,10 @@ function App() {
                 </div>
                 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">טכנולוגיות קשורות</h3>
+                  <h3 className="text-xl font-bold mb-4">Related Technologies</h3>
                   <div className="space-y-3">
-                    <Link to="/languages/javascript" className="block text-cybr-primary hover:underline">אבטחת JavaScript</Link>
-                    <Link to="/languages/nodejs" className="block text-cybr-primary hover:underline">אבטחת Node.js</Link>
+                    <Link to="/languages/javascript" className="block text-cybr-primary hover:underline">JavaScript Security</Link>
+                    <Link to="/languages/nodejs" className="block text-cybr-primary hover:underline">Node.js Security</Link>
                   </div>
                 </div>
               </div>
@@ -943,3 +943,4 @@ function App() {
 };
 
 export default ReactPage;
+
