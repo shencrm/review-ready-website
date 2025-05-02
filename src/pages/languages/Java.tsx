@@ -1,3 +1,4 @@
+
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -16,6 +17,16 @@ const Java = () => {
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
               Common vulnerabilities and security best practices for Java applications.
+            </p>
+          </div>
+          
+          {/* New introduction paragraphs */}
+          <div className="mb-10 prose prose-cybr max-w-none">
+            <p className="text-lg">
+              Java, with its "write once, run anywhere" philosophy, is widely used in enterprise applications, Android development, and back-end services. Its robust security model includes features like the SecurityManager, strong typing, and automatic memory management that help prevent common vulnerabilities found in lower-level languages. However, Java applications are not immune to security threats, particularly when developers overlook important security considerations or misuse the language's capabilities.
+            </p>
+            <p className="text-lg mt-4">
+              The Java Virtual Machine (JVM) and Java's standard library provide many built-in security mechanisms, but developers must still be vigilant about potential vulnerabilities. Common security issues in Java applications include insecure deserialization, XML External Entity (XXE) processing, SQL injection, and Cross-Site Request Forgery (CSRF). These vulnerabilities often arise from improper input validation, insufficient output encoding, or unsafe configurations of Java frameworks. Adopting secure coding practices and leveraging Java's security features appropriately can significantly reduce these risks.
             </p>
           </div>
           
