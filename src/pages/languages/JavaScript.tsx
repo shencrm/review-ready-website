@@ -1,11 +1,10 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
 import SecurityCard from '@/components/SecurityCard';
 import { Link } from 'react-router-dom';
-import { Shield, Bug, Code } from 'lucide-react';
+import { Shield, Bug, Code, FileWarning, Lock, KeyRound, AlertTriangle } from 'lucide-react';
 
 const JavaScript = () => {
   return (
@@ -31,6 +30,13 @@ const JavaScript = () => {
                   These attacks can steal cookies, session tokens, and sensitive information, or redirect users to malicious sites.
                 </p>
                 
+                <SecurityCard
+                  title="Cross-Site Scripting (XSS)"
+                  description="XSS attacks occur when untrusted data is included in a web page without proper validation or encoding, allowing attackers to execute malicious scripts in users' browsers."
+                  icon={<Bug className="w-6 h-6" />}
+                  severity="high"
+                />
+                
                 <CodeExample
                   language="javascript"
                   title="Vulnerable XSS Code"
@@ -43,7 +49,13 @@ function displayUsername(username) {
 
 // Attacker could provide: <script>sendCookiesToAttacker()</script>
 // Which would execute arbitrary JavaScript in the browser`}
+                  isVulnerable={true}
                 />
+                
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>This vulnerable code takes a username parameter and directly inserts it into the page's HTML using <code>innerHTML</code>. If an attacker provides a username containing JavaScript code enclosed in <code>&lt;script&gt;</code> tags or other HTML with embedded scripts (like <code>onerror</code> handlers), that code will execute in the browser context of any user viewing the page. This allows the attacker to steal cookies, session tokens, or perform actions on behalf of the victim.</p>
+                </div>
                 
                 <CodeExample
                   language="javascript"
@@ -64,7 +76,13 @@ function displayFormattedContent(content) {
   document.getElementById('content').innerHTML = 
     DOMPurify.sanitize(content);
 }`}
+                  isVulnerable={false}
                 />
+
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>The secure version provides two safe alternatives. The first approach uses <code>textContent</code> instead of <code>innerHTML</code>, which treats the input as plain text and doesn't parse HTML, ensuring that any malicious markup is displayed rather than executed. The second approach uses the DOMPurify library to sanitize HTML content, removing any potentially dangerous elements or attributes while preserving safe HTML formatting. This allows for rich text while preventing script execution.</p>
+                </div>
               </section>
               
               <section>
@@ -73,6 +91,13 @@ function displayFormattedContent(content) {
                   Prototype pollution is a vulnerability specific to JavaScript, where attackers manipulate the prototype 
                   of base objects like Object, allowing them to inject properties that affect all object instances.
                 </p>
+                
+                <SecurityCard
+                  title="Prototype Pollution"
+                  description="Prototype pollution allows attackers to modify JavaScript object prototypes, potentially affecting the behavior of the entire application and bypassing security checks."
+                  icon={<Code className="w-6 h-6" />}
+                  severity="high"
+                />
                 
                 <CodeExample
                   language="javascript"
@@ -99,7 +124,13 @@ deepMerge(userConfig, malicious);
 
 // Now ALL objects have isAdmin=true!
 console.log({}.isAdmin); // true - security bypass!`}
+                  isVulnerable={true}
                 />
+                
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>This vulnerability occurs in the <code>deepMerge</code> function that recursively merges properties from a source object into a target object. The function doesn't check for special property names like <code>__proto__</code>. An attacker can exploit this by providing a malicious object with a <code>__proto__</code> property, which will modify the prototype of the target object and, by extension, all objects in the application that share that prototype. In this example, after merging the malicious payload, <em>every</em> JavaScript object in the application would have <code>isAdmin=true</code>, potentially bypassing authorization checks.</p>
+                </div>
                 
                 <CodeExample
                   language="javascript"
@@ -122,7 +153,13 @@ function safeDeepMerge(target, source) {
 
 // Or use Object.create(null) to create objects without prototype
 const safeObj = Object.create(null);`}
+                  isVulnerable={false}
                 />
+
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>The secure implementation adds a simple check to skip the processing of special property names like <code>__proto__</code> and <code>constructor</code>. This prevents attackers from modifying object prototypes through the merge function. An alternative approach is to use <code>Object.create(null)</code> to create objects without a prototype chain, which makes them immune to prototype pollution attacks because they don't inherit from <code>Object.prototype</code>.</p>
+                </div>
               </section>
               
               <section>
@@ -131,6 +168,13 @@ const safeObj = Object.create(null);`}
                   Insecure deserialization occurs when untrusted data is used to abuse the logic of an application,
                   inflict a denial of service (DoS), or execute arbitrary code upon being deserialized.
                 </p>
+                
+                <SecurityCard
+                  title="Insecure Deserialization"
+                  description="Unsafe deserialization of untrusted data can lead to remote code execution, allowing attackers to run arbitrary code on your server or client."
+                  icon={<FileWarning className="w-6 h-6" />}
+                  severity="high"
+                />
                 
                 <CodeExample
                   language="javascript"
@@ -148,7 +192,13 @@ const userObj = serialize.unserialize(untrustedDataFromUser);
 // Attacker could send:
 // {"rce":"_$$ND_FUNC$$_function(){require('child_process').exec('malicious command')}()"}
 // Which would execute arbitrary code during deserialization`}
+                  isVulnerable={true}
                 />
+                
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>This code shows two dangerous deserialization vulnerabilities. The first uses <code>eval()</code> to parse JSON, which is extremely dangerous as it executes any JavaScript code in the input string. The second example uses the <code>node-serialize</code> library, which has a known vulnerability: it can deserialize and execute functions if they're marked with a special prefix (<code>_$$ND_FUNC$$_</code>). An attacker can craft a payload that executes arbitrary code when deserialized, potentially gaining complete control of the server.</p>
+                </div>
                 
                 <CodeExample
                   language="javascript"
@@ -181,7 +231,221 @@ function processUserConfig(configString) {
   
   return config;
 }`}
+                  isVulnerable={false}
                 />
+
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>The secure code uses <code>JSON.parse()</code> instead of <code>eval()</code> to safely parse JSON data. Unlike <code>eval()</code>, <code>JSON.parse()</code> only processes valid JSON and doesn't execute code. The second example adds schema validation after parsing to ensure the deserialized object has the expected structure and properties, providing an additional layer of security against malformed or malicious input.</p>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-bold mb-4">Client-Side Storage Exposure</h2>
+                <p className="mb-4">
+                  Storing sensitive information in client-side storage mechanisms like localStorage or sessionStorage can expose it to XSS attacks.
+                </p>
+                
+                <SecurityCard
+                  title="Insecure Client-Side Storage"
+                  description="Storing sensitive data like authentication tokens or personal information in client-side storage can expose it to theft through XSS attacks."
+                  icon={<Lock className="w-6 h-6" />}
+                  severity="medium"
+                />
+                
+                <CodeExample
+                  language="javascript"
+                  title="Insecure Client-Side Storage"
+                  code={`// VULNERABLE: Storing sensitive information in localStorage
+function loginUser(username, password) {
+  fetch('/api/login', {
+    method: 'POST',
+    body: JSON.stringify({ username, password }),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => response.json())
+  .then(data => {
+    // INSECURE: Storing sensitive data in localStorage
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('userRole', data.role);
+    localStorage.setItem('userId', data.userId);
+    localStorage.setItem('creditCard', data.paymentInfo.cardNumber);
+    
+    redirectToApp();
+  });
+}
+
+// If an XSS vulnerability exists, an attacker can access all this data:
+// const stolenData = {
+//   token: localStorage.getItem('token'),
+//   userRole: localStorage.getItem('userRole'),
+//   userId: localStorage.getItem('userId'),
+//   creditCard: localStorage.getItem('creditCard')
+// };
+// sendToAttackerServer(stolenData);`}
+                  isVulnerable={true}
+                />
+                
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>This vulnerable code stores sensitive information including authentication tokens and even credit card numbers in localStorage. The problem is that localStorage is accessible to any JavaScript running on the same domain. If an attacker can execute JavaScript through an XSS vulnerability, they can easily extract all this sensitive information. Additionally, localStorage persists even after the browser is closed, extending the window of vulnerability.</p>
+                </div>
+                
+                <CodeExample
+                  language="javascript"
+                  title="Secure Storage Practices"
+                  code={`// SECURE: Proper handling of sensitive information
+function loginUserSecurely(username, password) {
+  fetch('/api/login', {
+    method: 'POST',
+    body: JSON.stringify({ username, password }),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Store auth token in HttpOnly cookie (set by server, not accessible via JS)
+    // The API response doesn't include the token as it's set as an HttpOnly cookie
+    
+    // Store non-sensitive UI state in localStorage
+    localStorage.setItem('userName', data.displayName);
+    localStorage.setItem('uiPreferences', JSON.stringify(data.preferences));
+    
+    // Store session-specific data in sessionStorage (cleared when tab closes)
+    sessionStorage.setItem('lastAction', 'login');
+    
+    // Keep sensitive data in memory only (lost on page refresh)
+    const userSession = {
+      userId: data.userId,
+      role: data.role
+    };
+    
+    // Initialize app with in-memory data
+    initializeApp(userSession);
+  });
+}
+
+// Server-side implementation sets secure cookies
+// res.cookie('authToken', token, {
+//   httpOnly: true, // Not accessible via JavaScript
+//   secure: true,   // Only sent over HTTPS
+//   sameSite: 'strict', // Prevents CSRF
+//   maxAge: 3600000 // 1 hour expiry
+// });`}
+                  isVulnerable={false}
+                />
+
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>The secure implementation follows several best practices: (1) Authentication tokens are stored in HttpOnly cookies set by the server, making them inaccessible to JavaScript and therefore protected from XSS attacks. (2) Sensitive data is kept in memory variables that aren't persisted and are lost when the page refreshes. (3) SessionStorage is used for temporary data that should be cleared when the browser tab closes. (4) Only non-sensitive data like UI preferences are stored in localStorage. This approach implements defense-in-depth by using the appropriate storage mechanism for each type of data based on its sensitivity.</p>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-bold mb-4">Weak Cryptography and Random Values</h2>
+                <p className="mb-4">
+                  JavaScript implementations often use cryptographically weak random number generation or outdated cryptographic methods.
+                </p>
+                
+                <SecurityCard
+                  title="Weak Cryptographic Practices"
+                  description="Using insufficient cryptographic methods in JavaScript can lead to predictable values and compromised security measures."
+                  icon={<KeyRound className="w-6 h-6" />}
+                  severity="medium"
+                />
+                
+                <CodeExample
+                  language="javascript"
+                  title="Insecure Random Value Generation"
+                  code={`// VULNERABLE: Using Math.random() for security purposes
+function generateAuthToken() {
+  // INSECURE: Math.random() is not cryptographically strong
+  return Math.random().toString(36).substring(2, 15);
+}
+
+// VULNERABLE: Creating weak user IDs
+function createUserAccount(userData) {
+  const userId = Date.now() + Math.floor(Math.random() * 1000);
+  // Store predictable, sequential user IDs
+  return saveUser({ ...userData, id: userId });
+}
+
+// VULNERABLE: Weak password reset token
+function generatePasswordResetToken() {
+  // Creates predictable token based on timestamp
+  const timestamp = new Date().getTime();
+  return 'reset_' + (timestamp * 2 - 100000).toString(16);
+}`}
+                  isVulnerable={true}
+                />
+                
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>This vulnerable code uses <code>Math.random()</code> and predictable timestamps for security-sensitive operations. <code>Math.random()</code> is not cryptographically secure and can be predicted given enough samples. Using predictable values for authentication tokens or password reset tokens makes them susceptible to brute force or prediction attacks. The user ID generation creates IDs that are largely sequential and easily guessable, potentially allowing attackers to enumerate user accounts.</p>
+                </div>
+                
+                <CodeExample
+                  language="javascript"
+                  title="Secure Cryptographic Implementations"
+                  code={`// SECURE: Using cryptographically strong random values
+function generateAuthTokenSecure() {
+  // Create a buffer with cryptographically strong random values
+  const buffer = new Uint8Array(32);
+  crypto.getRandomValues(buffer);
+  
+  // Convert to URL-safe base64 string
+  return btoa(String.fromCharCode.apply(null, buffer))
+    .replace(/\\+/g, '-')
+    .replace(/\\//g, '_')
+    .replace(/=/g, '');
+}
+
+// SECURE: Creating strong user IDs with UUID
+function createUserAccountSecure(userData) {
+  // Generate a UUID (requires a UUID library or the crypto.randomUUID() in newer browsers)
+  const userId = crypto.randomUUID ? crypto.randomUUID() : generateUUID();
+  
+  return saveUser({ ...userData, id: userId });
+}
+
+// Helper function for older browsers
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = crypto.getRandomValues(new Uint8Array(1))[0] % 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+// SECURE: Strong password reset token with expiry
+function generateSecureResetToken(userId) {
+  // Create random bytes
+  const buffer = new Uint8Array(32);
+  crypto.getRandomValues(buffer);
+  
+  // Convert to hex string
+  const token = Array.from(buffer)
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
+  
+  // Store token with expiry and user association
+  const expiresAt = new Date();
+  expiresAt.setHours(expiresAt.getHours() + 1); // 1 hour expiry
+  
+  storeResetToken({
+    userId,
+    token,
+    expiresAt
+  });
+  
+  return token;
+}`}
+                  isVulnerable={false}
+                />
+
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mb-4">
+                  <h4 className="font-semibold mb-2">Explanation:</h4>
+                  <p>The secure implementation uses <code>crypto.getRandomValues()</code> to generate cryptographically strong random values, which are much harder to predict than <code>Math.random()</code>. For user IDs, it uses UUIDs (either via the modern <code>crypto.randomUUID()</code> API or a secure fallback implementation) to create globally unique, non-sequential identifiers. The password reset token function generates a secure random token, associates it with a specific user, and adds a short expiration time to limit the window of vulnerability. These approaches dramatically reduce the risk of token prediction or brute-forcing attacks.</p>
+                </div>
               </section>
             </div>
             
@@ -197,6 +461,8 @@ function processUserConfig(configString) {
                     <li>Insecure Dependencies</li>
                     <li>DOM-based Vulnerabilities</li>
                     <li>Client-Side Storage Exposure</li>
+                    <li>Weak Cryptography</li>
+                    <li>Cross-Window Messaging</li>
                   </ul>
                 </div>
                 
