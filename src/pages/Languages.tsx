@@ -8,33 +8,51 @@ const Languages = () => {
   const languages = [
     {
       name: "JavaScript",
-      description: "Learn about XSS, prototype pollution, insecure dependencies and other common JavaScript vulnerabilities.",
+      description: "למד על XSS, זיהום פרוטוטייפ, תלויות לא מאובטחות ופגיעויות JavaScript נפוצות אחרות.",
       path: "/languages/javascript",
       icon: "JS"
     },
     {
       name: "Python",
-      description: "Discover vulnerabilities in Python code, from insecure deserialization to command injection risks.",
+      description: "גלה פגיעויות בקוד Python, החל מדסריאליזציה לא מאובטחת ועד סיכוני הזרקת פקודות.",
       path: "/languages/python",
       icon: "PY"
     },
     {
       name: "Java",
-      description: "Explore common Java security flaws including improper authentication, CSRF, and XXE vulnerabilities.",
+      description: "חקור פגמי אבטחה נפוצים ב-Java כולל אימות לא תקין, CSRF, ופגיעויות XXE.",
       path: "/languages/java",
       icon: "JV"
     },
     {
       name: "C#",
-      description: "Understand .NET security concerns including LINQ injection, insecure deserialization, and access control issues.",
+      description: "הבן סוגיות אבטחה ב-.NET כולל הזרקת LINQ, דסריאליזציה לא מאובטחת, ובעיות בקרת גישה.",
       path: "/languages/csharp",
       icon: "C#"
     },
     {
       name: "PHP",
-      description: "Learn about typical PHP vulnerabilities like remote code execution, file inclusion, and session security.",
+      description: "למד על פגיעויות PHP טיפוסיות כמו הרצת קוד מרחוק, הכללת קבצים, ואבטחת סשן.",
       path: "/languages/php",
       icon: "PHP"
+    },
+    {
+      name: "React",
+      description: "הבן פגיעויות אבטחה ב-React, ניהול סטייט מאובטח, וסיכוני XSS ייחודיים לאפליקציות React.",
+      path: "/languages/react",
+      icon: "RE"
+    },
+    {
+      name: "Node.js",
+      description: "למד על אבטחת שרת צד, פגיעויות במודולים, והזרקת פקודות בסביבת Node.js.",
+      path: "/languages/nodejs",
+      icon: "ND"
+    },
+    {
+      name: "Golang",
+      description: "חקור אבטחה של יישומי Go, ניהול שגיאות, והגנה מפני סכנות אבטחה שכיחות בשפה מודרנית זו.",
+      path: "/languages/golang",
+      icon: "GO"
     }
   ];
 
@@ -45,14 +63,14 @@ const Languages = () => {
       <main className="flex-grow py-12">
         <div className="container mx-auto px-4">
           <div className="mb-12">
-            <h1 className="text-4xl font-bold mb-6">Language-Specific Security Guides</h1>
+            <h1 className="text-4xl font-bold mb-6">מדריכי אבטחה ספציפיים לשפות תכנות</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              Explore security vulnerabilities and best practices for different programming languages.
+              חקור פגיעויות אבטחה ושיטות עבודה מומלצות עבור שפות תכנות שונות.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {languages.map((language, index) => (
               <Link key={index} to={language.path} className="block group">
                 <div className="card h-full group-hover:-translate-y-1 transition-transform duration-300">
@@ -75,53 +93,56 @@ const Languages = () => {
           </div>
           
           <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-6">Why Language-Specific Security Matters</h2>
+            <h2 className="text-2xl font-bold mb-6">למה אבטחה ספציפית לשפה חשובה</h2>
             <div className="card">
               <p className="mb-4">
-                Each programming language has its own unique security challenges and vulnerabilities. Understanding these 
-                language-specific concerns is crucial for conducting effective secure code reviews.
+                לכל שפת תכנות יש את האתגרים והפגיעויות הייחודיים לה. הבנת הנושאים הספציפיים 
+                לכל שפה היא קריטית לביצוע סקירות קוד מאובטח אפקטיביות.
               </p>
               
               <p className="mb-4">
-                While general security principles apply across all languages, the implementation details and common 
-                pitfalls vary significantly. For example:
+                בעוד שעקרונות אבטחה כלליים חלים על כל השפות, פרטי היישום והמלכודות הנפוצות 
+                משתנים משמעותית. לדוגמה:
               </p>
               
               <ul className="list-disc list-inside space-y-3 pl-4 text-cybr-foreground/80">
-                <li>JavaScript faces unique challenges with prototype-based inheritance and browser DOM interactions</li>
-                <li>Python's dynamic typing can lead to unexpected type-related security issues</li>
-                <li>Java's complex class structure and serialization mechanisms present specific attack vectors</li>
-                <li>C# applications often have specific .NET framework vulnerabilities</li>
-                <li>PHP has historically been prone to inclusion vulnerabilities and injection flaws</li>
+                <li>JavaScript מתמודדת עם אתגרים ייחודיים עם ירושה מבוססת פרוטוטייפ ואינטראקציות DOM בדפדפן</li>
+                <li>Python עם טיפוסים דינמיים יכולה להוביל לבעיות אבטחה לא צפויות הקשורות לטיפוסים</li>
+                <li>מבנה הקלאסים המורכב של Java ומנגנוני סריאליזציה מציגים וקטורי תקיפה ספציפיים</li>
+                <li>ליישומי C# יש פגיעויות ספציפיות למסגרת ה-.NET</li>
+                <li>PHP היתה היסטורית נוטה לפגיעויות הכללה וחולשות הזרקה</li>
+                <li>React דורשת הבנה של סיכוני אבטחה ייחודיים ב-SPA וניהול מצב</li>
+                <li>Node.js מחייבת תשומת לב מיוחדת לאבטחת צד שרת בסביבת JavaScript</li>
+                <li>Golang, למרות שהיא מודרנית יחסית, יכולה עדיין להיות פגיעה אם לא מיישמים נכון</li>
               </ul>
               
               <p className="mt-4">
-                By understanding these language-specific concerns, you can perform more targeted and effective security reviews.
+                על ידי הבנת הסוגיות הספציפיות לשפה, תוכל לבצע סקירות אבטחה ממוקדות ואפקטיביות יותר.
               </p>
             </div>
           </div>
           
           <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-6">Cross-Language Security Principles</h2>
+            <h2 className="text-2xl font-bold mb-6">עקרונות אבטחה חוצי-שפות</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="card">
-                <h3 className="text-xl font-bold mb-3">Input Validation</h3>
+                <h3 className="text-xl font-bold mb-3">אימות קלט</h3>
                 <p className="text-cybr-foreground/80">
-                  Always validate, sanitize, and encode user input regardless of language. Never trust external data.
+                  תמיד אמת, חטא וקודד קלט משתמש ללא קשר לשפה. לעולם אל תסמוך על נתונים חיצוניים.
                 </p>
               </div>
               
               <div className="card">
-                <h3 className="text-xl font-bold mb-3">Authentication & Authorization</h3>
+                <h3 className="text-xl font-bold mb-3">אימות והרשאות</h3>
                 <p className="text-cybr-foreground/80">
-                  Implement robust identity verification and proper access controls using language-specific best practices.
+                  יישם אימות זהות חזק ובקרות גישה נאותות באמצעות שיטות עבודה מומלצות ספציפיות לשפה.
                 </p>
               </div>
               
               <div className="card">
-                <h3 className="text-xl font-bold mb-3">Data Protection</h3>
+                <h3 className="text-xl font-bold mb-3">הגנת מידע</h3>
                 <p className="text-cybr-foreground/80">
-                  Use appropriate encryption, secure storage mechanisms, and careful handling of sensitive information.
+                  השתמש בהצפנה מתאימה, מנגנוני אחסון מאובטחים, וטיפול זהיר במידע רגיש.
                 </p>
               </div>
             </div>
