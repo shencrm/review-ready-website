@@ -57,15 +57,15 @@ app.use((req, res, next) => {
         code={`// Server setting a strong CSP header
 app.use((req, res, next) => {
   // Generate a random nonce for each request
-  const nonce = crypto.randomBytes(16).toString('base64');
-  res.locals.cspNonce = nonce;
+  const cspNonce = crypto.randomBytes(16).toString('base64');
+  res.locals.cspNonce = cspNonce;
   
   // Strict CSP with nonce-based script execution
   res.setHeader(
     'Content-Security-Policy',
     \`
       default-src 'none';
-      script-src 'self' 'nonce-${nonce}' https://specific-cdn.trusted-site.com;
+      script-src 'self' 'nonce-\${cspNonce}' https://specific-cdn.trusted-site.com;
       style-src 'self' https://specific-cdn.trusted-site.com;
       img-src 'self';
       font-src 'self';
@@ -92,7 +92,7 @@ app.get('/page', (req, res) => {
 });
 
 // In EJS template:
-// <script nonce="<%= nonce %>">
+// <script nonce="<%- nonce %>">
 //   // Safe script that will execute with correct nonce
 // </script>
 

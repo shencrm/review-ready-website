@@ -44,12 +44,12 @@ X-Forwarded-Host: attacker.com
         code={`// 1. Avoid using unvalidated input in cached responses
 app.get('/home', (req, res) => {
   // Don't use user-controllable headers for resource loading
-  const scriptUrl = 'https://example.com/script.js'; // Hardcoded URL
+  const safeScriptUrl = 'https://example.com/script.js'; // Hardcoded URL
   
   res.send(\`
     <html>
       <head>
-        <script src="${scriptUrl}"></script>
+        <script src="\${safeScriptUrl}"></script>
       </head>
       <body>...</body>
     </html>
