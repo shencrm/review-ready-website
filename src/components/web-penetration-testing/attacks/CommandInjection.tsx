@@ -146,7 +146,7 @@ def ping_host(request):
       </p>
       <ul className="list-disc pl-6 space-y-2">
         <li>Injecting command separators (<code>;</code>, <code>&&</code>, <code>||</code>)</li>
-        <li>Using output redirection characters (<code>></code>, <code>>></code>)</li>
+        <li>Using output redirection characters (<code>{`>`}</code>, <code>{`>>`}</code>)</li>
         <li>Command substitution with backticks (``) or <code>$()</code> syntax</li>
         <li>Semi-blind testing with time delays (e.g., <code>ping -c 10 127.0.0.1</code>)</li>
         <li>Out-of-band techniques to detect successful injections that don't produce visible output</li>
