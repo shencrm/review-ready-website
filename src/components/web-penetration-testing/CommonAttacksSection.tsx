@@ -11,6 +11,19 @@ import InsecureDeserialization from './attacks/InsecureDeserialization';
 import CommandInjection from './attacks/CommandInjection';
 import SecurityMisconfigurations from './attacks/SecurityMisconfigurations';
 import PathTraversal from './attacks/PathTraversal';
+import SSRF from './attacks/SSRF';
+import HTTPRequestSmuggling from './attacks/HTTPRequestSmuggling';
+import JWTAttacks from './attacks/JWTAttacks';
+import APIVulnerabilities from './attacks/APIVulnerabilities';
+import RaceConditions from './attacks/RaceConditions';
+import CORSMisconfigurations from './attacks/CORSMisconfigurations';
+import WebSocketVulnerabilities from './attacks/WebSocketVulnerabilities';
+import PrototypePollution from './attacks/PrototypePollution';
+import GraphQLVulnerabilities from './attacks/GraphQLVulnerabilities';
+import OAuthVulnerabilities from './attacks/OAuthVulnerabilities';
+import WebCachePoisoning from './attacks/WebCachePoisoning';
+import CSPBypass from './attacks/CSPBypass';
+import OtherInjectionFlaws from './attacks/OtherInjectionFlaws';
 
 interface AttackType {
   id: string;
@@ -84,7 +97,19 @@ const CommonAttacksSection: React.FC = () => {
           <CommandInjection />
           <SecurityMisconfigurations />
           <PathTraversal />
-          {/* Additional attack components would be added here */}
+          <SSRF />
+          <HTTPRequestSmuggling />
+          <JWTAttacks />
+          <APIVulnerabilities />
+          <RaceConditions />
+          <CORSMisconfigurations />
+          <WebSocketVulnerabilities />
+          <PrototypePollution />
+          <GraphQLVulnerabilities />
+          <OAuthVulnerabilities />
+          <WebCachePoisoning />
+          <CSPBypass />
+          <OtherInjectionFlaws />
         </div>
       </div>
     </>
