@@ -3,8 +3,9 @@ import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
+import SecurityCard from '@/components/SecurityCard';
 import { Link } from 'react-router-dom';
-import { AlertCircle, ShieldAlert, Terminal, FileCode } from 'lucide-react';
+import { AlertCircle, ShieldAlert, Terminal, FileCode, Bug, Code, FileWarning, Lock, KeyRound } from 'lucide-react';
 
 const JavaScript = () => {
   return (

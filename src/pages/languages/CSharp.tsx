@@ -3,8 +3,9 @@ import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
+import SecurityCard from '@/components/SecurityCard';
 import { Link } from 'react-router-dom';
-import { ShieldAlert, Database, Key, FileWarning } from 'lucide-react';
+import { ShieldAlert, Database, Key, FileWarning, Bug, Lock } from 'lucide-react';
 
 const CSharp = () => {
   return (
