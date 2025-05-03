@@ -4,7 +4,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Lock, Terminal, FileCode } from 'lucide-react';
+import { Shield, Server, Terminal, AlertTriangle } from 'lucide-react';
 
 const NodeJs = () => {
   return (
@@ -17,7 +17,33 @@ const NodeJs = () => {
             <h1 className="text-4xl font-bold mb-6">Node.js Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              Understanding and mitigating security vulnerabilities in Node.js applications.
+              Security vulnerabilities and best practices for Node.js applications.
+            </p>
+          </div>
+          
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-4">About Node.js</h2>
+            <p className="mb-4">
+              Node.js is an open-source, cross-platform JavaScript runtime environment that executes JavaScript code outside a web browser.
+              Created by Ryan Dahl in 2009, Node.js was designed to build scalable network applications by using an event-driven,
+              non-blocking I/O model that makes it lightweight and efficient.
+            </p>
+            <p className="mb-4">
+              Unlike traditional server environments where each connection spawns a new thread, consuming system RAM and eventually
+              maxing out at the amount of RAM available, Node.js operates on a single-thread using non-blocking I/O calls. This allows
+              it to support tens of thousands of concurrent connections without incurring the cost of thread context switching.
+            </p>
+            <p className="mb-4">
+              Node.js has transformed JavaScript from being a browser-only language to a full-stack development platform. It's widely
+              used for building backend services (REST APIs, microservices), real-time applications (chat, gaming), command-line tools,
+              and even desktop applications. The Node Package Manager (npm) is the world's largest software registry, with millions of
+              packages available for developers.
+            </p>
+            <p>
+              However, Node.js applications face unique security challenges. The extensive use of third-party dependencies creates a large
+              attack surface through the supply chain. Its asynchronous, event-driven architecture can lead to complex code that's difficult
+              to secure. Common security issues include injection vulnerabilities, insecure dependencies, broken authentication, and
+              security misconfiguration. Understanding these risks is essential for Node.js developers to build secure applications.
             </p>
           </div>
           
@@ -914,4 +940,3 @@ app.get('/api/users/search', async (req, res) => {
 };
 
 export default NodeJs;
-

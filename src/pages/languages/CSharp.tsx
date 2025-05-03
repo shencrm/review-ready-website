@@ -3,9 +3,8 @@ import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
-import SecurityCard from '@/components/SecurityCard';
 import { Link } from 'react-router-dom';
-import { Shield, Bug, Database, FileWarning, Lock } from 'lucide-react';
+import { ShieldAlert, Database, Key, FileWarning } from 'lucide-react';
 
 const CSharp = () => {
   return (
@@ -18,7 +17,34 @@ const CSharp = () => {
             <h1 className="text-4xl font-bold mb-6">C# Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              Security vulnerabilities and best practices for C# and .NET applications.
+              Security vulnerabilities and best practices for C# applications.
+            </p>
+          </div>
+          
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-4">About C#</h2>
+            <p className="mb-4">
+              C# (pronounced "C sharp") is a modern, object-oriented programming language developed by Microsoft in 2000 as part of
+              its .NET initiative. Created by Anders Hejlsberg, C# was designed to be a simple, modern, general-purpose,
+              object-oriented programming language that combines the high productivity of rapid application development languages
+              with the raw power of C and C++.
+            </p>
+            <p className="mb-4">
+              As a statically-typed language, C# helps developers catch errors at compile time rather than runtime, while still
+              offering features like type inference to reduce verbosity. It runs on the .NET platform, which provides a rich
+              standard library and powerful runtime services including automatic memory management through garbage collection,
+              exception handling, and thread management.
+            </p>
+            <p className="mb-4">
+              C# is widely used for developing Windows desktop applications, web applications using ASP.NET, games with Unity,
+              and increasingly for cross-platform mobile development through frameworks like Xamarin and MAUI. It's also
+              becoming more popular for cloud services and microservices with .NET Core and now .NET 6+.
+            </p>
+            <p>
+              From a security perspective, C# benefits from .NET's managed runtime environment, which provides protection against
+              common vulnerabilities like buffer overflows. However, C# applications can still be vulnerable to injection attacks,
+              insecure deserialization, authentication flaws, and other security issues, particularly in web applications built with
+              ASP.NET. Understanding these risks and following secure coding practices remains essential for C# developers.
             </p>
           </div>
           

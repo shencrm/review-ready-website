@@ -1,9 +1,9 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
 import { Link } from 'react-router-dom';
+import { Shield, Lock, ServerCrash, Database } from 'lucide-react';
 
 const Java = () => {
   return (
@@ -16,7 +16,34 @@ const Java = () => {
             <h1 className="text-4xl font-bold mb-6">Java Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              Common vulnerabilities and security best practices for Java applications.
+              Security vulnerabilities and best practices for Java applications.
+            </p>
+          </div>
+          
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-4">About Java</h2>
+            <p className="mb-4">
+              Java is a class-based, object-oriented programming language that was designed to have as few implementation
+              dependencies as possible. Created by James Gosling at Sun Microsystems (now owned by Oracle Corporation) in 1995,
+              Java applications are typically compiled to bytecode that can run on any Java Virtual Machine (JVM) regardless of
+              the underlying computer architecture.
+            </p>
+            <p className="mb-4">
+              The language's core principle of "Write Once, Run Anywhere" (WORA) has made it one of the most popular programming
+              languages for enterprise applications, mobile development (Android), and large-scale systems. Java's strong typing, 
+              extensive standard library, and robust ecosystem have contributed to its longevity and continued relevance in the
+              software development industry.
+            </p>
+            <p className="mb-4">
+              Java's architecture provides several built-in security features. Its memory management with automatic garbage 
+              collection helps prevent memory leaks and buffer overflow vulnerabilities. The JVM's security manager and sandbox
+              model limit what untrusted code can do, and the language's strong type checking helps catch errors at compile time
+              rather than runtime.
+            </p>
+            <p>
+              Despite these inherent security benefits, Java applications can still be vulnerable to various attacks through
+              improper implementation, configuration issues, and the use of insecure libraries or frameworks. Understanding 
+              these vulnerabilities and following secure coding practices is essential for Java developers.
             </p>
           </div>
           

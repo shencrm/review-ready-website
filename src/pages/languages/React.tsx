@@ -4,7 +4,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Lock, FileCode, Code } from 'lucide-react';
+import { Shield, Code, AlertTriangle, FileWarning } from 'lucide-react';
 
 const ReactPage = () => {
   return (
@@ -17,7 +17,35 @@ const ReactPage = () => {
             <h1 className="text-4xl font-bold mb-6">React Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              Secure coding practices and vulnerability prevention in React applications.
+              Security vulnerabilities and best practices for React applications.
+            </p>
+          </div>
+          
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-4">About React</h2>
+            <p className="mb-4">
+              React is an open-source JavaScript library for building user interfaces, particularly for single-page applications.
+              Developed and maintained by Facebook (now Meta) and released in 2013, React has revolutionized front-end development
+              with its component-based architecture and virtual DOM implementation for efficient UI updates.
+            </p>
+            <p className="mb-4">
+              Unlike traditional frameworks, React focuses only on the view layer of an application, making it easy to integrate
+              with other libraries or frameworks for routing, state management, and other functionalities. Its declarative
+              approach allows developers to design simple views for each state in their application, and React efficiently
+              updates and renders just the right components when data changes.
+            </p>
+            <p className="mb-4">
+              React has become one of the most popular front-end technologies due to its performance, flexibility, and strong
+              community support. It's used by major companies worldwide, including Facebook, Instagram, Netflix, Airbnb, and
+              many others. The ecosystem has expanded to include React Native for mobile development and frameworks like Next.js
+              and Gatsby that build upon React's foundation.
+            </p>
+            <p>
+              From a security perspective, React provides some built-in protections against common web vulnerabilities like XSS
+              through features such as JSX escaping. However, React applications can still be vulnerable to various security issues
+              depending on how they're implemented, especially when integrating with APIs, managing authentication, handling user
+              input, or incorporating third-party dependencies. Understanding these security considerations is crucial for React
+              developers.
             </p>
           </div>
           
@@ -943,4 +971,3 @@ function App() {
 };
 
 export default ReactPage;
-

@@ -21,6 +21,34 @@ const GolangPage = () => {
             </p>
           </div>
           
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-4">About Golang</h2>
+            <p className="mb-4">
+              Go, also known as Golang, is an open-source programming language created by Google engineers Robert Griesemer,
+              Rob Pike, and Ken Thompson in 2007 and released in 2009. Go was designed with simplicity, efficiency, and safety
+              in mind, intended to address criticism of other languages while maintaining their positive characteristics.
+            </p>
+            <p className="mb-4">
+              As a statically-typed, compiled language, Go combines the performance and safety of languages like C++ with the
+              readability and usability of languages like Python. It features garbage collection, structural typing, memory safety,
+              and CSP-style concurrent programming features. Go's built-in concurrency primitives (goroutines and channels) make
+              it especially well-suited for networked services and multicore computing.
+            </p>
+            <p className="mb-4">
+              Go has become particularly popular for building infrastructure tools, cloud services, and microservices. It powers
+              major projects like Docker, Kubernetes, Prometheus, and many of Google's internal systems. Its performance characteristics,
+              simple deployment (via statically linked binaries), and excellent standard library have made it a favorite for DevOps
+              and backend development.
+            </p>
+            <p>
+              From a security perspective, Go provides several advantages. Its strong type system and memory safety features help
+              prevent common vulnerabilities like buffer overflows. Its simple syntax reduces the chance of developer error, and
+              its standard library includes robust implementations of cryptographic algorithms and secure networking protocols.
+              However, Go applications can still be vulnerable to logical flaws, injection attacks, and other security issues
+              if developers don't follow secure coding practices.
+            </p>
+          </div>
+          
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <section>

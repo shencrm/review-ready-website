@@ -1,9 +1,9 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
 import { Link } from 'react-router-dom';
+import { Shield, FileWarning, Terminal, AlertTriangle } from 'lucide-react';
 
 const PHP = () => {
   return (
@@ -16,7 +16,33 @@ const PHP = () => {
             <h1 className="text-4xl font-bold mb-6">PHP Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              Common vulnerabilities and security best practices for PHP applications.
+              Security vulnerabilities and best practices for PHP applications.
+            </p>
+          </div>
+          
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-4">About PHP</h2>
+            <p className="mb-4">
+              PHP (Hypertext Preprocessor) is a widely-used open source general-purpose scripting language that is especially
+              suited for web development and can be embedded into HTML. Created by Rasmus Lerdorf in 1994, PHP was originally
+              designed to create dynamic web pages but has evolved into a full-featured programming language.
+            </p>
+            <p className="mb-4">
+              As a server-side scripting language, PHP code is executed on the server, generating HTML that is then sent to
+              the client. PHP is remarkably flexible and powers everything from personal blogs to some of the world's largest
+              websites like WordPress, Facebook (historical codebase), and Wikipedia. Its popularity stems from its ease of
+              use, wide hosting support, and large ecosystem of frameworks like Laravel, Symfony, and CodeIgniter.
+            </p>
+            <p className="mb-4">
+              PHP's syntax draws elements from C, Java, and Perl, with a few unique PHP-specific features. While originally
+              a procedural language, PHP now supports object-oriented programming as well. Over time, PHP has evolved significantly,
+              with modern versions (PHP 7 and 8) offering improved performance, better type safety, and new language features.
+            </p>
+            <p>
+              However, PHP's historical legacy and flexibility have also led to security challenges. Its ease of use and
+              loose typing system can make it easy for developers to inadvertently introduce vulnerabilities such as SQL injection,
+              cross-site scripting (XSS), CSRF, and remote code execution if proper security practices aren't followed.
+              Understanding these risks is particularly important given PHP's widespread use in web applications.
             </p>
           </div>
           

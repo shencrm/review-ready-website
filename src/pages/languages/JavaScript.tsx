@@ -1,10 +1,10 @@
+
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
-import SecurityCard from '@/components/SecurityCard';
 import { Link } from 'react-router-dom';
-import { Shield, Bug, Code, FileWarning, Lock, KeyRound, AlertTriangle } from 'lucide-react';
+import { AlertCircle, ShieldAlert, Terminal, FileCode } from 'lucide-react';
 
 const JavaScript = () => {
   return (
@@ -17,7 +17,32 @@ const JavaScript = () => {
             <h1 className="text-4xl font-bold mb-6">JavaScript Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              Understanding and mitigating common JavaScript vulnerabilities.
+              Security vulnerabilities and best practices for JavaScript applications.
+            </p>
+          </div>
+          
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-4">About JavaScript</h2>
+            <p className="mb-4">
+              JavaScript is a high-level, interpreted programming language that conforms to the ECMAScript specification. 
+              Originally designed as a scripting language for web browsers to add dynamic functionality to web pages, 
+              JavaScript has evolved to become one of the world's most widely used programming languages.
+            </p>
+            <p className="mb-4">
+              As a multi-paradigm language, JavaScript supports event-driven, functional, and imperative programming styles. 
+              It has API functions for working with text, arrays, dates, regular expressions, and the DOM (Document Object Model),
+              but does not include any I/O functionality like networking, storage, or graphics facilities.
+            </p>
+            <p className="mb-4">
+              In recent years, with the advent of Node.js, JavaScript has expanded beyond client-side scripting to 
+              become a full-stack development language, allowing developers to build entire applications using JavaScript 
+              for both front-end and back-end systems. This has led to an explosion in JavaScript frameworks and libraries
+              like React, Angular, and Vue for front-end development, and Express.js for back-end services.
+            </p>
+            <p>
+              However, JavaScript's flexibility and widespread use also make it a common target for security vulnerabilities. 
+              Its client-side execution model, dynamic typing, and extensive ecosystem of third-party dependencies all 
+              contribute to potential security risks that developers must understand and mitigate.
             </p>
           </div>
           

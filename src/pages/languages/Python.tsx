@@ -1,9 +1,9 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CodeExample from '@/components/CodeExample';
 import { Link } from 'react-router-dom';
+import { AlertTriangle, Code, Terminal, AlertCircle } from 'lucide-react';
 
 const Python = () => {
   return (
@@ -16,7 +16,33 @@ const Python = () => {
             <h1 className="text-4xl font-bold mb-6">Python Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              Understanding and preventing security vulnerabilities in Python applications.
+              Security vulnerabilities and best practices for Python applications.
+            </p>
+          </div>
+          
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-4">About Python</h2>
+            <p className="mb-4">
+              Python is a high-level, interpreted programming language known for its readability and simple syntax that
+              emphasizes code readability with the use of significant whitespace. Created by Guido van Rossum and first
+              released in 1991, Python's design philosophy emphasizes code readability with its notable use of significant
+              indentation.
+            </p>
+            <p className="mb-4">
+              As a multi-paradigm language, Python supports object-oriented, imperative, functional programming, and
+              procedural styles. It features a dynamic type system and automatic memory management and has a comprehensive
+              standard library often described as having "batteries included" due to its extensive functionality.
+            </p>
+            <p className="mb-4">
+              Python has become one of the most popular programming languages for data science, machine learning, web development,
+              automation, scientific computing, and DevOps. Its simplicity makes it an excellent language for beginners, while
+              its powerful libraries and frameworks make it suitable for complex enterprise applications.
+            </p>
+            <p>
+              Despite Python's many advantages, it's not immune to security issues. Its dynamic nature and ease of use can 
+              sometimes lead developers to overlook security best practices. Common vulnerabilities include code injection,
+              insecure deserialization, dependency issues, and misconfiguration problems, particularly in web applications
+              built with frameworks like Django or Flask.
             </p>
           </div>
           
