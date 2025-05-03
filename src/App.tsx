@@ -16,6 +16,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import WebPenetrationTesting from "./pages/WebPenetrationTesting";
 import CloudPenetrationTesting from "./pages/CloudPenetrationTesting";
+import MobilePenetrationTesting from "./pages/MobilePenetrationTesting";
 
 // Import language pages
 import JavaScript from "./pages/languages/JavaScript";
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/database-security" element={<DatabaseSecurity />} />
           <Route path="/web-penetration-testing" element={<WebPenetrationTesting />} />
           <Route path="/cloud-penetration-testing" element={<CloudPenetrationTesting />} />
+          <Route path="/mobile-penetration-testing" element={<MobilePenetrationTesting />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/contact" element={<Contact />} />
