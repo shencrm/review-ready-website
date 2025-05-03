@@ -14,25 +14,25 @@ const GolangPage = () => {
       <main className="flex-grow py-12">
         <div className="container mx-auto px-4">
           <div className="mb-12">
-            <h1 className="text-4xl font-bold mb-6">אבטחת Golang</h1>
+            <h1 className="text-4xl font-bold mb-6">Golang Security</h1>
             <div className="h-1 w-24 bg-cybr-primary mb-6"></div>
             <p className="text-xl text-cybr-foreground/80">
-              פגיעויות אבטחה ושיטות עבודה מומלצות ליישומי Go.
+              Security vulnerabilities and best practices for Go applications.
             </p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <section>
-                <h2 className="text-2xl font-bold mb-4">הזרקת פקודות (Command Injection)</h2>
+                <h2 className="text-2xl font-bold mb-4">Command Injection</h2>
                 <p className="mb-4">
-                  למרות ש-Go היא שפה מהודרת, פגיעויות הזרקת פקודות עדיין יכולות להתרחש בעת שימוש לא נכון בחבילת os/exec.
+                  Although Go is a compiled language, command injection vulnerabilities can still occur when improperly using the os/exec package.
                 </p>
                 
                 <CodeExample
                   language="go"
-                  title="פגיעות הזרקת פקודות"
-                  code={`// פגיע: שימוש בקלט משתמש ישירות בפקודה
+                  title="Command Injection Vulnerability"
+                  code={`// Vulnerable: Using user input directly in command
 package main
 
 import (
@@ -44,7 +44,7 @@ import (
 func handlePing(w http.ResponseWriter, r *http.Request) {
 	host := r.URL.Query().Get("host")
 	
-	// פגיע: שימוש ישיר בקלט משתמש במחרוזת פקודה
+	// Vulnerable: Direct use of user input in command string
 	cmd := exec.Command("sh", "-c", "ping -c 1 " + host)
 	output, err := cmd.CombinedOutput()
 	
@@ -56,13 +56,13 @@ func handlePing(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", output)
 }
 
-// תוקף יכול להשתמש ב-: ?host=google.com; rm -rf /`}
+// Attacker can use: ?host=google.com; rm -rf /`}
                 />
                 
                 <CodeExample
                   language="go"
-                  title="הרצת פקודה מאובטחת"
-                  code={`// מאובטח: שימוש נכון ב-exec.Command עם ארגומנטים נפרדים
+                  title="Secure Command Execution"
+                  code={`// Secure: Proper use of exec.Command with separate arguments
 package main
 
 import (
@@ -75,14 +75,14 @@ import (
 func handlePingSafely(w http.ResponseWriter, r *http.Request) {
 	host := r.URL.Query().Get("host")
 	
-	// אימות קלט עם ביטוי רגולרי לשמות מארחים
+	// Input validation with regex for hostnames
 	valid := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\\.[a-zA-Z]{2,})+$")
 	if !valid.MatchString(host) {
-		http.Error(w, "שם מארח לא חוקי", http.StatusBadRequest)
+		http.Error(w, "Invalid hostname", http.StatusBadRequest)
 		return
 	}
 	
-	// מאובטח: העברת ארגומנטים בנפרד - לא מופעלת מעטפת
+	// Secure: Pass arguments separately - no shell is invoked
 	cmd := exec.Command("ping", "-c", "1", host)
 	output, err := cmd.CombinedOutput()
 	
@@ -97,8 +97,8 @@ func handlePingSafely(w http.ResponseWriter, r *http.Request) {
 
                 <CodeExample
                   language="go"
-                  title="פתרון הזרקת פקודות מתקדם יותר"
-                  code={`// פתרון מקיף יותר עם אימות מורחב ורישום
+                  title="Advanced Command Injection Solution"
+                  code={`// More comprehensive solution with extended validation and logging
 package main
 
 import (
@@ -111,7 +111,7 @@ import (
 	"time"
 )
 
-// רשימת פקודות מותרות לביצוע
+// List of allowed commands to execute
 var allowedCommands = map[string]bool{
 	"ping":    true,
 	"nslookup": true,
@@ -119,21 +119,21 @@ var allowedCommands = map[string]bool{
 }
 
 func executeCommand(command string, args ...string) ([]byte, error) {
-	// אימות הפקודה
+	// Validate the command
 	if !allowedCommands[command] {
-		return nil, fmt.Errorf("פקודה לא מורשית: %s", command)
+		return nil, fmt.Errorf("Unauthorized command: %s", command)
 	}
 	
-	// רישום הפקודה שמבוצעת
-	log.Printf("ביצוע פקודה: %s %s", command, strings.Join(args, " "))
+	// Log the executing command
+	log.Printf("Executing command: %s %s", command, strings.Join(args, " "))
 	
-	// הגדרת פסק זמן לפקודה
+	// Set command timeout
 	cmd := exec.Command(command, args...)
 	
-	// יצירת תעלה לפסק זמן
+	// Create a channel for timeout
 	done := make(chan error, 1)
 	
-	// הרץ את הפקודה בגורוטינה נפרדת
+	// Run the command in separate goroutine
 	var output []byte
 	var err error
 	
@@ -142,67 +142,67 @@ func executeCommand(command string, args ...string) ([]byte, error) {
 		done <- err
 	}()
 	
-	// הגדרת פסק זמן של 5 שניות
+	// Set a 5 second timeout
 	select {
 	case <-time.After(5 * time.Second):
 		if cmd.Process != nil {
 			cmd.Process.Kill()
 		}
-		return nil, fmt.Errorf("פסק זמן בביצוע הפקודה")
+		return nil, fmt.Errorf("Command execution timed out")
 	case err := <-done:
 		if err != nil {
-			return nil, fmt.Errorf("שגיאה בביצוע הפקודה: %v", err)
+			return nil, fmt.Errorf("Command execution error: %v", err)
 		}
 		return output, nil
 	}
 }
 
 func safeNetworkToolHandler(w http.ResponseWriter, r *http.Request) {
-	// אימות המשתמש (פשוט לדוגמה)
+	// Validate user (simple example)
 	apiKey := r.Header.Get("X-API-Key")
 	if !isValidAPIKey(apiKey) {
-		http.Error(w, "הרשאה נדחתה", http.StatusUnauthorized)
+		http.Error(w, "Authorization denied", http.StatusUnauthorized)
 		return
 	}
 	
-	// קבלת פרמטרים
+	// Get parameters
 	tool := r.URL.Query().Get("tool")
 	host := r.URL.Query().Get("host")
 	
-	// בדיקת תקפות הכלי
+	// Validate tool
 	if !allowedCommands[tool] {
-		http.Error(w, "כלי לא מורשה", http.StatusBadRequest)
+		http.Error(w, "Unauthorized tool", http.StatusBadRequest)
 		return
 	}
 	
-	// אימות פורמט שם המארח בהתאם לביטויים רגולריים מחמירים
+	// Validate hostname format with strict regex
 	validHost := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\\.[a-zA-Z0-9]{2,})+$")
 	if !validHost.MatchString(host) {
-		http.Error(w, "שם מארח לא חוקי", http.StatusBadRequest)
+		http.Error(w, "Invalid hostname", http.StatusBadRequest)
 		return
 	}
 	
-	// הכנת מפת כלים לארגומנטים
+	// Prepare tool args map
 	toolArgs := map[string][]string{
 		"ping":     {"-c", "4", host},
 		"nslookup": {host},
 		"dig":      {host},
 	}
 	
-	// ביצוע הפקודה באמצעות הפונקציה המאובטחת
+	// Execute command using secure function
 	output, err := executeCommand(tool, toolArgs[tool]...)
 	if err != nil {
-		log.Printf("שגיאה: %v", err)
-		http.Error(w, fmt.Sprintf("שגיאה: %v", err), http.StatusInternalServerError)
+		log.Printf("Error: %v", err)
+		http.Error(w, fmt.Sprintf("Error: %v", err), http.StatusInternalServerError)
 		return
 	}
 	
-	// החזרת הפלט עם כותרת תוכן מתאימה
+	// Return output with appropriate content type
 	w.Header().Set("Content-Type", "text/plain")
 	fmt.Fprintf(w, "%s", output)
 }
 
-// פונקציה לאימות מפתח API
+// Function to validate API key
 func isValidAPIKey(key string) bool {
 	validKeys := map[string]bool{
 		"api_key_123": true,
@@ -212,25 +212,25 @@ func isValidAPIKey(key string) bool {
 }
 
 func main() {
-	// הגדרת הנתיב וההאזנה
+	// Set up path and listening
 	http.HandleFunc("/api/network-tool", safeNetworkToolHandler)
 	
-	log.Println("שרת מאזין בכתובת :8080...")
+	log.Println("Server listening at :8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }`}
                 />
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">הזרקת SQL ב-Go</h2>
+                <h2 className="text-2xl font-bold mb-4">SQL Injection in Go</h2>
                 <p className="mb-4">
-                  הזרקת SQL יכולה להתרחש ביישומי Go כאשר קלט משתמשים מקושר ישירות לשאילתות SQL.
+                  SQL injection can occur in Go applications when user inputs are directly concatenated into SQL queries.
                 </p>
                 
                 <CodeExample
                   language="go"
-                  title="פגיעות הזרקת SQL"
-                  code={`// פגיע: שרשור מחרוזות בשאילתות SQL
+                  title="SQL Injection Vulnerability"
+                  code={`// Vulnerable: String concatenation in SQL queries
 package main
 
 import (
@@ -251,20 +251,20 @@ func getUserDetails(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	
-	// פגיע: שרשור מחרוזת ישיר
+	// Vulnerable: Direct string concatenation
 	query := "SELECT id, name, email FROM users WHERE username = '" + username + "'"
 	rows, err := db.Query(query)
 	
-	// עיבוד התוצאות...
+	// Process results...
 }
 
-// תוקף יכול להשתמש ב-: ?username=admin' OR '1'='1`}
+// Attacker can use: ?username=admin' OR '1'='1`}
                 />
                 
                 <CodeExample
                   language="go"
-                  title="שאילתת SQL מאובטחת"
-                  code={`// מאובטח: שימוש בשאילתות עם פרמטרים
+                  title="Secure SQL Query"
+                  code={`// Secure: Using parameterized queries
 package main
 
 import (
@@ -284,18 +284,18 @@ func getUserDetailsSafely(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	
-	// מאובטח: שימוש בשאילתה עם פרמטרים
+	// Secure: Using parameterized query
 	query := "SELECT id, name, email FROM users WHERE username = ?"
 	rows, err := db.Query(query, username)
 	
-	// עיבוד התוצאות...
+	// Process results...
 }`}
                 />
 
                 <CodeExample
                   language="go"
-                  title="יישום מאובטח יותר של גישה למסד נתונים"
-                  code={`// מאובטח יותר: שימוש ב-prepared statements, חיבורים מוגבלים, ורישום שגיאות
+                  title="More Secure Database Access Implementation"
+                  code={`// More secure: Using prepared statements, connection pooling, and error logging
 package main
 
 import (
@@ -311,7 +311,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-// מודל משתמש
+// User model
 type User struct {
 	ID       int    \`json:"id"\`
 	Username string \`json:"username"\`
@@ -319,85 +319,85 @@ type User struct {
 	Email    string \`json:"email"\`
 }
 
-// מנהל מסד נתונים
+// Database manager
 type DBManager struct {
 	db *sql.DB
 }
 
-// יצירת מנהל מסד נתונים חדש
+// Create new database manager
 func NewDBManager() (*DBManager, error) {
-	// קבל את פרטי ההתחברות מתוך משתני סביבה
+	// Get connection details from environment variables
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbHost := os.Getenv("DB_HOST")
 	dbName := os.Getenv("DB_NAME")
 	
 	if dbUser == "" || dbPassword == "" || dbHost == "" || dbName == "" {
-		return nil, fmt.Errorf("פרטי התחברות חסרים למסד הנתונים")
+		return nil, fmt.Errorf("Missing database connection details")
 	}
 	
-	// בניית מחרוזת DSN
+	// Build DSN string
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true", dbUser, dbPassword, dbHost, dbName)
 	
-	// פתיחת חיבור למסד הנתונים
+	// Open database connection
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
-		return nil, fmt.Errorf("שגיאה בפתיחת חיבור למסד הנתונים: %v", err)
+		return nil, fmt.Errorf("Error opening database connection: %v", err)
 	}
 	
-	// הגדרת מגבלות חיבור
-	db.SetMaxOpenConns(25) // מגביל לאט ספציפי של חיבורים פתוחים
+	// Configure connection limits
+	db.SetMaxOpenConns(25) // Limit to specific number of open connections
 	db.SetMaxIdleConns(25)
 	db.SetConnMaxLifetime(5 * time.Minute)
 	
-	// בדיקת חיבור
+	// Test connection
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	
 	if err := db.PingContext(ctx); err != nil {
 		db.Close()
-		return nil, fmt.Errorf("שגיאה בבדיקת חיבור למסד הנתונים: %v", err)
+		return nil, fmt.Errorf("Error testing database connection: %v", err)
 	}
 	
 	return &DBManager{db: db}, nil
 }
 
-// סגירת חיבורים
+// Close connections
 func (m *DBManager) Close() error {
 	return m.db.Close()
 }
 
-// קבלת משתמש לפי שם משתמש
+// Get user by username
 func (m *DBManager) GetUserByUsername(ctx context.Context, username string) (*User, error) {
-	// יצירת prepared statement (מוכן מראש)
+	// Create prepared statement
 	stmt, err := m.db.PrepareContext(ctx, "SELECT id, username, name, email FROM users WHERE username = ?")
 	if err != nil {
-		return nil, fmt.Errorf("שגיאה בהכנת שאילתה: %v", err)
+		return nil, fmt.Errorf("Error preparing query: %v", err)
 	}
 	defer stmt.Close()
 	
-	// הגדרת משתמש
+	// Define user
 	var user User
 	
-	// ביצוע השאילתה עם הפרמטרים
+	// Execute query with parameters
 	err = stmt.QueryRowContext(ctx, username).Scan(&user.ID, &user.Username, &user.Name, &user.Email)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, nil // אין תוצאות
+			return nil, nil // No results
 		}
-		return nil, fmt.Errorf("שגיאה בביצוע השאילתה: %v", err)
+		return nil, fmt.Errorf("Error executing query: %v", err)
 	}
 	
 	return &user, nil
 }
 
-// קבלת משתמשים על פי פילטרים שונים
+// Get users with various filters
 func (m *DBManager) GetUsers(ctx context.Context, filters map[string]interface{}, limit, offset int) ([]User, error) {
-	// בניית שאילתה בסיסית
+	// Build base query
 	query := "SELECT id, username, name, email FROM users WHERE 1=1"
 	var args []interface{}
 	
-	// הוספת פילטרים אם יש
+	// Add filters if any
 	if nameFilter, ok := filters["name"]; ok && nameFilter != "" {
 		query += " AND name LIKE ?"
 		args = append(args, "%" + nameFilter.(string) + "%")
@@ -408,104 +408,104 @@ func (m *DBManager) GetUsers(ctx context.Context, filters map[string]interface{}
 		args = append(args, emailFilter)
 	}
 	
-	// הוספת מגבלה ודילוג
+	// Add limit and offset
 	query += " LIMIT ? OFFSET ?"
 	args = append(args, limit, offset)
 	
-	// הכנת השאילתה
+	// Prepare query
 	stmt, err := m.db.PrepareContext(ctx, query)
 	if err != nil {
-		return nil, fmt.Errorf("שגיאה בהכנת שאילתה: %v", err)
+		return nil, fmt.Errorf("Error preparing query: %v", err)
 	}
 	defer stmt.Close()
 	
-	// ביצוע השאילתה
+	// Execute query
 	rows, err := stmt.QueryContext(ctx, args...)
 	if err != nil {
-		return nil, fmt.Errorf("שגיאה בביצוע השאילתה: %v", err)
+		return nil, fmt.Errorf("Error executing query: %v", err)
 	}
 	defer rows.Close()
 	
-	// איסוף התוצאות
+	// Collect results
 	var users []User
 	for rows.Next() {
 		var user User
 		if err := rows.Scan(&user.ID, &user.Username, &user.Name, &user.Email); err != nil {
-			return nil, fmt.Errorf("שגיאה בסריקת שורה: %v", err)
+			return nil, fmt.Errorf("Error scanning row: %v", err)
 		}
 		users = append(users, user)
 	}
 	
-	// בדיקת שגיאות בזמן חזרה על השורות
+	// Check for errors during row iteration
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("שגיאה בקריאת שורות: %v", err)
+		return nil, fmt.Errorf("Error reading rows: %v", err)
 	}
 	
 	return users, nil
 }
 
-// טיפול ב-HTTP לקבלת משתמש
+// HTTP handler for getting a user
 func (m *DBManager) HandleGetUser(w http.ResponseWriter, r *http.Request) {
-	// חילוץ שם המשתמש מהפרמטרים
+	// Extract username from parameters
 	username := r.URL.Query().Get("username")
 	if username == "" {
-		http.Error(w, "שם משתמש נדרש", http.StatusBadRequest)
+		http.Error(w, "Username required", http.StatusBadRequest)
 		return
 	}
 	
-	// יצירת הקשר עם פסק זמן
+	// Create context with timeout
 	ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
 	defer cancel()
 	
-	// קבלת משתמש ממסד הנתונים
+	// Get user from database
 	user, err := m.GetUserByUsername(ctx, username)
 	if err != nil {
-		log.Printf("שגיאה בקבלת משתמש: %v", err)
-		http.Error(w, "שגיאה בקבלת הנתונים", http.StatusInternalServerError)
+		log.Printf("Error getting user: %v", err)
+		http.Error(w, "Error retrieving data", http.StatusInternalServerError)
 		return
 	}
 	
 	if user == nil {
-		http.Error(w, "משתמש לא נמצא", http.StatusNotFound)
+		http.Error(w, "User not found", http.StatusNotFound)
 		return
 	}
 	
-	// החזרת המשתמש כ-JSON
+	// Return user as JSON
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(user); err != nil {
-		log.Printf("שגיאה בהמרת המשתמש ל-JSON: %v", err)
-		http.Error(w, "שגיאה בעיבוד התגובה", http.StatusInternalServerError)
+		log.Printf("Error encoding user to JSON: %v", err)
+		http.Error(w, "Error processing response", http.StatusInternalServerError)
 	}
 }
 
 func main() {
-	// יצירת מנהל מסד נתונים
+	// Create database manager
 	dbManager, err := NewDBManager()
 	if err != nil {
-		log.Fatalf("שגיאה באתחול מנהל מסד הנתונים: %v", err)
+		log.Fatalf("Error initializing database manager: %v", err)
 	}
 	defer dbManager.Close()
 	
-	// הגדרת נתיב ה-API
+	// Set up API path
 	http.HandleFunc("/api/user", dbManager.HandleGetUser)
 	
-	// הפעלת השרת
-	log.Println("שרת מאזין בכתובת :8080...")
+	// Start server
+	log.Println("Server listening at :8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }`}
                 />
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">Path Traversal (טיול בנתיבים)</h2>
+                <h2 className="text-2xl font-bold mb-4">Path Traversal</h2>
                 <p className="mb-4">
-                  פגיעויות path traversal מאפשרות לתוקפים לגשת לקבצים מחוץ לתיקיות המיועדות.
+                  Path traversal vulnerabilities allow attackers to access files outside of intended directories.
                 </p>
                 
                 <CodeExample
                   language="go"
-                  title="פגיעות Path Traversal"
-                  code={`// פגיע: טיפול לא בטוח בנתיב קובץ
+                  title="Path Traversal Vulnerability"
+                  code={`// Vulnerable: Unsafe handling of file path
 package main
 
 import (
@@ -517,25 +517,25 @@ import (
 func serveFile(w http.ResponseWriter, r *http.Request) {
 	filename := r.URL.Query().Get("filename")
 	
-	// פגיע: לא מנקה את הנתיב או בודק טיול
+	// Vulnerable: Not sanitizing path or checking for traversal
 	filepath := path.Join("./files/", filename)
 	
 	data, err := ioutil.ReadFile(filepath)
 	if err != nil {
-		http.Error(w, "הקובץ לא נמצא", http.StatusNotFound)
+		http.Error(w, "File not found", http.StatusNotFound)
 		return
 	}
 	
 	w.Write(data)
 }
 
-// תוקף יכול להשתמש ב-: ?filename=../../../etc/passwd`}
+// Attacker can use: ?filename=../../../etc/passwd`}
                 />
                 
                 <CodeExample
                   language="go"
-                  title="גישה מאובטחת לקבצים"
-                  code={`// מאובטח: מניעת path traversal
+                  title="Secure File Access"
+                  code={`// Secure: Preventing path traversal
 package main
 
 import (
@@ -549,27 +549,27 @@ import (
 func serveFileSafely(w http.ResponseWriter, r *http.Request) {
 	filename := r.URL.Query().Get("filename")
 	
-	// מאובטח: סניטציה של שם הקובץ - הסרת לוכסנים ונקודות
+	// Secure: Sanitize filename - strip slashes and dots
 	sanitized := filepath.Base(filename)
 	
-	// מאובטח: בדיקה מפורשת שהקובץ נמצא בתיקייה המותרת
+	// Secure: Explicitly check that file is in allowed directory
 	filepath := path.Join("./files/", sanitized)
 	absPath, err := filepath.Abs(filepath)
 	if err != nil {
-		http.Error(w, "נתיב לא חוקי", http.StatusBadRequest)
+		http.Error(w, "Invalid path", http.StatusBadRequest)
 		return
 	}
 	
-	// מאובטח: וודא שהנתיב נמצא בתוך התיקייה המיועדת
+	// Secure: Ensure path is within intended directory
 	filesDir, err := filepath.Abs("./files")
 	if err != nil || !strings.HasPrefix(absPath, filesDir) {
-		http.Error(w, "הגישה נדחתה", http.StatusForbidden)
+		http.Error(w, "Access denied", http.StatusForbidden)
 		return
 	}
 	
 	data, err := ioutil.ReadFile(filepath)
 	if err != nil {
-		http.Error(w, "הקובץ לא נמצא", http.StatusNotFound)
+		http.Error(w, "File not found", http.StatusNotFound)
 		return
 	}
 	
@@ -579,8 +579,8 @@ func serveFileSafely(w http.ResponseWriter, r *http.Request) {
 
                 <CodeExample
                   language="go"
-                  title="מערכת קבצים מאובטחת מתקדמת"
-                  code={`// טיפול מתקדם בקבצים עם תיקיות וירטואליות וסניטציה
+                  title="Advanced Secure Filesystem"
+                  code={`// Advanced file handling with virtual directories and sanitization
 package main
 
 import (
@@ -596,21 +596,21 @@ import (
 	"time"
 )
 
-// מנהל קבצים עם מיפוי בטוח
+// File manager with secure mapping
 type SafeFileManager struct {
-	// תיקיית הקבצים הפיזית
+	// Physical files directory
 	baseDir string
 	
-	// מיפוי של תיקיות וירטואליות לתיקיות פיזיות
+	// Mapping of virtual directories to physical directories
 	virtualDirs map[string]string
 	
-	// סוגי קבצים מותרים
+	// Allowed file types
 	allowedExtensions map[string]bool
 }
 
-// יצירת מנהל קבצים חדש
+// Create new file manager
 func NewSafeFileManager(baseDir string) *SafeFileManager {
-	// ודא שהתיקייה הבסיסית קיימת
+	// Ensure base directory exists
 	if _, err := os.Stat(baseDir); os.IsNotExist(err) {
 		os.MkdirAll(baseDir, 0755)
 	}
@@ -636,192 +636,192 @@ func NewSafeFileManager(baseDir string) *SafeFileManager {
 	}
 }
 
-// אתחול המנהל ויצירת תיקיות
+// Initialize manager and create directories
 func (sfm *SafeFileManager) Init() error {
-	// יצירת כל התיקיות הווירטואליות אם הן לא קיימות
+	// Create all virtual directories if they don't exist
 	for _, dir := range sfm.virtualDirs {
 		if _, err := os.Stat(dir); os.IsNotExist(err) {
 			if err := os.MkdirAll(dir, 0755); err != nil {
-				return fmt.Errorf("שגיאה ביצירת תיקייה %s: %v", dir, err)
+				return fmt.Errorf("Error creating directory %s: %v", dir, err)
 			}
 		}
 	}
 	return nil
 }
 
-// אימות ומיפוי נתיב וירטואלי לנתיב פיזי בטוח
+// Validate and map virtual path to secure physical path
 func (sfm *SafeFileManager) ResolvePath(virtualPath string) (string, error) {
-	// פירוק הנתיב הוירטואלי
+	// Parse virtual path
 	parts := strings.SplitN(strings.Trim(virtualPath, "/"), "/", 2)
 	if len(parts) == 0 {
-		return "", fmt.Errorf("נתיב ריק")
+		return "", fmt.Errorf("Empty path")
 	}
 	
-	// קבלת התיקייה הוירטואלית
+	// Get virtual directory
 	virtualDir := parts[0]
 	physicalDir, exists := sfm.virtualDirs[virtualDir]
 	if !exists {
-		return "", fmt.Errorf("תיקייה וירטואלית לא מוכרת: %s", virtualDir)
+		return "", fmt.Errorf("Unknown virtual directory: %s", virtualDir)
 	}
 	
-	// טיפול בנתיב ריק
+	// Handle empty path
 	if len(parts) == 1 || parts[1] == "" {
 		return physicalDir, nil
 	}
 	
-	// בדיקת סיומת הקובץ
+	// Check file extension
 	filePath := parts[1]
 	ext := strings.ToLower(filepath.Ext(filePath))
 	if ext != "" && !sfm.allowedExtensions[ext] {
-		return "", fmt.Errorf("סוג קובץ לא מורשה: %s", ext)
+		return "", fmt.Errorf("Unauthorized file type: %s", ext)
 	}
 	
-	// וידוא שאין path traversal
+	// Ensure no path traversal
 	cleanedPath := filepath.Clean(filepath.Join(physicalDir, filepath.Clean(filePath)))
 	if !strings.HasPrefix(cleanedPath, physicalDir) {
-		return "", fmt.Errorf("ניסיון path traversal")
+		return "", fmt.Errorf("Path traversal attempt")
 	}
 	
 	return cleanedPath, nil
 }
 
-// שירות קובץ
+// Serve file
 func (sfm *SafeFileManager) ServeFile(w http.ResponseWriter, r *http.Request) {
-	// קבלת הנתיב מה-URL
+	// Get path from URL
 	requestPath := r.URL.Path
 	
-	// תפיסת מקרה מיוחד עבור נתיב השורש
+	// Handle special case for root path
 	if requestPath == "/" || requestPath == "" {
-		http.Error(w, "נתיב הקובץ נדרש", http.StatusBadRequest)
+		http.Error(w, "File path required", http.StatusBadRequest)
 		return
 	}
 	
-	// הסרת "/files" מתחילת הנתיב אם קיים
+	// Strip "/files" from beginning of path if it exists
 	requestPath = strings.TrimPrefix(requestPath, "/files")
 	requestPath = strings.TrimPrefix(requestPath, "/")
 	
-	// אימות ופתרון הנתיב
+	// Validate and resolve the path
 	physicalPath, err := sfm.ResolvePath(requestPath)
 	if err != nil {
-		log.Printf("שגיאת אימות נתיב: %v", err)
-		http.Error(w, "נתיב לא חוקי", http.StatusBadRequest)
+		log.Printf("Path validation error: %v", err)
+		http.Error(w, "Invalid path", http.StatusBadRequest)
 		return
 	}
 	
-	// בדיקה אם הקובץ קיים
+	// Check if file exists
 	fileInfo, err := os.Stat(physicalPath)
 	if os.IsNotExist(err) {
-		http.Error(w, "הקובץ לא נמצא", http.StatusNotFound)
+		http.Error(w, "File not found", http.StatusNotFound)
 		return
 	} else if err != nil {
-		log.Printf("שגיאת גישה לקובץ: %v", err)
-		http.Error(w, "שגיאת מערכת", http.StatusInternalServerError)
+		log.Printf("File access error: %v", err)
+		http.Error(w, "System error", http.StatusInternalServerError)
 		return
 	}
 	
-	// אם זוהי תיקייה, דחה את הבקשה או הצג רשימה
+	// If it's a directory, deny request or show listing
 	if fileInfo.IsDir() {
-		http.Error(w, "לא ניתן להציג תיקיות", http.StatusForbidden)
+		http.Error(w, "Cannot display directories", http.StatusForbidden)
 		return
 	}
 	
-	// פתיחת הקובץ
+	// Open the file
 	file, err := os.Open(physicalPath)
 	if err != nil {
-		log.Printf("שגיאה בפתיחת הקובץ: %v", err)
-		http.Error(w, "שגיאת גישה לקובץ", http.StatusInternalServerError)
+		log.Printf("Error opening file: %v", err)
+		http.Error(w, "Error accessing file", http.StatusInternalServerError)
 		return
 	}
 	defer file.Close()
 	
-	// זיהוי סוג MIME
+	// Determine MIME type
 	contentType := mime.TypeByExtension(filepath.Ext(physicalPath))
 	if contentType == "" {
 		contentType = "application/octet-stream"
 	}
 	
-	// הגדרת כותרות HTTP
+	// Set HTTP headers
 	w.Header().Set("Content-Type", contentType)
 	w.Header().Set("Content-Disposition", "inline; filename="+filepath.Base(physicalPath))
-	w.Header().Set("Cache-Control", "public, max-age=86400") // שמור במטמון למשך יום
+	w.Header().Set("Cache-Control", "public, max-age=86400") // Cache for one day
 	w.Header().Set("Last-Modified", fileInfo.ModTime().UTC().Format(http.TimeFormat))
 	
-	// שליחת התוכן
+	// Send content
 	http.ServeContent(w, r, filepath.Base(physicalPath), fileInfo.ModTime(), file)
 }
 
-// העלאת קובץ
+// Upload file
 func (sfm *SafeFileManager) HandleUpload(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "רק POST מורשה", http.StatusMethodNotAllowed)
+		http.Error(w, "Only POST allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	
-	// הגבלת גודל הטופס ל-10MB
+	// Limit form size to 10MB
 	r.Body = http.MaxBytesReader(w, r.Body, 10*1024*1024)
 	if err := r.ParseMultipartForm(10 << 20); err != nil {
-		http.Error(w, "הקובץ גדול מדי או פורמט שגוי", http.StatusBadRequest)
+		http.Error(w, "File too large or invalid format", http.StatusBadRequest)
 		return
 	}
 	
-	// קבלת הקובץ מהטופס
+	// Get file from form
 	file, header, err := r.FormFile("file")
 	if err != nil {
-		http.Error(w, "שגיאה בקבלת הקובץ", http.StatusBadRequest)
+		http.Error(w, "Error retrieving file", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 	
-	// אימות סוג הקובץ
+	// Validate file type
 	ext := strings.ToLower(filepath.Ext(header.Filename))
 	if !sfm.allowedExtensions[ext] {
-		http.Error(w, "סוג קובץ לא מורשה", http.StatusForbidden)
+		http.Error(w, "Unauthorized file type", http.StatusForbidden)
 		return
 	}
 	
-	// יצירת שם קובץ בטוח
+	// Create safe filename
 	safeFilename := fmt.Sprintf("%d_%s", time.Now().UnixNano(), sfm.sanitizeFilename(header.Filename))
 	
-	// קבלת תיקיית היעד מהטופס
+	// Get destination directory from form
 	destDir := r.FormValue("directory")
 	physicalDir, exists := sfm.virtualDirs[destDir]
 	if !exists {
-		http.Error(w, "תיקיית יעד לא חוקית", http.StatusBadRequest)
+		http.Error(w, "Invalid destination directory", http.StatusBadRequest)
 		return
 	}
 	
-	// יצירת נתיב קובץ המטרה
+	// Create destination file path
 	destPath := filepath.Join(physicalDir, safeFilename)
 	
-	// יצירת קובץ היעד
+	// Create destination file
 	outFile, err := os.Create(destPath)
 	if err != nil {
-		log.Printf("שגיאה ביצירת קובץ יעד: %v", err)
-		http.Error(w, "שגיאת שרת פנימית", http.StatusInternalServerError)
+		log.Printf("Error creating destination file: %v", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
 	defer outFile.Close()
 	
-	// העתקת התוכן
+	// Copy contents
 	_, err = io.Copy(outFile, file)
 	if err != nil {
-		log.Printf("שגיאה בכתיבת קובץ: %v", err)
-		http.Error(w, "שגיאת שרת פנימית", http.StatusInternalServerError)
+		log.Printf("Error writing file: %v", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
 	
-	// שליחת תשובה מוצלחת
+	// Send successful response
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, \`{"success": true, "filename": "%s", "path": "%s/%s"}\`, 
 		safeFilename, destDir, safeFilename)
 }
 
-// סניטציה של שם קובץ
+// Sanitize filename
 func (sfm *SafeFileManager) sanitizeFilename(filename string) string {
-	// לקיחת רק שם הבסיס
+	// Take only base name
 	filename = filepath.Base(filename)
 	
-	// החלפת תווים מסוכנים
+	// Replace dangerous characters
 	replacer := strings.NewReplacer(
 		" ", "_",
 		"\\", "",
@@ -841,33 +841,33 @@ func (sfm *SafeFileManager) sanitizeFilename(filename string) string {
 }
 
 func main() {
-	// יצירת מנהל הקבצים המאובטח
+	// Create secure file manager
 	fileManager := NewSafeFileManager("./storage")
 	if err := fileManager.Init(); err != nil {
-		log.Fatalf("שגיאה באתחול מנהל הקבצים: %v", err)
+		log.Fatalf("Error initializing file manager: %v", err)
 	}
 	
-	// הגדרת נתיבים
+	// Set up paths
 	http.HandleFunc("/files/", fileManager.ServeFile)
 	http.HandleFunc("/upload", fileManager.HandleUpload)
 	
-	// הפעלת השרת
-	log.Println("שרת מאזין בכתובת :8080...")
+	// Start server
+	log.Println("Server listening at :8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }`}
                 />
               </section>
               
               <section>
-                <h2 className="text-2xl font-bold mb-4">כותרות HTTP מאובטחות ב-Go</h2>
+                <h2 className="text-2xl font-bold mb-4">Secure HTTP Headers in Go</h2>
                 <p className="mb-4">
-                  קביעת תצורה נכונה של כותרות HTTP חשובה להגנה על יישומי אינטרנט ב-Go.
+                  Properly configuring HTTP headers is important for protecting Go web applications.
                 </p>
                 
                 <CodeExample
                   language="go"
-                  title="יישום כותרות אבטחה"
-                  code={`// מאובטח: הוספת כותרות HTTP אבטחה
+                  title="Implementing Security Headers"
+                  code={`// Secure: Adding security HTTP headers
 package main
 
 import (
@@ -876,7 +876,7 @@ import (
 
 func securityMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// הגדרת כותרות אבטחה
+		// Set security headers
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.Header().Set("X-Frame-Options", "DENY")
 		w.Header().Set("X-XSS-Protection", "1; mode=block")
@@ -884,7 +884,7 @@ func securityMiddleware(next http.Handler) http.Handler {
 		w.Header().Set("Referrer-Policy", "no-referrer-when-downgrade")
 		w.Header().Set("Feature-Policy", "camera 'none'; microphone 'none'")
 		
-		// עוגיות HTTPS בלבד
+		// HTTPS-only cookies
 		w.Header().Set("Set-Cookie", "HttpOnly; Secure; SameSite=Strict")
 		
 		next.ServeHTTP(w, r)
@@ -894,18 +894,18 @@ func securityMiddleware(next http.Handler) http.Handler {
 func main() {
 	mux := http.NewServeMux()
 	
-	// רישום נתיבים
+	// Register paths
 	mux.HandleFunc("/", homeHandler)
 	
-	// כריכה עם middleware אבטחה
+	// Wrap with security middleware
 	http.ListenAndServe(":8080", securityMiddleware(mux))
 }`}
                 />
 
                 <CodeExample
                   language="go"
-                  title="יישום מתקדם של middleware אבטחה"
-                  code={`// מימוש מקיף של middleware אבטחה עם אפשרויות מתקדמות
+                  title="Advanced Security Middleware Implementation"
+                  code={`// Comprehensive security middleware implementation with advanced options
 package main
 
 import (
@@ -917,7 +917,7 @@ import (
 	"time"
 )
 
-// אפשרויות לסביבת הפעלה
+// Environment options
 type Environment string
 const (
 	Development Environment = "development"
@@ -925,17 +925,17 @@ const (
 	Testing     Environment = "testing"
 )
 
-// אפשרויות קונפיגורציית האבטחה
+// Security configuration options
 type SecurityOptions struct {
 	Environment Environment
 	
-	// כותרות אבטחה
+	// Security headers
 	EnableCSP            bool
 	EnableXSSProtection  bool
 	EnableFrameOptions   bool
 	EnableHSTS           bool
 	
-	// אפשרויות TLS
+	// TLS options
 	EnableTLS            bool
 	TLSCertFile          string
 	TLSKeyFile           string
@@ -950,13 +950,13 @@ type SecurityOptions struct {
 	AllowedMethods       []string
 	AllowedHeaders       []string
 	
-	// עוגיות
+	// Cookies
 	CookiePrefix         string
 	CookieDomain         string
 	CookiePath           string
 }
 
-// ערכי ברירת מחדל לאבטחה
+// Default security values
 func DefaultSecurityOptions() SecurityOptions {
 	return SecurityOptions{
 		Environment:        Production,
@@ -973,15 +973,15 @@ func DefaultSecurityOptions() SecurityOptions {
 	}
 }
 
-// מנהל האבטחה
+// Security manager
 type SecurityManager struct {
 	options SecurityOptions
 	rateLimiter *RateLimiter
 }
 
-// יצירת מנהל אבטחה
+// Create security manager
 func NewSecurityManager(options SecurityOptions) *SecurityManager {
-	// אתחול rate limiter אם הוא מופעל
+	// Initialize rate limiter if enabled
 	var limiter *RateLimiter
 	if options.EnableRateLimit {
 		limiter = NewRateLimiter(options.RequestsPerMinute)
@@ -993,7 +993,7 @@ func NewSecurityManager(options SecurityOptions) *SecurityManager {
 	}
 }
 
-// פונקציית middleware לאבטחה
+// Security middleware function
 func (sm *SecurityManager) SecurityMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Rate Limiting
@@ -1001,12 +1001,12 @@ func (sm *SecurityManager) SecurityMiddleware(next http.Handler) http.Handler {
 			clientIP := r.RemoteAddr
 			if !sm.rateLimiter.AllowRequest(clientIP) {
 				w.Header().Set("Retry-After", "60")
-				http.Error(w, "יותר מדי בקשות, נסה שוב מאוחר יותר", http.StatusTooManyRequests)
+				http.Error(w, "Too many requests, try again later", http.StatusTooManyRequests)
 				return
 			}
 		}
 		
-		// הגדרת כותרות אבטחה
+		// Set security headers
 		sm.setSecurityHeaders(w, r)
 		
 		// CORS
@@ -1020,7 +1020,7 @@ func (sm *SecurityManager) SecurityMiddleware(next http.Handler) http.Handler {
 					strings.Join(sm.options.AllowedHeaders, ", "))
 				w.Header().Set("Access-Control-Max-Age", "86400")
 				
-				// טיפול בבקשות preflight
+				// Handle preflight requests
 				if r.Method == http.MethodOptions {
 					w.WriteHeader(http.StatusOK)
 					return
@@ -1028,27 +1028,27 @@ func (sm *SecurityManager) SecurityMiddleware(next http.Handler) http.Handler {
 			}
 		}
 		
-		// תוסף מידע אבטחה להקשר
+		// Add security info to context
 		ctx := context.WithValue(r.Context(), "security", map[string]interface{}{
 			"environment": sm.options.Environment,
 			"secure": r.TLS != nil || r.Header.Get("X-Forwarded-Proto") == "https",
 		})
 		
-		// המשך לטיפול הבא
+		// Continue to next handler
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
-// הגדרת כותרות אבטחה
+// Set security headers
 func (sm *SecurityManager) setSecurityHeaders(w http.ResponseWriter, r *http.Request) {
-	// כותרות אבטחה בסיסיות
+	// Basic security headers
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 	
 	// Content-Security-Policy
 	if sm.options.EnableCSP {
 		cspValue := "default-src 'self'; "
 		
-		// אפשרויות CSP נוספות לפי סביבה
+		// Additional CSP options based on environment
 		if sm.options.Environment == Development {
 			cspValue += "script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
 		} else {
@@ -1069,29 +1069,29 @@ func (sm *SecurityManager) setSecurityHeaders(w http.ResponseWriter, r *http.Req
 		w.Header().Set("X-XSS-Protection", "1; mode=block")
 	}
 	
-	// HSTS - רק לחיבורי HTTPS
+	// HSTS - only for HTTPS connections
 	isSecure := r.TLS != nil || r.Header.Get("X-Forwarded-Proto") == "https"
 	if sm.options.EnableHSTS && isSecure && sm.options.Environment == Production {
 		w.Header().Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
 	}
 	
-	// כותרות נוספות
+	// Additional headers
 	w.Header().Set("Referrer-Policy", "no-referrer-when-downgrade")
 	w.Header().Set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()")
 }
 
-// בדיקת האם המקור מורשה
+// Check if origin is allowed
 func (sm *SecurityManager) isOriginAllowed(origin string) bool {
 	if origin == "" {
 		return false
 	}
 	
-	// אם אין רשימת מקורות מורשים, אל תאפשר CORS
+	// If no allowed origins list, don't allow CORS
 	if len(sm.options.AllowedOrigins) == 0 {
 		return false
 	}
 	
-	// בדוק אם יש * בתוך רשימת המקורות (הרשאה לכולם)
+	// Check if there's a * in the origins list (allow all)
 	for _, allowed := range sm.options.AllowedOrigins {
 		if allowed == "*" {
 			return true
@@ -1104,11 +1104,11 @@ func (sm *SecurityManager) isOriginAllowed(origin string) bool {
 	return false
 }
 
-// הגדרת עוגייה מאובטחת
+// Set secure cookie
 func (sm *SecurityManager) SetSecureCookie(w http.ResponseWriter, name, value string, maxAge int) {
 	isSecure := sm.options.Environment == Production
 	
-	// הוסף קידומת אבטחה אם צריך
+	// Add security prefix if needed
 	if isSecure && sm.options.CookiePrefix != "" {
 		name = sm.options.CookiePrefix + name
 	}
@@ -1127,7 +1127,7 @@ func (sm *SecurityManager) SetSecureCookie(w http.ResponseWriter, name, value st
 	http.SetCookie(w, &cookie)
 }
 
-// מנגנון הגבלת קצב בקשות
+// Request rate limiting mechanism
 type RateLimiter struct {
 	requestsPerMinute int
 	clients           map[string]*ClientBucket
@@ -1135,13 +1135,13 @@ type RateLimiter struct {
 	lastCleanup       time.Time
 }
 
-// דלי בקשות לקליינט
+// Client request bucket
 type ClientBucket struct {
 	tokens    int
 	lastRefill time.Time
 }
 
-// יצירת rate limiter חדש
+// Create new rate limiter
 func NewRateLimiter(requestsPerMinute int) *RateLimiter {
 	return &RateLimiter{
 		requestsPerMinute: requestsPerMinute,
@@ -1151,12 +1151,12 @@ func NewRateLimiter(requestsPerMinute int) *RateLimiter {
 	}
 }
 
-// בדיקה האם לאפשר בקשה
+// Check if request is allowed
 func (rl *RateLimiter) AllowRequest(clientIP string) bool {
-	// ניקוי תקופתי של לקוחות ישנים
+	// Periodic cleanup of old clients
 	rl.performCleanupIfNeeded()
 	
-	// קבלת דלי הלקוח או יצירת חדש
+	// Get client bucket or create new one
 	bucket, exists := rl.clients[clientIP]
 	if !exists {
 		bucket = &ClientBucket{
@@ -1166,18 +1166,18 @@ func (rl *RateLimiter) AllowRequest(clientIP string) bool {
 		rl.clients[clientIP] = bucket
 	}
 	
-	// חישוב זמן עדכון הטוקנים האחרון
+	// Calculate time since last token refresh
 	now := time.Now()
 	timePassed := now.Sub(bucket.lastRefill)
 	
-	// מילוי מחדש של הטוקנים לפי הזמן שעבר
+	// Refill tokens based on time passed
 	tokensToAdd := int(timePassed.Minutes() * float64(rl.requestsPerMinute))
 	if tokensToAdd > 0 {
 		bucket.tokens = min(bucket.tokens+tokensToAdd, rl.requestsPerMinute)
 		bucket.lastRefill = now
 	}
 	
-	// בדוק אם יש מספיק טוקנים
+	// Check if enough tokens
 	if bucket.tokens > 0 {
 		bucket.tokens--
 		return true
@@ -1186,7 +1186,7 @@ func (rl *RateLimiter) AllowRequest(clientIP string) bool {
 	return false
 }
 
-// פונקציית מינימום
+// Min function
 func min(a, b int) int {
 	if a < b {
 		return a
@@ -1194,12 +1194,12 @@ func min(a, b int) int {
 	return b
 }
 
-// ניקוי לקוחות ישנים
+// Clean up old clients
 func (rl *RateLimiter) performCleanupIfNeeded() {
 	now := time.Now()
 	if now.Sub(rl.lastCleanup) > rl.cleanupInterval {
 		for ip, bucket := range rl.clients {
-			// הסר לקוחות שלא היו פעילים למשך יותר מ-30 דקות
+			// Remove clients inactive for more than 30 minutes
 			if now.Sub(bucket.lastRefill) > 30*time.Minute {
 				delete(rl.clients, ip)
 			}
@@ -1208,37 +1208,37 @@ func (rl *RateLimiter) performCleanupIfNeeded() {
 	}
 }
 
-// דוגמה לתוכנית עם אבטחה
+// Example program with security
 func main() {
-	// יצירת אפשרויות אבטחה
+	// Create security options
 	options := DefaultSecurityOptions()
 	options.AllowedOrigins = []string{"https://example.com", "https://api.example.com"}
 	options.AllowedMethods = []string{"GET", "POST", "PUT", "DELETE"}
 	options.AllowedHeaders = []string{"Content-Type", "Authorization"}
 	options.CookieDomain = "example.com"
 	
-	// תצורת TLS מאובטחת
+	// TLS secure configuration
 	options.EnableTLS = true
 	options.TLSCertFile = "cert.pem"
 	options.TLSKeyFile = "key.pem"
 	
-	// יצירת מנהל אבטחה
+	// Create security manager
 	securityManager := NewSecurityManager(options)
 	
-	// יצירת נתב HTTP
+	// Create HTTP router
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		// דוגמה לשימוש בעוגייה מאובטחת
+		// Example of using secure cookie
 		securityManager.SetSecureCookie(w, "session", "abc123", 3600)
-		w.Write([]byte("שלום עולם מאובטח!"))
+		w.Write([]byte("Hello secure world!"))
 	})
 	
-	// החלת middleware האבטחה
+	// Apply security middleware
 	secureHandler := securityManager.SecurityMiddleware(mux)
 	
-	// אתחול שרת ב-TLS אם מופעל
+	// Start server with TLS if enabled
 	if options.EnableTLS {
-		// תצורת TLS מאובטחת
+		// Secure TLS configuration
 		tlsConfig := &tls.Config{
 			MinVersion:               tls.VersionTLS12,
 			CurvePreferences:         []tls.CurveID{tls.CurveP521, tls.CurveP384, tls.CurveP256},
@@ -1251,7 +1251,7 @@ func main() {
 			},
 		}
 		
-		// הגדרת שרת HTTP
+		// Configure HTTP server
 		server := &http.Server{
 			Addr:         ":8443",
 			Handler:      secureHandler,
@@ -1261,11 +1261,11 @@ func main() {
 			IdleTimeout:  120 * time.Second,
 		}
 		
-		log.Println("שרת מאובטח פועל בכתובת https://localhost:8443")
+		log.Println("Secure server running at https://localhost:8443")
 		log.Fatal(server.ListenAndServeTLS(options.TLSCertFile, options.TLSKeyFile))
 		
 	} else {
-		// אירוח רגיל
+		// Regular hosting
 		server := &http.Server{
 			Addr:         ":8080",
 			Handler:      secureHandler,
@@ -1274,7 +1274,7 @@ func main() {
 			IdleTimeout:  120 * time.Second,
 		}
 		
-		log.Println("שרת פועל בכתובת http://localhost:8080")
+		log.Println("Server running at http://localhost:8080")
 		log.Fatal(server.ListenAndServe())
 	}
 }`}
@@ -1285,55 +1285,55 @@ func main() {
             <div className="lg:col-span-1">
               <div className="sticky top-24">
                 <div className="card">
-                  <h3 className="text-xl font-bold mb-4">בעיות אבטחה נפוצות ב-Golang</h3>
+                  <h3 className="text-xl font-bold mb-4">Common Security Issues in Golang</h3>
                   <ul className="space-y-2 pl-4 text-cybr-foreground/80">
-                    <li>הזרקת פקודות (Command Injection)</li>
-                    <li>הזרקת SQL</li>
+                    <li>Command Injection</li>
+                    <li>SQL Injection</li>
                     <li>Path Traversal</li>
-                    <li>דסריאליזציה לא מאובטחת</li>
-                    <li>מצבי מירוץ (Race Conditions)</li>
-                    <li>בעיות גישה מקבילית</li>
-                    <li>תצורת TLS לא נכונה</li>
-                    <li>שגיאות זליגת מידע</li>
-                    <li>טיפול לא נאות בקבצי רגישים</li>
-                    <li>ערבוב זיכרון משותף</li>
-                    <li>זליגת מידע בשגיאות</li>
-                    <li>חוסר אקראיות מספקת</li>
-                    <li>אימות לא מספק של קלט משתמש</li>
+                    <li>Insecure Deserialization</li>
+                    <li>Race Conditions</li>
+                    <li>Concurrency Access Issues</li>
+                    <li>Improper TLS Configuration</li>
+                    <li>Information Leakage Errors</li>
+                    <li>Improper Handling of Sensitive Files</li>
+                    <li>Shared Memory Contamination</li>
+                    <li>Information Leakage in Errors</li>
+                    <li>Insufficient Randomness</li>
+                    <li>Inadequate User Input Validation</li>
                   </ul>
                 </div>
                 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">כלי אבטחה ל-Golang</h3>
+                  <h3 className="text-xl font-bold mb-4">Golang Security Tools</h3>
                   <ul className="space-y-3 text-cybr-foreground/80">
                     <li><a href="https://github.com/securego/gosec" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">gosec</a></li>
                     <li><a href="https://github.com/golang/lint" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">golint</a></li>
                     <li><a href="https://github.com/dominikh/go-tools" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">staticcheck</a></li>
-                    <li><a href="https://github.com/sonatype-nexus-community/nancy" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">nancy (בודק תלויות)</a></li>
+                    <li><a href="https://github.com/sonatype-nexus-community/nancy" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">nancy (dependency checker)</a></li>
                     <li><a href="https://github.com/golang/vuln" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">govulncheck</a></li>
                     <li><a href="https://github.com/quasilyte/go-ruleguard" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">ruleguard</a></li>
                   </ul>
                 </div>
                 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">משאבי אבטחה ב-Go</h3>
+                  <h3 className="text-xl font-bold mb-4">Go Security Resources</h3>
                   <ul className="space-y-3 text-cybr-foreground/80">
-                    <li><a href="https://blog.golang.org/go-security-release-process" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">תהליך שחרור אבטחה של Go</a></li>
-                    <li><a href="https://golang.org/doc/security" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">מדיניות האבטחה של Go</a></li>
+                    <li><a href="https://blog.golang.org/go-security-release-process" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">Go Security Release Process</a></li>
+                    <li><a href="https://golang.org/doc/security" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">Go Security Policy</a></li>
                     <li><a href="https://github.com/OWASP/Go-SCP" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">OWASP Go Secure Coding Practices</a></li>
-                    <li><a href="https://golang.org/pkg/crypto/" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">חבילת הקריפטוגרפיה של Go</a></li>
-                    <li><a href="https://pkg.go.dev/golang.org/x/crypto" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">הרחבות הקריפטוגרפיה של Go</a></li>
+                    <li><a href="https://golang.org/pkg/crypto/" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">Go Cryptography Package</a></li>
+                    <li><a href="https://pkg.go.dev/golang.org/x/crypto" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">Go Cryptography Extensions</a></li>
                   </ul>
                 </div>
 
                 <div className="card mt-6">
-                  <h3 className="text-xl font-bold mb-4">ספריות אבטחה מומלצות</h3>
+                  <h3 className="text-xl font-bold mb-4">Recommended Security Libraries</h3>
                   <ul className="space-y-3 text-cybr-foreground/80">
                     <li><a href="https://github.com/unrolled/secure" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">unrolled/secure</a></li>
                     <li><a href="https://github.com/gorilla/csrf" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">gorilla/csrf</a></li>
                     <li><a href="https://github.com/justinas/nosurf" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">justinas/nosurf</a></li>
                     <li><a href="https://github.com/golang-jwt/jwt" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">golang-jwt/jwt</a></li>
-                    <li><a href="https://github.com/microcosm-cc/bluemonday" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">bluemonday (סינון HTML)</a></li>
+                    <li><a href="https://github.com/microcosm-cc/bluemonday" target="_blank" rel="noreferrer" className="text-cybr-primary hover:underline">bluemonday (HTML sanitizer)</a></li>
                   </ul>
                 </div>
               </div>
