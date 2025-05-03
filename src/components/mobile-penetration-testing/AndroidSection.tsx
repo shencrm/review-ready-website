@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Android, Shield, Bug, Terminal } from 'lucide-react';
+import { Smartphone, Shield, Bug, Terminal } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
 
 const AndroidSection: React.FC = () => {
@@ -8,7 +7,7 @@ const AndroidSection: React.FC = () => {
     <section className="space-y-12">
       <div className="mb-8">
         <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
-          <Android className="text-cybr-primary" />
+          <Smartphone className="text-cybr-primary" />
           Android Penetration Testing
         </h2>
         <p className="mb-4">

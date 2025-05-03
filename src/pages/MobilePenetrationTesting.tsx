@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Smartphone, Shield, Android, Bug, Code, Terminal, Lock } from 'lucide-react';
+import { Smartphone, Shield, Bug, Code, Terminal, Lock } from 'lucide-react';
 import AndroidSection from '@/components/mobile-penetration-testing/AndroidSection';
 import IOSSection from '@/components/mobile-penetration-testing/IOSSection';
 import MobileMethodologySection from '@/components/mobile-penetration-testing/MethodologySection';
@@ -16,7 +16,7 @@ const MobilePenetrationTesting: React.FC = () => {
   const sections = [
     { id: 'common-attacks', title: 'Common Attacks', icon: <Bug className="h-6 w-6" /> },
     { id: 'methodology', title: 'Methodology', icon: <Shield className="h-6 w-6" /> },
-    { id: 'android', title: 'Android', icon: <Android className="h-6 w-6" /> },
+    { id: 'android', title: 'Android', icon: <Smartphone className="h-6 w-6" /> },
     { id: 'ios', title: 'iOS', icon: <Smartphone className="h-6 w-6" /> },
     { id: 'tools', title: 'Tools', icon: <Terminal className="h-6 w-6" /> },
   ];
