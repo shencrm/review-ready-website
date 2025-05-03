@@ -1,7 +1,7 @@
 
 import React from 'react';
 import SecurityCard from '@/components/SecurityCard';
-import { Cloud, Shield, Bug, Database, Server, Key, Lock } from 'lucide-react';
+import { Cloud, Shield, Bug, Database, Server, Key, Lock, Code } from 'lucide-react';
 
 const CommonAttacksSection: React.FC = () => {
   return (

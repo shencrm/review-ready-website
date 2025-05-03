@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Tab, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { terminal, cloud, lock, server } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Terminal, Cloud, Lock, Server } from 'lucide-react';
 
 const ToolsSection: React.FC = () => {
   return (
@@ -31,7 +31,7 @@ const ToolsSection: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-cybr-muted/20 rounded-lg p-6">
                   <h4 className="text-xl font-bold flex items-center mb-3">
-                    <terminal className="mr-2 h-5 w-5" />
+                    <Terminal className="mr-2 h-5 w-5" />
                     ScoutSuite
                   </h4>
                   <p className="text-sm mb-3">
@@ -50,7 +50,7 @@ const ToolsSection: React.FC = () => {
                 
                 <div className="bg-cybr-muted/20 rounded-lg p-6">
                   <h4 className="text-xl font-bold flex items-center mb-3">
-                    <terminal className="mr-2 h-5 w-5" />
+                    <Terminal className="mr-2 h-5 w-5" />
                     Prowler
                   </h4>
                   <p className="text-sm mb-3">
@@ -68,7 +68,7 @@ const ToolsSection: React.FC = () => {
                 
                 <div className="bg-cybr-muted/20 rounded-lg p-6">
                   <h4 className="text-xl font-bold flex items-center mb-3">
-                    <terminal className="mr-2 h-5 w-5" />
+                    <Terminal className="mr-2 h-5 w-5" />
                     cs-suite
                   </h4>
                   <p className="text-sm mb-3">
@@ -86,7 +86,7 @@ const ToolsSection: React.FC = () => {
                 
                 <div className="bg-cybr-muted/20 rounded-lg p-6">
                   <h4 className="text-xl font-bold flex items-center mb-3">
-                    <terminal className="mr-2 h-5 w-5" />
+                    <Terminal className="mr-2 h-5 w-5" />
                     Nuclei
                   </h4>
                   <p className="text-sm mb-3">

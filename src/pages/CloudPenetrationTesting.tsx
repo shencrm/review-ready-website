@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { cloud, shield, aws, azure, gcp, database, bug, code, terminal, server } from 'lucide-react';
+import { Cloud, Shield, Database, Bug, Code, Terminal, Server } from 'lucide-react';
 import AWSSection from '@/components/cloud-penetration-testing/AWSSection';
 import AzureSection from '@/components/cloud-penetration-testing/AzureSection';
 import GCPSection from '@/components/cloud-penetration-testing/GCPSection';
@@ -15,12 +15,12 @@ const CloudPenetrationTesting: React.FC = () => {
   const [activeTab, setActiveTab] = useState('common-attacks');
 
   const sections = [
-    { id: 'common-attacks', title: 'Common Attacks', icon: <bug className="h-6 w-6" /> },
-    { id: 'methodology', title: 'Methodology', icon: <shield className="h-6 w-6" /> },
-    { id: 'aws', title: 'AWS', icon: <aws className="h-6 w-6" /> },
-    { id: 'azure', title: 'Azure', icon: <azure className="h-6 w-6" /> },
-    { id: 'gcp', title: 'GCP', icon: <gcp className="h-6 w-6" /> },
-    { id: 'tools', title: 'Tools', icon: <terminal className="h-6 w-6" /> },
+    { id: 'common-attacks', title: 'Common Attacks', icon: <Bug className="h-6 w-6" /> },
+    { id: 'methodology', title: 'Methodology', icon: <Shield className="h-6 w-6" /> },
+    { id: 'aws', title: 'AWS', icon: <Cloud className="h-6 w-6" /> },
+    { id: 'azure', title: 'Azure', icon: <Server className="h-6 w-6" /> },
+    { id: 'gcp', title: 'GCP', icon: <Database className="h-6 w-6" /> },
+    { id: 'tools', title: 'Tools', icon: <Terminal className="h-6 w-6" /> },
   ];
 
   return (
