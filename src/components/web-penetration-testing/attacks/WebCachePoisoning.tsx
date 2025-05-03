@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Bug } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
@@ -9,7 +10,8 @@ const WebCachePoisoning: React.FC = () => {
       <p className="mb-6">
         Web cache poisoning is an attack where an attacker manipulates a web cache to serve malicious content to users.
         This occurs when the application includes unvalidated input from request headers or parameters in the response,
-        which is then cached and served to other users.
+        which is then cached and served to other users. Unlike most attacks that target a specific user, cache poisoning
+        attacks can affect all users who access the cached resource.
       </p>
       
       <h4 className="text-xl font-semibold mt-6 mb-3">How Cache Poisoning Works</h4>
@@ -20,6 +22,14 @@ const WebCachePoisoning: React.FC = () => {
         <li><strong>Cache Probing</strong>: Identifying how the cache works, which headers are used in the cache key, and which are reflected in responses but not used in the key</li>
         <li><strong>Poisoning</strong>: Sending a request with malicious data in non-keyed inputs that get reflected in the response and cached</li>
       </ol>
+      
+      <h4 className="text-xl font-semibold mt-6 mb-3">Key Concepts in Cache Poisoning</h4>
+      <ul className="list-disc pl-6 space-y-2 mb-4">
+        <li><strong>Cache Keys</strong>: Parameters used to identify cached responses (typically URL, host, query parameters)</li>
+        <li><strong>Unkeyed Inputs</strong>: Headers or parameters that affect the response but aren't part of the cache key</li>
+        <li><strong>Cache Variations</strong>: Different versions of a cached resource based on certain request attributes</li>
+        <li><strong>Cache Lifetime</strong>: How long a poisoned response remains in the cache (impact duration)</li>
+      </ul>
       
       <CodeExample 
         language="http" 
@@ -34,7 +44,29 @@ X-Forwarded-Host: attacker.com
 # Response might include:
 <script src="//attacker.com/malicious.js"></script>
 
-# This response gets cached and served to all users`} 
+# This response gets cached and served to all users
+
+# Another example - using Vary header to detect unkeyed inputs
+GET /api/data HTTP/1.1
+Host: example.com
+X-Custom-Header: test
+
+# If the response contains a Vary header that doesn't include X-Custom-Header,
+# but the header influences the response content, it might be vulnerable
+
+# Example of cache poisoning via HTTP request smuggling
+POST / HTTP/1.1
+Host: example.com
+Content-Length: 128
+Transfer-Encoding: chunked
+
+0
+
+GET /api/user HTTP/1.1
+X-Forwarded-Host: evil.com
+Content-Length: 5
+
+x=1`} 
       />
       
       <CodeExample 
@@ -94,8 +126,36 @@ app.use((req, res, next) => {
     "default-src 'self'; script-src 'self' https://trusted-scripts.example.com;"
   );
   next();
+});
+
+// 6. Regularly audit and purge caches
+function auditAndPurgeCache() {
+  // Code to periodically purge cache or when suspicious activity is detected
+  cdn.purgeCache('/vulnerable-path/*');
+}
+
+// 7. Properly set Vary headers for headers that affect response
+app.get('/api/localized-content', (req, res) => {
+  // Tell cache to vary responses based on these headers
+  res.setHeader('Vary', 'Accept-Language, Accept-Encoding');
+  
+  // Generate content based on these headers
+  const language = req.headers['accept-language'] || 'en';
+  const content = getLocalizedContent(language);
+  
+  res.json(content);
 });`} 
       />
+      
+      <h4 className="text-xl font-semibold mt-6 mb-3">Testing for Cache Poisoning</h4>
+      <ul className="list-disc pl-6 space-y-2">
+        <li><strong>Identify Caching Behavior:</strong> Check for cache headers like <code>Cache-Control</code> and <code>Vary</code></li>
+        <li><strong>Probe for Unkeyed Inputs:</strong> Test different headers to see what affects responses</li>
+        <li><strong>Check Cache Keys:</strong> Determine which parameters are used as cache keys</li>
+        <li><strong>Test Reflection of Headers:</strong> Look for request headers reflected in responses</li>
+        <li><strong>Investigate Cache-Buster Parameters:</strong> Identify parameters that create fresh cache entries</li>
+        <li><strong>Test for HTTP Request Smuggling:</strong> Cache poisoning can be combined with request smuggling</li>
+      </ul>
     </section>
   );
 };

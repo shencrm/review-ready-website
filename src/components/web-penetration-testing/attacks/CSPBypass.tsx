@@ -10,16 +10,19 @@ const CSPBypass: React.FC = () => {
       <p className="mb-6">
         Content Security Policy (CSP) is a security feature that helps prevent cross-site scripting (XSS) and other code
         injection attacks. CSP bypass techniques exploit weaknesses in CSP configurations to execute malicious code
-        despite the protections in place.
+        despite the protections in place. Understanding these bypasses is crucial for implementing effective security controls.
       </p>
       
       <h4 className="text-xl font-semibold mt-6 mb-3">Common CSP Bypass Techniques</h4>
       <ul className="list-disc pl-6 space-y-2 mb-4">
-        <li><strong>Unsafe Inline</strong>: Using 'unsafe-inline' directive that defeats the purpose of CSP</li>
-        <li><strong>JSONP Endpoints</strong>: Exploiting allowlisted domains with JSONP endpoints</li>
-        <li><strong>Angular ng-src Bypass</strong>: Exploiting AngularJS template injection with ng-src</li>
-        <li><strong>DOM-based Bypasses</strong>: Using DOM manipulation techniques to bypass CSP</li>
-        <li><strong>Iframe Sandbox Bypass</strong>: Exploiting sandbox attribute permissions</li>
+        <li><strong>Unsafe Inline</strong>: Using 'unsafe-inline' directive that defeats the purpose of CSP by allowing inline scripts</li>
+        <li><strong>JSONP Endpoints</strong>: Exploiting allowlisted domains with JSONP endpoints that allow arbitrary callback execution</li>
+        <li><strong>Angular ng-src Bypass</strong>: Exploiting AngularJS template injection with ng-src in applications using Angular</li>
+        <li><strong>DOM-based Bypasses</strong>: Using DOM manipulation techniques to bypass CSP through methods like innerHTML</li>
+        <li><strong>Iframe Sandbox Bypass</strong>: Exploiting sandbox attribute permissions to execute scripts</li>
+        <li><strong>Base-URI Exploitation</strong>: Using an unprotected base-uri directive to change the base URL for relative script paths</li>
+        <li><strong>Data URIs</strong>: Utilizing data: URIs when allowed as a source in CSP directives</li>
+        <li><strong>Nonce/Hash Leakage</strong>: Exploiting leaked nonce values to execute scripts that would otherwise be blocked</li>
       </ul>
       
       <CodeExample 
@@ -47,7 +50,24 @@ app.use((req, res, next) => {
 // Another vulnerability: JSONP endpoint on trusted domain
 // If trusted-cdn.com hosts a JSONP endpoint:
 // https://trusted-cdn.com/jsonp?callback=alert(document.cookie)
-// This would be allowed by the CSP`} 
+// This would be allowed by the CSP
+
+// Vulnerable CSP allowing data URIs
+res.setHeader(
+  'Content-Security-Policy',
+  "default-src 'self'; img-src 'self' data:; script-src 'self';"
+);
+
+// Attacker can inject: <img src="data:text/html,<script>alert(1)</script>">
+
+// Missing base-uri directive
+res.setHeader(
+  'Content-Security-Policy',
+  "default-src 'self'; script-src 'self'"
+);
+
+// Attacker can inject: <base href="https://evil.com">
+// This changes the base for all relative URLs`} 
       />
       
       <CodeExample 
@@ -108,8 +128,46 @@ app.use((req, res, next) => {
 // Regularly check CSP with security testing tools
 // - Use CSP evaluator: https://csp-evaluator.withgoogle.com/
 // - Implement Content-Security-Policy-Report-Only for testing
-// - Configure report-uri for CSP violation reporting`} 
+// - Configure report-uri for CSP violation reporting
+
+// Best practices for protecting against specific bypasses
+app.use((req, res, next) => {
+  // 1. Avoid wildcards in source directives
+  // 2. Avoid 'unsafe-inline' and 'unsafe-eval'
+  // 3. Whitelist specific domains instead of using wildcards
+  // 4. Use nonces or hashes instead of 'unsafe-inline'
+  // 5. Set strict base-uri directive
+  // 6. Disable dangerous features with restrictive directives
+  // 7. Use CSP Level 3 features like 'strict-dynamic' for compatible browsers
+  res.setHeader(
+    'Content-Security-Policy',
+    \`
+      default-src 'none';
+      script-src 'strict-dynamic' 'nonce-\${res.locals.cspNonce}' https://specific-cdn.com;
+      style-src 'self';
+      img-src 'self';
+      connect-src 'self';
+      base-uri 'self';
+      form-action 'self';
+      frame-ancestors 'none';
+      object-src 'none';
+      require-trusted-types-for 'script';
+    \`.replace(/\\s+/g, ' ').trim()
+  );
+  next();
+});`} 
       />
+      
+      <h4 className="text-xl font-semibold mt-6 mb-3">Testing for CSP Bypasses</h4>
+      <ul className="list-disc pl-6 space-y-2">
+        <li>Analyze the current CSP configuration using tools like CSP Evaluator</li>
+        <li>Check for dangerous directives like 'unsafe-inline', 'unsafe-eval', or overly permissive wildcards</li>
+        <li>Review all allowlisted domains for JSONP endpoints or other scriptable features</li>
+        <li>Test for DOM-based XSS even when CSP is present</li>
+        <li>Investigate browser-specific CSP implementations and bypasses</li>
+        <li>Look for missing directives (e.g., base-uri, object-src, frame-ancestors)</li>
+        <li>Test nonce and hash implementations for proper randomization and usage</li>
+      </ul>
     </section>
   );
 };
