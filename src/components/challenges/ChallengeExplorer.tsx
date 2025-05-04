@@ -50,6 +50,7 @@ const ChallengeExplorer: React.FC = () => {
   
   // Calculate counts
   const completedCount = Object.values(progress).filter(p => p.completed).length;
+  const correctCount = Object.values(progress).filter(p => p.completed && p.correct).length;
   const failedCount = Object.values(progress).filter(p => p.completed && !p.correct).length;
   
   if (currentChallenge) {
