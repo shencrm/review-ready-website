@@ -1249,27 +1249,27 @@ gsutil kms buckets
 gcloud secrets list
 
 # Access secret values
-for secret in $(gcloud secrets list --format="value(name)"); do
-  echo "Extracting secret: $secret"
-  gcloud secrets versions access latest --secret=$secret > "./extracted-secrets/$secret.txt"
+for secretName in $(gcloud secrets list --format="value(name)"); do
+  echo "Extracting secret: $secretName"
+  gcloud secrets versions access latest --secret=$secretName > "./extracted-secrets/$secretName.txt"
 done
 
 # Check secret IAM permissions
-for secret in $(gcloud secrets list --format="value(name)"); do
-  echo "Checking IAM for secret: $secret"
-  gcloud secrets get-iam-policy $secret
+for secretName in $(gcloud secrets list --format="value(name)"); do
+  echo "Checking IAM for secret: $secretName"
+  gcloud secrets get-iam-policy $secretName
 done
 
 # Check for weak permissions on secrets
 gcloud secrets list | grep -i "api\|key\|password\|credential\|token"
 
 # Extract all secret versions, not just latest
-for secret in $(gcloud secrets list --format="value(name)"); do
-  echo "Secret: $secret"
-  versions=$(gcloud secrets versions list $secret --format="value(name)")
-  for version in $versions; do
-    echo "  Version: $version"
-    gcloud secrets versions access $version --secret=$secret > "./extracted-secrets/${secret}_${version}.txt"
+for secretName in $(gcloud secrets list --format="value(name)"); do
+  echo "Secret: $secretName"
+  versions=$(gcloud secrets versions list $secretName --format="value(name)")
+  for versionNumber in $versions; do
+    echo "  Version: $versionNumber"
+    gcloud secrets versions access $versionNumber --secret=$secretName > "./extracted-secrets/${secretName}_${versionNumber}.txt"
   done
 done`}
                     />
