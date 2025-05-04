@@ -116,7 +116,7 @@ function CommentDisplay({ comment }) {
 
 export default CommentDisplay;`,
     answer: false,
-    explanation: "This component is vulnerable to XSS attacks because it uses dangerouslySetInnerHTML to directly insert user-provided content (comment) into the DOM. If comment contains malicious JavaScript like '<script>alert(\"XSS\")</script>' or '<img src=\"x\" onerror=\"alert(1)\">', it will be executed in the browser. To fix this, either avoid dangerouslySetInnerHTML or sanitize the input using a library like DOMPurify."
+    explanation: "This component is vulnerable to XSS attacks because it uses dangerouslySetInnerHTML to directly insert user-provided content (comment) into the DOM. If comment contains malicious JavaScript like '<script>alert(\"XSS\")</script>' or '<img src=\"x\" onerror=\"alert(1)\'>', it will be executed in the browser. To fix this, either avoid dangerouslySetInnerHTML or sanitize the input using a library like DOMPurify."
   },
   {
     id: 'xss-2',
@@ -864,5 +864,44 @@ router.put('/api/users/:id', authenticate, async (req, res) => {
 module.exports = router;`,
     answer: false,
     explanation: "This code is vulnerable to mass assignment attacks because it directly passes the entire req.body object to the database update operation. This allows an attacker to update any field in the user document, including privileged fields like 'role', 'isAdmin', or 'accountBalance' that they shouldn't be able to modify. To fix this, explicitly list the fields that can be updated or use a whitelist to filter the request body before passing it to the database operation."
-  },
-  // Additional challenges
+  }
+];
+
+// Categories for filtering
+export const categories = [
+  'All',
+  'Injection Flaws',
+  'Cross-Site Scripting',
+  'CSRF',
+  'Path Traversal',
+  'SSRF',
+  'Insecure Deserialization',
+  'Broken Authentication',
+  'Sensitive Data Exposure',
+  'Cryptographic Failures',
+  'Broken Access Control',
+  'XXE',
+  'Race Conditions',
+  'API Security'
+];
+
+// Languages for filtering
+export const languages = [
+  'All', 
+  'JavaScript', 
+  'Python', 
+  'Java', 
+  'C#',
+  'PHP',
+  'React',
+  'React Native',
+  'Node.js'
+];
+
+// Difficulty levels
+export const difficulties = [
+  'All',
+  'easy',
+  'medium',
+  'hard'
+];
