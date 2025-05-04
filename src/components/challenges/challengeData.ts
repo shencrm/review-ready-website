@@ -874,4 +874,11 @@ router.put('/api/users/:id', authenticate, async (req, res) => {
 
 module.exports = router;`,
     answer: false,
-    explanation: "This code is vulnerable to mass assignment attacks because it directly passes the entire req.body object to the database update operation. This allows an attacker to update any field in the user document, including privileged fields like 'role', 'isAdmin', or 'accountBalance' that they shouldn't be able to modify. To fix this, explicitly list the fields that can be updated or use a whitelist to filter the request
+    explanation: "This code is vulnerable to mass assignment attacks because it directly passes the entire req.body object to the database update operation. This allows an attacker to update any field in the user document, including privileged fields like 'role', 'isAdmin', or 'accountBalance' that they shouldn't be able to modify. To fix this, explicitly list the fields that can be updated or use a whitelist to filter the request body before passing it to the database operation."
+  }
+];
+
+// Export categories, languages, and difficulty levels for filtering
+export const categories = Array.from(new Set(challenges.map((challenge) => challenge.category)));
+export const languages = Array.from(new Set(challenges.flatMap((challenge) => challenge.languages)));
+export const difficultyLevels = Array.from(new Set(challenges.map((challenge) => challenge.difficulty)));
