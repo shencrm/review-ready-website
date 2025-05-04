@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'lucide-react';
@@ -19,6 +18,7 @@ const NavBar: React.FC = () => {
     { name: 'Cloud Penetration Testing', path: '/cloud-penetration-testing' },
     { name: 'Mobile Penetration Testing', path: '/mobile-penetration-testing' },
     { name: 'Infrastructure Penetration Testing', path: '/infrastructure-penetration-testing' },
+    { name: 'Challenges', path: '/challenges' },
     { name: 'Tools', path: '/tools' },
     { name: 'Resources', path: '/resources' },
     { name: 'Contact', path: '/contact' },
