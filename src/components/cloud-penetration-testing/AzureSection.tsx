@@ -766,9 +766,7 @@ Get-AzRoleAssignment -SignInName user@example.com
 
 # If user has User Access Administrator role at any scope
 # they can assign themselves higher privileges
-New-AzRoleAssignment -SignInName user@example.com `
-                          + "-RoleDefinitionName 'Owner' " +
-                          `-Scope "/subscriptions/00000000-0000-0000-0000-000000000000"
+New-AzRoleAssignment -SignInName user@example.com -RoleDefinitionName 'Owner' -Scope "/subscriptions/00000000-0000-0000-0000-000000000000"
 
 # If user has Contributor role, they may be able to deploy
 # resources that can lead to privilege escalation
@@ -1120,13 +1118,13 @@ foreach ($server in $sqlServers) {
                     
                     $dataReader.Close()
                 } catch {
-                    Write-Host "Error querying table $table`: $_"
+                    Write-Host "Error querying table $table"
                 }
             }
             
             $conn.Close()
         } catch {
-            Write-Host "Error connecting to database $($db.DatabaseName): $_"
+            Write-Host "Error connecting to database $($db.DatabaseName)"
         }
     }
 }`}
