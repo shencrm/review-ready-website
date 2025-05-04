@@ -777,7 +777,7 @@ def withdraw():
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Get current balance
+    // Get current balance
     cursor.execute('SELECT balance FROM accounts WHERE user_id = ?', (user_id,))
     account = cursor.fetchone()
     
@@ -787,12 +787,12 @@ def withdraw():
     
     current_balance = account['balance']
     
-    # Check if enough balance
+    // Check if enough balance
     if current_balance < amount:
         conn.close()
         return jsonify({'error': 'Insufficient funds'}), 400
     
-    # Update balance
+    // Update balance
     new_balance = current_balance - amount
     cursor.execute(
         'UPDATE accounts SET balance = ? WHERE user_id = ?',
@@ -864,44 +864,6 @@ router.put('/api/users/:id', authenticate, async (req, res) => {
 module.exports = router;`,
     answer: false,
     explanation: "This code is vulnerable to mass assignment attacks because it directly passes the entire req.body object to the database update operation. This allows an attacker to update any field in the user document, including privileged fields like 'role', 'isAdmin', or 'accountBalance' that they shouldn't be able to modify. To fix this, explicitly list the fields that can be updated or use a whitelist to filter the request body before passing it to the database operation."
-  }
-];
-
-// Categories for filtering
-export const categories = [
-  'All',
-  'Injection Flaws',
-  'Cross-Site Scripting',
-  'CSRF',
-  'Path Traversal',
-  'SSRF',
-  'Insecure Deserialization',
-  'Broken Authentication',
-  'Sensitive Data Exposure',
-  'Cryptographic Failures',
-  'Broken Access Control',
-  'XXE',
-  'Race Conditions',
-  'API Security'
-];
-
-// Languages for filtering
-export const languages = [
-  'All', 
-  'JavaScript', 
-  'Python', 
-  'Java', 
-  'C#',
-  'PHP',
-  'React',
-  'React Native',
-  'Node.js'
-];
-
-// Difficulty levels
-export const difficulties = [
-  'All',
-  'easy',
-  'medium',
-  'hard'
-];
+  },
+  
+  //

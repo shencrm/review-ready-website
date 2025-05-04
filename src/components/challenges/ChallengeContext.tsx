@@ -12,7 +12,7 @@ interface Challenge {
   type: 'comparison' | 'single';
   vulnerabilityType?: string;
   code?: string;
-  answer?: boolean;
+  answer?: boolean | string;
   explanation: string;
   secureCode?: string;
   vulnerableCode?: string;
@@ -66,8 +66,8 @@ export const ChallengeProvider: React.FC<{ children: ReactNode }> = ({ children 
   };
 
   const filteredChallenges = allChallenges.filter(challenge => {
-    const categoryMatch = selectedCategory === 'all' || challenge.category === selectedCategory;
-    const languageMatch = selectedLanguage === 'all' || challenge.languages.includes(selectedLanguage);
+    const categoryMatch = selectedCategory === 'all' || challenge.category.toLowerCase() === selectedCategory;
+    const languageMatch = selectedLanguage === 'all' || challenge.languages.some(lang => lang.toLowerCase() === selectedLanguage);
     const difficultyMatch = selectedDifficulty === 'all' || challenge.difficulty === selectedDifficulty;
     
     return categoryMatch && languageMatch && difficultyMatch;

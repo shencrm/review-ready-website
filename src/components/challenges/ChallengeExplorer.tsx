@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 
 const ChallengeExplorer: React.FC = () => {
   const {
+    allChallenges,
     filteredChallenges,
     currentChallenge,
     setCurrentChallenge,
@@ -49,7 +50,7 @@ const ChallengeExplorer: React.FC = () => {
   
   // Calculate counts
   const completedCount = Object.values(progress).filter(p => p.completed).length;
-  const correctCount = Object.values(progress).filter(p => p.correct).length;
+  const failedCount = Object.values(progress).filter(p => p.completed && !p.correct).length;
   
   if (currentChallenge) {
     return <ChallengeView challenge={currentChallenge} onBack={handleBackToExplorer} />;
@@ -63,7 +64,7 @@ const ChallengeExplorer: React.FC = () => {
             <Activity className="w-5 h-5 mr-2 text-cybr-primary" />
             <h3 className="font-bold">Total Challenges</h3>
           </div>
-          <p className="text-2xl font-bold">{filteredChallenges.length}</p>
+          <p className="text-2xl font-bold">{allChallenges.length}</p>
         </div>
         
         <div className="card bg-gradient-to-br from-cybr-muted to-cybr-muted/50 p-4">
@@ -77,9 +78,9 @@ const ChallengeExplorer: React.FC = () => {
         <div className="card bg-gradient-to-br from-cybr-muted to-cybr-muted/50 p-4">
           <div className="flex items-center mb-1">
             <XCircle className="w-5 h-5 mr-2 text-red-500" />
-            <h3 className="font-bold">Attempted</h3>
+            <h3 className="font-bold">Failed Attempts</h3>
           </div>
-          <p className="text-2xl font-bold">{completedCount}</p>
+          <p className="text-2xl font-bold">{failedCount}</p>
         </div>
       </div>
       
