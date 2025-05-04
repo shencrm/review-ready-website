@@ -11,6 +11,11 @@ interface Challenge {
   languages: string[];
   type: 'comparison' | 'single';
   vulnerabilityType?: string;
+  code?: string;
+  answer?: boolean;
+  explanation: string;
+  secureCode?: string;
+  vulnerableCode?: string;
 }
 
 interface ChallengeProgress {
@@ -44,7 +49,7 @@ export const ChallengeProvider: React.FC<{ children: ReactNode }> = ({ children 
   const [selectedLanguage, setSelectedLanguage] = useState<string>('all');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
   const [progress, setProgress] = useState<ChallengeProgress>({});
-  const allChallenges = challenges;
+  const allChallenges = challenges as Challenge[];
 
   const markChallengeAttempt = (challengeId: string, correct: boolean) => {
     setProgress(prevProgress => {
