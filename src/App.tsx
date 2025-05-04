@@ -18,6 +18,7 @@ import WebPenetrationTesting from "./pages/WebPenetrationTesting";
 import CloudPenetrationTesting from "./pages/CloudPenetrationTesting";
 import MobilePenetrationTesting from "./pages/MobilePenetrationTesting";
 import InfrastructurePenetrationTesting from "./pages/InfrastructurePenetrationTesting";
+import Challenges from "./pages/Challenges";
 
 // Import language pages
 import JavaScript from "./pages/languages/JavaScript";
@@ -62,6 +63,7 @@ const App = () => (
           <Route path="/tools" element={<Tools />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/challenges" element={<Challenges />} />
           
           {/* Language-specific routes */}
           <Route path="/languages/javascript" element={<JavaScript />} />
