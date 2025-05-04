@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Server, Shield, Windows, Linux, Network, Bug, Terminal, Lock } from 'lucide-react';
+import { Server, Shield, Monitor, Terminal, Network, Bug, Lock } from 'lucide-react';
 import WindowsSection from '@/components/infrastructure-penetration-testing/WindowsSection';
 import LinuxSection from '@/components/infrastructure-penetration-testing/LinuxSection';
 import ActiveDirectorySection from '@/components/infrastructure-penetration-testing/ActiveDirectorySection';
@@ -17,8 +17,8 @@ const InfrastructurePenetrationTesting: React.FC = () => {
   const sections = [
     { id: 'common-attacks', title: 'Common Attacks', icon: <Bug className="h-6 w-6" /> },
     { id: 'methodology', title: 'Methodology', icon: <Shield className="h-6 w-6" /> },
-    { id: 'windows', title: 'Windows', icon: <Windows className="h-6 w-6" /> },
-    { id: 'linux', title: 'Linux', icon: <Linux className="h-6 w-6" /> },
+    { id: 'windows', title: 'Windows', icon: <Monitor className="h-6 w-6" /> },
+    { id: 'linux', title: 'Linux', icon: <Terminal className="h-6 w-6" /> },
     { id: 'active-directory', title: 'Active Directory', icon: <Network className="h-6 w-6" /> },
     { id: 'tools', title: 'Tools', icon: <Terminal className="h-6 w-6" /> },
   ];

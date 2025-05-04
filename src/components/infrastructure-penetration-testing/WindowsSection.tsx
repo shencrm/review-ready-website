@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Windows, Shield, Bug, Terminal } from 'lucide-react';
+import { Monitor, Shield, Bug, Terminal } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
 import SecurityCard from '@/components/SecurityCard';
 
@@ -9,7 +8,7 @@ const WindowsSection: React.FC = () => {
     <section className="space-y-12">
       <div className="mb-8">
         <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
-          <Windows className="text-cybr-primary" />
+          <Monitor className="text-cybr-primary" />
           Windows Penetration Testing
         </h2>
         <p className="mb-4">
