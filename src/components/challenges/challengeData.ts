@@ -93,6 +93,7 @@ public class UserDAO {
     answer: 'secure',
     explanation: "The secure version uses a PreparedStatement with parameter binding (?), which sanitizes user input and prevents SQL injection. The vulnerable version directly concatenates the userId into the SQL statement, making it vulnerable to SQL injection attacks."
   },
+  
   // XSS Challenges
   {
     id: 'xss-1',
@@ -116,7 +117,7 @@ function CommentDisplay({ comment }) {
 
 export default CommentDisplay;`,
     answer: false,
-    explanation: "This component is vulnerable to XSS attacks because it uses dangerouslySetInnerHTML to directly insert user-provided content (comment) into the DOM. If comment contains malicious JavaScript like '<script>alert(\"XSS\")</script>' or '<img src=\"x\" onerror=\"alert(1)\'>', it will be executed in the browser. To fix this, either avoid dangerouslySetInnerHTML or sanitize the input using a library like DOMPurify."
+    explanation: "This component is vulnerable to XSS attacks because it uses dangerouslySetInnerHTML to directly insert user-provided content (comment) into the DOM. If comment contains malicious JavaScript like '<script>alert(\\\"XSS\\\")</script>' or '<img src=\\\"x\\\" onerror=\\\"alert(1)\\'>', it will be executed in the browser. To fix this, either avoid dangerouslySetInnerHTML or sanitize the input using a library like DOMPurify."
   },
   {
     id: 'xss-2',
@@ -147,6 +148,7 @@ export default CommentDisplay;`,
     answer: 'secure',
     explanation: "The secure version uses document.createTextNode() which automatically escapes any HTML or JavaScript in the comment, preventing XSS. The vulnerable version uses innerHTML which directly interprets and executes any HTML or JavaScript in the comment string, making it vulnerable to XSS attacks."
   },
+  
   // CSRF Challenges
   {
     id: 'csrf-1',
@@ -196,6 +198,7 @@ app.listen(3000, () => {
     answer: false,
     explanation: "This code is vulnerable to CSRF attacks because it doesn't implement CSRF tokens. While it does check if the user is authenticated via session, it doesn't verify that the request originated from a legitimate form on the website. An attacker could create a malicious website that submits a form to this endpoint, and if the victim is logged in, the password change would succeed. To fix this, implement CSRF protection using a library like 'csurf' and include CSRF tokens in your forms."
   },
+  
   // Path Traversal Challenges
   {
     id: 'path-traversal-1',
@@ -253,6 +256,7 @@ def download_file():
     answer: 'secure',
     explanation: "The secure version prevents path traversal by: 1) Validating the filename with a regex to ensure it only contains safe characters, 2) Converting both the intended directory and the requested path to absolute paths, and 3) Checking that the requested path starts with the safe directory path. The vulnerable version doesn't validate the filename, allowing attackers to use '../' sequences to traverse outside the intended directory."
   },
+  
   // Server-Side Request Forgery Challenges
   {
     id: 'ssrf-1',
@@ -289,6 +293,7 @@ app.listen(3000, () => {
     answer: false,
     explanation: "This code is vulnerable to SSRF (Server-Side Request Forgery) because it makes HTTP requests to any URL provided by the user without validation. An attacker could supply internal network URLs like 'http://localhost:27017' (MongoDB) or 'http://169.254.169.254/latest/meta-data/' (AWS metadata service) to access internal services or cloud instance metadata. To fix this, implement URL validation to allow only specific domains and protocols, and use a whitelist approach rather than a blacklist."
   },
+  
   // Command Injection Challenges
   {
     id: 'command-injection-1',
@@ -339,6 +344,7 @@ echo pingHost($host);
     answer: 'secure',
     explanation: "The secure version prevents command injection by: 1) Validating the input using a regular expression to ensure it only contains safe characters, and 2) Using escapeshellarg() to properly escape the user input before including it in the command. The vulnerable version directly concatenates user input into the command string without any validation or escaping, allowing attackers to inject additional commands using operators like ';', '&&', or '|'."
   },
+  
   // Insecure Deserialization Challenges
   {
     id: 'insecure-deserialization-1',
@@ -391,6 +397,7 @@ class UserData implements Serializable {
     answer: false,
     explanation: "This code is vulnerable to insecure deserialization attacks because it deserializes user-provided data without any validation or filtering. An attacker could craft a malicious serialized object that, when deserialized, could execute arbitrary code through gadget chains in the classpath. To fix this, avoid deserializing untrusted data, or use safer alternatives like JSON. If deserialization is necessary, implement validation filters using ObjectInputFilter (Java 9+) or libraries like SerialKiller."
   },
+  
   // Broken Authentication Challenges
   {
     id: 'broken-auth-1',
@@ -445,6 +452,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     answer: false,
     explanation: "This code has multiple authentication vulnerabilities: 1) SQL Injection vulnerability in the authentication query by directly concatenating user inputs, allowing for authentication bypass, 2) Plaintext password storage and comparison instead of using secure hashing, 3) No brute force protection, 4) No account lockout mechanism, and 5) No CSRF protection for the login form. An attacker could bypass authentication with a username like: admin' -- which would make the SQL query return the admin user regardless of password."
   },
+  
   // Sensitive Data Exposure Challenges
   {
     id: 'data-exposure-1',
@@ -509,6 +517,7 @@ export async function getWeatherData(city) {
     answer: 'secure',
     explanation: "The secure version handles API keys correctly by: 1) Using environment variables for web platforms and secure storage for mobile platforms instead of hardcoding the key, 2) Checking if the key exists before making the request, and 3) Providing appropriate error handling. The vulnerable version directly hardcodes the API key in the source code, which can be extracted from the compiled app or discovered through reverse engineering."
   },
+  
   // Cryptographic Failures Challenges
   {
     id: 'crypto-1',
@@ -603,6 +612,7 @@ module.exports = {
     answer: 'secure',
     explanation: "The secure version uses proper password hashing practices: 1) It uses PBKDF2, a secure key derivation function designed for passwords, 2) It applies 100,000 iterations to make brute-force attacks computationally expensive, 3) It uses a cryptographically secure random salt to prevent rainbow table attacks, and 4) It uses SHA-512 as the underlying hash function. The vulnerable version uses MD5, which is cryptographically broken and unsuitable for password hashing, and it doesn't use any salt, making it vulnerable to rainbow table attacks."
   },
+  
   // Access Control Challenges
   {
     id: 'access-control-1',
@@ -665,7 +675,6 @@ module.exports = router;`,
     answer: false,
     explanation: "This code has a broken access control vulnerability because it doesn't check if the authenticated user has permission to access the requested user profile. Any authenticated user can access any other user's profile by simply changing the userId parameter. To fix this issue, add authorization logic that checks if the requesting user has permission to access the specified profile, typically by comparing the authenticated user's ID with the requested userId or checking for admin role."
   },
-  // More challenges for various languages and vulnerabilities...
   
   // XML External Entity (XXE) Challenges
   {
@@ -745,6 +754,7 @@ public class XmlProcessor
     answer: 'secure',
     explanation: "The secure version prevents XXE attacks by explicitly setting xmlDoc.XmlResolver = null, which disables the processing of external entities in the XML document. The vulnerable version uses default settings which allow external entity processing, making it vulnerable to XXE attacks where an attacker could include external entities that access local files or make network requests to internal services."
   },
+  
   // Race Condition Challenges
   {
     id: 'race-condition-1',
@@ -809,6 +819,7 @@ if __name__ == '__main__':
     answer: false,
     explanation: "This code is vulnerable to race conditions because it uses a 'read-then-write' pattern without proper synchronization. If two withdrawal requests for the same account are processed simultaneously, both might read the same initial balance and both could succeed even if together they exceed the available funds. To fix this, use database transactions with the appropriate isolation level, or implement row-level locking. For example, use 'SELECT ... FOR UPDATE' to lock the row until the transaction completes."
   },
+  
   // API Security Challenges
   {
     id: 'api-security-1',
@@ -863,45 +874,4 @@ router.put('/api/users/:id', authenticate, async (req, res) => {
 
 module.exports = router;`,
     answer: false,
-    explanation: "This code is vulnerable to mass assignment attacks because it directly passes the entire req.body object to the database update operation. This allows an attacker to update any field in the user document, including privileged fields like 'role', 'isAdmin', or 'accountBalance' that they shouldn't be able to modify. To fix this, explicitly list the fields that can be updated or use a whitelist to filter the request body before passing it to the database operation."
-  }
-];
-
-// Categories for filtering
-export const categories = [
-  'All',
-  'Injection Flaws',
-  'Cross-Site Scripting',
-  'CSRF',
-  'Path Traversal',
-  'SSRF',
-  'Insecure Deserialization',
-  'Broken Authentication',
-  'Sensitive Data Exposure',
-  'Cryptographic Failures',
-  'Broken Access Control',
-  'XXE',
-  'Race Conditions',
-  'API Security'
-];
-
-// Languages for filtering
-export const languages = [
-  'All', 
-  'JavaScript', 
-  'Python', 
-  'Java', 
-  'C#',
-  'PHP',
-  'React',
-  'React Native',
-  'Node.js'
-];
-
-// Difficulty levels
-export const difficulties = [
-  'All',
-  'easy',
-  'medium',
-  'hard'
-];
+    explanation: "This code is vulnerable to mass assignment attacks because it directly passes the entire req.body object to the database update operation. This allows an attacker to update any field in the user document, including privileged fields like 'role', 'isAdmin', or 'accountBalance' that they shouldn't be able to modify. To fix this, explicitly list the fields that can be updated or use a whitelist to filter the request
