@@ -1,3 +1,4 @@
+
 import React from 'react';
 import CodeExample from '@/components/CodeExample';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -800,4 +801,374 @@ curl -s https://storage.googleapis.com/company-name-prod?list=true
                     <ol className="list-decimal pl-6 mb-3 space-y-1">
                       <li>Start by gathering the target's domain names</li>
                       <li>Perform subdomain enumeration to discover potential GCP assets
-                        <ul className="list-disc pl-6 mt
+                        <ul className="list-disc pl-6 mt-1">
+                          <li>Look for *.appspot.com, *.cloudfunctions.net, storage.googleapis.com</li>
+                          <li>Check DNS records for GCP-related CNAME entries</li>
+                        </ul>
+                      </li>
+                      <li>Try to discover GCP project IDs from URLs, DNS records, source code</li>
+                      <li>Search for exposed credentials in code repositories, public documents</li>
+                      <li>Map identified resources to potential attack vectors</li>
+                    </ol>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-lg font-medium">2. Configuration Analysis</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="mb-3">
+                      Once access is obtained or from external assessment, analyze the cloud configuration for security issues.
+                    </p>
+                    <h5 className="font-semibold mb-2">Key Activities:</h5>
+                    <ul className="list-disc pl-6 mb-3 space-y-1">
+                      <li>Review IAM policies and permissions</li>
+                      <li>Analyze service account configurations</li>
+                      <li>Assess network security groups and firewall rules</li>
+                      <li>Evaluate storage bucket permissions and encryption</li>
+                      <li>Check logging and monitoring configurations</li>
+                    </ul>
+                    
+                    <h5 className="font-semibold mb-2">Tools and Approaches:</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                      <div className="bg-cybr-muted/20 p-3 rounded">
+                        <h6 className="font-medium mb-1">GCP Security Scanner Tools</h6>
+                        <CodeExample 
+                          language="bash"
+                          title="Security Scanning Commands"
+                          code={`# Using GCP Security Command Center (if available)
+gcloud scc assets list --organization=ORGANIZATION_ID --format=json
+
+# Using Scout Suite for GCP
+python scout.py gcp --report-dir ./output --account ACCOUNT
+
+# Using G-Scout for role and permission analysis
+python gscout.py --project-id PROJECT_ID
+
+# Using GCP IAM Recommender
+gcloud beta recommender recommendations list \
+  --recommender=google.iam.policy.Recommender \
+  --location=global \
+  --project=PROJECT_ID`}
+                        />
+                      </div>
+                      <div className="bg-cybr-muted/20 p-3 rounded">
+                        <h6 className="font-medium mb-1">Manual Configuration Review</h6>
+                        <CodeExample 
+                          language="bash"
+                          title="Configuration Analysis Commands"
+                          code={`# Check organization policies
+gcloud resource-manager org-policies list --organization=ORGANIZATION_ID
+
+# Review IAM bindings on organization level
+gcloud organizations get-iam-policy ORGANIZATION_ID
+
+# Check for overly permissive firewall rules
+gcloud compute firewall-rules list \
+  --filter="disabled=false AND sourceRanges:0.0.0.0/0" \
+  --project=PROJECT_ID
+
+# Look for public buckets
+gsutil ls
+for bucket in $(gsutil ls | cut -d/ -f3); do
+  gsutil iam get gs://$bucket | grep allUsers
+done`}
+                        />
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-lg font-medium">3. Vulnerability Assessment</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="mb-3">
+                      Identify specific vulnerabilities in the GCP environment that could be exploited.
+                    </p>
+                    <h5 className="font-semibold mb-2">Areas to Assess:</h5>
+                    <ul className="list-disc pl-6 mb-3 space-y-1">
+                      <li>Identity and access control weaknesses</li>
+                      <li>Network security misconfigurations</li>
+                      <li>Storage security issues</li>
+                      <li>Compute instance vulnerabilities</li>
+                      <li>Serverless function security</li>
+                      <li>Database service security</li>
+                    </ul>
+                    
+                    <h5 className="font-semibold mb-2">Common Techniques:</h5>
+                    <CodeExample 
+                      language="bash"
+                      title="Vulnerability Assessment Commands"
+                      code={`# Check for service account key files
+gcloud iam service-accounts list --project=PROJECT_ID
+gcloud iam service-accounts keys list --iam-account=SERVICE_ACCOUNT_EMAIL
+
+# Identify VM instances with public IPs
+gcloud compute instances list \
+  --format="table(name,networkInterfaces[0].accessConfigs[0].natIP)" \
+  --project=PROJECT_ID
+
+# Check if Cloud SQL instances are publicly accessible
+gcloud sql instances list \
+  --format="table(name,settings.ipConfiguration.authorizedNetworks[].value)" \
+  --project=PROJECT_ID | grep 0.0.0.0
+
+# Check for unauthenticated Cloud Functions
+gcloud functions list --project=PROJECT_ID
+for func in $(gcloud functions list --format="value(name)" --project=PROJECT_ID); do
+  gcloud functions get-iam-policy $func --project=PROJECT_ID | grep allUsers
+done`}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-lg font-medium">4. Exploitation & Privilege Escalation</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="mb-3">
+                      Attempt to exploit identified vulnerabilities to demonstrate impact.
+                    </p>
+                    <h5 className="font-semibold mb-2">Common Techniques:</h5>
+                    <ul className="list-disc pl-6 mb-3 space-y-1">
+                      <li>IAM privilege escalation</li>
+                      <li>Service account key misuse</li>
+                      <li>Metadata service exploitation</li>
+                      <li>Network access control bypass</li>
+                      <li>Storage security bypass</li>
+                    </ul>
+                    
+                    <h5 className="font-semibold mb-2">Example Attack Paths:</h5>
+                    <CodeExample 
+                      language="bash"
+                      title="Privilege Escalation Examples"
+                      code={`# Scenario 1: Service account impersonation
+# If you have permissions to create service account keys
+gcloud iam service-accounts keys create key.json --iam-account=TARGET_SA@PROJECT_ID.iam.gserviceaccount.com
+gcloud auth activate-service-account --key-file=key.json
+
+# Scenario 2: Using VM access to escalate
+# SSH to VM, then access metadata service
+curl "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token" -H "Metadata-Flavor: Google"
+
+# Scenario 3: Custom role creation to escalate
+# If you can create/update roles
+gcloud iam roles create EscalationRole --project=PROJECT_ID \
+  --permissions=resourcemanager.projects.setIamPolicy,iam.serviceAccounts.actAs
+
+# Scenario 4: Exploiting overly permissive storage permissions
+gsutil cp sensitive-file gs://public-bucket/
+curl https://storage.googleapis.com/public-bucket/sensitive-file`}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-lg font-medium">5. Reporting & Remediation</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="mb-3">
+                      Document findings and provide clear remediation guidance.
+                    </p>
+                    <h5 className="font-semibold mb-2">Key Components:</h5>
+                    <ul className="list-disc pl-6 mb-3 space-y-1">
+                      <li>Vulnerabilities identified with clear impact assessment</li>
+                      <li>Exploitation paths demonstrated</li>
+                      <li>Practical remediation steps for each finding</li>
+                      <li>Prioritization of issues based on risk</li>
+                      <li>Strategic recommendations for improving cloud security</li>
+                    </ul>
+                    
+                    <h5 className="font-semibold mb-2">Example Remediation Commands:</h5>
+                    <CodeExample 
+                      language="bash"
+                      title="Common Remediation Steps"
+                      code={`# Fix 1: Remove public IAM access to a bucket
+gsutil iam ch -d allUsers:objectViewer gs://BUCKET_NAME
+
+# Fix 2: Rotate compromised service account keys
+gcloud iam service-accounts keys list --iam-account=SA_NAME@PROJECT_ID.iam.gserviceaccount.com
+gcloud iam service-accounts keys delete KEY_ID --iam-account=SA_NAME@PROJECT_ID.iam.gserviceaccount.com
+
+# Fix 3: Enable VPC Service Controls for sensitive services
+gcloud access-context-manager perimeters create perimeter-name \
+    --title="Security Perimeter" \
+    --resources=projects/PROJECT_NUMBER \
+    --restricted-services=storage.googleapis.com,bigquery.googleapis.com
+
+# Fix 4: Restrict access to Cloud Functions
+gcloud functions remove-iam-policy-binding FUNCTION_NAME \
+    --member="allUsers" \
+    --role="roles/cloudfunctions.invoker"
+
+# Fix 5: Apply least privilege principle to service accounts
+gcloud projects add-iam-policy-binding PROJECT_ID \
+    --member="serviceAccount:SA_NAME@PROJECT_ID.iam.gserviceaccount.com" \
+    --role="roles/SPECIFIC_LIMITED_ROLE" \
+    --condition="expression=resource.name.startsWith('projects/PROJECT_ID/buckets/SPECIFIC_BUCKET'),title=BucketAccessOnly"
+`}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="tools" className="space-y-6 mt-6">
+            <div className="card">
+              <h3 className="text-2xl font-bold mb-4">GCP Penetration Testing Tools</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-cybr-muted/20 p-4 rounded">
+                  <h4 className="text-xl font-bold mb-2">Cloud Security Scanner</h4>
+                  <p className="mb-3">Google's built-in vulnerability scanner for App Engine, Compute Engine, and GKE applications.</p>
+                  <ul className="list-disc pl-6 space-y-1">
+                    <li>Detects common web vulnerabilities</li>
+                    <li>Scans for outdated libraries</li>
+                    <li>Identifies misconfigurations</li>
+                  </ul>
+                  <CodeExample 
+                    language="bash"
+                    title="Using Cloud Security Scanner"
+                    code={`# Enable Security Scanner API
+gcloud services enable websecurityscanner.googleapis.com
+
+# Scans are configured through the Google Cloud Console
+# https://console.cloud.google.com/security/web-scanner`}
+                  />
+                </div>
+                
+                <div className="bg-cybr-muted/20 p-4 rounded">
+                  <h4 className="text-xl font-bold mb-2">G-Scout</h4>
+                  <p className="mb-3">Open-source tool that collects GCP resource metadata to identify security misconfigurations.</p>
+                  <ul className="list-disc pl-6 space-y-1">
+                    <li>Audits IAM policies and permissions</li>
+                    <li>Checks firewall rules and network settings</li>
+                    <li>Identifies exposed cloud storage</li>
+                  </ul>
+                  <CodeExample 
+                    language="bash"
+                    title="Using G-Scout"
+                    code={`# Clone repository
+git clone https://github.com/nccgroup/G-Scout.git
+cd G-Scout
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run G-Scout
+python gscout.py --project-id PROJECT_ID
+
+# Results will be in the "Report" folder`}
+                  />
+                </div>
+                
+                <div className="bg-cybr-muted/20 p-4 rounded">
+                  <h4 className="text-xl font-bold mb-2">GCPBucketBrute</h4>
+                  <p className="mb-3">Tool for enumerating Google Cloud Storage buckets to find publicly accessible buckets.</p>
+                  <ul className="list-disc pl-6 space-y-1">
+                    <li>Identifies open buckets based on keywords</li>
+                    <li>Tests common naming patterns</li>
+                    <li>Attempts directory listing</li>
+                  </ul>
+                  <CodeExample 
+                    language="bash"
+                    title="Using GCPBucketBrute"
+                    code={`# Clone repository
+git clone https://github.com/RhinoSecurityLabs/GCPBucketBrute.git
+cd GCPBucketBrute
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run with keyword
+python3 gcpbucketbrute.py -k company-name -o results.txt
+
+# Run with keyword list and permutations
+python3 gcpbucketbrute.py -kl keywords.txt -p permutations.txt -o results.txt`}
+                  />
+                </div>
+                
+                <div className="bg-cybr-muted/20 p-4 rounded">
+                  <h4 className="text-xl font-bold mb-2">ScoutSuite</h4>
+                  <p className="mb-3">Multi-cloud security auditing tool with extensive GCP support.</p>
+                  <ul className="list-disc pl-6 space-y-1">
+                    <li>Comprehensive security rules</li>
+                    <li>HTML reporting with findings</li>
+                    <li>Covers all major GCP services</li>
+                  </ul>
+                  <CodeExample 
+                    language="bash"
+                    title="Using ScoutSuite"
+                    code={`# Install ScoutSuite
+pip install scoutsuite
+
+# Run against a GCP project
+scout gcp --project-id PROJECT_ID --report-dir ./scout-report
+
+# Run with service account authentication
+scout gcp --service-account /path/to/credentials.json --report-dir ./scout-report
+
+# Open the report
+firefox ./scout-report/scoutsuite-report/scoutsuite-results/scoutsuite_results_gcp-project.html`}
+                  />
+                </div>
+                
+                <div className="bg-cybr-muted/20 p-4 rounded">
+                  <h4 className="text-xl font-bold mb-2">GCP Firewall Auditor</h4>
+                  <p className="mb-3">Tool to analyze and visualize GCP VPC firewall rules.</p>
+                  <ul className="list-disc pl-6 space-y-1">
+                    <li>Identifies overly permissive rules</li>
+                    <li>Visualizes potential attack paths</li>
+                    <li>Highlights security gaps</li>
+                  </ul>
+                  <CodeExample 
+                    language="bash"
+                    title="Using GCP Firewall Auditor"
+                    code={`# Export firewall rules to JSON
+gcloud compute firewall-rules list --format=json > firewall-rules.json
+
+# Run the analyzer (example tool)
+python firewall-analyzer.py --input firewall-rules.json --output report.html
+
+# Identify rules allowing public access
+gcloud compute firewall-rules list \
+  --filter="(sourceRanges:0.0.0.0/0) AND (allowed.ports:22 OR allowed.ports:3389)" \
+  --format="table(name,network,sourceRanges,allowed)"`}
+                  />
+                </div>
+                
+                <div className="bg-cybr-muted/20 p-4 rounded">
+                  <h4 className="text-xl font-bold mb-2">GCP IAM Explorer</h4>
+                  <p className="mb-3">Tool for analyzing IAM policies and identifying privilege escalation paths.</p>
+                  <ul className="list-disc pl-6 space-y-1">
+                    <li>Maps effective permissions</li>
+                    <li>Identifies excessive privileges</li>
+                    <li>Shows potential escalation paths</li>
+                  </ul>
+                  <CodeExample 
+                    language="bash"
+                    title="GCP IAM Analysis"
+                    code={`# Export IAM policies
+gcloud projects get-iam-policy PROJECT_ID --format=json > iam-policy.json
+gcloud organizations get-iam-policy ORGANIZATION_ID --format=json > org-policy.json
+
+# Use IAM Recommender to identify excessive permissions
+gcloud beta recommender recommendations list \
+  --recommender=google.iam.policy.Recommender \
+  --location=global \
+  --project=PROJECT_ID
+
+# Find service accounts with excessive permissions
+gcloud projects get-iam-policy PROJECT_ID --format=json | \
+  jq '.bindings[] | select(.role=="roles/owner" or .role=="roles/editor") | \
+  select(.members[] | contains("serviceAccount:"))'`}
+                  />
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </section>
+  );
+};
+
+export default GCPSection;
