@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useChallengeContext } from './ChallengeContext';
 import { SearchIcon, Filter, CheckCircle, XCircle, Activity } from 'lucide-react';
-import { categories, languages, difficulties } from './challengeData';
+import { categories, languages, difficultyLevels } from './challengeData';
 import ChallengeCard from './ChallengeCard';
 import ChallengeView from './ChallengeView';
 import { Button } from '@/components/ui/button';
