@@ -787,7 +787,7 @@ def withdraw():
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Get current balance
+    // Get current balance
     cursor.execute('SELECT balance FROM accounts WHERE user_id = ?', (user_id,))
     account = cursor.fetchone()
     
@@ -797,12 +797,12 @@ def withdraw():
     
     current_balance = account['balance']
     
-    # Check if enough balance
+    // Check if enough balance
     if current_balance < amount:
         conn.close()
         return jsonify({'error': 'Insufficient funds'}), 400
     
-    # Update balance
+    // Update balance
     new_balance = current_balance - amount
     cursor.execute(
         'UPDATE accounts SET balance = ? WHERE user_id = ?',
