@@ -1,22 +1,7 @@
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { challenges } from './challengeData';
-
-interface Challenge {
-  id: string;
-  title: string;
-  description: string;
-  difficulty: 'easy' | 'medium' | 'hard';
-  category: string;
-  languages: string[];
-  type: 'comparison' | 'single';
-  vulnerabilityType?: string;
-  code?: string;
-  answer?: boolean | string;
-  explanation: string;
-  secureCode?: string;
-  vulnerableCode?: string;
-}
+import { challenges } from './data';
+import { Challenge } from './data/challenge-types';
 
 interface ChallengeProgress {
   [challengeId: string]: {

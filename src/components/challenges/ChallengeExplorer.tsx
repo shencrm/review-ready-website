@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useChallengeContext } from './ChallengeContext';
 import { SearchIcon, Filter, CheckCircle, XCircle, Activity } from 'lucide-react';
-import { categories, languages, difficultyLevels } from './challengeData';
+import { categories, languages, difficultyLevels } from './data';
 import ChallengeCard from './ChallengeCard';
 import ChallengeView from './ChallengeView';
 import { Button } from '@/components/ui/button';
@@ -175,7 +175,7 @@ const ChallengeExplorer: React.FC = () => {
             <p className="text-xl text-cybr-foreground/60">No challenges found matching your filters.</p>
             <Button 
               onClick={handleReset}
-              variant="link" 
+              variant="outline" 
               className="mt-2 text-cybr-primary"
             >
               Reset filters
