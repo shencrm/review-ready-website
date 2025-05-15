@@ -95,7 +95,8 @@ export const languages = [
   'AWS',
   'Azure',
   'JSON',
-  'Android'
+  'Android',
+  'HTML'
 ];
 
 export const difficultyLevels = [

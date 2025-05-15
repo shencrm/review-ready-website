@@ -3,111 +3,126 @@ import { Challenge } from './challenge-types';
 
 export const clientSideSecurityChallenges: Challenge[] = [
   {
-    id: 'client-security-1',
-    title: 'React Authentication State Management',
-    description: 'This React code manages user authentication. Does it handle authentication securely?',
-    difficulty: 'medium',
-    category: 'Client-Side Security',
-    languages: ['JavaScript', 'React'],
-    type: 'single',
-    vulnerabilityType: 'Insecure Authentication Storage',
-    code: `import React, { useState, useEffect } from 'react';
-
-function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Check if user is already logged in
-    const token = localStorage.getItem('auth_token');
-    const userData = localStorage.getItem('user_data');
-    
-    if (token && userData) {
-      setUser(JSON.parse(userData));
-    }
-    
-    setLoading(false);
-  }, []);
-
-  const login = async (email, password) => {
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        localStorage.setItem('auth_token', data.token);
-        localStorage.setItem('user_data', JSON.stringify(data.user));
-        setUser(data.user);
-        return { success: true };
-      } else {
-        return { success: false, error: data.error };
-      }
-    } catch (error) {
-      return { success: false, error: 'Network error' };
-    }
-  };
-
-  const logout = () => {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_data');
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}`,
-    answer: false,
-    explanation: "This implementation has security issues: 1) It stores sensitive user data and tokens in localStorage, which is accessible to any JavaScript running on the domain and vulnerable to XSS attacks, 2) There's no token validation or expiration checking, 3) No CSRF protection when making API calls, 4) No secure handling of the token (e.g., HttpOnly cookies would be more secure). A better approach would use HttpOnly cookies for the token and avoid storing sensitive user data on the client side."
-  },
-  {
-    id: 'client-security-2',
-    title: 'React Router Authorization',
-    description: 'Review this React protected route implementation. Is it securely implemented?',
+    id: 'client-side-security-1',
+    title: 'DOM-based XSS',
+    description: 'Compare these two JavaScript functions that update page content based on URL parameters. Which one is protected against DOM-based XSS?',
     difficulty: 'easy',
     category: 'Client-Side Security',
-    languages: ['JavaScript', 'React'],
-    type: 'single',
-    vulnerabilityType: 'Broken Access Control',
-    code: `import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-
-function ProtectedRoute({ component: Component, ...rest }) {
-  const isAuthenticated = localStorage.getItem('auth_token') !== null;
-
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
+    languages: ['JavaScript'],
+    type: 'comparison',
+    vulnerabilityType: 'DOM-based XSS',
+    secureCode: `function displayWelcomeMessage() {
+  // Get URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const username = urlParams.get('username');
+  
+  // Get the welcome element
+  const welcomeElement = document.getElementById('welcome-message');
+  
+  if (username) {
+    // Create a text node (safe from XSS)
+    const textNode = document.createTextNode('Welcome, ' + username + '!');
+    welcomeElement.appendChild(textNode);
+    
+    // Alternative safe approach using textContent
+    // welcomeElement.textContent = 'Welcome, ' + username + '!';
+  } else {
+    welcomeElement.textContent = 'Welcome, guest!';
+  }
 }
 
-// Usage in routes configuration
-function AppRoutes() {
-  return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/login" component={Login} />
-      <ProtectedRoute path="/dashboard" component={Dashboard} />
-      <ProtectedRoute path="/admin" component={AdminPanel} />
-    </Switch>
-  );
-}`,
-    answer: false,
-    explanation: "This implementation is not secure because: 1) It only checks for the presence of an auth_token in localStorage without validating it, 2) localStorage can be easily manipulated by users in the browser, 3) There's no role-based access control - all protected routes use the same check, meaning any authenticated user could access the admin panel, 4) Client-side route protection is easily bypassed and should always be complemented by server-side authorization checks. A better approach would verify the token on the server and implement proper role-based access control."
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', displayWelcomeMessage);`,
+    vulnerableCode: `function displayWelcomeMessage() {
+  // Get URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const username = urlParams.get('username');
+  
+  // Get the welcome element
+  const welcomeElement = document.getElementById('welcome-message');
+  
+  if (username) {
+    // Update the HTML (vulnerable to XSS)
+    welcomeElement.innerHTML = 'Welcome, ' + username + '!';
+  } else {
+    welcomeElement.innerHTML = 'Welcome, guest!';
+  }
+}
+
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', displayWelcomeMessage);`,
+    answer: 'secure',
+    explanation: "The secure implementation prevents DOM-based XSS by using document.createTextNode() or textContent instead of innerHTML. These methods treat the content as plain text rather than HTML, ensuring that any HTML or JavaScript in the username parameter is displayed as text rather than being executed. The vulnerable implementation uses innerHTML which parses and executes any HTML or JavaScript in the username parameter, allowing attackers to execute arbitrary code by crafting a malicious URL like '?username=<script>alert(document.cookie)</script>'."
+  },
+  {
+    id: 'client-side-security-2',
+    title: 'Content Security Policy Implementation',
+    description: 'Review this HTML file with Content Security Policy (CSP) headers. Is it properly configured for security?',
+    difficulty: 'hard',
+    category: 'Client-Side Security',
+    languages: ['HTML'],
+    type: 'single',
+    vulnerabilityType: 'CSP Configuration',
+    code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Application</title>
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self'; 
+                   script-src 'self' https://trusted-cdn.com; 
+                   style-src 'self' https://trusted-cdn.com;
+                   img-src 'self' data: https:;
+                   connect-src 'self' https://api.example.com;
+                   font-src 'self' https://trusted-cdn.com;
+                   object-src 'none';
+                   media-src 'self';
+                   frame-src 'self';
+                   form-action 'self';
+                   base-uri 'self';
+                   frame-ancestors 'self';
+                   upgrade-insecure-requests;
+                   report-uri https://example.com/csp-report">
+    
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Secure Application</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="content">
+            <h2>Welcome to our secure application!</h2>
+            <p>This application implements various security best practices.</p>
+            
+            <div id="dynamic-content"></div>
+            
+            <form action="/submit" method="post">
+                <input type="text" name="name" placeholder="Your name">
+                <input type="email" name="email" placeholder="Your email">
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Secure Application. All rights reserved.</p>
+    </footer>
+</body>
+</html>`,
+    answer: true,
+    explanation: "This CSP configuration is well-implemented with multiple security features: 1) It uses default-src 'self' as a fallback restricting resources to the same origin, 2) It explicitly defines trusted sources for scripts, styles, images, and connections, 3) It blocks object-src completely with 'none', preventing plugin-based attacks, 4) It restricts form submissions to same origin with form-action 'self', 5) It prevents clickjacking with frame-ancestors 'self', 6) It automatically upgrades HTTP to HTTPS with upgrade-insecure-requests, 7) It includes reporting with report-uri, and 8) It sets base-uri to prevent base tag hijacking. Overall, this is a strong policy that follows defense-in-depth principles without using unsafe-inline or unsafe-eval, which are common CSP weaknesses."
   }
 ];

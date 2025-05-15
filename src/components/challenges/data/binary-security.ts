@@ -4,8 +4,8 @@ import { Challenge } from './challenge-types';
 export const binarySecurityChallenges: Challenge[] = [
   {
     id: 'binary-security-1',
-    title: 'Buffer Overflow Prevention in C',
-    description: 'Compare these two C functions that process user input. Which one prevents buffer overflow vulnerabilities?',
+    title: 'Buffer Overflow Protection',
+    description: 'Compare these two C functions that handle user input. Which one is protected against buffer overflow?',
     difficulty: 'hard',
     category: 'Binary Security',
     languages: ['C'],
@@ -15,114 +15,112 @@ export const binarySecurityChallenges: Challenge[] = [
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_INPUT_SIZE 256
-
-void processInput(const char* input) {
-    char buffer[MAX_INPUT_SIZE];
+void process_user_input(const char* input) {
+    // Check input length before processing
+    if (!input || strlen(input) > 1024) {
+        fprintf(stderr, "Input too long or invalid\\n");
+        return;
+    }
     
-    // Copy only up to MAX_INPUT_SIZE-1 bytes to leave room for null terminator
-    strncpy(buffer, input, MAX_INPUT_SIZE - 1);
+    // Allocate buffer with exact required size
+    char* buffer = (char*)malloc(strlen(input) + 1);
+    if (!buffer) {
+        fprintf(stderr, "Memory allocation failed\\n");
+        return;
+    }
     
-    // Ensure null termination
-    buffer[MAX_INPUT_SIZE - 1] = '\\0';
+    // Use strncpy to safely copy into allocated buffer
+    strncpy(buffer, input, strlen(input));
+    buffer[strlen(input)] = '\\0'; // Ensure null termination
     
-    printf("Processing input: %s\\n", buffer);
+    // Process the buffer...
+    printf("Processing: %s\\n", buffer);
     
-    // Process the input safely...
+    // Clean up
+    free(buffer);
 }
 
-int main(int argc, char** argv) {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s <input>\\n", argv[0]);
-        return EXIT_FAILURE;
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <input>\\n", argv[0]);
+        return 1;
     }
     
-    // Validate input length
-    if (strlen(argv[1]) >= MAX_INPUT_SIZE) {
-        fprintf(stderr, "Input too long (max %d characters)\\n", MAX_INPUT_SIZE - 1);
-        return EXIT_FAILURE;
-    }
-    
-    processInput(argv[1]);
-    return EXIT_SUCCESS;
+    process_user_input(argv[1]);
+    return 0;
 }`,
     vulnerableCode: `#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-void processInput(const char* input) {
+void process_user_input(const char* input) {
+    // Fixed-size buffer on the stack
     char buffer[128];
     
-    // Copy directly without size check
+    // Unsafe copy of input into buffer
     strcpy(buffer, input);
     
-    printf("Processing input: %s\\n", buffer);
-    
-    // Process the input...
+    // Process the buffer...
+    printf("Processing: %s\\n", buffer);
 }
 
-int main(int argc, char** argv) {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s <input>\\n", argv[0]);
-        return EXIT_FAILURE;
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <input>\\n", argv[0]);
+        return 1;
     }
     
-    processInput(argv[1]);
-    return EXIT_SUCCESS;
+    process_user_input(argv[1]);
+    return 0;
 }`,
     answer: 'secure',
-    explanation: "The secure implementation prevents buffer overflow through several measures: 1) It uses strncpy() instead of strcpy() to limit the number of bytes copied, 2) It explicitly ensures null termination by setting the last character to '\\0', 3) It validates input length before processing, rejecting inputs that exceed the buffer size, and 4) It defines a clear MAX_INPUT_SIZE constant. The vulnerable code uses strcpy() which will continue copying past the end of the buffer if the input is longer than 128 bytes, potentially overwriting adjacent memory, corrupting the stack, and enabling exploitation techniques like return-oriented programming (ROP)."
+    explanation: "The secure implementation protects against buffer overflow through multiple safeguards: 1) It checks input length before processing, 2) It dynamically allocates memory with the exact required size based on the input length, 3) It uses strncpy() with proper length control instead of strcpy(), 4) It explicitly ensures null termination of the string, and 5) It properly frees the memory when done. The vulnerable implementation uses a fixed-size stack buffer with strcpy() which doesn't check boundaries, allowing attackers to overflow the buffer and potentially overwrite the return address or other stack variables, enabling code execution attacks."
   },
   {
     id: 'binary-security-2',
     title: 'Format String Vulnerability',
-    description: 'This C program logs user input. Does it contain any security vulnerabilities?',
+    description: 'This C code logs user input. Is it vulnerable to format string attacks?',
     difficulty: 'medium',
     category: 'Binary Security',
     languages: ['C'],
     type: 'single',
-    vulnerabilityType: 'Format String Vulnerability',
+    vulnerabilityType: 'Format String',
     code: `#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-void logUserInput(const char* username, const char* input) {
+void log_access(const char* username) {
     time_t now = time(NULL);
-    char timestamp[26];
+    char time_buffer[64];
     
-    // Format timestamp
-    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", localtime(&now));
+    // Format the current time
+    strftime(time_buffer, sizeof(time_buffer), 
+             "%Y-%m-%d %H:%M:%S", localtime(&now));
     
-    // Log the user input to console
-    printf("[%s] User %s provided input: ", timestamp, username);
-    printf(input);
+    // Log the access to stdout
+    printf("[%s] User access: ");
+    printf(username);
     printf("\\n");
     
-    // Also log to file
-    FILE* logfile = fopen("user_activity.log", "a");
+    // Also log to a file
+    FILE* logfile = fopen("access.log", "a");
     if (logfile) {
-        fprintf(logfile, "[%s] User %s provided input: ", timestamp, username);
-        fprintf(logfile, input);
-        fprintf(logfile, "\\n");
+        fprintf(logfile, "[%s] User access: %s\\n", 
+                time_buffer, username);
         fclose(logfile);
     }
 }
 
-int main(int argc, char** argv) {
-    if (argc != 3) {
-        fprintf(stderr, "Usage: %s <username> <input>\\n", argv[0]);
-        return EXIT_FAILURE;
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <username>\\n", argv[0]);
+        return 1;
     }
     
-    const char* username = argv[1];
-    const char* input = argv[2];
-    
-    logUserInput(username, input);
-    
-    return EXIT_SUCCESS;
+    log_access(argv[1]);
+    return 0;
 }`,
     answer: false,
-    explanation: "This code contains format string vulnerabilities in both printf(input) and fprintf(logfile, input) calls. Instead of using printf(input), which interprets input as a format string, it should use printf(\"%s\", input) to treat input as data only. When input is used as a format string, an attacker can provide format specifiers like %x, %s, or %n to read from or write to memory. This can lead to information disclosure (reading memory values), crashes, or even arbitrary code execution. The vulnerability exists in both the console logging and file logging sections."
+    explanation: "This code is vulnerable to format string attacks because it passes the user-controlled input (username) directly as the format string to printf(). An attacker could provide input containing format specifiers like '%x' or '%n' to leak memory contents or even write to memory. The correct way to log the username would be to use printf(\"[%s] User access: %s\\n\", time_buffer, username) with '%s' as the format specifier for the user input. Note that the file logging (fprintf) is done correctly because it uses a proper format string."
   }
 ];
