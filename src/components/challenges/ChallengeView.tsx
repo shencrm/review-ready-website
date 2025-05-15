@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/radio-group';
 import { Badge } from '@/components/ui/badge';
 import { useChallengeContext } from './ChallengeContext';
+import { toast } from '@/hooks/use-toast';
 
 interface ChallengeViewProps {
   challenge: any;
@@ -24,20 +25,29 @@ interface ChallengeViewProps {
 }
 
 const ChallengeView: React.FC<ChallengeViewProps> = ({ challenge, onBack }) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { markChallengeAttempt } = useChallengeContext();
   
   const isCorrect = () => {
     if (challenge.type === 'single') {
       return selectedAnswer === (challenge.answer ? 'secure' : 'vulnerable');
+    } else if (challenge.type === 'multiple-choice') {
+      return selectedAnswer === challenge.answer;
     } else {
       return selectedAnswer === challenge.answer;
     }
   };
   
   const handleSubmit = () => {
-    if (!selectedAnswer) return;
+    if (selectedAnswer === null) {
+      toast({
+        title: "No answer selected",
+        description: "Please select an answer before submitting.",
+        variant: "destructive"
+      });
+      return;
+    }
     
     setIsSubmitted(true);
     markChallengeAttempt(challenge.id, isCorrect());
@@ -83,7 +93,7 @@ const ChallengeView: React.FC<ChallengeViewProps> = ({ challenge, onBack }) => {
         
         <p className="mb-8 text-lg">{challenge.description}</p>
         
-        {challenge.type === 'single' ? (
+        {challenge.type === 'single' && (
           // Single code review
           <div className="mb-8">
             <CodeExample 
@@ -117,7 +127,9 @@ const ChallengeView: React.FC<ChallengeViewProps> = ({ challenge, onBack }) => {
               </RadioGroup>
             </div>
           </div>
-        ) : (
+        )}
+        
+        {challenge.type === 'comparison' && (
           // Comparison code review
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <div>
@@ -156,10 +168,36 @@ const ChallengeView: React.FC<ChallengeViewProps> = ({ challenge, onBack }) => {
           </div>
         )}
         
+        {challenge.type === 'multiple-choice' && (
+          // Multiple choice question
+          <div className="mb-8">
+            <CodeExample 
+              language={challenge.languages[0].toLowerCase()}
+              code={challenge.code}
+              title={`Review this code for security issues`}
+            />
+            
+            <div className="mt-6 mb-4">
+              <h3 className="text-xl font-bold mb-4">Select the correct answer:</h3>
+              
+              <RadioGroup value={selectedAnswer?.toString() || ''} onValueChange={(value) => setSelectedAnswer(parseInt(value))} className="space-y-3">
+                {challenge.options?.map((option, index) => (
+                  <div key={index} className="flex items-center space-x-3">
+                    <RadioGroupItem value={index.toString()} id={`option-${index}`} disabled={isSubmitted} />
+                    <label htmlFor={`option-${index}`} className="cursor-pointer">
+                      {option}
+                    </label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </div>
+          </div>
+        )}
+        
         {!isSubmitted ? (
           <Button 
             onClick={handleSubmit} 
-            disabled={!selectedAnswer}
+            disabled={selectedAnswer === null}
             className="w-full md:w-auto"
           >
             Submit Answer

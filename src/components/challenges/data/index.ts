@@ -24,6 +24,21 @@ import { securecodingChallenges } from './secure-coding';
 import { binarySecurityChallenges } from './binary-security';
 import { microserviceSecurityChallenges } from './microservice-security';
 
+// Import new challenge categories
+import { idorChallenges } from './idor';
+import { jwtSecurityChallenges } from './jwt-security';
+import { deserializationAttacksChallenges } from './deserialization-attacks';
+import { serverSideTemplateInjectionChallenges } from './server-side-template-injection';
+import { authorizationIssuesChallenges } from './authorization-issues';
+import { cryptographyFailuresChallenges } from './cryptography-failures';
+import { frontEndVulnerabilitiesChallenges } from './front-end-vulnerabilities';
+import { securityHeadersChallenges } from './security-headers';
+import { fileUploadVulnerabilitiesChallenges } from './file-upload-vulnerabilities';
+import { graphqlSecurityChallenges } from './graphql-security';
+import { devSecOpsChallenges } from './devsecops-challenges';
+import { hostSecurityChallenges } from './host-security';
+import { businessLogicFlawsChallenges } from './business-logic-flaws';
+
 // Combine all challenges into a single array
 export const challenges = [
   ...sqlInjectionChallenges,
@@ -48,7 +63,21 @@ export const challenges = [
   ...iotSecurityChallenges,
   ...securecodingChallenges,
   ...binarySecurityChallenges,
-  ...microserviceSecurityChallenges
+  ...microserviceSecurityChallenges,
+  // Add new challenge categories
+  ...idorChallenges,
+  ...jwtSecurityChallenges,
+  ...deserializationAttacksChallenges,
+  ...serverSideTemplateInjectionChallenges,
+  ...authorizationIssuesChallenges,
+  ...cryptographyFailuresChallenges,
+  ...frontEndVulnerabilitiesChallenges,
+  ...securityHeadersChallenges,
+  ...fileUploadVulnerabilitiesChallenges,
+  ...graphqlSecurityChallenges,
+  ...devSecOpsChallenges,
+  ...hostSecurityChallenges,
+  ...businessLogicFlawsChallenges
 ];
 
 // Export constants used in filters
@@ -75,7 +104,11 @@ export const categories = [
   'IoT Security',
   'Secure Coding',
   'Binary Security',
-  'Microservice Security'
+  'Microservice Security',
+  'DevSecOps',
+  'Operating System Security',
+  'Business Logic Flaws',
+  'Security Misconfigurations'
 ];
 
 export const languages = [
@@ -96,7 +129,9 @@ export const languages = [
   'Azure',
   'JSON',
   'Android',
-  'HTML'
+  'HTML',
+  'Bash',
+  'GraphQL'
 ];
 
 export const difficultyLevels = [

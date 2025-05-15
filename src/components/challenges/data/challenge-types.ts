@@ -6,11 +6,12 @@ export interface Challenge {
   difficulty: 'easy' | 'medium' | 'hard';
   category: string;
   languages: string[];
-  type: 'comparison' | 'single';
+  type: 'comparison' | 'single' | 'multiple-choice';
   vulnerabilityType?: string;
   code?: string;
-  answer?: boolean | string;
+  answer?: boolean | string | number;
   explanation: string;
   secureCode?: string;
   vulnerableCode?: string;
+  options?: string[];
 }
