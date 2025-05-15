@@ -105,7 +105,7 @@ const ChallengeView: React.FC<ChallengeViewProps> = ({ challenge, onBack }) => {
             <div className="mt-6 mb-4">
               <h3 className="text-xl font-bold mb-4">Is this code secure or vulnerable?</h3>
               
-              <RadioGroup value={selectedAnswer || ''} onValueChange={setSelectedAnswer} className="space-y-3">
+              <RadioGroup value={selectedAnswer?.toString() || ''} onValueChange={setSelectedAnswer} className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="secure" id="secure" disabled={isSubmitted} />
                   <label htmlFor="secure" className="flex items-center cursor-pointer">
@@ -150,7 +150,7 @@ const ChallengeView: React.FC<ChallengeViewProps> = ({ challenge, onBack }) => {
             <div className="lg:col-span-2 mt-4">
               <h3 className="text-xl font-bold mb-4">Which implementation is secure?</h3>
               
-              <RadioGroup value={selectedAnswer || ''} onValueChange={setSelectedAnswer} className="space-y-3">
+              <RadioGroup value={selectedAnswer?.toString() || ''} onValueChange={setSelectedAnswer} className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="secure" id="a-secure" disabled={isSubmitted} />
                   <label htmlFor="a-secure" className="cursor-pointer">
