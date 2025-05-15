@@ -45,9 +45,9 @@ jobs:
       run: |
         echo "Deploying to production server..."
         curl -X POST "https://api.example.com/deploy" \\
-          -H "Authorization: Bearer ${{ secrets.DEPLOY_TOKEN }}" \\
+          -H "Authorization: Bearer \${{ secrets.DEPLOY_TOKEN }}" \\
           -H "Content-Type: application/json" \\
-          -d '{"version": "${{ github.sha }}", "environment": "production"}'`,
+          -d '{"version": "\${{ github.sha }}", "environment": "production"}'`,
     options: [
       'No dependency vulnerability scanning',
       'Hardcoded deployment credentials',
