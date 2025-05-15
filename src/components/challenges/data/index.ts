@@ -14,6 +14,15 @@ import { accessControlChallenges } from './access-control';
 import { xxeChallenges } from './xxe';
 import { raceConditionChallenges } from './race-conditions';
 import { apiSecurityChallenges } from './api-security';
+import { webSecurityChallenges } from './web-security';
+import { clientSideSecurityChallenges } from './client-side-security';
+import { mobileSecurityChallenges } from './mobile-security';
+import { containerSecurityChallenges } from './container-security';
+import { cloudSecurityChallenges } from './cloud-security';
+import { iotSecurityChallenges } from './iot-security';
+import { securecodingChallenges } from './secure-coding';
+import { binarySecurityChallenges } from './binary-security';
+import { microserviceSecurityChallenges } from './microservice-security';
 
 // Combine all challenges into a single array
 export const challenges = [
@@ -30,7 +39,16 @@ export const challenges = [
   ...accessControlChallenges,
   ...xxeChallenges,
   ...raceConditionChallenges,
-  ...apiSecurityChallenges
+  ...apiSecurityChallenges,
+  ...webSecurityChallenges,
+  ...clientSideSecurityChallenges,
+  ...mobileSecurityChallenges,
+  ...containerSecurityChallenges,
+  ...cloudSecurityChallenges,
+  ...iotSecurityChallenges,
+  ...securecodingChallenges,
+  ...binarySecurityChallenges,
+  ...microserviceSecurityChallenges
 ];
 
 // Export constants used in filters
@@ -48,7 +66,16 @@ export const categories = [
   'Broken Access Control', 
   'XXE', 
   'Race Conditions', 
-  'API Security'
+  'API Security',
+  'Web Security',
+  'Client-Side Security',
+  'Mobile Security',
+  'Container Security',
+  'Cloud Security',
+  'IoT Security',
+  'Secure Coding',
+  'Binary Security',
+  'Microservice Security'
 ];
 
 export const languages = [
@@ -60,7 +87,15 @@ export const languages = [
   'C#', 
   'React', 
   'Node.js', 
-  'React Native'
+  'React Native',
+  'C',
+  'Docker',
+  'Kubernetes',
+  'YAML',
+  'AWS',
+  'Azure',
+  'JSON',
+  'Android'
 ];
 
 export const difficultyLevels = [
