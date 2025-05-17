@@ -13,8 +13,8 @@ const CodeExample: React.FC<CodeExampleProps> = ({ language, code, title, isVuln
     <div className={`code-block my-6 border ${isVulnerable ? 'border-red-400' : isVulnerable === false ? 'border-green-500' : 'border-cybr-muted'}`}>
       {title && (
         <div className={`flex items-center justify-between px-4 py-2 border-b ${
-          isVulnerable ? 'bg-red-50 border-red-400' : 
-          isVulnerable === false ? 'bg-green-50 border-green-500' : 
+          isVulnerable ? 'bg-slate-200 dark:bg-slate-800 border-red-400' : 
+          isVulnerable === false ? 'bg-slate-200 dark:bg-slate-800 border-green-500' : 
           'bg-cybr-card-muted border-cybr-muted'
         }`}>
           <div className="flex items-center">
@@ -23,16 +23,16 @@ const CodeExample: React.FC<CodeExampleProps> = ({ language, code, title, isVuln
                 {isVulnerable ? '!' : '✓'}
               </span>
             )}
-            <span className="text-sm font-mono font-semibold">
+            <span className="text-sm font-mono font-semibold text-slate-900 dark:text-slate-100">
               {title}
               {isVulnerable !== undefined && (
-                <span className="ml-2 text-xs font-normal">
+                <span className="ml-2 text-xs font-normal text-slate-700 dark:text-slate-300">
                   {isVulnerable ? '(Vulnerable - Do Not Use)' : '(Secure - Recommended)'}
                 </span>
               )}
             </span>
           </div>
-          <span className="text-xs text-cybr-primary/70">{language}</span>
+          <span className="text-xs text-cybr-primary">{language}</span>
         </div>
       )}
       <pre className="p-4 border-0 overflow-x-auto bg-cybr-card">
