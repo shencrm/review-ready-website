@@ -46,6 +46,12 @@ const ChallengeExplorer: React.FC = () => {
   
   const handleBackToExplorer = () => {
     setCurrentChallenge(null);
+    window.scrollTo(0, 0);
+  };
+  
+  const selectChallenge = (challenge: any) => {
+    setCurrentChallenge(challenge);
+    window.scrollTo(0, 0);
   };
   
   // Calculate counts
@@ -164,7 +170,7 @@ const ChallengeExplorer: React.FC = () => {
               <ChallengeCard 
                 key={challenge.id} 
                 challenge={challenge} 
-                onClick={() => setCurrentChallenge(challenge)}
+                onClick={() => selectChallenge(challenge)}
                 completed={progress[challenge.id]?.completed || false}
                 correct={progress[challenge.id]?.correct || false}
               />

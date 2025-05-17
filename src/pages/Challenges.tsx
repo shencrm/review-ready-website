@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '@/components/NavBar';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Shield, Code, Check, AlertTriangle, FileCode } from 'lucide-react';
@@ -16,6 +16,11 @@ const Challenges: React.FC = () => {
     { id: 'leaderboard', title: 'Leaderboard', icon: <Code className="h-5 w-5" /> },
     { id: 'resources', title: 'Learning Resources', icon: <AlertTriangle className="h-5 w-5" /> },
   ];
+  
+  // Scroll to top when changing sections
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeSection]);
 
   return (
     <div className="min-h-screen flex flex-col bg-cybr-background text-cybr-foreground">

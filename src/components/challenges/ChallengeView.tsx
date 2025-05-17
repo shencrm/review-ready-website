@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useChallengeContext } from './ChallengeContext';
@@ -21,6 +21,11 @@ const ChallengeView: React.FC<ChallengeViewProps> = ({ challenge, onBack }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { markChallengeAttempt } = useChallengeContext();
+  
+  // Auto-scroll to top when challenge is opened
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [challenge]);
   
   const isCorrect = () => {
     if (challenge.type === 'single') {
