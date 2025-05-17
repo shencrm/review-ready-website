@@ -47,6 +47,7 @@ import { advancedWebAttacksChallenges } from './advanced-web-attacks';
 import { secureArchitectureChallenges } from './secure-architecture';
 import { defensiveCodingChallenges } from './defensive-coding';
 import { browserSecurityChallenges } from './browser-security';
+import { apiSecurityBestPracticesChallenges } from './api-security-best-practices';
 
 // Combine all challenges into a single array
 export const challenges = [
@@ -95,7 +96,8 @@ export const challenges = [
   ...advancedWebAttacksChallenges,
   ...secureArchitectureChallenges,
   ...defensiveCodingChallenges,
-  ...browserSecurityChallenges
+  ...browserSecurityChallenges,
+  ...apiSecurityBestPracticesChallenges
 ];
 
 // Export constants used in filters
