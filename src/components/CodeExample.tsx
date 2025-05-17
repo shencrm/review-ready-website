@@ -36,7 +36,7 @@ const CodeExample: React.FC<CodeExampleProps> = ({ language, code, title, isVuln
         </div>
       )}
       <pre className="p-4 border-0 overflow-x-auto bg-cybr-card">
-        <code className="language-{language}">{code}</code>
+        <code className={`language-${language}`}>{code}</code>
       </pre>
     </div>
   );
