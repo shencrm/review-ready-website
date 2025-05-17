@@ -97,7 +97,7 @@ const XSS: React.FC = () => {
         <div>
           <h4 className="text-xl font-semibold mb-4">Sample XSS Payloads</h4>
           <Tabs defaultValue="basic">
-            <TabsList>
+            <TabsList className="bg-slate-200 dark:bg-slate-800">
               <TabsTrigger value="basic">Basic Payloads</TabsTrigger>
               <TabsTrigger value="advanced">Advanced Payloads</TabsTrigger>
               <TabsTrigger value="bypass">Filter Bypasses</TabsTrigger>
@@ -275,7 +275,7 @@ function Comment({ userComment }) {
         <div>
           <h4 className="text-xl font-semibold mb-4">Comprehensive Prevention Techniques</h4>
           <Tabs defaultValue="input">
-            <TabsList>
+            <TabsList className="bg-slate-200 dark:bg-slate-800">
               <TabsTrigger value="input">Input Handling</TabsTrigger>
               <TabsTrigger value="output">Output Encoding</TabsTrigger>
               <TabsTrigger value="headers">Security Headers</TabsTrigger>
@@ -316,22 +316,22 @@ function Comment({ userComment }) {
         <div>
           <h4 className="text-xl font-semibold mb-4">Development Environment Considerations</h4>
           <div className="space-y-3">
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-md">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-slate-800 rounded-md">
               <h5 className="font-semibold text-lg mb-2">Frontend Frameworks</h5>
               <p className="text-sm">Modern frameworks like React, Vue, and Angular provide built-in XSS protection by automatically escaping content, but can be bypassed when using unsafe methods like <code>dangerouslySetInnerHTML</code> (React), <code>v-html</code> (Vue), or <code>bypassSecurityTrustHtml</code> (Angular). Always avoid these methods unless absolutely necessary and sanitize input first.</p>
             </div>
             
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-md">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-slate-800 rounded-md">
               <h5 className="font-semibold text-lg mb-2">Template Engines</h5>
               <p className="text-sm">Server-side template engines like EJS, Handlebars, or Jinja2 may have different default behaviors for escaping. Some automatically escape output while others require explicit escaping. Always verify the security features of your template engine and test thoroughly.</p>
             </div>
             
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-md">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-slate-800 rounded-md">
               <h5 className="font-semibold text-lg mb-2">AJAX and API Endpoints</h5>
               <p className="text-sm">JSON APIs can be vulnerable to XSS if responses containing untrusted data are parsed and inserted into the DOM. Set proper <code>Content-Type</code> headers (application/json) and validate input server-side regardless of client-side validation.</p>
             </div>
             
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-md">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-slate-800 rounded-md">
               <h5 className="font-semibold text-lg mb-2">User-Generated Content</h5>
               <p className="text-sm">When allowing rich HTML content (blogs, forums), use libraries like DOMPurify to sanitize HTML, restrict allowed tags and attributes to a safe subset, and consider using markdown instead of raw HTML.</p>
             </div>
