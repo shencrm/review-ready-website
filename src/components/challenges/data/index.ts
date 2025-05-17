@@ -23,7 +23,7 @@ import { securecodingChallenges } from './secure-coding';
 import { binarySecurityChallenges } from './binary-security';
 import { microserviceSecurityChallenges } from './microservice-security';
 
-// Import new challenge categories
+// Import previously added challenge categories
 import { idorChallenges } from './idor';
 import { jwtSecurityChallenges } from './jwt-security';
 import { deserializationAttacksChallenges } from './deserialization-attacks';
@@ -38,7 +38,7 @@ import { devSecOpsChallenges } from './devsecops-challenges';
 import { hostSecurityChallenges } from './host-security';
 import { businessLogicFlawsChallenges } from './business-logic-flaws';
 
-// Import the new challenge categories
+// Import the secure coding best practices challenges
 import { securecodingBestPracticesChallenges } from './secure-coding-best-practices';
 import { sessionManagementChallenges } from './session-management';
 import { webSecurityMisconfigurationsChallenges } from './web-security-misconfigurations';
@@ -48,6 +48,13 @@ import { secureArchitectureChallenges } from './secure-architecture';
 import { defensiveCodingChallenges } from './defensive-coding';
 import { browserSecurityChallenges } from './browser-security';
 import { apiSecurityBestPracticesChallenges } from './api-security-best-practices';
+
+// Import new security challenges categories
+import { mobileSecurityChallenges as newMobileSecurityChallenges } from './mobile-security-challenges';
+import { webSecurityChallenges as newWebSecurityChallenges } from './web-security-challenges';
+import { infrastructureSecurityChallenges } from './infrastructure-security-challenges';
+import { cloudSecurityChallenges as newCloudSecurityChallenges } from './cloud-security-challenges';
+import { databaseSecurityChallenges } from './database-security-challenges';
 
 // Combine all challenges into a single array
 export const challenges = [
@@ -74,7 +81,7 @@ export const challenges = [
   ...securecodingChallenges,
   ...binarySecurityChallenges,
   ...microserviceSecurityChallenges,
-  // Add previously added challenge categories
+  // Previously added challenge categories
   ...idorChallenges,
   ...jwtSecurityChallenges,
   ...deserializationAttacksChallenges,
@@ -88,7 +95,7 @@ export const challenges = [
   ...devSecOpsChallenges,
   ...hostSecurityChallenges,
   ...businessLogicFlawsChallenges,
-  // Add new challenge categories
+  // Secure coding best practices challenges
   ...securecodingBestPracticesChallenges,
   ...sessionManagementChallenges,
   ...webSecurityMisconfigurationsChallenges,
@@ -97,7 +104,13 @@ export const challenges = [
   ...secureArchitectureChallenges,
   ...defensiveCodingChallenges,
   ...browserSecurityChallenges,
-  ...apiSecurityBestPracticesChallenges
+  ...apiSecurityBestPracticesChallenges,
+  // New security challenges
+  ...newMobileSecurityChallenges,
+  ...newWebSecurityChallenges,
+  ...infrastructureSecurityChallenges,
+  ...newCloudSecurityChallenges,
+  ...databaseSecurityChallenges
 ];
 
 // Export constants used in filters
@@ -128,7 +141,9 @@ export const categories = [
   'DevSecOps',
   'Operating System Security',
   'Business Logic Flaws',
-  'Security Misconfigurations'
+  'Security Misconfigurations',
+  'Database Security',
+  'Infrastructure Security'
 ];
 
 export const languages = [
@@ -147,13 +162,19 @@ export const languages = [
   'YAML',
   'AWS',
   'Azure',
+  'GCP',
   'JSON',
   'Android',
+  'iOS',
   'HTML',
   'Bash',
   'GraphQL',
-  'iOS',
-  'XML'
+  'XML',
+  'SQL',
+  'MongoDB',
+  'HTTP',
+  'Networking',
+  'Windows'
 ];
 
 export const difficultyLevels = [

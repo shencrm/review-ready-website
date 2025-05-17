@@ -19,11 +19,13 @@ const MultipleChoiceChallenge: React.FC<MultipleChoiceChallengeProps> = ({
 }) => {
   return (
     <div className="mb-8">
-      <CodeExample 
-        language={challenge.languages[0].toLowerCase()}
-        code={challenge.code}
-        title={`Review this code for security issues`}
-      />
+      {challenge.code && (
+        <CodeExample 
+          language={challenge.languages[0].toLowerCase()}
+          code={challenge.code}
+          title={`Review this code for security issues`}
+        />
+      )}
       
       <div className="mt-6 mb-4">
         <h3 className="text-xl font-bold mb-4">Select the correct answer:</h3>
