@@ -78,7 +78,7 @@ const SQLInjection: React.FC = () => {
         <div>
           <h4 className="text-xl font-semibold mb-4">Types of SQL Injection</h4>
           <Tabs defaultValue="inband">
-            <TabsList className="grid grid-cols-1 sm:grid-cols-3 w-full">
+            <TabsList className="grid grid-cols-1 sm:grid-cols-3 w-full bg-slate-200 dark:bg-slate-800">
               <TabsTrigger value="inband">In-band SQLi</TabsTrigger>
               <TabsTrigger value="blind">Blind SQLi</TabsTrigger>
               <TabsTrigger value="outofband">Out-of-band SQLi</TabsTrigger>
@@ -307,22 +307,22 @@ const user = await prisma.user.findUnique({
         <div>
           <h4 className="text-xl font-semibold mb-4">SQL Injection Testing Tools</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border p-4 rounded-md">
+            <div className="border p-4 rounded-md bg-slate-100 dark:bg-slate-800">
               <h5 className="font-semibold mb-2">SQLmap</h5>
               <p className="text-sm">Automated SQL injection detection and exploitation tool. Can automatically detect and exploit various types of SQL injection vulnerabilities.</p>
               <p className="text-xs mt-2 italic">Usage: <code>sqlmap -u &quot;http://example.com/page?id=1&quot; --dbs</code></p>
             </div>
-            <div className="border p-4 rounded-md">
+            <div className="border p-4 rounded-md bg-slate-100 dark:bg-slate-800">
               <h5 className="font-semibold mb-2">Burp Suite</h5>
               <p className="text-sm">Web proxy with built-in SQL injection scanner (in Professional edition) and features that facilitate manual testing.</p>
               <p className="text-xs mt-2 italic">Features: Intruder, Repeater, Scanner</p>
             </div>
-            <div className="border p-4 rounded-md">
+            <div className="border p-4 rounded-md bg-slate-100 dark:bg-slate-800">
               <h5 className="font-semibold mb-2">OWASP ZAP</h5>
               <p className="text-sm">Free alternative to Burp Suite with active and passive scanning capabilities for SQL injection.</p>
               <p className="text-xs mt-2 italic">Features: Spider, Active Scanner, Fuzzer</p>
             </div>
-            <div className="border p-4 rounded-md">
+            <div className="border p-4 rounded-md bg-slate-100 dark:bg-slate-800">
               <h5 className="font-semibold mb-2">NoSQLMap</h5>
               <p className="text-sm">Similar to SQLmap but designed for NoSQL database injection testing.</p>
               <p className="text-xs mt-2 italic">Useful for MongoDB, Cassandra, etc.</p>
@@ -402,7 +402,7 @@ const user = await prisma.user.findUnique({
         <div>
           <h4 className="text-xl font-semibold mb-4">Database-Specific Considerations</h4>
           <Tabs defaultValue="mysql">
-            <TabsList className="grid grid-cols-2 md:grid-cols-4 w-full">
+            <TabsList className="grid grid-cols-2 md:grid-cols-4 w-full bg-slate-200 dark:bg-slate-800">
               <TabsTrigger value="mysql">MySQL</TabsTrigger>
               <TabsTrigger value="mssql">SQL Server</TabsTrigger>
               <TabsTrigger value="oracle">Oracle</TabsTrigger>
