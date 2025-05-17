@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap');
 
 @tailwind base;
@@ -63,7 +62,7 @@
   }
 
   .code-block {
-    @apply relative bg-cybr-muted/80 border border-cybr-primary/20 rounded-md p-4 overflow-hidden;
+    @apply relative bg-transparent border border-cybr-primary/20 rounded-md overflow-hidden;
   }
 
   .code-block::before {
