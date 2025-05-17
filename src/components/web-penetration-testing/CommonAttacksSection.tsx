@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Database, ShieldAlert, Code, Bug, KeyRound, File, Lock, ShieldX } from 'lucide-react';
 import SQLInjection from './attacks/SQLInjection';
 import XSS from './attacks/XSS';
@@ -24,6 +24,8 @@ import OAuthVulnerabilities from './attacks/OAuthVulnerabilities';
 import WebCachePoisoning from './attacks/WebCachePoisoning';
 import CSPBypass from './attacks/CSPBypass';
 import OtherInjectionFlaws from './attacks/OtherInjectionFlaws';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface AttackType {
   id: string;
@@ -58,58 +60,76 @@ const CommonAttacksSection: React.FC = () => {
     { id: 'other-injection', title: 'Other Injection Flaws', icon: <Code className="h-5 w-5" /> },
   ];
 
+  const [selectedAttack, setSelectedAttack] = useState<string>('sql-injection');
+
+  // Get attack component based on selected ID
+  const renderAttackComponent = () => {
+    switch (selectedAttack) {
+      case 'sql-injection': return <SQLInjection />;
+      case 'xss': return <XSS />;
+      case 'csrf': return <CSRF />;
+      case 'auth': return <BrokenAuthentication />;
+      case 'access': return <BrokenAccessControl />;
+      case 'xxe': return <XXE />;
+      case 'deserial': return <InsecureDeserialization />;
+      case 'cmd-injection': return <CommandInjection />;
+      case 'misconfig': return <SecurityMisconfigurations />;
+      case 'file-traversal': return <PathTraversal />;
+      case 'ssrf': return <SSRF />;
+      case 'http-smuggling': return <HTTPRequestSmuggling />;
+      case 'jwt': return <JWTAttacks />;
+      case 'api': return <APIVulnerabilities />;
+      case 'race': return <RaceConditions />;
+      case 'cors': return <CORSMisconfigurations />;
+      case 'websocket': return <WebSocketVulnerabilities />;
+      case 'prototype': return <PrototypePollution />;
+      case 'graphql': return <GraphQLVulnerabilities />;
+      case 'oauth': return <OAuthVulnerabilities />;
+      case 'cache': return <WebCachePoisoning />;
+      case 'csp': return <CSPBypass />;
+      case 'other-injection': return <OtherInjectionFlaws />;
+      default: return <SQLInjection />;
+    }
+  };
+
+  // Scroll to top when selected attack changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [selectedAttack]);
+
   return (
     <>
       <h2 className="section-title">Common Web Attacks</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
-        {/* Left sidebar with attack types */}
-        <div className="md:col-span-1 bg-cybr-muted/20 rounded-lg p-4 self-start sticky top-20">
-          <h3 className="text-lg font-semibold mb-4 text-cybr-primary">Attack Types</h3>
-          <ul className="space-y-1">
-            {attackTypes.map(attack => (
-              <li key={attack.id}>
-                <a 
-                  href={`#${attack.id}`}
-                  className="flex items-center gap-2 p-2 rounded-md hover:bg-cybr-muted/30 transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById(attack.id)?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  {attack.icon}
-                  <span>{attack.title}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+        {/* Left sidebar with attack types - now using ScrollArea */}
+        <div className="md:col-span-1">
+          <div className="sticky top-20">
+            <div className="bg-cybr-muted/20 rounded-lg p-4">
+              <h3 className="text-lg font-semibold mb-4 text-cybr-primary">Attack Types</h3>
+              
+              <ScrollArea className="h-[calc(100vh-200px)] pr-4">
+                <ul className="space-y-1">
+                  {attackTypes.map(attack => (
+                    <li key={attack.id}>
+                      <button 
+                        className={`flex w-full items-center gap-2 p-2 rounded-md hover:bg-cybr-muted/30 transition-colors ${selectedAttack === attack.id ? 'bg-cybr-muted/40 text-cybr-primary font-medium' : ''}`}
+                        onClick={() => setSelectedAttack(attack.id)}
+                      >
+                        {attack.icon}
+                        <span>{attack.title}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </ScrollArea>
+            </div>
+          </div>
         </div>
         
-        {/* Right content area */}
-        <div className="md:col-span-3 space-y-16">
-          <SQLInjection />
-          <XSS />
-          <CSRF />
-          <BrokenAuthentication />
-          <BrokenAccessControl />
-          <XXE />
-          <InsecureDeserialization />
-          <CommandInjection />
-          <SecurityMisconfigurations />
-          <PathTraversal />
-          <SSRF />
-          <HTTPRequestSmuggling />
-          <JWTAttacks />
-          <APIVulnerabilities />
-          <RaceConditions />
-          <CORSMisconfigurations />
-          <WebSocketVulnerabilities />
-          <PrototypePollution />
-          <GraphQLVulnerabilities />
-          <OAuthVulnerabilities />
-          <WebCachePoisoning />
-          <CSPBypass />
-          <OtherInjectionFlaws />
+        {/* Right content area - showing only selected attack */}
+        <div className="md:col-span-3">
+          {renderAttackComponent()}
         </div>
       </div>
     </>

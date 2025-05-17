@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import CodeExample from '@/components/CodeExample';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -17,6 +17,11 @@ const MultipleChoiceChallenge: React.FC<MultipleChoiceChallengeProps> = ({
   setSelectedAnswer, 
   isSubmitted 
 }) => {
+  // Scroll to top when challenge changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [challenge]);
+
   return (
     <div className="mb-8">
       {challenge.code && (
