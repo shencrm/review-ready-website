@@ -1,5 +1,4 @@
 
-// This file exports all challenge data and categorizations
 import { sqlInjectionChallenges } from './sql-injection';
 import { xssChallenges } from './xss';
 import { csrfChallenges } from './csrf';
@@ -39,6 +38,16 @@ import { devSecOpsChallenges } from './devsecops-challenges';
 import { hostSecurityChallenges } from './host-security';
 import { businessLogicFlawsChallenges } from './business-logic-flaws';
 
+// Import the new challenge categories
+import { securecodingBestPracticesChallenges } from './secure-coding-best-practices';
+import { sessionManagementChallenges } from './session-management';
+import { webSecurityMisconfigurationsChallenges } from './web-security-misconfigurations';
+import { mobileSecurityIssuesChallenges } from './mobile-security-issues';
+import { advancedWebAttacksChallenges } from './advanced-web-attacks';
+import { secureArchitectureChallenges } from './secure-architecture';
+import { defensiveCodingChallenges } from './defensive-coding';
+import { browserSecurityChallenges } from './browser-security';
+
 // Combine all challenges into a single array
 export const challenges = [
   ...sqlInjectionChallenges,
@@ -64,7 +73,7 @@ export const challenges = [
   ...securecodingChallenges,
   ...binarySecurityChallenges,
   ...microserviceSecurityChallenges,
-  // Add new challenge categories
+  // Add previously added challenge categories
   ...idorChallenges,
   ...jwtSecurityChallenges,
   ...deserializationAttacksChallenges,
@@ -77,7 +86,16 @@ export const challenges = [
   ...graphqlSecurityChallenges,
   ...devSecOpsChallenges,
   ...hostSecurityChallenges,
-  ...businessLogicFlawsChallenges
+  ...businessLogicFlawsChallenges,
+  // Add new challenge categories
+  ...securecodingBestPracticesChallenges,
+  ...sessionManagementChallenges,
+  ...webSecurityMisconfigurationsChallenges,
+  ...mobileSecurityIssuesChallenges,
+  ...advancedWebAttacksChallenges,
+  ...secureArchitectureChallenges,
+  ...defensiveCodingChallenges,
+  ...browserSecurityChallenges
 ];
 
 // Export constants used in filters
@@ -131,7 +149,9 @@ export const languages = [
   'Android',
   'HTML',
   'Bash',
-  'GraphQL'
+  'GraphQL',
+  'iOS',
+  'XML'
 ];
 
 export const difficultyLevels = [
