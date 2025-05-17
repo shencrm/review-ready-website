@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Code } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
@@ -316,22 +315,22 @@ function Comment({ userComment }) {
         <div>
           <h4 className="text-xl font-semibold mb-4">Development Environment Considerations</h4>
           <div className="space-y-3">
-            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold text-lg mb-2">Frontend Frameworks</h5>
               <p className="text-sm">Modern frameworks like React, Vue, and Angular provide built-in XSS protection by automatically escaping content, but can be bypassed when using unsafe methods like <code>dangerouslySetInnerHTML</code> (React), <code>v-html</code> (Vue), or <code>bypassSecurityTrustHtml</code> (Angular). Always avoid these methods unless absolutely necessary and sanitize input first.</p>
             </div>
             
-            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold text-lg mb-2">Template Engines</h5>
               <p className="text-sm">Server-side template engines like EJS, Handlebars, or Jinja2 may have different default behaviors for escaping. Some automatically escape output while others require explicit escaping. Always verify the security features of your template engine and test thoroughly.</p>
             </div>
             
-            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold text-lg mb-2">AJAX and API Endpoints</h5>
               <p className="text-sm">JSON APIs can be vulnerable to XSS if responses containing untrusted data are parsed and inserted into the DOM. Set proper <code>Content-Type</code> headers (application/json) and validate input server-side regardless of client-side validation.</p>
             </div>
             
-            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold text-lg mb-2">User-Generated Content</h5>
               <p className="text-sm">When allowing rich HTML content (blogs, forums), use libraries like DOMPurify to sanitize HTML, restrict allowed tags and attributes to a safe subset, and consider using markdown instead of raw HTML.</p>
             </div>
@@ -342,27 +341,27 @@ function Comment({ userComment }) {
         <div>
           <h4 className="text-xl font-semibold mb-4">Special XSS Cases and Edge Scenarios</h4>
           <div className="space-y-3">
-            <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold mb-2">Blind XSS</h5>
               <p className="text-sm">Vulnerabilities that only trigger in specific contexts not immediately visible to the attacker, such as admin panels, logs, or support tickets. Use tools like XSS Hunter to detect these by including callbacks in payloads.</p>
             </div>
             
-            <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold mb-2">Self-XSS</h5>
               <p className="text-sm">Requires the victim to paste malicious code into their browser. While not directly exploitable by attackers, it can be combined with social engineering to trick users into executing malicious code against themselves.</p>
             </div>
             
-            <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold mb-2">mXSS (Mutation-based XSS)</h5>
               <p className="text-sm">Occurs when seemingly safe HTML is transformed into a malicious form by the browser's parser or DOM manipulation. Often bypasses sanitizers that don't account for browser parsing quirks.</p>
             </div>
             
-            <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold mb-2">CSP Bypass Techniques</h5>
               <p className="text-sm">Advanced attacks that circumvent Content-Security-Policy protections through policy misconfigurations, JSONP endpoints, or unsafe-eval usage. Always test CSP configurations thoroughly.</p>
             </div>
             
-            <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <div className="p-4 bg-cybr-muted/50 rounded-md">
               <h5 className="font-semibold mb-2">XSS in Unusual Contexts</h5>
               <p className="text-sm">SVG images, CSS contexts, PDF generation, and other non-traditional HTML contexts can harbor XSS vulnerabilities that require specialized testing and mitigation approaches.</p>
             </div>
