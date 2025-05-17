@@ -82,7 +82,7 @@ const ToolsCheatSheetsSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold mb-2">Reconnaissance</h4>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-3 rounded text-sm overflow-x-auto">
+            <pre className="bg-cybr-muted p-3 rounded text-sm overflow-x-auto">
               <code># Find subdomains
 amass enum -d example.com
 
@@ -97,7 +97,7 @@ ffuf -w wordlist.txt -u https://example.com/FUZZ
           
           <div>
             <h4 className="font-semibold mb-2">SQL Injection</h4>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-3 rounded text-sm overflow-x-auto">
+            <pre className="bg-cybr-muted p-3 rounded text-sm overflow-x-auto">
               <code># Basic tests
 ' OR 1=1 --
 " OR 1=1 --

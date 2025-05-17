@@ -13,8 +13,8 @@ const CodeExample: React.FC<CodeExampleProps> = ({ language, code, title, isVuln
     <div className={`code-block my-6 border ${isVulnerable ? 'border-red-400' : isVulnerable === false ? 'border-green-500' : 'border-cybr-muted'}`}>
       {title && (
         <div className={`flex items-center justify-between px-4 py-2 border-b ${
-          isVulnerable ? 'bg-slate-200 dark:bg-slate-800 border-red-400' : 
-          isVulnerable === false ? 'bg-slate-200 dark:bg-slate-800 border-green-500' : 
+          isVulnerable ? 'bg-cybr-muted border-red-400' : 
+          isVulnerable === false ? 'bg-cybr-muted border-green-500' : 
           'bg-cybr-card-muted border-cybr-muted'
         }`}>
           <div className="flex items-center">
