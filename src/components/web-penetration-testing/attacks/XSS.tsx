@@ -5,10 +5,8 @@ import SecurityCard from '@/components/SecurityCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
-
 const XSS: React.FC = () => {
-  return (
-    <section id="xss" className="scroll-mt-20">
+  return <section id="xss" className="scroll-mt-20">
       <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">Cross-Site Scripting (XSS)</h3>
       
       <div className="space-y-6">
@@ -20,7 +18,7 @@ const XSS: React.FC = () => {
             malicious redirects, and website defacement. XSS is consistently ranked among the top web application vulnerabilities.
           </p>
           
-          <Alert className="mb-4 bg-amber-50 text-amber-900 dark:bg-amber-900/20 dark:text-amber-200">
+          <Alert className="mb-4 text-amber-900 dark:text-amber-200 bg-cybr-muted">
             <InfoIcon className="h-4 w-4" />
             <AlertTitle>Attacker's Goal</AlertTitle>
             <AlertDescription>
@@ -34,21 +32,9 @@ const XSS: React.FC = () => {
         <div>
           <h4 className="text-xl font-semibold mb-4">Types of XSS Attacks</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <SecurityCard
-              title="Reflected XSS"
-              description="Non-persistent attack where malicious script is reflected off a web server, typically through URLs, search results, or error messages. The attacker tricks victims into clicking malicious links."
-              severity="medium"
-            />
-            <SecurityCard
-              title="Stored XSS"
-              description="Malicious script is permanently stored on the target server (e.g., in a database, comment field, forum post) and later retrieved by victims during normal browsing. Most dangerous form of XSS."
-              severity="high"
-            />
-            <SecurityCard
-              title="DOM-based XSS"
-              description="Vulnerability exists in client-side code rather than server-side code. JavaScript modifies the DOM in an unsafe way based on attacker-controllable data sources like URL fragments or localStorage."
-              severity="medium"
-            />
+            <SecurityCard title="Reflected XSS" description="Non-persistent attack where malicious script is reflected off a web server, typically through URLs, search results, or error messages. The attacker tricks victims into clicking malicious links." severity="medium" />
+            <SecurityCard title="Stored XSS" description="Malicious script is permanently stored on the target server (e.g., in a database, comment field, forum post) and later retrieved by victims during normal browsing. Most dangerous form of XSS." severity="high" />
+            <SecurityCard title="DOM-based XSS" description="Vulnerability exists in client-side code rather than server-side code. JavaScript modifies the DOM in an unsafe way based on attacker-controllable data sources like URL fragments or localStorage." severity="medium" />
           </div>
         </div>
         
@@ -179,11 +165,7 @@ const XSS: React.FC = () => {
         {/* Examples of Vulnerable Code */}
         <div>
           <h4 className="text-xl font-semibold mb-4">Example Vulnerable Code</h4>
-          <CodeExample 
-            language="javascript" 
-            isVulnerable={true}
-            title="Vulnerable Code" 
-            code={`// Directly inserting user input into HTML
+          <CodeExample language="javascript" isVulnerable={true} title="Vulnerable Code" code={`// Directly inserting user input into HTML
 document.getElementById("output").innerHTML = 
   "Search results for: " + userInput;
 
@@ -200,14 +182,9 @@ echo '<div>Welcome, ' . $_GET['name'] . '!</div>';
 function Comment({ userComment }) {
   return <div dangerouslySetInnerHTML={{ __html: userComment }} />;
 }
-// This renders userComment as HTML without sanitization`} 
-          />
+// This renders userComment as HTML without sanitization`} />
           
-          <CodeExample 
-            language="javascript" 
-            isVulnerable={false}
-            title="Secure Implementation" 
-            code={`// Using safe methods to add text content
+          <CodeExample language="javascript" isVulnerable={false} title="Secure Implementation" code={`// Using safe methods to add text content
 document.getElementById("output").textContent = 
   "Search results for: " + userInput;
 
@@ -237,8 +214,7 @@ function Comment({ userComment }) {
 // 2. Use frameworks that escape output by default (React, Vue, Angular)
 // 3. Apply input validation with allowlists
 // 4. Use HttpOnly cookies to prevent JavaScript access to sensitive cookies
-// 5. Use X-XSS-Protection header for older browsers`} 
-          />
+// 5. Use X-XSS-Protection header for older browsers`} />
         </div>
         
         {/* Step-by-Step Detection */}
@@ -368,8 +344,6 @@ function Comment({ userComment }) {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default XSS;
