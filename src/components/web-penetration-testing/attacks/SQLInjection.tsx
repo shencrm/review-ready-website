@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Database } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
@@ -7,10 +6,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
 const SQLInjection: React.FC = () => {
-  return (
-    <section id="sql-injection" className="scroll-mt-20">
+  return <section id="sql-injection" className="scroll-mt-20">
       <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">SQL Injection</h3>
       
       <div className="space-y-6">
@@ -22,7 +19,7 @@ const SQLInjection: React.FC = () => {
             prevalent and dangerous web application vulnerabilities, potentially allowing attackers to view, modify, or delete database data.
           </p>
           
-          <Alert className="mb-4 bg-red-50 text-red-900 dark:bg-red-900/20 dark:text-red-200">
+          <Alert className="mb-4 text-red-900 dark:text-red-200 bg-zinc-700">
             <InfoIcon className="h-4 w-4" />
             <AlertTitle>Attacker&apos;s Goal</AlertTitle>
             <AlertDescription>
@@ -201,11 +198,7 @@ const SQLInjection: React.FC = () => {
         {/* Examples of Vulnerable Code */}
         <div>
           <h4 className="text-xl font-semibold mb-4">Example Attack</h4>
-          <CodeExample 
-            language="javascript" 
-            isVulnerable={true}
-            title="Vulnerable SQL Query" 
-            code={`// Server-side code
+          <CodeExample language="javascript" isVulnerable={true} title="Vulnerable SQL Query" code={`// Server-side code
 const userId = req.params.id;
 const query = "SELECT * FROM users WHERE id = " + userId;
 db.execute(query);
@@ -222,14 +215,9 @@ const query = "SELECT * FROM users WHERE username = '" + username +
 
 // Attacker input: admin' --
 // Resulting query: SELECT * FROM users WHERE username = 'admin' --' AND password = 'anything'
-// This comments out the password check`} 
-          />
+// This comments out the password check`} />
           
-          <CodeExample 
-            language="javascript" 
-            isVulnerable={false}
-            title="Secure Implementation" 
-            code={`// Server-side code with parameterized queries
+          <CodeExample language="javascript" isVulnerable={false} title="Secure Implementation" code={`// Server-side code with parameterized queries
 const userId = req.params.id;
 const query = "SELECT * FROM users WHERE id = ?";
 db.execute(query, [userId]);
@@ -251,8 +239,7 @@ const user = await prisma.user.findUnique({
 // 1. Use the principle of least privilege for database accounts
 // 2. Implement proper input validation (e.g., ensure 'id' is a number)
 // 3. Use database stored procedures when possible
-// 4. Enable proper error handling to avoid leaking schema details`} 
-          />
+// 4. Enable proper error handling to avoid leaking schema details`} />
         </div>
         
         {/* Step-by-Step Testing */}
@@ -312,17 +299,17 @@ const user = await prisma.user.findUnique({
               <p className="text-sm">Automated SQL injection detection and exploitation tool. Can automatically detect and exploit various types of SQL injection vulnerabilities.</p>
               <p className="text-xs mt-2 italic">Usage: <code>sqlmap -u &quot;http://example.com/page?id=1&quot; --dbs</code></p>
             </div>
-            <div className="border p-4 rounded-md bg-slate-100 dark:bg-slate-800">
+            <div className="border p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">Burp Suite</h5>
               <p className="text-sm">Web proxy with built-in SQL injection scanner (in Professional edition) and features that facilitate manual testing.</p>
               <p className="text-xs mt-2 italic">Features: Intruder, Repeater, Scanner</p>
             </div>
-            <div className="border p-4 rounded-md bg-slate-100 dark:bg-slate-800">
+            <div className="border p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">OWASP ZAP</h5>
               <p className="text-sm">Free alternative to Burp Suite with active and passive scanning capabilities for SQL injection.</p>
               <p className="text-xs mt-2 italic">Features: Spider, Active Scanner, Fuzzer</p>
             </div>
-            <div className="border p-4 rounded-md bg-slate-100 dark:bg-slate-800">
+            <div className="border p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">NoSQLMap</h5>
               <p className="text-sm">Similar to SQLmap but designed for NoSQL database injection testing.</p>
               <p className="text-xs mt-2 italic">Useful for MongoDB, Cassandra, etc.</p>
@@ -334,7 +321,7 @@ const user = await prisma.user.findUnique({
         <div>
           <h4 className="text-xl font-semibold mb-4">Comprehensive Prevention Techniques</h4>
           <div className="space-y-4">
-            <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-md">
+            <div className="p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">1. Use Parameterized Queries (Prepared Statements)</h5>
               <p className="text-sm">The most effective defense. Ensures that user input is never treated as part of the SQL command.</p>
               <div className="bg-slate-800 text-white p-3 rounded-md overflow-x-auto font-mono text-xs mt-2">
@@ -344,7 +331,7 @@ const user = await prisma.user.findUnique({
               </div>
             </div>
             
-            <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-md">
+            <div className="p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">2. Use ORMs (Object Relational Mapping)</h5>
               <p className="text-sm">ORMs like Sequelize, Prisma, or Hibernate typically use parameterized queries under the hood.</p>
               <div className="bg-slate-800 text-white p-3 rounded-md overflow-x-auto font-mono text-xs mt-2">
@@ -358,7 +345,7 @@ const user = await prisma.user.findUnique({
               </div>
             </div>
             
-            <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-md">
+            <div className="p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">3. Input Validation and Sanitization</h5>
               <p className="text-sm">Always validate input against expected formats using whitelist approach.</p>
               <div className="bg-slate-800 text-white p-3 rounded-md overflow-x-auto font-mono text-xs mt-2">
@@ -370,7 +357,7 @@ const user = await prisma.user.findUnique({
               </div>
             </div>
             
-            <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-md">
+            <div className="p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">4. Apply Least Privilege Principle</h5>
               <p className="text-sm">Database accounts used by applications should have the minimum necessary privileges.</p>
               <div className="bg-slate-800 text-white p-3 rounded-md overflow-x-auto font-mono text-xs mt-2">
@@ -381,17 +368,17 @@ const user = await prisma.user.findUnique({
               </div>
             </div>
             
-            <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-md">
+            <div className="p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">5. Implement Web Application Firewall (WAF)</h5>
               <p className="text-sm">Add a layer of protection that can detect and block common SQL injection patterns.</p>
             </div>
             
-            <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-md">
+            <div className="p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">6. Error Handling</h5>
               <p className="text-sm">Use custom error pages and avoid displaying database errors to users. Log errors server-side for debugging.</p>
             </div>
             
-            <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-md">
+            <div className="p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">7. Use Stored Procedures</h5>
               <p className="text-sm">Encapsulate database operations in stored procedures that only accept parameters of specific types.</p>
             </div>
@@ -451,8 +438,6 @@ const user = await prisma.user.findUnique({
           </Tabs>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default SQLInjection;
