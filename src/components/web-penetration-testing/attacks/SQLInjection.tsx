@@ -19,7 +19,7 @@ const SQLInjection: React.FC = () => {
             prevalent and dangerous web application vulnerabilities, potentially allowing attackers to view, modify, or delete database data.
           </p>
           
-          <Alert className="mb-4 text-red-900 dark:text-red-200 bg-zinc-700">
+          <Alert className="mb-4 text-red-900 dark:text-red-200 bg-slate-50">
             <InfoIcon className="h-4 w-4" />
             <AlertTitle>Attacker&apos;s Goal</AlertTitle>
             <AlertDescription>
