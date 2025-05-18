@@ -18,7 +18,7 @@ const XSS: React.FC = () => {
             malicious redirects, and website defacement. XSS is consistently ranked among the top web application vulnerabilities.
           </p>
           
-          <Alert className="mb-4 text-amber-900 dark:text-amber-200 bg-cybr-muted">
+          <Alert className="mb-4 text-amber-900 dark:text-amber-200 bg-slate-50">
             <InfoIcon className="h-4 w-4" />
             <AlertTitle>Attacker's Goal</AlertTitle>
             <AlertDescription>
