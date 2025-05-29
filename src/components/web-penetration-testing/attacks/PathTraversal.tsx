@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { File } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
@@ -74,7 +73,7 @@ const PathTraversal: React.FC = () => {
             <SecurityCard
               title="Include/Require Statements"
               description="Dynamic file inclusion in scripting languages where user input influences which files are included or executed."
-              severity="critical"
+              severity="high"
             />
             <SecurityCard
               title="Image/Media Servers"
@@ -426,7 +425,7 @@ http://target.com/admin.php?config=settings.ini`}
 
 # URL encoding
 %2e%2e%2fetc%2fpasswd
-%2e%2e%5cetc%5cpasswd
+%2e%2e%5cwindows%5cwin.ini
 
 # Double encoding
 %252e%252e%252fetc%252fpasswd
