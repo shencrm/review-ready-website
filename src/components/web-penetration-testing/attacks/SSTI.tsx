@@ -146,9 +146,9 @@ const SSTI: React.FC = () => {
                 <div className="p-4 bg-cybr-muted/50 rounded-md">
                   <h6 className="font-medium mb-2">Detection Payloads:</h6>
                   <ol className="list-decimal pl-6 space-y-2 text-sm">
-                    <li><strong>Mathematical Expressions:</strong> Test {`{{7*7}}`}, `${{`7*7`}}`, etc.</li>
+                    <li><strong>Mathematical Expressions:</strong> Test template syntax with calculations</li>
                     <li><strong>Template-Specific Syntax:</strong> Try engine-specific delimiters</li>
-                    <li><strong>String Operations:</strong> Test string multiplication like {`{{7*'7'}}`}</li>
+                    <li><strong>String Operations:</strong> Test string multiplication operations</li>
                     <li><strong>Object Access:</strong> Attempt to access built-in objects</li>
                   </ol>
                 </div>
@@ -161,10 +161,10 @@ const SSTI: React.FC = () => {
                 <div className="p-4 bg-cybr-muted/50 rounded-md">
                   <h6 className="font-medium mb-2">Engine Fingerprinting:</h6>
                   <ol className="list-decimal pl-6 space-y-2 text-sm">
-                    <li><strong>Jinja2/Twig:</strong> {`{{7*'7'}}`} returns "7777777"</li>
-                    <li><strong>FreeMarker:</strong> `${{`7*7`}}` returns "49"</li>
-                    <li><strong>Velocity:</strong> `#set($x=7*7)$x` returns "49"</li>
-                    <li><strong>Smarty:</strong> `{7*7}` returns "49"</li>
+                    <li><strong>Jinja2/Twig:</strong> String multiplication returns repeated characters</li>
+                    <li><strong>FreeMarker:</strong> Mathematical expressions return calculated results</li>
+                    <li><strong>Velocity:</strong> Variable assignment and evaluation syntax</li>
+                    <li><strong>Smarty:</strong> Simple mathematical expressions</li>
                   </ol>
                 </div>
               </div>
@@ -393,34 +393,34 @@ def send_notification(user_name, message):
             code={`<?php
 require_once 'vendor/autoload.php';
 
-\$loader = new \\Twig\\Loader\\ArrayLoader([]);
-\$twig = new \\Twig\\Environment(\$loader);
+\\$loader = new \\\\Twig\\\\Loader\\\\ArrayLoader([]);
+\\$twig = new \\\\Twig\\\\Environment(\\$loader);
 
 // VULNERABLE: User input directly in template string
-function generateWelcome(\$username) {
-    global \$twig;
-    \$template = "Hello " . \$username . "! Welcome to our site.";
-    return \$twig->createTemplate(\$template)->render();
+function generateWelcome(\\$username) {
+    global \\$twig;
+    \\$template = "Hello " . \\$username . "! Welcome to our site.";
+    return \\$twig->createTemplate(\\$template)->render();
 }
 
 // VULNERABLE: Email template with user content
-function sendEmail(\$to, \$subject, \$userMessage) {
-    global \$twig;
-    \$emailTemplate = "
-        <h1>{{\$subject}}</h1>
-        <p>{{\$userMessage}}</p>
+function sendEmail(\\$to, \\$subject, \\$userMessage) {
+    global \\$twig;
+    \\$emailTemplate = "
+        <h1>{{\\$subject}}</h1>
+        <p>{{\\$userMessage}}</p>
         <p>Thank you!</p>
     ";
-    return \$twig->createTemplate(\$emailTemplate)->render([
-        'subject' => \$subject,
-        'userMessage' => \$userMessage
+    return \\$twig->createTemplate(\\$emailTemplate)->render([
+        'subject' => \\$subject,
+        'userMessage' => \\$userMessage
     ]);
 }
 
 // VULNERABLE: Dynamic template creation
-if (isset(\$_GET['template'])) {
-    \$userTemplate = \$_GET['template'];
-    echo \$twig->createTemplate(\$userTemplate)->render();
+if (isset(\\$_GET['template'])) {
+    \\$userTemplate = \\$_GET['template'];
+    echo \\$twig->createTemplate(\\$userTemplate)->render();
 }
 ?>`} 
           />
@@ -542,49 +542,49 @@ def send_notification(user_name, message):
             code={`<?php
 require_once 'vendor/autoload.php';
 
-\$loader = new \\Twig\\Loader\\FilesystemLoader('templates');
-\$twig = new \\Twig\\Environment(\$loader, [
+\\$loader = new \\\\Twig\\\\Loader\\\\FilesystemLoader('templates');
+\\$twig = new \\\\Twig\\\\Environment(\\$loader, [
     'autoescape' => 'html',
     'strict_variables' => true,
 ]);
 
 // SECURE: Use predefined templates with data
-function generateWelcome(\$username) {
-    global \$twig;
+function generateWelcome(\\$username) {
+    global \\$twig;
     // Use template file instead of dynamic string
-    return \$twig->render('welcome.html.twig', [
-        'username' => htmlspecialchars(\$username, ENT_QUOTES, 'UTF-8')
+    return \\$twig->render('welcome.html.twig', [
+        'username' => htmlspecialchars(\\$username, ENT_QUOTES, 'UTF-8')
     ]);
 }
 
 // SECURE: Validate input and use template files
-function sendEmail(\$to, \$subject, \$userMessage) {
-    global \$twig;
+function sendEmail(\\$to, \\$subject, \\$userMessage) {
+    global \\$twig;
     
     // Input validation
-    if (!validateInput(\$userMessage)) {
+    if (!validateInput(\\$userMessage)) {
         throw new InvalidArgumentException('Invalid message content');
     }
     
-    return \$twig->render('email.html.twig', [
-        'subject' => htmlspecialchars(\$subject, ENT_QUOTES, 'UTF-8'),
-        'message' => htmlspecialchars(\$userMessage, ENT_QUOTES, 'UTF-8')
+    return \\$twig->render('email.html.twig', [
+        'subject' => htmlspecialchars(\\$subject, ENT_QUOTES, 'UTF-8'),
+        'message' => htmlspecialchars(\\$userMessage, ENT_QUOTES, 'UTF-8')
     ]);
 }
 
 // Input validation function
-function validateInput(\$input) {
+function validateInput(\\$input) {
     // Check for template injection patterns
-    \$dangerousPatterns = [
+    \\$dangerousPatterns = [
         '/{{.*}}/',
         '/{%.*%}/',
-        '/\\b_self\\b/',
-        '/\\benv\\b/',
+        '/\\\\b_self\\\\b/',
+        '/\\\\benv\\\\b/',
         '/registerUndefinedFilterCallback/',
     ];
     
-    foreach (\$dangerousPatterns as \$pattern) {
-        if (preg_match(\$pattern, \$input)) {
+    foreach (\\$dangerousPatterns as \\$pattern) {
+        if (preg_match(\\$pattern, \\$input)) {
             return false;
         }
     }
@@ -594,13 +594,13 @@ function validateInput(\$input) {
 
 // SECURE: Never create templates from user input
 // Instead, use a whitelist of allowed templates
-\$allowedTemplates = ['welcome', 'profile', 'email'];
-\$templateName = \$_GET['template'] ?? 'welcome';
+\\$allowedTemplates = ['welcome', 'profile', 'email'];
+\\$templateName = \\$_GET['template'] ?? 'welcome';
 
-if (in_array(\$templateName, \$allowedTemplates)) {
-    echo \$twig->render(\$templateName . '.html.twig', \$data);
+if (in_array(\\$templateName, \\$allowedTemplates)) {
+    echo \\$twig->render(\\$templateName . '.html.twig', \\$data);
 } else {
-    echo \$twig->render('error.html.twig', ['message' => 'Invalid template']);
+    echo \\$twig->render('error.html.twig', ['message' => 'Invalid template']);
 }
 ?>`} 
           />
