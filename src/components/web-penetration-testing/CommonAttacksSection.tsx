@@ -1,3 +1,4 @@
+
 import React from 'react';
 import SecurityCard from '@/components/SecurityCard';
 import SQLInjection from './attacks/SQLInjection';
@@ -17,6 +18,7 @@ import CSPBypass from './attacks/CSPBypass';
 import HTTPRequestSmuggling from './attacks/HTTPRequestSmuggling';
 import XXE from './attacks/XXE';
 import SSTI from './attacks/SSTI';
+import PathTraversal from './attacks/PathTraversal';
 
 const CommonAttacksSection: React.FC = () => {
   return (
@@ -56,8 +58,8 @@ const CommonAttacksSection: React.FC = () => {
           severity="high"
         />
         <SecurityCard
-          title="Broken Authentication"
-          description="Flaws in authentication mechanisms allowing attackers to compromise accounts."
+          title="Path Traversal"
+          description="Directory traversal attacks to access files outside the intended directory."
           severity="high"
         />
       </div>
@@ -68,6 +70,7 @@ const CommonAttacksSection: React.FC = () => {
         <CSRF />
         <XXE />
         <SSTI />
+        <PathTraversal />
         <BrokenAuthentication />
         <BrokenAccessControl />
         <InsecureDeserialization />
