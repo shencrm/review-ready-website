@@ -1,97 +1,137 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Code2 } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
 import SecurityCard from '@/components/SecurityCard';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const SSTI: React.FC = () => {
+  const [selectedSection, setSelectedSection] = useState<string>('introduction');
+
+  const attackSections = [
+    { id: 'introduction', title: 'Introduction', icon: '📖' },
+    { id: 'how-it-works', title: 'How SSTI Works', icon: '⚙️' },
+    { id: 'vulnerable-components', title: 'Vulnerable Components', icon: '🎯' },
+    { id: 'jinja2', title: 'Jinja2 (Python)', icon: '🐍' },
+    { id: 'twig', title: 'Twig (PHP)', icon: '🐘' },
+    { id: 'freemarker', title: 'FreeMarker (Java)', icon: '☕' },
+    { id: 'smarty', title: 'Smarty (PHP)', icon: '🔧' },
+    { id: 'velocity', title: 'Velocity (Java)', icon: '⚡' },
+    { id: 'methodology', title: 'Detection Methodology', icon: '🔍' },
+    { id: 'prevention', title: 'Prevention Strategies', icon: '🛡️' },
+    { id: 'tools', title: 'Testing Tools', icon: '🔨' },
+  ];
+
   return (
     <section id="ssti" className="scroll-mt-20">
       <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">
         Server-Side Template Injection (SSTI)
       </h3>
       
-      <div className="space-y-8">
-        {/* Introduction */}
-        <div>
-          <p className="mb-4">
-            Server-Side Template Injection (SSTI) occurs when an attacker is able to inject malicious input into a server-side 
-            template, causing the template engine to execute arbitrary code on the server. This vulnerability can lead to complete 
-            server compromise, as template engines often have access to sensitive functionality and can execute system commands. 
-            SSTI attacks are particularly dangerous because they often lead to Remote Code Execution (RCE).
-          </p>
-          
-          <Alert className="mb-4 text-red-900 dark:text-red-200 bg-red-50 dark:bg-red-950/30">
-            <InfoIcon className="h-4 w-4" />
-            <AlertTitle>Critical Severity</AlertTitle>
-            <AlertDescription>
-              SSTI vulnerabilities frequently result in complete server compromise through Remote Code Execution. 
-              They can allow attackers to read sensitive files, execute system commands, and gain full control over the server.
-            </AlertDescription>
-          </Alert>
-        </div>
-
-        {/* How SSTI Works */}
-        <div>
-          <h4 className="text-xl font-semibold mb-4">How SSTI Attacks Work</h4>
-          <div className="p-4 bg-cybr-muted/50 rounded-md mb-4">
-            <h5 className="font-semibold mb-2">Attack Flow:</h5>
-            <ol className="list-decimal pl-6 space-y-2">
-              <li><strong>Template Identification:</strong> Attacker identifies that the application uses a template engine</li>
-              <li><strong>Injection Point Discovery:</strong> User input is being directly embedded into a template</li>
-              <li><strong>Template Engine Detection:</strong> Determine which template engine is being used</li>
-              <li><strong>Payload Crafting:</strong> Create engine-specific payloads to exploit template functionality</li>
-              <li><strong>Code Execution:</strong> Template engine processes the malicious input and executes arbitrary code</li>
-              <li><strong>System Compromise:</strong> Attacker gains control through command execution or file access</li>
-            </ol>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {/* Left sidebar with attack types */}
+        <div className="md:col-span-1">
+          <div className="sticky top-20">
+            <div className="bg-cybr-muted/20 rounded-lg p-4">
+              <h4 className="text-lg font-semibold mb-4 text-cybr-primary">SSTI Topics</h4>
+              
+              <ScrollArea className="h-[calc(100vh-200px)] pr-4">
+                <ul className="space-y-1">
+                  {attackSections.map(section => (
+                    <li key={section.id}>
+                      <button 
+                        className={`flex w-full items-center gap-2 p-2 rounded-md hover:bg-cybr-muted/30 transition-colors text-left ${selectedSection === section.id ? 'bg-cybr-muted/40 text-cybr-primary font-medium' : ''}`}
+                        onClick={() => setSelectedSection(section.id)}
+                      >
+                        <span>{section.icon}</span>
+                        <span className="text-sm">{section.title}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </ScrollArea>
+            </div>
           </div>
         </div>
+        
+        {/* Right content area */}
+        <div className="md:col-span-3">
+          <div className="space-y-8">
+            {/* Introduction */}
+            {selectedSection === 'introduction' && (
+              <div>
+                <p className="mb-4">
+                  Server-Side Template Injection (SSTI) occurs when an attacker is able to inject malicious input into a server-side 
+                  template, causing the template engine to execute arbitrary code on the server. This vulnerability can lead to complete 
+                  server compromise, as template engines often have access to sensitive functionality and can execute system commands. 
+                  SSTI attacks are particularly dangerous because they often lead to Remote Code Execution (RCE).
+                </p>
+                
+                <Alert className="mb-4 text-red-900 dark:text-red-200 bg-red-50 dark:bg-red-950/30">
+                  <InfoIcon className="h-4 w-4" />
+                  <AlertTitle>Critical Severity</AlertTitle>
+                  <AlertDescription>
+                    SSTI vulnerabilities frequently result in complete server compromise through Remote Code Execution. 
+                    They can allow attackers to read sensitive files, execute system commands, and gain full control over the server.
+                  </AlertDescription>
+                </Alert>
+              </div>
+            )}
 
-        {/* Vulnerable Components */}
-        <div>
-          <h4 className="text-xl font-semibold mb-4">Commonly Vulnerable Components</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <SecurityCard
-              title="Web Framework Templates"
-              description="Applications using Flask/Jinja2, Django, Express/Handlebars, Ruby on Rails that embed user input directly into templates."
-              severity="high"
-            />
-            <SecurityCard
-              title="Email Template Systems"
-              description="Email services that allow customization of email templates with user-provided content without proper sanitization."
-              severity="high"
-            />
-            <SecurityCard
-              title="Report Generation"
-              description="Systems that generate reports or documents using template engines with user-controllable data."
-              severity="medium"
-            />
-            <SecurityCard
-              title="Content Management Systems"
-              description="CMS platforms that allow users to create custom templates or widgets with template engine functionality."
-              severity="medium"
-            />
-          </div>
-        </div>
+            {/* How SSTI Works */}
+            {selectedSection === 'how-it-works' && (
+              <div>
+                <h4 className="text-xl font-semibold mb-4">How SSTI Attacks Work</h4>
+                <div className="p-4 bg-cybr-muted/50 rounded-md mb-4">
+                  <h5 className="font-semibold mb-2">Attack Flow:</h5>
+                  <ol className="list-decimal pl-6 space-y-2">
+                    <li><strong>Template Identification:</strong> Attacker identifies that the application uses a template engine</li>
+                    <li><strong>Injection Point Discovery:</strong> User input is being directly embedded into a template</li>
+                    <li><strong>Template Engine Detection:</strong> Determine which template engine is being used</li>
+                    <li><strong>Payload Crafting:</strong> Create engine-specific payloads to exploit template functionality</li>
+                    <li><strong>Code Execution:</strong> Template engine processes the malicious input and executes arbitrary code</li>
+                    <li><strong>System Compromise:</strong> Attacker gains control through command execution or file access</li>
+                  </ol>
+                </div>
+              </div>
+            )}
 
-        {/* Template Engine Exploitation */}
-        <div>
-          <h4 className="text-xl font-semibold mb-4">Template Engine Specific Exploitation</h4>
-          <Tabs defaultValue="jinja2">
-            <TabsList className="bg-slate-200 dark:bg-slate-800">
-              <TabsTrigger value="jinja2">Jinja2 (Python)</TabsTrigger>
-              <TabsTrigger value="twig">Twig (PHP)</TabsTrigger>
-              <TabsTrigger value="freemarker">FreeMarker (Java)</TabsTrigger>
-              <TabsTrigger value="smarty">Smarty (PHP)</TabsTrigger>
-              <TabsTrigger value="velocity">Velocity (Java)</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="jinja2" className="mt-4">
+            {/* Vulnerable Components */}
+            {selectedSection === 'vulnerable-components' && (
+              <div>
+                <h4 className="text-xl font-semibold mb-4">Commonly Vulnerable Components</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <SecurityCard
+                    title="Web Framework Templates"
+                    description="Applications using Flask/Jinja2, Django, Express/Handlebars, Ruby on Rails that embed user input directly into templates."
+                    severity="high"
+                  />
+                  <SecurityCard
+                    title="Email Template Systems"
+                    description="Email services that allow customization of email templates with user-provided content without proper sanitization."
+                    severity="high"
+                  />
+                  <SecurityCard
+                    title="Report Generation"
+                    description="Systems that generate reports or documents using template engines with user-controllable data."
+                    severity="medium"
+                  />
+                  <SecurityCard
+                    title="Content Management Systems"
+                    description="CMS platforms that allow users to create custom templates or widgets with template engine functionality."
+                    severity="medium"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Jinja2 Template Injection */}
+            {selectedSection === 'jinja2' && (
               <div className="space-y-4">
-                <h5 className="font-semibold text-lg">Jinja2 Template Injection (Flask/Python)</h5>
+                <h4 className="text-xl font-semibold mb-4">Jinja2 Template Injection (Flask/Python)</h4>
                 <CodeExample 
                   language="python" 
                   isVulnerable={true}
@@ -158,11 +198,12 @@ def profile():
 {{url_for.__globals__['sys'].modules['os'].popen('ls').read()}}`} 
                 />
               </div>
-            </TabsContent>
-            
-            <TabsContent value="twig" className="mt-4">
+            )}
+
+            {/* Twig Template Injection */}
+            {selectedSection === 'twig' && (
               <div className="space-y-4">
-                <h5 className="font-semibold text-lg">Twig Template Injection (Symfony/PHP)</h5>
+                <h4 className="text-xl font-semibold mb-4">Twig Template Injection (Symfony/PHP)</h4>
                 <CodeExample 
                   language="php" 
                   isVulnerable={true}
@@ -222,11 +263,12 @@ echo $template->render(['user' => $currentUser]);
 {{_self.env.getLoader().getSourceContext('test').getCode()}}`} 
                 />
               </div>
-            </TabsContent>
-            
-            <TabsContent value="freemarker" className="mt-4">
+            )}
+
+            {/* FreeMarker Template Injection */}
+            {selectedSection === 'freemarker' && (
               <div className="space-y-4">
-                <h5 className="font-semibold text-lg">FreeMarker Template Injection (Java)</h5>
+                <h4 className="text-xl font-semibold mb-4">FreeMarker Template Injection (Java)</h4>
                 <CodeExample 
                   language="java" 
                   isVulnerable={true}
@@ -285,11 +327,12 @@ return output.toString();`}
 \${result}`} 
                 />
               </div>
-            </TabsContent>
-            
-            <TabsContent value="smarty" className="mt-4">
+            )}
+
+            {/* Smarty Template Injection */}
+            {selectedSection === 'smarty' && (
               <div className="space-y-4">
-                <h5 className="font-semibold text-lg">Smarty Template Injection (PHP)</h5>
+                <h4 className="text-xl font-semibold mb-4">Smarty Template Injection (PHP)</h4>
                 <CodeExample 
                   language="php" 
                   isVulnerable={true}
@@ -346,11 +389,12 @@ $smarty->display('string:Hello {$name}!');
 {$code($payload)}`} 
                 />
               </div>
-            </TabsContent>
-            
-            <TabsContent value="velocity" className="mt-4">
+            )}
+
+            {/* Velocity Template Injection */}
+            {selectedSection === 'velocity' && (
               <div className="space-y-4">
-                <h5 className="font-semibold text-lg">Velocity Template Injection (Java)</h5>
+                <h4 className="text-xl font-semibold mb-4">Velocity Template Injection (Java)</h4>
                 <CodeExample 
                   language="java" 
                   isVulnerable={true}
@@ -410,34 +454,35 @@ $props.invoke(null, ["user.name"])
 $content`} 
                 />
               </div>
-            </TabsContent>
-          </Tabs>
-        </div>
+            )}
 
-        {/* Detection and Exploitation Methodology */}
-        <div>
-          <h4 className="text-xl font-semibold mb-4">SSTI Detection and Exploitation Methodology</h4>
-          <div className="p-4 bg-cybr-muted/50 rounded-md mb-4">
-            <h5 className="font-semibold mb-2">Step-by-Step Exploitation:</h5>
-            <ol className="list-decimal pl-6 space-y-2">
-              <li><strong>Identify Injection Points:</strong> Look for user input that gets reflected in responses</li>
-              <li><strong>Test for Template Processing:</strong> Use mathematical expressions like double curly braces with 7*7</li>
-              <li><strong>Determine Template Engine:</strong> Use engine-specific syntax to identify the backend</li>
-              <li><strong>Explore Template Context:</strong> Discover available objects and functions</li>
-              <li><strong>Escalate to Code Execution:</strong> Craft payloads for command execution</li>
-              <li><strong>Post-Exploitation:</strong> Maintain access and gather sensitive information</li>
-            </ol>
-          </div>
-        </div>
+            {/* Detection and Exploitation Methodology */}
+            {selectedSection === 'methodology' && (
+              <div>
+                <h4 className="text-xl font-semibold mb-4">SSTI Detection and Exploitation Methodology</h4>
+                <div className="p-4 bg-cybr-muted/50 rounded-md mb-4">
+                  <h5 className="font-semibold mb-2">Step-by-Step Exploitation:</h5>
+                  <ol className="list-decimal pl-6 space-y-2">
+                    <li><strong>Identify Injection Points:</strong> Look for user input that gets reflected in responses</li>
+                    <li><strong>Test for Template Processing:</strong> Use mathematical expressions like double curly braces with 7*7</li>
+                    <li><strong>Determine Template Engine:</strong> Use engine-specific syntax to identify the backend</li>
+                    <li><strong>Explore Template Context:</strong> Discover available objects and functions</li>
+                    <li><strong>Escalate to Code Execution:</strong> Craft payloads for command execution</li>
+                    <li><strong>Post-Exploitation:</strong> Maintain access and gather sensitive information</li>
+                  </ol>
+                </div>
+              </div>
+            )}
 
-        {/* Prevention Strategies */}
-        <div>
-          <h4 className="text-xl font-semibold mb-4">SSTI Prevention Strategies</h4>
-          <CodeExample 
-            language="python" 
-            isVulnerable={false}
-            title="Secure Template Usage" 
-            code={`# Python Flask - Secure template usage
+            {/* Prevention Strategies */}
+            {selectedSection === 'prevention' && (
+              <div>
+                <h4 className="text-xl font-semibold mb-4">SSTI Prevention Strategies</h4>
+                <CodeExample 
+                  language="python" 
+                  isVulnerable={false}
+                  title="Secure Template Usage" 
+                  code={`# Python Flask - Secure template usage
 from flask import Flask, request, render_template
 import re
 
@@ -502,32 +547,37 @@ def safe_render_template(template_string, **context):
 def add_security_headers(response):
     response.headers['Content-Security-Policy'] = "default-src 'self'"
     return response`} 
-          />
-        </div>
+                />
+              </div>
+            )}
 
-        {/* Testing Tools */}
-        <div>
-          <h4 className="text-xl font-semibold mb-4">SSTI Testing Tools and Resources</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-4 bg-cybr-muted/50 rounded-md">
-              <h5 className="font-semibold mb-2">Automated Tools</h5>
-              <ul className="list-disc pl-6 space-y-1 text-sm">
-                <li><strong>Tplmap:</strong> Automated SSTI detection and exploitation tool</li>
-                <li><strong>Burp Suite:</strong> Manual and automated SSTI testing capabilities</li>
-                <li><strong>Nuclei:</strong> Template-based SSTI vulnerability detection</li>
-                <li><strong>SSTImap:</strong> Python tool for SSTI exploitation</li>
-              </ul>
-            </div>
-            
-            <div className="p-4 bg-cybr-muted/50 rounded-md">
-              <h5 className="font-semibold mb-2">Manual Testing Resources</h5>
-              <ul className="list-disc pl-6 space-y-1 text-sm">
-                <li><strong>PayloadsAllTheThings:</strong> Comprehensive SSTI payload collection</li>
-                <li><strong>HackTricks:</strong> SSTI methodology and techniques</li>
-                <li><strong>PortSwigger Research:</strong> Advanced SSTI exploitation techniques</li>
-                <li><strong>Custom Scripts:</strong> Engine-specific testing and exploitation</li>
-              </ul>
-            </div>
+            {/* Testing Tools */}
+            {selectedSection === 'tools' && (
+              <div>
+                <h4 className="text-xl font-semibold mb-4">SSTI Testing Tools and Resources</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="p-4 bg-cybr-muted/50 rounded-md">
+                    <h5 className="font-semibold mb-2">Automated Tools</h5>
+                    <ul className="list-disc pl-6 space-y-1 text-sm">
+                      <li><strong>Tplmap:</strong> Automated SSTI detection and exploitation tool</li>
+                      <li><strong>Burp Suite:</strong> Manual and automated SSTI testing capabilities</li>
+                      <li><strong>Nuclei:</strong> Template-based SSTI vulnerability detection</li>
+                      <li><strong>SSTImap:</strong> Python tool for SSTI exploitation</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="p-4 bg-cybr-muted/50 rounded-md">
+                    <h5 className="font-semibold mb-2">Manual Testing Resources</h5>
+                    <ul className="list-disc pl-6 space-y-1 text-sm">
+                      <li><strong>PayloadsAllTheThings:</strong> Comprehensive SSTI payload collection</li>
+                      <li><strong>HackTricks:</strong> SSTI methodology and techniques</li>
+                      <li><strong>PortSwigger Research:</strong> Advanced SSTI exploitation techniques</li>
+                      <li><strong>Custom Scripts:</strong> Engine-specific testing and exploitation</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
