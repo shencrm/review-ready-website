@@ -24,6 +24,7 @@ import OAuthVulnerabilities from './attacks/OAuthVulnerabilities';
 import WebCachePoisoning from './attacks/WebCachePoisoning';
 import CSPBypass from './attacks/CSPBypass';
 import OtherInjectionFlaws from './attacks/OtherInjectionFlaws';
+import SSTI from './attacks/SSTI';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
@@ -41,6 +42,7 @@ const CommonAttacksSection: React.FC = () => {
     { id: 'auth', title: 'Broken Authentication', icon: <Lock className="h-5 w-5" /> },
     { id: 'access', title: 'Broken Access Control', icon: <KeyRound className="h-5 w-5" /> },
     { id: 'xxe', title: 'XML External Entity', icon: <File className="h-5 w-5" /> },
+    { id: 'ssti', title: 'Server-Side Template Injection', icon: <Code className="h-5 w-5" /> },
     { id: 'deserial', title: 'Insecure Deserialization', icon: <Bug className="h-5 w-5" /> },
     { id: 'cmd-injection', title: 'Command Injection', icon: <Code className="h-5 w-5" /> },
     { id: 'misconfig', title: 'Security Misconfigurations', icon: <ShieldX className="h-5 w-5" /> },
@@ -71,6 +73,7 @@ const CommonAttacksSection: React.FC = () => {
       case 'auth': return <BrokenAuthentication />;
       case 'access': return <BrokenAccessControl />;
       case 'xxe': return <XXE />;
+      case 'ssti': return <SSTI />;
       case 'deserial': return <InsecureDeserialization />;
       case 'cmd-injection': return <CommandInjection />;
       case 'misconfig': return <SecurityMisconfigurations />;
