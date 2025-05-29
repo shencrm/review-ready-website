@@ -676,9 +676,9 @@ app.use('/api/json/', (req, res, next) => {
           <div className="p-4 bg-cybr-muted/50 rounded-md">
             <h5 className="font-semibold mb-2">Framework-Specific Protections</h5>
             <ul className="list-disc pl-6 space-y-2 text-sm">
-              <li><strong>Django:</strong> Built-in CSRF middleware with {% csrf_token %} template tag</li>
+              <li><strong>Django:</strong> Built-in CSRF middleware with csrf_token template tag</li>
               <li><strong>Ruby on Rails:</strong> protect_from_forgery method and authenticity tokens</li>
-              <li><strong>ASP.NET:</strong> Anti-forgery tokens with @Html.AntiForgeryToken()</li>
+              <li><strong>ASP.NET:</strong> Anti-forgery tokens with AntiForgeryToken</li>
               <li><strong>Spring Security:</strong> CSRF protection enabled by default in newer versions</li>
               <li><strong>Laravel:</strong> @csrf Blade directive and automatic token validation</li>
               <li><strong>Angular:</strong> Built-in CSRF protection with HttpClientXsrfModule</li>
