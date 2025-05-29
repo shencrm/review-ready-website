@@ -148,7 +148,7 @@ const CommandInjection: React.FC = () => {
                   <h6 className="font-medium mb-2">Testing Techniques:</h6>
                   <ol className="list-decimal pl-6 space-y-2 text-sm">
                     <li><strong>Command Separator Injection:</strong> Test ; && || | operators</li>
-                    <li><strong>Command Substitution:</strong> Try `command` and $(command) syntax</li>
+                    <li><strong>Command Substitution:</strong> Try backtick and dollar-parentheses syntax</li>
                     <li><strong>Time-based Detection:</strong> Use sleep/ping commands for blind injection</li>
                     <li><strong>Error-based Detection:</strong> Inject invalid commands to trigger errors</li>
                   </ol>
@@ -483,7 +483,7 @@ app.get('/system-info', (req, res) => {
 {cat,/etc/passwd}
 cat</etc/passwd
 cat$IFS/etc/passwd
-cat${IFS}/etc/passwd
+cat\${IFS}/etc/passwd
 
 # If slash (/) is filtered:
 cat$HOME..passwd
@@ -640,7 +640,7 @@ def is_valid_host(host):
 
 def is_valid_filename(filename):
     # Reject dangerous characters and patterns
-    dangerous_chars = ['..', '/', '\\', '|', ';', '&', '$', '`', '(', ')', '{', '}', '[', ']', '<', '>', '*', '?', "'", '"']
+    dangerous_chars = ['..', '/', '\\\\', '|', ';', '&', '$', '`', '(', ')', '{', '}', '[', ']', '<', '>', '*', '?', "'", '"']
     
     for char in dangerous_chars:
         if char in filename:
