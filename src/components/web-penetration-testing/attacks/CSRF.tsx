@@ -558,7 +558,7 @@ analyzeCsrfProtection();`}
                   <h6 className="font-medium mb-2 mt-3">Impact Assessment Framework:</h6>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
                     <div className="p-3 bg-red-900/20 rounded">
-                      <h7 className="font-medium text-red-400">Critical Impact</h7>
+                      <div className="font-medium text-red-400">Critical Impact</div>
                       <ul className="list-disc pl-4 text-xs mt-1">
                         <li>Administrative account takeover</li>
                         <li>Financial transactions</li>
@@ -567,7 +567,7 @@ analyzeCsrfProtection();`}
                       </ul>
                     </div>
                     <div className="p-3 bg-yellow-900/20 rounded">
-                      <h7 className="font-medium text-yellow-400">High Impact</h7>
+                      <div className="font-medium text-yellow-400">High Impact</div>
                       <ul className="list-disc pl-4 text-xs mt-1">
                         <li>Password changes</li>
                         <li>Email modifications</li>
@@ -615,7 +615,7 @@ analyzeCsrfProtection();`}
                   cannot guess or obtain these tokens through cross-site requests due to the Same-Origin Policy.
                 </p>
                 
-                <h7 className="font-medium text-sm mb-2">Implementation Best Practices:</h7>
+                <div className="font-medium text-sm mb-2">Implementation Best Practices:</div>
                 <ul className="list-disc pl-6 space-y-1 text-xs mb-3">
                   <li>Generate cryptographically secure random tokens with sufficient entropy (at least 128 bits)</li>
                   <li>Use a different token for each form or session, never reuse tokens</li>
@@ -695,7 +695,7 @@ app.post('/api/transfer', csrfProtection, (req, res) => {
                   CSRF attack surface when properly configured.
                 </p>
                 
-                <h7 className="font-medium text-sm mb-2">SameSite Values and Their Impact:</h7>
+                <div className="font-medium text-sm mb-2">SameSite Values and Their Impact:</div>
                 <ul className="list-disc pl-6 space-y-1 text-xs mb-3">
                   <li><strong>Strict:</strong> Cookies never sent with cross-site requests, maximum protection but may break legitimate workflows</li>
                   <li><strong>Lax:</strong> Cookies sent with top-level navigation but not with embedded requests, good balance of security and usability</li>
@@ -906,7 +906,7 @@ app.use('/api/sensitive/', validateOrigin);`}
                 <h6 className="font-medium mb-2">Popular Framework Implementations</h6>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <h7 className="font-medium text-sm mb-1">Backend Frameworks:</h7>
+                    <div className="font-medium text-sm mb-1">Backend Frameworks:</div>
                     <ul className="list-disc pl-6 space-y-1 text-xs">
                       <li><strong>Django:</strong> Built-in CSRF middleware with csrf_token template tag</li>
                       <li><strong>Ruby on Rails:</strong> protect_from_forgery method with authenticity tokens</li>
@@ -916,7 +916,7 @@ app.use('/api/sensitive/', validateOrigin);`}
                     </ul>
                   </div>
                   <div>
-                    <h7 className="font-medium text-sm mb-1">Frontend Frameworks:</h7>
+                    <div className="font-medium text-sm mb-1">Frontend Frameworks:</div>
                     <ul className="list-disc pl-6 space-y-1 text-xs">
                       <li><strong>Angular:</strong> Built-in CSRF protection with HttpClientXsrfModule</li>
                       <li><strong>React:</strong> Manual implementation with libraries like axios interceptors</li>
