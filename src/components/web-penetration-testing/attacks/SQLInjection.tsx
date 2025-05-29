@@ -294,7 +294,7 @@ const user = await prisma.user.findUnique({
         <div>
           <h4 className="text-xl font-semibold mb-4">SQL Injection Testing Tools</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border p-4 rounded-md bg-slate-100 dark:bg-slate-800">
+            <div className="border p-4 rounded-md bg-cybr-muted">
               <h5 className="font-semibold mb-2">SQLmap</h5>
               <p className="text-sm">Automated SQL injection detection and exploitation tool. Can automatically detect and exploit various types of SQL injection vulnerabilities.</p>
               <p className="text-xs mt-2 italic">Usage: <code>sqlmap -u &quot;http://example.com/page?id=1&quot; --dbs</code></p>
