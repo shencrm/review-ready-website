@@ -388,7 +388,7 @@ const maliciousData = {
         <h5 className="text-lg font-medium mb-3">Manual Testing Approach</h5>
         <ol className="list-decimal pl-6 space-y-2 mb-4">
           <li><strong>Identify Input Points:</strong> Find endpoints accepting JSON/object data</li>
-          <li><strong>Test Basic Pollution:</strong> Send {"__proto__": {"polluted": true}} payloads</li>
+          <li><strong>Test Basic Pollution:</strong> Send payload with __proto__ property</li>
           <li><strong>Verify Pollution:</strong> Check if subsequent requests show polluted properties</li>
           <li><strong>Test Impact:</strong> Look for authentication bypass or privilege escalation</li>
           <li><strong>Document Scope:</strong> Identify all affected application areas</li>
