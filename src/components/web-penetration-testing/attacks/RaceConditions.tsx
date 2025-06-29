@@ -487,7 +487,7 @@ withdraw_secure = rate_limit(max_requests=3, window=60)(withdraw_secure)`}
           <li><strong>Artillery.js</strong>: Load testing tool for concurrent request scenarios</li>
           <li><strong>Race the Web</strong>: Specialized tool for race condition testing</li>
           <li><strong>Postman</strong>: Collection runner with parallel execution</li>
-        </ol>
+        </ul>
 
         <h5 className="text-lg font-medium mb-3">Testing Script Example</h5>
         <div className="bg-cybr-muted/30 p-4 rounded-lg mb-4">
