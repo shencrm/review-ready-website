@@ -208,7 +208,7 @@ nuclei -u https://example.com -tags tech
 curl -I https://example.com | grep -E "(Server|X-Powered-By|X-AspNet-Version)"
 
 # JavaScript library detection
-curl -s https://example.com | grep -oP '(?<=src=")[^"]*\.js' | head -10
+curl -s https://example.com | grep -oP '(?<=src=")[^"]*\\.js' | head -10
 
 # CMS detection with CMSeeK
 python3 cmseek.py -u https://example.com`}
@@ -1042,7 +1042,7 @@ document.getElementById('content').innerHTML = params.get('message');
                       <strong className="text-orange-400">High:</strong> Significant security risk
                     </div>
                     <div className="p-2 bg-yellow-900/20 border border-yellow-500 rounded">
-                      <strong className="text-yellow-400">Medium:</strong> Moderate security concern</li>
+                      <strong className="text-yellow-400">Medium:</strong> Moderate security concern
                     </div>
                     <div className="p-2 bg-blue-900/20 border border-blue-500 rounded">
                       <strong className="text-blue-400">Low:</strong> Minor security issue
