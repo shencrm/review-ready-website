@@ -7,6 +7,8 @@ import WebApplicationMapping from './advanced/WebApplicationMapping';
 import HTTPAnalysis from './advanced/HTTPAnalysis';
 import JavaScriptAnalysis from './advanced/JavaScriptAnalysis';
 import ModernToolsArsenal from './advanced/ModernToolsArsenal';
+import SectionNavigation from './advanced/SectionNavigation';
+import { useActiveSection } from '@/hooks/useActiveSection';
 
 // Import new exploitation components
 import ManualExploitationTechniques from './advanced/exploitation/ManualExploitationTechniques';
@@ -16,6 +18,32 @@ import AuthenticationBypass from './advanced/exploitation/AuthenticationBypass';
 import CloudContainerExploitation from './advanced/exploitation/CloudContainerExploitation';
 
 const AdvancedContentSection: React.FC = () => {
+  // Navigation items for Advanced Reconnaissance
+  const reconnaissanceItems = [
+    { id: 'osint-section', title: 'OSINT Techniques', icon: <Search className="h-4 w-4" /> },
+    { id: 'web-mapping-section', title: 'Web Application Mapping', icon: <Globe className="h-4 w-4" /> },
+    { id: 'http-analysis-section', title: 'HTTP Traffic Analysis', icon: <Shield className="h-4 w-4" /> },
+    { id: 'javascript-analysis-section', title: 'JavaScript Analysis', icon: <Code className="h-4 w-4" /> },
+    { id: 'modern-tools-section', title: 'Modern Tools Arsenal', icon: <Database className="h-4 w-4" /> },
+  ];
+
+  // Navigation items for Exploitation Techniques
+  const exploitationItems = [
+    { id: 'manual-exploitation-section', title: 'Manual Exploitation', icon: <Target className="h-4 w-4" /> },
+    { id: 'modern-attack-vectors-section', title: 'Modern Attack Vectors', icon: <Zap className="h-4 w-4" /> },
+    { id: 'client-side-exploitation-section', title: 'Client-Side Exploitation', icon: <Code className="h-4 w-4" /> },
+    { id: 'authentication-bypass-section', title: 'Authentication Bypass', icon: <Shield className="h-4 w-4" /> },
+    { id: 'cloud-container-exploitation-section', title: 'Cloud & Container Exploitation', icon: <Globe className="h-4 w-4" /> },
+  ];
+
+  const { activeSection: activeReconSection, setActiveSection: setActiveReconSection } = useActiveSection(
+    reconnaissanceItems.map(item => item.id)
+  );
+
+  const { activeSection: activeExploitSection, setActiveSection: setActiveExploitSection } = useActiveSection(
+    exploitationItems.map(item => item.id)
+  );
+
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
@@ -58,66 +86,95 @@ const AdvancedContentSection: React.FC = () => {
 
         {/* Advanced Reconnaissance Tab */}
         <TabsContent value="advanced-reconnaissance" className="space-y-6">
-          <div className="grid gap-6">
-            <OSINTSection />
+          <div className="flex gap-6">
+            <SectionNavigation
+              items={reconnaissanceItems}
+              activeSection={activeReconSection}
+              onSectionChange={setActiveReconSection}
+            />
             
-            <Card className="bg-cybr-card border-cybr-muted">
-              <CardContent className="space-y-6 pt-6">
-                <WebApplicationMapping />
-                <HTTPAnalysis />
-                <JavaScriptAnalysis />
-                <ModernToolsArsenal />
-              </CardContent>
-            </Card>
+            <div className="flex-1 space-y-8">
+              <div id="osint-section">
+                <OSINTSection />
+              </div>
+              
+              <div id="web-mapping-section">
+                <Card className="bg-cybr-card border-cybr-muted">
+                  <CardHeader>
+                    <CardTitle className="text-cybr-primary">Web Application Mapping</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <WebApplicationMapping />
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div id="http-analysis-section">
+                <Card className="bg-cybr-card border-cybr-muted">
+                  <CardHeader>
+                    <CardTitle className="text-cybr-primary">HTTP Traffic Analysis</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <HTTPAnalysis />
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div id="javascript-analysis-section">
+                <Card className="bg-cybr-card border-cybr-muted">
+                  <CardHeader>
+                    <CardTitle className="text-cybr-primary">JavaScript Analysis</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <JavaScriptAnalysis />
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div id="modern-tools-section">
+                <Card className="bg-cybr-card border-cybr-muted">
+                  <CardHeader>
+                    <CardTitle className="text-cybr-primary">Modern Tools Arsenal</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ModernToolsArsenal />
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
         </TabsContent>
 
         {/* Exploitation Techniques Tab */}
         <TabsContent value="exploitation-techniques" className="space-y-6">
-          <div className="grid gap-6">
-            <ManualExploitationTechniques />
-            <ModernAttackVectors />
-            <ClientSideExploitation />
-            <AuthenticationBypass />
-            <CloudContainerExploitation />
+          <div className="flex gap-6">
+            <SectionNavigation
+              items={exploitationItems}
+              activeSection={activeExploitSection}
+              onSectionChange={setActiveExploitSection}
+            />
             
-            {/* Additional exploitation sections placeholder */}
-            <Card className="bg-cybr-card border-cybr-muted">
-              <CardHeader>
-                <CardTitle className="text-cybr-primary">Additional Advanced Techniques</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                  <div className="bg-cybr-muted/20 p-3 rounded">
-                    <h6 className="font-semibold text-cybr-accent mb-2">Binary & Memory Exploitation</h6>
-                    <ul className="space-y-1 text-xs opacity-80">
-                      <li>• WebAssembly (WASM) exploitation</li>
-                      <li>• Buffer overflow in web context</li>
-                      <li>• Heap exploitation techniques</li>
-                      <li>• ROP/JOP chain construction</li>
-                    </ul>
-                  </div>
-                  <div className="bg-cybr-muted/20 p-3 rounded">
-                    <h6 className="font-semibold text-cybr-accent mb-2">AI/ML Security</h6>
-                    <ul className="space-y-1 text-xs opacity-80">
-                      <li>• LLM prompt injection attacks</li>
-                      <li>• Model extraction techniques</li>
-                      <li>• Adversarial example generation</li>
-                      <li>• Training data poisoning</li>
-                    </ul>
-                  </div>
-                  <div className="bg-cybr-muted/20 p-3 rounded">
-                    <h6 className="font-semibold text-cybr-accent mb-2">Framework Exploitation</h6>
-                    <ul className="space-y-1 text-xs opacity-80">
-                      <li>• React/Vue/Angular attacks</li>
-                      <li>• Node.js prototype pollution</li>
-                      <li>• Python framework vulnerabilities</li>
-                      <li>• Go/Rust memory safety bypasses</li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="flex-1 space-y-8">
+              <div id="manual-exploitation-section">
+                <ManualExploitationTechniques />
+              </div>
+              
+              <div id="modern-attack-vectors-section">
+                <ModernAttackVectors />
+              </div>
+
+              <div id="client-side-exploitation-section">
+                <ClientSideExploitation />
+              </div>
+
+              <div id="authentication-bypass-section">
+                <AuthenticationBypass />
+              </div>
+
+              <div id="cloud-container-exploitation-section">
+                <CloudContainerExploitation />
+              </div>
+            </div>
           </div>
         </TabsContent>
 
