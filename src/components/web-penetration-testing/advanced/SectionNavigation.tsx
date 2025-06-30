@@ -104,9 +104,11 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="sticky-navigation p-4">
-        <div className="navigation-scroll-area pr-2">
-          <NavigationContent />
+      <div className="sticky top-20">
+        <div className="bg-cybr-muted/20 rounded-lg p-4">
+          <ScrollArea className="h-[calc(100vh-200px)] pr-4">
+            <NavigationContent />
+          </ScrollArea>
         </div>
       </div>
     </div>
