@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
-import { Shield, ShieldAlert, Code, Bug, Database, Lock, KeyRound, File, FileSearch, ShieldX } from 'lucide-react';
+import { Shield, ShieldAlert, Code, Bug, Database, Lock, KeyRound, File, FileSearch, ShieldX, Zap } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import CoreConcepts from '@/components/web-penetration-testing/CoreConcepts';
 import CommonAttacksSection from '@/components/web-penetration-testing/CommonAttacksSection';
@@ -9,6 +9,7 @@ import TestingTechniquesSection from '@/components/web-penetration-testing/Testi
 import MitigationStrategiesSection from '@/components/web-penetration-testing/MitigationStrategiesSection';
 import ToolsCheatSheetsSection from '@/components/web-penetration-testing/ToolsCheatSheetsSection';
 import InterviewQuestionsSection from '@/components/web-penetration-testing/InterviewQuestionsSection';
+import AdvancedContentSection from '@/components/web-penetration-testing/AdvancedContentSection';
 import { cn } from '@/lib/utils';
 
 const WebPenetrationTesting: React.FC = () => {
@@ -20,6 +21,7 @@ const WebPenetrationTesting: React.FC = () => {
     { id: 'testing-techniques', title: 'Testing Techniques', icon: <FileSearch className="h-6 w-6" /> },
     { id: 'mitigation-strategies', title: 'Mitigation Strategies', icon: <ShieldX className="h-6 w-6" /> },
     { id: 'tools-cheatsheets', title: 'Tools & Cheat Sheets', icon: <KeyRound className="h-6 w-6" /> },
+    { id: 'advanced-content', title: 'Advanced Web Penetration Testing', icon: <Zap className="h-6 w-6" /> },
     { id: 'interview-questions', title: 'Interview Questions', icon: <File className="h-6 w-6" /> },
   ];
 
@@ -46,12 +48,12 @@ const WebPenetrationTesting: React.FC = () => {
               onValueChange={setActiveSection} 
               className="w-full"
             >
-              <TabsList className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full bg-cybr-muted/30 p-1">
+              <TabsList className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 w-full bg-cybr-muted/30 p-1">
                 {sections.map(section => (
                   <TabsTrigger 
                     key={section.id}
                     value={section.id}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 text-xs"
                   >
                     {section.icon}
                     <span className="hidden sm:inline">{section.title}</span>
@@ -82,6 +84,11 @@ const WebPenetrationTesting: React.FC = () => {
               {/* Tools & Cheat Sheets Section */}
               <TabsContent value="tools-cheatsheets" className="mt-6">
                 <ToolsCheatSheetsSection />
+              </TabsContent>
+              
+              {/* Advanced Web Penetration Testing Section */}
+              <TabsContent value="advanced-content" className="mt-6">
+                <AdvancedContentSection />
               </TabsContent>
               
               {/* Interview Questions Section */}
