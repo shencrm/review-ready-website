@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -86,14 +87,16 @@ const AdvancedContentSection: React.FC = () => {
 
         {/* Advanced Reconnaissance Tab */}
         <TabsContent value="advanced-reconnaissance" className="space-y-6">
-          <div className="flex gap-6">
-            <SectionNavigation
-              items={reconnaissanceItems}
-              activeSection={activeReconSection}
-              onSectionChange={setActiveReconSection}
-            />
+          <div className="grid grid-cols-[280px_1fr] gap-8 min-h-screen">
+            <div className="w-full">
+              <SectionNavigation
+                items={reconnaissanceItems}
+                activeSection={activeReconSection}
+                onSectionChange={setActiveReconSection}
+              />
+            </div>
             
-            <div className="flex-1 space-y-8">
+            <div className="min-w-0 space-y-8 max-w-none overflow-hidden">
               <div id="osint-section">
                 <OSINTSection />
               </div>
@@ -147,14 +150,16 @@ const AdvancedContentSection: React.FC = () => {
 
         {/* Exploitation Techniques Tab */}
         <TabsContent value="exploitation-techniques" className="space-y-6">
-          <div className="flex gap-6">
-            <SectionNavigation
-              items={exploitationItems}
-              activeSection={activeExploitSection}
-              onSectionChange={setActiveExploitSection}
-            />
+          <div className="grid grid-cols-[280px_1fr] gap-8 min-h-screen">
+            <div className="w-full">
+              <SectionNavigation
+                items={exploitationItems}
+                activeSection={activeExploitSection}
+                onSectionChange={setActiveExploitSection}
+              />
+            </div>
             
-            <div className="flex-1 space-y-8">
+            <div className="min-w-0 space-y-8 max-w-none overflow-hidden">
               <div id="manual-exploitation-section">
                 <ManualExploitationTechniques />
               </div>

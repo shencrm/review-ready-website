@@ -103,9 +103,9 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
   }
 
   return (
-    <div className={cn("w-60 flex-shrink-0", className)}>
-      <div className="sticky top-6 bg-cybr-card/50 backdrop-blur-sm border border-cybr-muted/30 rounded-lg p-4">
-        <ScrollArea className="h-[calc(100vh-12rem)]">
+    <div className={cn("w-full", className)}>
+      <div className="sticky top-20 bg-cybr-card/80 backdrop-blur-lg border border-cybr-muted/40 rounded-lg p-4 z-40 shadow-lg shadow-cybr-primary/5">
+        <ScrollArea className="h-[calc(100vh-10rem)] pr-4">
           <NavigationContent />
         </ScrollArea>
       </div>
