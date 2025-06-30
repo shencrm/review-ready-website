@@ -27,6 +27,13 @@ import CoveringTracks from './advanced/post-exploitation/CoveringTracks';
 import MaintainingAccess from './advanced/post-exploitation/MaintainingAccess';
 import AdvancedPostExploitation from './advanced/post-exploitation/AdvancedPostExploitation';
 
+// Import evasion components
+import WAFBypass from './advanced/evasion/WAFBypass';
+import AntivirusEvasion from './advanced/evasion/AntivirusEvasion';
+import NetworkEvasion from './advanced/evasion/NetworkEvasion';
+import TrafficObfuscation from './advanced/evasion/TrafficObfuscation';
+import StealthTechniques from './advanced/evasion/StealthTechniques';
+
 const AdvancedContentSection: React.FC = () => {
   // Navigation items for Advanced Reconnaissance
   const reconnaissanceItems = [{
@@ -113,6 +120,35 @@ const AdvancedContentSection: React.FC = () => {
     }
   ];
 
+  // Navigation items for Evasion Techniques
+  const evasionItems = [
+    {
+      id: 'waf-bypass-section',
+      title: 'WAF Bypass',
+      icon: <Shield className="h-4 w-4" />
+    },
+    {
+      id: 'antivirus-evasion-section',
+      title: 'Antivirus Evasion',
+      icon: <Eye className="h-4 w-4" />
+    },
+    {
+      id: 'network-evasion-section',
+      title: 'Network Evasion',
+      icon: <Network className="h-4 w-4" />
+    },
+    {
+      id: 'traffic-obfuscation-section',
+      title: 'Traffic Obfuscation',
+      icon: <Code className="h-4 w-4" />
+    },
+    {
+      id: 'stealth-techniques-section',
+      title: 'Stealth Techniques',
+      icon: <EyeOff className="h-4 w-4" />
+    }
+  ];
+
   const {
     activeSection: activeReconSection,
     setActiveSection: setActiveReconSection
@@ -125,6 +161,10 @@ const AdvancedContentSection: React.FC = () => {
     activeSection: activePostExploitSection,
     setActiveSection: setActivePostExploitSection
   } = useActiveSection(postExploitationItems.map(item => item.id));
+  const {
+    activeSection: activeEvasionSection,
+    setActiveSection: setActiveEvasionSection
+  } = useActiveSection(evasionItems.map(item => item.id));
 
   // Debug logging
   React.useEffect(() => {
@@ -327,20 +367,42 @@ const AdvancedContentSection: React.FC = () => {
             </div>
           </TabsContent>
 
-          {/* Other tabs content remains unchanged */}
+          {/* Evasion Techniques Tab */}
           <TabsContent value="evasion-techniques" className="space-y-6">
-            <Card className="bg-cybr-card border-cybr-muted">
-              <CardHeader>
-                <CardTitle className="text-cybr-primary">Evasion Techniques</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-cybr-foreground opacity-80">
-                  Evasion techniques content will be implemented here.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="grid grid-cols-[280px_1fr] gap-8 min-h-screen">
+              <div className="w-full">
+                <SectionNavigation 
+                  items={evasionItems} 
+                  activeSection={activeEvasionSection} 
+                  onSectionChange={setActiveEvasionSection} 
+                />
+              </div>
+              
+              <div className="min-w-0 space-y-8 max-w-none overflow-hidden">
+                <div id="waf-bypass-section">
+                  <WAFBypass />
+                </div>
+                
+                <div id="antivirus-evasion-section">
+                  <AntivirusEvasion />
+                </div>
+
+                <div id="network-evasion-section">
+                  <NetworkEvasion />
+                </div>
+
+                <div id="traffic-obfuscation-section">
+                  <TrafficObfuscation />
+                </div>
+
+                <div id="stealth-techniques-section">
+                  <StealthTechniques />
+                </div>
+              </div>
+            </div>
           </TabsContent>
 
+          {/* Other tabs content remains unchanged */}
           <TabsContent value="automation-scripting" className="space-y-6">
             <Card className="bg-cybr-card border-cybr-muted">
               <CardHeader>
