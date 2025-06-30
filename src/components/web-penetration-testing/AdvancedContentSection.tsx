@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -39,7 +38,107 @@ import {
   Archive,
   Layers,
   GitBranch,
-  Bug
+  Bug,
+  Activity,
+  Compass,
+  Command,
+  Monitor,
+  Cpu,
+  HardDrive,
+  Link,
+  BookOpen,
+  Clock,
+  Filter,
+  Hash,
+  Download,
+  Upload,
+  Scan,
+  MousePointer,
+  RotateCcw,
+  RefreshCw,
+  Play,
+  Pause,
+  Square,
+  Volume2,
+  Image,
+  FileCode,
+  Folder,
+  FolderOpen,
+  FileX,
+  FilePlus,
+  Edit,
+  Copy,
+  Scissors,
+  Share,
+  ExternalLink,
+  ArrowRight,
+  ArrowLeft,
+  ChevronRight,
+  ChevronDown,
+  Plus,
+  Minus,
+  X,
+  Check,
+  AlertCircle,
+  HelpCircle,
+  MessageSquare,
+  Bell,
+  Star,
+  Heart,
+  ThumbsUp,
+  Flag,
+  Bookmark,
+  Tag,
+  Paperclip,
+  Send,
+  Inbox,
+  Trash,
+  Archive as ArchiveIcon,
+  FileArchive,
+  Maximize,
+  Minimize,
+  MoreHorizontal,
+  MoreVertical,
+  Menu,
+  Grid,
+  List,
+  Layout,
+  Sidebar,
+  PanelLeft,
+  PanelRight,
+  FullScreen,
+  ZoomIn,
+  ZoomOut,
+  RotateCw,
+  FlipHorizontal,
+  FlipVertical,
+  Crop,
+  Move,
+  Resize,
+  PaintBucket,
+  Brush,
+  Eraser,
+  Palette,
+  Pipette,
+  Type,
+  Bold,
+  Italic,
+  Underline,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignJustify,
+  SquareCode,
+  Braces,
+  Binary,
+  Hexagon,
+  Triangle,
+  Circle,
+  Square as SquareIcon,
+  Pentagon,
+  Octagon,
+  Diamond,
+  ShieldCheck
 } from 'lucide-react';
 
 const AdvancedContentSection: React.FC = () => {
@@ -310,6 +409,807 @@ const AdvancedContentSection: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Advanced Web Application Mapping */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Monitor className="h-6 w-6 text-cybr-primary" />
+                  Advanced Web Application Mapping
+                </CardTitle>
+                <CardDescription>
+                  Comprehensive techniques for mapping modern web applications and SPAs
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                
+                <Alert>
+                  <Info className="h-4 w-4" />
+                  <AlertDescription>
+                    Modern web applications use complex client-side routing and dynamic content loading. 
+                    Traditional crawlers miss critical functionality that requires JavaScript execution and user interaction simulation.
+                  </AlertDescription>
+                </Alert>
+
+                <div className="grid lg:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-lg font-semibold mb-4 text-cybr-primary">Why Traditional Crawling Fails</h4>
+                    <ul className="space-y-2 text-cybr-foreground/90">
+                      <li className="flex items-start gap-2">
+                        <Code className="h-4 w-4 text-orange-500 mt-1 flex-shrink-0" />
+                        <span>Single Page Applications (SPAs) render content dynamically</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Activity className="h-4 w-4 text-orange-500 mt-1 flex-shrink-0" />
+                        <span>API calls triggered by user interactions</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <MousePointer className="h-4 w-4 text-orange-500 mt-1 flex-shrink-0" />
+                        <span>Content loaded on scroll, click, or hover events</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Lock className="h-4 w-4 text-orange-500 mt-1 flex-shrink-0" />
+                        <span>Authentication-protected areas require session management</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold mb-4 text-cybr-primary">Advanced Mapping Strategy</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">1</Badge>
+                        <span className="text-sm">Start with robots.txt and sitemap.xml analysis</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">2</Badge>
+                        <span className="text-sm">Use headless browsers for JavaScript rendering</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">3</Badge>
+                        <span className="text-sm">Implement event-driven interaction simulation</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">4</Badge>
+                        <span className="text-sm">Monitor network traffic for API endpoint discovery</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">5</Badge>
+                        <span className="text-sm">Extract client-side routing configurations</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Terminal className="h-5 w-5 text-cybr-primary" />
+                    Single Page Application (SPA) Reconnaissance
+                  </h4>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h5 className="font-medium mb-3 text-cybr-primary">React Application Analysis</h5>
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <div className="font-mono text-sm space-y-2">
+                          <div className="text-green-400"># Identify React application</div>
+                          <div>grep -r "react" /path/to/source</div>
+                          <div>curl -s https://example.com | grep -i react</div>
+                          <div className="text-green-400"># Extract React Router routes</div>
+                          <div>grep -r "Route path" /path/to/source</div>
+                          <div>grep -r "BrowserRouter\|HashRouter" /path/to/source</div>
+                          <div className="text-green-400"># Find component structure</div>
+                          <div>find . -name "*.jsx" -o -name "*.tsx" | head -20</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className="font-medium mb-3 text-cybr-primary">Angular Application Analysis</h5>
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <div className="font-mono text-sm space-y-2">
+                          <div className="text-green-400"># Detect Angular version and modules</div>
+                          <div>curl -s https://example.com | grep ng-version</div>
+                          <div>grep -r "RouterModule" /path/to/source</div>
+                          <div className="text-green-400"># Extract routing configuration</div>
+                          <div>grep -r "path:" /path/to/source</div>
+                          <div>find . -name "*.routing.ts" -o -name "*-routing.module.ts"</div>
+                          <div className="text-green-400"># Identify services and components</div>
+                          <div>find . -name "*.service.ts" | head -10</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className="font-medium mb-3 text-cybr-primary">Vue.js Application Analysis</h5>
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <div className="font-mono text-sm space-y-2">
+                          <div className="text-green-400"># Identify Vue.js framework</div>
+                          <div>curl -s https://example.com | grep -i vue</div>
+                          <div>grep -r "Vue.createApp\|new Vue" /path/to/source</div>
+                          <div className="text-green-400"># Extract Vue Router configuration</div>
+                          <div>grep -r "createRouter\|VueRouter" /path/to/source</div>
+                          <div>find . -name "router.js" -o -name "index.js" | grep router</div>
+                          <div className="text-green-400"># Find Vue components</div>
+                          <div>find . -name "*.vue" | head -15</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Activity className="h-5 w-5 text-cybr-primary" />
+                    Progressive Web App (PWA) Analysis
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                      <h5 className="font-medium mb-2 text-cybr-primary">PWA Manifest Discovery</h5>
+                      <div className="font-mono text-sm space-y-1">
+                        <div className="text-green-400"># Check for PWA manifest</div>
+                        <div>curl -s https://example.com/manifest.json</div>
+                        <div>curl -s https://example.com/manifest.webmanifest</div>
+                        <div className="text-green-400"># Service Worker discovery</div>
+                        <div>curl -s https://example.com/sw.js</div>
+                        <div>curl -s https://example.com/service-worker.js</div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h6 className="font-medium mb-2 text-cybr-primary">Offline Capabilities</h6>
+                        <div className="text-sm space-y-1">
+                          <p>• Cache API endpoints discovery</p>
+                          <p>• IndexedDB storage analysis</p>
+                          <p>• Background sync functionality</p>
+                          <p>• Push notification setup</p>
+                        </div>
+                      </div>
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h6 className="font-medium mb-2 text-cybr-primary">Security Implications</h6>
+                        <div className="text-sm space-y-1">
+                          <p>• Service worker script injection</p>
+                          <p>• Cache poisoning attacks</p>
+                          <p>• Offline data persistence</p>
+                          <p>• Cross-origin communication</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Compass className="h-5 w-5 text-cybr-primary" />
+                    Headless Browser Automation
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h5 className="font-medium mb-2 text-cybr-primary">Puppeteer Script Example</h5>
+                        <div className="font-mono text-xs space-y-1">
+                          <div className="text-green-400">// Advanced SPA crawling</div>
+                          <div>const puppeteer = require('puppeteer');</div>
+                          <div>const browser = await puppeteer.launch();</div>
+                          <div>const page = await browser.newPage();</div>
+                          <div>await page.goto('https://example.com');</div>
+                          <div>// Wait for dynamic content</div>
+                          <div>await page.waitForSelector('.dynamic-content');</div>
+                          <div>// Extract all links including dynamic ones</div>
+                          <div>const links = await page.$$eval('a', as => as.map(a => a.href));</div>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h5 className="font-medium mb-2 text-cybr-primary">Selenium WebDriver</h5>
+                        <div className="font-mono text-xs space-y-1">
+                          <div className="text-green-400"># Python Selenium example</div>
+                          <div>from selenium import webdriver</div>
+                          <div>driver = webdriver.Chrome()</div>
+                          <div>driver.get("https://example.com")</div>
+                          <div># Interact with dynamic elements</div>
+                          <div>driver.find_element_by_id("menu").click()</div>
+                          <div># Extract dynamically loaded content</div>
+                          <div>content = driver.page_source</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* HTTP/HTTPS Deep Analysis */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Globe className="h-6 w-6 text-cybr-primary" />
+                  HTTP/HTTPS Deep Analysis
+                </CardTitle>
+                <CardDescription>
+                  Advanced HTTP protocol analysis and modern web protocol reconnaissance
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                
+                <div className="grid lg:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-lg font-semibold mb-4 text-cybr-primary">Why HTTP Analysis is Critical</h4>
+                    <ul className="space-y-2 text-cybr-foreground/90">
+                      <li className="flex items-start gap-2">
+                        <ShieldCheck className="h-4 w-4 text-cybr-primary mt-1 flex-shrink-0" />
+                        <span>HTTP headers reveal server configurations and security policies</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Command className="h-4 w-4 text-cybr-primary mt-1 flex-shrink-0" />
+                        <span>HTTP methods expose additional attack vectors</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Network className="h-4 w-4 text-cybr-primary mt-1 flex-shrink-0" />
+                        <span>Protocol version differences affect security features</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Lock className="h-4 w-4 text-cybr-primary mt-1 flex-shrink-0" />
+                        <span>TLS configuration determines encryption strength</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold mb-4 text-cybr-primary">Analysis Methodology</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">1</Badge>
+                        <span className="text-sm">Enumerate all supported HTTP methods</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">2</Badge>
+                        <span className="text-sm">Analyze security headers and policies</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">3</Badge>
+                        <span className="text-sm">Test HTTP/2 and HTTP/3 specific features</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">4</Badge>
+                        <span className="text-sm">Examine SSL/TLS certificate chains</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">5</Badge>
+                        <span className="text-sm">Discover WebSocket upgrade endpoints</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Command className="h-5 w-5 text-cybr-primary" />
+                    HTTP Method Enumeration & Testing
+                  </h4>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h5 className="font-medium mb-3 text-cybr-primary">Comprehensive Method Discovery</h5>
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <div className="font-mono text-sm space-y-2">
+                          <div className="text-green-400"># OPTIONS method discovery</div>
+                          <div>curl -X OPTIONS https://example.com -i</div>
+                          <div>curl -X OPTIONS https://example.com/api -i</div>
+                          <div className="text-green-400"># Test dangerous methods</div>
+                          <div>curl -X TRACE https://example.com -i</div>
+                          <div>curl -X CONNECT https://example.com -i</div>
+                          <div>curl -X DELETE https://example.com/api/users/1 -i</div>
+                          <div className="text-green-400"># WebDAV methods</div>
+                          <div>curl -X PROPFIND https://example.com -i</div>
+                          <div>curl -X MKCOL https://example.com/test -i</div>
+                          <div>curl -X COPY https://example.com/file -H "Destination: /newfile"</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <Card className="border-cybr-muted/30">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base">Standard Methods</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm space-y-1">
+                          <p>• GET - Retrieve resources</p>
+                          <p>• POST - Submit data</p>
+                          <p>• PUT - Update resources</p>
+                          <p>• DELETE - Remove resources</p>
+                          <p>• HEAD - Headers only</p>
+                          <p>• OPTIONS - Method discovery</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-cybr-muted/30">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base">Dangerous Methods</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm space-y-1">
+                          <p>• TRACE - XSS potential</p>
+                          <p>• CONNECT - Proxy tunneling</p>
+                          <p>• PATCH - Partial updates</p>
+                          <p>• TRACK - Similar to TRACE</p>
+                          <p>• DEBUG - Debug information</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-cybr-muted/30">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base">WebDAV Methods</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm space-y-1">
+                          <p>• PROPFIND - Property discovery</p>
+                          <p>• PROPPATCH - Property modification</p>
+                          <p>• MKCOL - Create collections</p>
+                          <p>• COPY - Copy resources</p>
+                          <p>• MOVE - Move resources</p>
+                          <p>• LOCK/UNLOCK - Resource locking</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <ShieldCheck className="h-5 w-5 text-cybr-primary" />
+                    Security Headers Analysis
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                      <h5 className="font-medium mb-2 text-cybr-primary">Critical Security Headers</h5>
+                      <div className="font-mono text-sm space-y-2">
+                        <div className="text-green-400"># Check for security headers</div>
+                        <div>curl -I https://example.com | grep -i "strict-transport-security"</div>
+                        <div>curl -I https://example.com | grep -i "content-security-policy"</div>
+                        <div>curl -I https://example.com | grep -i "x-frame-options"</div>
+                        <div>curl -I https://example.com | grep -i "x-content-type-options"</div>
+                        <div className="text-green-400"># Automated security header analysis</div>
+                        <div>python3 -c "import requests; r=requests.get('https://example.com'); print(r.headers)"</div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <h6 className="font-medium mb-2 text-cybr-primary">Missing Headers Indicate</h6>
+                        <div className="text-sm space-y-1">
+                          <p>• No HSTS = MITM vulnerability</p>
+                          <p>• No CSP = XSS risk</p>
+                          <p>• No X-Frame-Options = Clickjacking</p>
+                          <p>• No X-Content-Type-Options = MIME sniffing</p>
+                          <p>• No Referrer-Policy = Information leakage</p>
+                        </div>
+                      </div>
+                      <div>
+                        <h6 className="font-medium mb-2 text-cybr-primary">Weak Configurations</h6>
+                        <div className="text-sm space-y-1">
+                          <p>• CSP with 'unsafe-inline'</p>
+                          <p>• X-Frame-Options: ALLOWALL</p>
+                          <p>• Short HSTS max-age values</p>
+                          <p>• Permissive CORS policies</p>
+                          <p>• Debug headers in production</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Network className="h-5 w-5 text-cybr-primary" />
+                    HTTP/2 and HTTP/3 Analysis
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h5 className="font-medium mb-2 text-cybr-primary">HTTP/2 Features Testing</h5>
+                        <div className="font-mono text-sm space-y-1">
+                          <div className="text-green-400"># Check HTTP/2 support</div>
+                          <div>curl --http2 -I https://example.com</div>
+                          <div className="text-green-400"># Server push testing</div>
+                          <div>curl --http2 -v https://example.com 2>&1 | grep "&lt; HTTP/2 200"</div>
+                          <div className="text-green-400"># Stream multiplexing</div>
+                          <div>h2load -n1000 -c10 https://example.com</div>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h5 className="font-medium mb-2 text-cybr-primary">HTTP/3 (QUIC) Detection</h5>
+                        <div className="font-mono text-sm space-y-1">
+                          <div className="text-green-400"># Check for HTTP/3 support</div>
+                          <div>curl --http3 -I https://example.com</div>
+                          <div className="text-green-400"># Alt-Svc header check</div>
+                          <div>curl -I https://example.com | grep -i alt-svc</div>
+                          <div className="text-green-400"># QUIC discovery</div>
+                          <div>nmap -sU -p 443 --script http-quic example.com</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <Alert>
+                      <AlertTriangle className="h-4 w-4" />
+                      <AlertDescription>
+                        HTTP/2 request smuggling and HTTP/3 connection migration attacks are emerging threats. 
+                        Always test for protocol downgrade vulnerabilities and stream multiplexing abuse.
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Activity className="h-5 w-5 text-cybr-primary" />
+                    WebSocket Discovery & Analysis
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                      <div className="font-mono text-sm space-y-2">
+                        <div className="text-green-400"># WebSocket endpoint discovery</div>
+                        <div>curl -H "Connection: Upgrade" -H "Upgrade: websocket" https://example.com/ws</div>
+                        <div>curl -H "Sec-WebSocket-Key: test" -H "Sec-WebSocket-Version: 13" https://example.com/chat</div>
+                        <div className="text-green-400"># JavaScript WebSocket enumeration</div>
+                        <div>grep -r "new WebSocket\|ws://" /path/to/source</div>
+                        <div>grep -r "wss://" /path/to/source</div>
+                        <div className="text-green-400"># Common WebSocket paths</div>
+                        <div>curl -i https://example.com/socket.io/</div>
+                        <div>curl -i https://example.com/sockjs/</div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <h6 className="font-medium mb-2 text-cybr-primary">Common WebSocket Paths</h6>
+                        <div className="text-sm space-y-1">
+                          <p>• /ws, /websocket, /socket</p>
+                          <p>• /chat, /live, /stream</p>
+                          <p>• /socket.io/, /sockjs/</p>
+                          <p>• /realtime, /notifications</p>
+                          <p>• /api/ws, /v1/websocket</p>
+                        </div>
+                      </div>
+                      <div>
+                        <h6 className="font-medium mb-2 text-cybr-primary">Security Testing Areas</h6>
+                        <div className="text-sm space-y-1">
+                          <p>• Authentication bypass</p>
+                          <p>• Message injection attacks</p>
+                          <p>• Cross-site WebSocket hijacking</p>
+                          <p>• Denial of service via flooding</p>
+                          <p>• Information disclosure</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Advanced JavaScript Analysis */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Code className="h-6 w-6 text-cybr-primary" />
+                  Advanced JavaScript Analysis
+                </CardTitle>
+                <CardDescription>
+                  Deep analysis of client-side JavaScript for hidden functionality and security vulnerabilities
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                
+                <Alert>
+                  <Info className="h-4 w-4" />
+                  <AlertDescription>
+                    Modern web applications rely heavily on JavaScript for functionality. Client-side code often contains 
+                    API endpoints, authentication mechanisms, and business logic that traditional scanners miss.
+                  </AlertDescription>
+                </Alert>
+
+                <div className="grid lg:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-lg font-semibold mb-4 text-cybr-primary">What JavaScript Analysis Reveals</h4>
+                    <ul className="space-y-2 text-cybr-foreground/90">
+                      <li className="flex items-start gap-2">
+                        <Link className="h-4 w-4 text-cybr-primary mt-1 flex-shrink-0" />
+                        <span>Hidden API endpoints and internal URLs</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Key className="h-4 w-4 text-cybr-primary mt-1 flex-shrink-0" />
+                        <span>Hardcoded API keys and authentication tokens</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Settings className="h-4 w-4 text-cybr-primary mt-1 flex-shrink-0" />
+                        <span>Application configuration and feature flags</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Bug className="h-4 w-4 text-cybr-primary mt-1 flex-shrink-0" />
+                        <span>Development artifacts and debug functions</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold mb-4 text-cybr-primary">Analysis Strategy</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">1</Badge>
+                        <span className="text-sm">Download and catalog all JavaScript files</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">2</Badge>
+                        <span className="text-sm">Deobfuscate and beautify minified code</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">3</Badge>
+                        <span className="text-sm">Extract URLs, endpoints, and sensitive strings</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">4</Badge>
+                        <span className="text-sm">Analyze source maps for original code</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Badge variant="outline" className="text-xs">5</Badge>
+                        <span className="text-sm">Map client-side routing and state management</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <FileCode className="h-5 w-5 text-cybr-primary" />
+                    Source Map Discovery & Analysis
+                  </h4>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h5 className="font-medium mb-3 text-cybr-primary">Source Map Detection</h5>
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <div className="font-mono text-sm space-y-2">
+                          <div className="text-green-400"># Check for source map references</div>
+                          <div>curl -s https://example.com/js/app.js | grep "sourceMappingURL"</div>
+                          <div>curl -s https://example.com/js/app.js | tail -5</div>
+                          <div className="text-green-400"># Common source map locations</div>
+                          <div>curl -s https://example.com/js/app.js.map</div>
+                          <div>curl -s https://example.com/static/js/main.js.map</div>
+                          <div>curl -s https://example.com/assets/js/bundle.js.map</div>
+                          <div className="text-green-400"># Extract original filenames</div>
+                          <div>curl -s https://example.com/js/app.js.map | jq '.sources[]'</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h6 className="font-medium mb-2 text-cybr-primary">What Source Maps Reveal</h6>
+                        <div className="text-sm space-y-2">
+                          <p>• Original TypeScript/JSX source code</p>
+                          <p>• Development file structure</p>
+                          <p>• Developer comments and TODOs</p>
+                          <p>• Internal API documentation</p>
+                          <p>• Test files and debug functions</p>
+                          <p>• Environment-specific configurations</p>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h6 className="font-medium mb-2 text-cybr-primary">Source Map Analysis Tools</h6>
+                        <div className="font-mono text-xs space-y-1">
+                          <div className="text-green-400"># Source map explorer</div>
+                          <div>npm install -g source-map-explorer</div>
+                          <div>source-map-explorer bundle.js</div>
+                          <div className="text-green-400"># Manual extraction</div>
+                          <div>cat app.js.map | jq '.sourcesContent[]'</div>
+                          <div className="text-green-400"># Automated analysis</div>
+                          <div>python3 sourcemap_analyzer.py app.js.map</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Hash className="h-5 w-5 text-cybr-primary" />
+                    Webpack Bundle Analysis
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                      <h5 className="font-medium mb-2 text-cybr-primary">Webpack Chunk Discovery</h5>
+                      <div className="font-mono text-sm space-y-2">
+                        <div className="text-green-400"># Identify webpack patterns</div>
+                        <div>curl -s https://example.com/js/app.js | grep "__webpack_"</div>
+                        <div>curl -s https://example.com/js/app.js | grep "webpackJsonp"</div>
+                        <div className="text-green-400"># Find chunk files</div>
+                        <div>curl -s https://example.com/js/app.js | grep -oE '[0-9]+\.[a-f0-9]+\.chunk\.js'</div>
+                        <div className="text-green-400"># Extract module information</div>
+                        <div>curl -s https://example.com/js/app.js | grep -oE 'modules:\[.*\]'</div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <Card className="border-cybr-muted/30">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base">Common Chunk Types</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm space-y-1">
+                          <p>• main.js - Application entry</p>
+                          <p>• vendor.js - Third-party libs</p>
+                          <p>• runtime.js - Webpack runtime</p>
+                          <p>• [number].js - Lazy loaded</p>
+                          <p>• commons.js - Shared code</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-cybr-muted/30">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base">Module Analysis</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm space-y-1">
+                          <p>• Module dependency mapping</p>
+                          <p>• Dynamic import discovery</p>
+                          <p>• Code splitting boundaries</p>
+                          <p>• Hot module replacement</p>
+                          <p>• Development vs production</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-cybr-muted/30">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base">Security Implications</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm space-y-1">
+                          <p>• Exposed development tools</p>
+                          <p>• Debug mode indicators</p>
+                          <p>• Environment variables</p>
+                          <p>• API endpoint discovery</p>
+                          <p>• Feature flag exposure</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Link className="h-5 w-5 text-cybr-primary" />
+                    Hidden API Endpoint Discovery
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                      <h5 className="font-medium mb-2 text-cybr-primary">JavaScript Endpoint Extraction</h5>
+                      <div className="font-mono text-sm space-y-2">
+                        <div className="text-green-400"># Extract URLs from JavaScript</div>
+                        <div>curl -s https://example.com/js/app.js | grep -oE "https?://[^\"']+"</div>
+                        <div>curl -s https://example.com/js/app.js | grep -oE '"/api/[^"]*"'</div>
+                        <div className="text-green-400"># Find GraphQL endpoints</div>
+                        <div>curl -s https://example.com/js/app.js | grep -i graphql</div>
+                        <div>curl -s https://example.com/js/app.js | grep -oE '"/graphql[^"]*"'</div>
+                        <div className="text-green-400"># Discover WebSocket connections</div>
+                        <div>curl -s https://example.com/js/app.js | grep -oE 'wss?://[^"]*'</div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h6 className="font-medium mb-2 text-cybr-primary">API Pattern Recognition</h6>
+                        <div className="text-sm space-y-2">
+                          <p>• REST endpoints: /api/v1/users</p>
+                          <p>• GraphQL queries: query GetUsers</p>
+                          <p>• WebSocket events: ws.send(data)</p>
+                          <p>• AJAX calls: fetch("/internal/api")</p>
+                          <p>• Form submissions: action="/submit"</p>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h6 className="font-medium mb-2 text-cybr-primary">Advanced Extraction Tools</h6>
+                        <div className="font-mono text-xs space-y-1">
+                          <div className="text-green-400"># LinkFinder</div>
+                          <div>python3 linkfinder.py -i example.com -o cli</div>
+                          <div className="text-green-400"># JSParser</div>
+                          <div>python3 jsparser.py -u example.com</div>
+                          <div className="text-green-400"># SecretFinder</div>
+                          <div>python3 SecretFinder.py -i example.com</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Braces className="h-5 w-5 text-cybr-primary" />
+                    JavaScript Deobfuscation Techniques
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h5 className="font-medium mb-2 text-cybr-primary">Common Obfuscation Methods</h5>
+                        <div className="text-sm space-y-2">
+                          <p>• Variable name mangling (a, b, c)</p>
+                          <p>• String encoding (hex, base64)</p>
+                          <p>• Control flow flattening</p>
+                          <p>• Dead code injection</p>
+                          <p>• Function name obfuscation</p>
+                          <p>• Eval-based dynamic execution</p>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                        <h5 className="font-medium mb-2 text-cybr-primary">Deobfuscation Tools</h5>
+                        <div className="font-mono text-xs space-y-1">
+                          <div className="text-green-400"># Online tools</div>
+                          <div>js-beautify, unminify.com</div>
+                          <div className="text-green-400"># Command line</div>
+                          <div>js-beautify obfuscated.js</div>
+                          <div>node -e "console.log(require('util').inspect(eval('obfuscated_code')))"</div>
+                          <div className="text-green-400"># Browser console</div>
+                          <div>Debug and step through execution</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-cybr-muted/20 p-4 rounded-lg">
+                      <h5 className="font-medium mb-2 text-cybr-primary">Manual Deobfuscation Process</h5>
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                          <Badge variant="outline" className="text-xs">1</Badge>
+                          <span className="text-sm">Beautify the code to improve readability</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <Badge variant="outline" className="text-xs">2</Badge>
+                          <span className="text-sm">Identify string arrays and decode functions</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <Badge variant="outline" className="text-xs">3</Badge>
+                          <span className="text-sm">Replace obfuscated variables with meaningful names</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <Badge variant="outline" className="text-xs">4</Badge>
+                          <span className="text-sm">Execute decoder functions to reveal strings</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <Badge variant="outline" className="text-xs">5</Badge>
+                          <span className="text-sm">Analyze control flow and remove dead code</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
             {/* Subdomain Enumeration */}
             <Card>
