@@ -48,7 +48,7 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
   };
 
   const NavigationContent = () => (
-    <div className="space-y-2">
+    <div className="space-y-2 p-1">
       <h3 className="text-sm font-semibold text-cybr-primary mb-4 px-2">
         Quick Navigation
       </h3>
@@ -57,10 +57,10 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
           key={item.id}
           onClick={() => scrollToSection(item.id)}
           className={cn(
-            "w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-200 flex items-center gap-2 group",
+            "w-full text-left px-3 py-2.5 rounded-lg text-sm transition-all duration-200 flex items-center gap-2 group",
             activeSection === item.id
-              ? "bg-cybr-primary/20 text-cybr-primary border-l-2 border-cybr-primary"
-              : "text-cybr-foreground/70 hover:text-cybr-foreground hover:bg-cybr-muted/30"
+              ? "bg-cybr-primary/20 text-cybr-primary border-l-2 border-cybr-primary shadow-sm"
+              : "text-cybr-foreground/70 hover:text-cybr-foreground hover:bg-cybr-muted/40 hover:border-l-2 hover:border-cybr-primary/50"
           )}
         >
           {item.icon && (
@@ -68,10 +68,10 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
               {item.icon}
             </span>
           )}
-          <span className="flex-1">{item.title}</span>
+          <span className="flex-1 font-medium">{item.title}</span>
           <ChevronRight className={cn(
-            "w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity",
-            activeSection === item.id && "opacity-100"
+            "w-3 h-3 opacity-0 group-hover:opacity-100 transition-all duration-200 transform",
+            activeSection === item.id && "opacity-100 translate-x-1"
           )} />
         </button>
       ))}
@@ -85,12 +85,12 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
           <Button
             variant="outline"
             size="sm"
-            className="fixed top-20 right-4 z-50 bg-cybr-card border-cybr-muted"
+            className="fixed top-20 right-4 z-50 bg-cybr-card/90 border-cybr-muted backdrop-blur-lg shadow-lg"
           >
             <Menu className="h-4 w-4" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-80 bg-cybr-card border-cybr-muted">
+        <SheetContent side="left" className="w-80 bg-cybr-card/95 border-cybr-muted backdrop-blur-xl">
           <SheetHeader>
             <SheetTitle className="text-cybr-primary">Navigation</SheetTitle>
           </SheetHeader>
@@ -104,10 +104,10 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="sticky top-20 bg-cybr-card/80 backdrop-blur-lg border border-cybr-muted/40 rounded-lg p-4 z-40 shadow-lg shadow-cybr-primary/5">
-        <ScrollArea className="h-[calc(100vh-10rem)] pr-4">
+      <div className="sticky-navigation p-4">
+        <div className="navigation-scroll-area pr-2">
           <NavigationContent />
-        </ScrollArea>
+        </div>
       </div>
     </div>
   );

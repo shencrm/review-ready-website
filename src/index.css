@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap');
 
 @tailwind base;
@@ -98,6 +99,53 @@
 
   .card {
     @apply bg-cybr-muted/50 backdrop-blur-sm border border-cybr-primary/20 rounded-lg p-6 transition-all duration-300 hover:border-cybr-primary/40 hover:shadow-md hover:shadow-cybr-primary/5;
+  }
+
+  /* Sticky Navigation Styles */
+  .sticky-navigation {
+    position: sticky;
+    top: 5rem; /* 80px - after navbar */
+    z-index: 50;
+    background: rgba(29, 39, 59, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 255, 231, 0.2);
+    border-radius: 0.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 20px rgba(0, 255, 231, 0.05);
+    will-change: transform;
+    isolation: isolate;
+  }
+
+  .sticky-navigation:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 231, 0.02) 0%, rgba(66, 133, 244, 0.02) 50%, rgba(255, 60, 92, 0.02) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .navigation-scroll-area {
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 231, 0.3) transparent;
+  }
+
+  .navigation-scroll-area::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .navigation-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .navigation-scroll-area::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 231, 0.3);
+    border-radius: 3px;
+  }
+
+  .navigation-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 231, 0.5);
   }
 }
 
