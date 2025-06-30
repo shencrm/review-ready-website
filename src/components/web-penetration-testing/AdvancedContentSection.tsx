@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Zap, Search, Globe, Code, Database, Shield, Eye, Target } from 'lucide-react';
+import { Zap, Search, Globe, Code, Database, Shield, Eye, Target, Crown, Download, Network, EyeOff, Key } from 'lucide-react';
 import OSINTSection from './advanced/OSINTSection';
 import WebApplicationMapping from './advanced/WebApplicationMapping';
 import HTTPAnalysis from './advanced/HTTPAnalysis';
@@ -16,6 +16,16 @@ import ModernAttackVectors from './advanced/exploitation/ModernAttackVectors';
 import ClientSideExploitation from './advanced/exploitation/ClientSideExploitation';
 import AuthenticationBypass from './advanced/exploitation/AuthenticationBypass';
 import CloudContainerExploitation from './advanced/exploitation/CloudContainerExploitation';
+
+// Import post-exploitation components
+import PersistenceTechniques from './advanced/post-exploitation/PersistenceTechniques';
+import PrivilegeEscalation from './advanced/post-exploitation/PrivilegeEscalation';
+import DataExfiltration from './advanced/post-exploitation/DataExfiltration';
+import LateralMovement from './advanced/post-exploitation/LateralMovement';
+import CoveringTracks from './advanced/post-exploitation/CoveringTracks';
+import MaintainingAccess from './advanced/post-exploitation/MaintainingAccess';
+import AdvancedPostExploitation from './advanced/post-exploitation/AdvancedPostExploitation';
+
 const AdvancedContentSection: React.FC = () => {
   // Navigation items for Advanced Reconnaissance
   const reconnaissanceItems = [{
@@ -62,6 +72,46 @@ const AdvancedContentSection: React.FC = () => {
     title: 'Cloud & Container Exploitation',
     icon: <Globe className="h-4 w-4" />
   }];
+
+  // Navigation items for Post-Exploitation
+  const postExploitationItems = [
+    {
+      id: 'persistence-section',
+      title: 'Persistence Techniques',
+      icon: <Shield className="h-4 w-4" />
+    },
+    {
+      id: 'privilege-escalation-section',
+      title: 'Privilege Escalation',
+      icon: <Crown className="h-4 w-4" />
+    },
+    {
+      id: 'data-exfiltration-section',
+      title: 'Data Exfiltration',
+      icon: <Download className="h-4 w-4" />
+    },
+    {
+      id: 'lateral-movement-section',
+      title: 'Lateral Movement',
+      icon: <Network className="h-4 w-4" />
+    },
+    {
+      id: 'covering-tracks-section',
+      title: 'Covering Tracks',
+      icon: <EyeOff className="h-4 w-4" />
+    },
+    {
+      id: 'maintaining-access-section',
+      title: 'Maintaining Access',
+      icon: <Key className="h-4 w-4" />
+    },
+    {
+      id: 'advanced-post-exploitation-section',
+      title: 'Advanced Techniques',
+      icon: <Zap className="h-4 w-4" />
+    }
+  ];
+
   const {
     activeSection: activeReconSection,
     setActiveSection: setActiveReconSection
@@ -70,6 +120,11 @@ const AdvancedContentSection: React.FC = () => {
     activeSection: activeExploitSection,
     setActiveSection: setActiveExploitSection
   } = useActiveSection(exploitationItems.map(item => item.id));
+  const {
+    activeSection: activePostExploitSection,
+    setActiveSection: setActivePostExploitSection
+  } = useActiveSection(postExploitationItems.map(item => item.id));
+
   return <div className="space-y-8">
       <div className="text-center mb-8">
         
@@ -194,20 +249,50 @@ const AdvancedContentSection: React.FC = () => {
           </div>
         </TabsContent>
 
-        {/* Other tabs content remains unchanged */}
+        {/* Post-Exploitation Tab */}
         <TabsContent value="post-exploitation" className="space-y-6">
-          <Card className="bg-cybr-card border-cybr-muted">
-            <CardHeader>
-              <CardTitle className="text-cybr-primary">Post-Exploitation Techniques</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-cybr-foreground opacity-80">
-                Post-exploitation techniques content will be implemented here.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-[280px_1fr] gap-8 min-h-screen">
+            <div className="w-full">
+              <SectionNavigation 
+                items={postExploitationItems} 
+                activeSection={activePostExploitSection} 
+                onSectionChange={setActivePostExploitSection} 
+              />
+            </div>
+            
+            <div className="min-w-0 space-y-8 max-w-none overflow-hidden">
+              <div id="persistence-section">
+                <PersistenceTechniques />
+              </div>
+              
+              <div id="privilege-escalation-section">
+                <PrivilegeEscalation />
+              </div>
+
+              <div id="data-exfiltration-section">
+                <DataExfiltration />
+              </div>
+
+              <div id="lateral-movement-section">
+                <LateralMovement />
+              </div>
+
+              <div id="covering-tracks-section">
+                <CoveringTracks />
+              </div>
+
+              <div id="maintaining-access-section">
+                <MaintainingAccess />
+              </div>
+
+              <div id="advanced-post-exploitation-section">
+                <AdvancedPostExploitation />
+              </div>
+            </div>
+          </div>
         </TabsContent>
 
+        {/* Other tabs content remains unchanged */}
         <TabsContent value="evasion-techniques" className="space-y-6">
           <Card className="bg-cybr-card border-cybr-muted">
             <CardHeader>
