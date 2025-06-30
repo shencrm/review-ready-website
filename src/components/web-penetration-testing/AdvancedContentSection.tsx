@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -17,44 +16,64 @@ import ModernAttackVectors from './advanced/exploitation/ModernAttackVectors';
 import ClientSideExploitation from './advanced/exploitation/ClientSideExploitation';
 import AuthenticationBypass from './advanced/exploitation/AuthenticationBypass';
 import CloudContainerExploitation from './advanced/exploitation/CloudContainerExploitation';
-
 const AdvancedContentSection: React.FC = () => {
   // Navigation items for Advanced Reconnaissance
-  const reconnaissanceItems = [
-    { id: 'osint-section', title: 'OSINT Techniques', icon: <Search className="h-4 w-4" /> },
-    { id: 'web-mapping-section', title: 'Web Application Mapping', icon: <Globe className="h-4 w-4" /> },
-    { id: 'http-analysis-section', title: 'HTTP Traffic Analysis', icon: <Shield className="h-4 w-4" /> },
-    { id: 'javascript-analysis-section', title: 'JavaScript Analysis', icon: <Code className="h-4 w-4" /> },
-    { id: 'modern-tools-section', title: 'Modern Tools Arsenal', icon: <Database className="h-4 w-4" /> },
-  ];
+  const reconnaissanceItems = [{
+    id: 'osint-section',
+    title: 'OSINT Techniques',
+    icon: <Search className="h-4 w-4" />
+  }, {
+    id: 'web-mapping-section',
+    title: 'Web Application Mapping',
+    icon: <Globe className="h-4 w-4" />
+  }, {
+    id: 'http-analysis-section',
+    title: 'HTTP Traffic Analysis',
+    icon: <Shield className="h-4 w-4" />
+  }, {
+    id: 'javascript-analysis-section',
+    title: 'JavaScript Analysis',
+    icon: <Code className="h-4 w-4" />
+  }, {
+    id: 'modern-tools-section',
+    title: 'Modern Tools Arsenal',
+    icon: <Database className="h-4 w-4" />
+  }];
 
   // Navigation items for Exploitation Techniques
-  const exploitationItems = [
-    { id: 'manual-exploitation-section', title: 'Manual Exploitation', icon: <Target className="h-4 w-4" /> },
-    { id: 'modern-attack-vectors-section', title: 'Modern Attack Vectors', icon: <Zap className="h-4 w-4" /> },
-    { id: 'client-side-exploitation-section', title: 'Client-Side Exploitation', icon: <Code className="h-4 w-4" /> },
-    { id: 'authentication-bypass-section', title: 'Authentication Bypass', icon: <Shield className="h-4 w-4" /> },
-    { id: 'cloud-container-exploitation-section', title: 'Cloud & Container Exploitation', icon: <Globe className="h-4 w-4" /> },
-  ];
-
-  const { activeSection: activeReconSection, setActiveSection: setActiveReconSection } = useActiveSection(
-    reconnaissanceItems.map(item => item.id)
-  );
-
-  const { activeSection: activeExploitSection, setActiveSection: setActiveExploitSection } = useActiveSection(
-    exploitationItems.map(item => item.id)
-  );
-
-  return (
-    <div className="space-y-8">
+  const exploitationItems = [{
+    id: 'manual-exploitation-section',
+    title: 'Manual Exploitation',
+    icon: <Target className="h-4 w-4" />
+  }, {
+    id: 'modern-attack-vectors-section',
+    title: 'Modern Attack Vectors',
+    icon: <Zap className="h-4 w-4" />
+  }, {
+    id: 'client-side-exploitation-section',
+    title: 'Client-Side Exploitation',
+    icon: <Code className="h-4 w-4" />
+  }, {
+    id: 'authentication-bypass-section',
+    title: 'Authentication Bypass',
+    icon: <Shield className="h-4 w-4" />
+  }, {
+    id: 'cloud-container-exploitation-section',
+    title: 'Cloud & Container Exploitation',
+    icon: <Globe className="h-4 w-4" />
+  }];
+  const {
+    activeSection: activeReconSection,
+    setActiveSection: setActiveReconSection
+  } = useActiveSection(reconnaissanceItems.map(item => item.id));
+  const {
+    activeSection: activeExploitSection,
+    setActiveSection: setActiveExploitSection
+  } = useActiveSection(exploitationItems.map(item => item.id));
+  return <div className="space-y-8">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-cybr-primary mb-4">
-          Advanced Web Penetration Testing Techniques
-        </h2>
-        <p className="text-lg opacity-80 max-w-4xl mx-auto">
-          Master-level techniques and methodologies for comprehensive web application security assessment. 
-          This section covers advanced reconnaissance, exploitation, and analysis techniques used by professional penetration testers.
-        </p>
+        
+        
       </div>
 
       <Tabs defaultValue="advanced-reconnaissance" className="w-full">
@@ -89,11 +108,7 @@ const AdvancedContentSection: React.FC = () => {
         <TabsContent value="advanced-reconnaissance" className="space-y-6">
           <div className="grid grid-cols-[280px_1fr] gap-8 min-h-screen">
             <div className="w-full">
-              <SectionNavigation
-                items={reconnaissanceItems}
-                activeSection={activeReconSection}
-                onSectionChange={setActiveReconSection}
-              />
+              <SectionNavigation items={reconnaissanceItems} activeSection={activeReconSection} onSectionChange={setActiveReconSection} />
             </div>
             
             <div className="min-w-0 space-y-8 max-w-none overflow-hidden">
@@ -152,11 +167,7 @@ const AdvancedContentSection: React.FC = () => {
         <TabsContent value="exploitation-techniques" className="space-y-6">
           <div className="grid grid-cols-[280px_1fr] gap-8 min-h-screen">
             <div className="w-full">
-              <SectionNavigation
-                items={exploitationItems}
-                activeSection={activeExploitSection}
-                onSectionChange={setActiveExploitSection}
-              />
+              <SectionNavigation items={exploitationItems} activeSection={activeExploitSection} onSectionChange={setActiveExploitSection} />
             </div>
             
             <div className="min-w-0 space-y-8 max-w-none overflow-hidden">
@@ -236,8 +247,6 @@ const AdvancedContentSection: React.FC = () => {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
-  );
+    </div>;
 };
-
 export default AdvancedContentSection;
