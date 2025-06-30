@@ -8,6 +8,13 @@ import HTTPAnalysis from './advanced/HTTPAnalysis';
 import JavaScriptAnalysis from './advanced/JavaScriptAnalysis';
 import ModernToolsArsenal from './advanced/ModernToolsArsenal';
 
+// Import new exploitation components
+import ManualExploitationTechniques from './advanced/exploitation/ManualExploitationTechniques';
+import ModernAttackVectors from './advanced/exploitation/ModernAttackVectors';
+import ClientSideExploitation from './advanced/exploitation/ClientSideExploitation';
+import AuthenticationBypass from './advanced/exploitation/AuthenticationBypass';
+import CloudContainerExploitation from './advanced/exploitation/CloudContainerExploitation';
+
 const AdvancedContentSection: React.FC = () => {
   return (
     <div className="space-y-8">
@@ -65,20 +72,56 @@ const AdvancedContentSection: React.FC = () => {
           </div>
         </TabsContent>
 
-        {/* Other tabs content remains unchanged */}
+        {/* Exploitation Techniques Tab */}
         <TabsContent value="exploitation-techniques" className="space-y-6">
-          <Card className="bg-cybr-card border-cybr-muted">
-            <CardHeader>
-              <CardTitle className="text-cybr-primary">Advanced Exploitation Techniques</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-cybr-foreground opacity-80">
-                Advanced exploitation techniques content will be implemented here.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="grid gap-6">
+            <ManualExploitationTechniques />
+            <ModernAttackVectors />
+            <ClientSideExploitation />
+            <AuthenticationBypass />
+            <CloudContainerExploitation />
+            
+            {/* Additional exploitation sections placeholder */}
+            <Card className="bg-cybr-card border-cybr-muted">
+              <CardHeader>
+                <CardTitle className="text-cybr-primary">Additional Advanced Techniques</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                  <div className="bg-cybr-muted/20 p-3 rounded">
+                    <h6 className="font-semibold text-cybr-accent mb-2">Binary & Memory Exploitation</h6>
+                    <ul className="space-y-1 text-xs opacity-80">
+                      <li>• WebAssembly (WASM) exploitation</li>
+                      <li>• Buffer overflow in web context</li>
+                      <li>• Heap exploitation techniques</li>
+                      <li>• ROP/JOP chain construction</li>
+                    </ul>
+                  </div>
+                  <div className="bg-cybr-muted/20 p-3 rounded">
+                    <h6 className="font-semibold text-cybr-accent mb-2">AI/ML Security</h6>
+                    <ul className="space-y-1 text-xs opacity-80">
+                      <li>• LLM prompt injection attacks</li>
+                      <li>• Model extraction techniques</li>
+                      <li>• Adversarial example generation</li>
+                      <li>• Training data poisoning</li>
+                    </ul>
+                  </div>
+                  <div className="bg-cybr-muted/20 p-3 rounded">
+                    <h6 className="font-semibold text-cybr-accent mb-2">Framework Exploitation</h6>
+                    <ul className="space-y-1 text-xs opacity-80">
+                      <li>• React/Vue/Angular attacks</li>
+                      <li>• Node.js prototype pollution</li>
+                      <li>• Python framework vulnerabilities</li>
+                      <li>• Go/Rust memory safety bypasses</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
+        {/* Other tabs content remains unchanged */}
         <TabsContent value="post-exploitation" className="space-y-6">
           <Card className="bg-cybr-card border-cybr-muted">
             <CardHeader>
