@@ -15,6 +15,7 @@ import Resources from "./pages/Resources";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import WebPenetrationTesting from "./pages/WebPenetrationTesting";
+import AdvancedWebPenetrationTesting from "./pages/AdvancedWebPenetrationTesting";
 import CloudPenetrationTesting from "./pages/CloudPenetrationTesting";
 import MobilePenetrationTesting from "./pages/MobilePenetrationTesting";
 import InfrastructurePenetrationTesting from "./pages/InfrastructurePenetrationTesting";
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/languages" element={<Languages />} />
           <Route path="/database-security" element={<DatabaseSecurity />} />
           <Route path="/web-penetration-testing" element={<WebPenetrationTesting />} />
+          <Route path="/advanced-web-penetration-testing" element={<AdvancedWebPenetrationTesting />} />
           <Route path="/cloud-penetration-testing" element={<CloudPenetrationTesting />} />
           <Route path="/mobile-penetration-testing" element={<MobilePenetrationTesting />} />
           <Route path="/infrastructure-penetration-testing" element={<InfrastructurePenetrationTesting />} />

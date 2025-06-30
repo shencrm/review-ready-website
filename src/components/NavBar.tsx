@@ -16,6 +16,7 @@ const NavBar: React.FC = () => {
     { name: 'Languages', path: '/languages' },
     { name: 'Database Security', path: '/database-security' },
     { name: 'Web Penetration Testing', path: '/web-penetration-testing' },
+    { name: 'Advanced Web Penetration Testing', path: '/advanced-web-penetration-testing' },
     { name: 'Cloud Penetration Testing', path: '/cloud-penetration-testing' },
     { name: 'Mobile Penetration Testing', path: '/mobile-penetration-testing' },
     { name: 'Infrastructure Penetration Testing', path: '/infrastructure-penetration-testing' },
