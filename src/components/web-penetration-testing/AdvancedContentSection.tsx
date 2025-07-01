@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Zap, Search, Globe, Code, Database, Shield, Eye, Target, Crown, Download, Network, EyeOff, Key } from 'lucide-react';
+import { Zap, Search, Globe, Code, Database, Shield, Eye, Target, Crown, Download, Network, EyeOff, Key, Terminal, TestTube, Cpu, Clock } from 'lucide-react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import OSINTSection from './advanced/OSINTSection';
 import WebApplicationMapping from './advanced/WebApplicationMapping';
@@ -33,6 +33,11 @@ import AntivirusEvasion from './advanced/evasion/AntivirusEvasion';
 import NetworkEvasion from './advanced/evasion/NetworkEvasion';
 import TrafficObfuscation from './advanced/evasion/TrafficObfuscation';
 import StealthTechniques from './advanced/evasion/StealthTechniques';
+
+// Import automation components
+import ScriptDevelopment from './advanced/automation/ScriptDevelopment';
+import TestingFrameworks from './advanced/automation/TestingFrameworks';
+import VulnerabilityScanning from './advanced/automation/VulnerabilityScanning';
 
 const AdvancedContentSection: React.FC = () => {
   // Navigation items for Advanced Reconnaissance
@@ -149,6 +154,40 @@ const AdvancedContentSection: React.FC = () => {
     }
   ];
 
+  // Navigation items for Automation & Scripting
+  const automationItems = [
+    {
+      id: 'script-development-section',
+      title: 'Script Development',
+      icon: <Code className="h-4 w-4" />
+    },
+    {
+      id: 'testing-frameworks-section',
+      title: 'Testing Frameworks',
+      icon: <TestTube className="h-4 w-4" />
+    },
+    {
+      id: 'vulnerability-scanning-section',
+      title: 'Vulnerability Scanning',
+      icon: <Search className="h-4 w-4" />
+    },
+    {
+      id: 'payload-generation-section',
+      title: 'Payload Generation',
+      icon: <Terminal className="h-4 w-4" />
+    },
+    {
+      id: 'continuous-monitoring-section',
+      title: 'Continuous Monitoring',
+      icon: <Clock className="h-4 w-4" />
+    },
+    {
+      id: 'report-generation-section',
+      title: 'Report Generation',
+      icon: <Database className="h-4 w-4" />
+    }
+  ];
+
   const {
     activeSection: activeReconSection,
     setActiveSection: setActiveReconSection
@@ -165,6 +204,10 @@ const AdvancedContentSection: React.FC = () => {
     activeSection: activeEvasionSection,
     setActiveSection: setActiveEvasionSection
   } = useActiveSection(evasionItems.map(item => item.id));
+  const {
+    activeSection: activeAutomationSection,
+    setActiveSection: setActiveAutomationSection
+  } = useActiveSection(automationItems.map(item => item.id));
 
   // Debug logging
   React.useEffect(() => {
@@ -402,18 +445,79 @@ const AdvancedContentSection: React.FC = () => {
             </div>
           </TabsContent>
 
-          {/* Other tabs content remains unchanged */}
+          {/* Automation & Scripting Tab */}
           <TabsContent value="automation-scripting" className="space-y-6">
-            <Card className="bg-cybr-card border-cybr-muted">
-              <CardHeader>
-                <CardTitle className="text-cybr-primary">Automation & Scripting</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-cybr-foreground opacity-80">
-                  Automation and scripting content will be implemented here.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="grid grid-cols-[280px_1fr] gap-8 min-h-screen">
+              <div className="w-full">
+                <SectionNavigation 
+                  items={automationItems} 
+                  activeSection={activeAutomationSection} 
+                  onSectionChange={setActiveAutomationSection} 
+                />
+              </div>
+              
+              <div className="min-w-0 space-y-8 max-w-none overflow-hidden">
+                <div id="script-development-section">
+                  <ScriptDevelopment />
+                </div>
+                
+                <div id="testing-frameworks-section">
+                  <TestingFrameworks />
+                </div>
+
+                <div id="vulnerability-scanning-section">
+                  <VulnerabilityScanning />
+                </div>
+
+                <div id="payload-generation-section">
+                  <Card className="bg-cybr-card border-cybr-muted">
+                    <CardHeader>
+                      <CardTitle className="text-cybr-primary flex items-center gap-2">
+                        <Terminal className="h-6 w-6" />
+                        Payload Generation
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-cybr-foreground opacity-80">
+                        Advanced payload generation techniques will be implemented here.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div id="continuous-monitoring-section">
+                  <Card className="bg-cybr-card border-cybr-muted">
+                    <CardHeader>
+                      <CardTitle className="text-cybr-primary flex items-center gap-2">
+                        <Clock className="h-6 w-6" />
+                        Continuous Monitoring
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-cybr-foreground opacity-80">
+                        Continuous monitoring and alerting systems will be implemented here.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div id="report-generation-section">
+                  <Card className="bg-cybr-card border-cybr-muted">
+                    <CardHeader>
+                      <CardTitle className="text-cybr-primary flex items-center gap-2">
+                        <Database className="h-6 w-6" />
+                        Report Generation
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-cybr-foreground opacity-80">
+                        Automated report generation and visualization will be implemented here.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="reporting-analysis" className="space-y-6">
