@@ -11,6 +11,8 @@ import AndroidMethodology from './android/AndroidMethodology';
 import AndroidStaticAnalysis from './android/AndroidStaticAnalysis';
 import AndroidDynamicAnalysis from './android/AndroidDynamicAnalysis';
 import AndroidNetworkAnalysis from './android/AndroidNetworkAnalysis';
+import AndroidStorageAnalysis from './android/AndroidStorageAnalysis';
+import AndroidIPCAnalysis from './android/AndroidIPCAnalysis';
 
 const AndroidSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState('environment-setup');
@@ -84,9 +86,9 @@ const AndroidSection: React.FC = () => {
               <Network className="h-3 w-3" />
               <span className="hidden md:inline">Network</span>
             </TabsTrigger>
-            <TabsTrigger value="exploitation" className="flex items-center gap-1 py-2 text-xs">
-              <Bug className="h-3 w-3" />
-              <span className="hidden md:inline">Exploitation</span>
+            <TabsTrigger value="storage-analysis" className="flex items-center gap-1 py-2 text-xs">
+              <Database className="h-3 w-3" />
+              <span className="hidden md:inline">Storage</span>
             </TabsTrigger>
           </TabsList>
 
@@ -111,26 +113,18 @@ const AndroidSection: React.FC = () => {
           </TabsContent>
 
           <TabsContent value="storage-analysis" id="storage-analysis" className="scroll-mt-20">
-            <div className="text-center py-12">
-              <Database className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-2">Storage Analysis</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
-            </div>
+            <AndroidStorageAnalysis />
           </TabsContent>
 
           <TabsContent value="ipc-analysis" id="ipc-analysis" className="scroll-mt-20">
-            <div className="text-center py-12">
-              <Shield className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-2">IPC Analysis</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
-            </div>
+            <AndroidIPCAnalysis />
           </TabsContent>
 
           <TabsContent value="auth-testing" id="auth-testing" className="scroll-mt-20">
             <div className="text-center py-12">
               <Key className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Authentication Testing</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
+              <p className="text-cybr-foreground/70">This section is under development - Advanced authentication testing techniques coming soon</p>
             </div>
           </TabsContent>
 
@@ -138,7 +132,7 @@ const AndroidSection: React.FC = () => {
             <div className="text-center py-12">
               <Key className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Cryptography Analysis</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
+              <p className="text-cybr-foreground/70">This section is under development - Comprehensive crypto analysis coming soon</p>
             </div>
           </TabsContent>
 
@@ -146,7 +140,7 @@ const AndroidSection: React.FC = () => {
             <div className="text-center py-12">
               <Bug className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Anti-Analysis Bypass</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
+              <p className="text-cybr-foreground/70">This section is under development - Advanced evasion techniques coming soon</p>
             </div>
           </TabsContent>
 
@@ -154,7 +148,7 @@ const AndroidSection: React.FC = () => {
             <div className="text-center py-12">
               <Shield className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Privilege Escalation</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
+              <p className="text-cybr-foreground/70">This section is under development - Advanced privilege escalation coming soon</p>
             </div>
           </TabsContent>
 
@@ -162,7 +156,7 @@ const AndroidSection: React.FC = () => {
             <div className="text-center py-12">
               <Bug className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Exploitation Techniques</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
+              <p className="text-cybr-foreground/70">This section is under development - Advanced exploitation techniques coming soon</p>
             </div>
           </TabsContent>
 
@@ -170,7 +164,7 @@ const AndroidSection: React.FC = () => {
             <div className="text-center py-12">
               <Terminal className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Post-Exploitation</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
+              <p className="text-cybr-foreground/70">This section is under development - Post-exploitation techniques coming soon</p>
             </div>
           </TabsContent>
 
@@ -178,7 +172,7 @@ const AndroidSection: React.FC = () => {
             <div className="text-center py-12">
               <FileText className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Reporting</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
+              <p className="text-cybr-foreground/70">This section is under development - Professional reporting templates coming soon</p>
             </div>
           </TabsContent>
         </Tabs>
