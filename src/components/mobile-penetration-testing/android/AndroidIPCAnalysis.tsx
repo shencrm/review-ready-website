@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Copy, ExternalLink, Shield, MessageSquare, Database, Share2, Broadcast, Settings, AlertTriangle, CheckCircle, Code, Terminal, FileText, Bug } from 'lucide-react';
+import { Copy, ExternalLink, Shield, MessageSquare, Database, Share2, Radio, Settings, AlertTriangle, CheckCircle, Code, Terminal, FileText, Bug } from 'lucide-react';
 
 const AndroidIPCAnalysis: React.FC = () => {
   const [activeTab, setActiveTab] = useState('introduction');
@@ -65,7 +64,7 @@ const AndroidIPCAnalysis: React.FC = () => {
             <span className="hidden md:inline">Providers</span>
           </TabsTrigger>
           <TabsTrigger value="broadcast-services" className="flex items-center gap-1 py-2 text-xs">
-            <Broadcast className="h-3 w-3" />
+            <Radio className="h-3 w-3" />
             <span className="hidden md:inline">Broadcast</span>
           </TabsTrigger>
         </TabsList>
@@ -118,7 +117,7 @@ const AndroidIPCAnalysis: React.FC = () => {
                 <div className="space-y-4">
                   <div className="border rounded-lg p-4">
                     <h3 className="font-semibold text-purple-600 mb-2 flex items-center gap-2">
-                      <Broadcast className="h-4 w-4" />
+                      <Radio className="h-4 w-4" />
                       Broadcast Receivers
                     </h3>
                     <p className="text-sm text-gray-600 mb-3">
@@ -256,22 +255,22 @@ echo "Intent fuzzing completed"`)}
 PACKAGE_NAME="com.example.target"
 ACTIVITY_NAME="com.example.target.MainActivity"
 
-echo "Starting Intent fuzzing for \$PACKAGE_NAME"
+echo "Starting Intent fuzzing for \\$PACKAGE_NAME"
 
 # Test 1: Basic Intent with malicious extras
-adb shell am start -n "\$PACKAGE_NAME/\$ACTIVITY_NAME" \\
-  --es "username" "../../../etc/passwd" \\
-  --es "password" "' OR 1=1--" \\
+adb shell am start -n "\\$PACKAGE_NAME/\\$ACTIVITY_NAME" \\\\
+  --es "username" "../../../etc/passwd" \\\\
+  --es "password" "' OR 1=1--" \\\\
   --es "url" "javascript:alert('XSS')"
 
 # Test 2: Intent with malicious URI
-adb shell am start -a android.intent.action.VIEW \\
+adb shell am start -a android.intent.action.VIEW \\\\
   -d "content://com.example.provider/../../sensitive_data"
 
 # Test 3: Intent with oversized data
-LARGE_STRING=$(python3 -c "print('A' * 10000)")
-adb shell am start -n "\$PACKAGE_NAME/\$ACTIVITY_NAME" \\
-  --es "data" "\$LARGE_STRING"
+LARGE_STRING=\\$(python3 -c "print('A' * 10000)")
+adb shell am start -n "\\$PACKAGE_NAME/\\$ACTIVITY_NAME" \\\\
+  --es "data" "\\$LARGE_STRING"
 
 echo "Intent fuzzing completed"`}
                     </pre>
@@ -423,18 +422,18 @@ adb shell content query --uri "content://$PACKAGE_NAME.provider/files/../../../d
 
 PACKAGE_NAME="com.example.target"
 
-echo "Enumerating Content Providers for \$PACKAGE_NAME"
+echo "Enumerating Content Providers for \\$PACKAGE_NAME"
 
 # Test common Content Provider URIs
 COMMON_URIS=(
-    "content://\$PACKAGE_NAME.provider/"
-    "content://\$PACKAGE_NAME.provider/users"
-    "content://\$PACKAGE_NAME.provider/files"
+    "content://\\$PACKAGE_NAME.provider/"
+    "content://\\$PACKAGE_NAME.provider/users"
+    "content://\\$PACKAGE_NAME.provider/files"
 )
 
-for uri in "\${COMMON_URIS[@]}"; do
-    echo "Testing URI: \$uri"
-    adb shell content query --uri "\$uri"
+for uri in "\\${COMMON_URIS[@]}"; do
+    echo "Testing URI: \\$uri"
+    adb shell content query --uri "\\$uri"
 done`}
                     </pre>
                   </div>
@@ -448,7 +447,7 @@ done`}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Broadcast className="h-5 w-5" />
+                <Radio className="h-5 w-5" />
                 Broadcast Receivers & Services Analysis
               </CardTitle>
               <CardDescription>
@@ -601,14 +600,14 @@ echo "Service exploitation tests completed"`)}
 
 PACKAGE_NAME="com.example.target"
 
-echo "Analyzing services for \$PACKAGE_NAME"
+echo "Analyzing services for \\$PACKAGE_NAME"
 
 # Test service binding
-adb shell am startservice -n "\$PACKAGE_NAME/.VulnerableService" \\
-    --es "command" "cat /data/data/\$PACKAGE_NAME/sensitive.txt"
+adb shell am startservice -n "\\$PACKAGE_NAME/.VulnerableService" \\\\
+    --es "command" "cat /data/data/\\$PACKAGE_NAME/sensitive.txt"
 
 # AIDL interface testing
-adb shell service call "\$PACKAGE_NAME" 1 s16 "malicious_input"
+adb shell service call "\\$PACKAGE_NAME" 1 s16 "malicious_input"
 
 echo "Service exploitation tests completed"`}
                     </pre>
