@@ -12,7 +12,7 @@ const AndroidEnvironmentSetup: React.FC = () => {
         <CardHeader>
           <CardTitle className="text-cybr-primary flex items-center gap-2">
             <Settings className="h-6 w-6" />
-            הכנת סביבת הבדיקה
+            Testing Environment Setup
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -25,41 +25,41 @@ const AndroidEnvironmentSetup: React.FC = () => {
             </TabsList>
 
             <TabsContent value="emulator-setup" className="space-y-4">
-              <h3 className="text-xl font-semibold text-cybr-primary">הכנת Android Emulator</h3>
+              <h3 className="text-xl font-semibold text-cybr-primary">Android Emulator Setup</h3>
               
               <div className="space-y-4">
                 <h4 className="text-lg font-medium text-cybr-secondary">Android Studio AVD Manager</h4>
                 <CodeExample
                   language="bash"
-                  title="יצירת AVD מהקונסול"
-                  code={`# רשימת targets זמינים
+                  title="Creating AVD from Command Line"
+                  code={`# List available targets
 avdmanager list target
 
-# יצירת AVD חדש
+# Create new AVD
 avdmanager create avd -n TestDevice -k "system-images;android-29;google_apis;x86_64" -d "Nexus 5X"
 
-# הפעלת האמולטור
+# Start emulator
 emulator -avd TestDevice -writable-system -no-snapshot
 
-# הפעלה עם proxy
+# Start with proxy
 emulator -avd TestDevice -http-proxy 127.0.0.1:8080
 
-# הפעלה במצב root
+# Start in root mode
 emulator -avd TestDevice -writable-system -selinux permissive`}
                 />
 
                 <h4 className="text-lg font-medium text-cybr-secondary">Genymotion Setup</h4>
                 <CodeExample
                   language="bash"
-                  title="התקנת Genymotion"
-                  code={`# הורדת Genymotion
+                  title="Installing Genymotion"
+                  code={`# Download Genymotion
 wget https://dl.genymotion.com/releases/genymotion-3.4.0/genymotion-3.4.0-linux_x64.bin
 
-# התקנה
+# Install
 chmod +x genymotion-3.4.0-linux_x64.bin
 ./genymotion-3.4.0-linux_x64.bin
 
-# הפעלת virtual device
+# Start virtual device
 genymotion-shell -c "devices list"
 genymotion-shell -c "devices start 'Google Pixel 3'"
 
@@ -70,18 +70,18 @@ adb connect 192.168.56.101:5555`}
             </TabsContent>
 
             <TabsContent value="device-rooting" className="space-y-4">
-              <h3 className="text-xl font-semibold text-cybr-primary">Rooting מכשירים</h3>
+              <h3 className="text-xl font-semibold text-cybr-primary">Device Rooting</h3>
               
               <div className="space-y-4">
                 <h4 className="text-lg font-medium text-cybr-secondary">Magisk Root</h4>
                 <CodeExample
                   language="bash"
-                  title="התקנת Magisk"
-                  code={`# בדיקת bootloader unlock
+                  title="Installing Magisk"
+                  code={`# Check bootloader unlock status
 adb shell getprop ro.boot.verifiedbootstate
 adb shell getprop ro.boot.flash.locked
 
-# התקנת Magisk Manager
+# Install Magisk Manager
 adb install MagiskManager.apk
 
 # Patching boot image
@@ -92,7 +92,7 @@ adb install MagiskManager.apk
 fastboot flash boot magisk_patched.img
 fastboot reboot
 
-# וודא root
+# Verify root access
 adb shell su -c "id"
 adb shell su -c "mount -o remount,rw /system"`}
                 />
@@ -100,8 +100,8 @@ adb shell su -c "mount -o remount,rw /system"`}
                 <h4 className="text-lg font-medium text-cybr-secondary">SuperSU (Legacy)</h4>
                 <CodeExample
                   language="bash"
-                  title="התקנת SuperSU"
-                  code={`# התקנת TWRP Recovery
+                  title="Installing SuperSU"
+                  code={`# Install TWRP Recovery
 fastboot flash recovery twrp.img
 fastboot boot twrp.img
 
@@ -109,7 +109,7 @@ fastboot boot twrp.img
 adb push SR5-SuperSU-v2.82-SR5-20171001224502.zip /sdcard/
 # Install via TWRP
 
-# וודא root
+# Verify root
 adb shell su -c "which su"
 adb shell su -c "ls -la /system/xbin/su"`}
                 />
@@ -117,14 +117,14 @@ adb shell su -c "ls -la /system/xbin/su"`}
             </TabsContent>
 
             <TabsContent value="tools-installation" className="space-y-4">
-              <h3 className="text-xl font-semibold text-cybr-primary">התקנת כלי בדיקה</h3>
+              <h3 className="text-xl font-semibold text-cybr-primary">Testing Tools Installation</h3>
               
               <div className="space-y-4">
-                <h4 className="text-lg font-medium text-cybr-secondary">כלים בסיסיים</h4>
+                <h4 className="text-lg font-medium text-cybr-secondary">Basic Tools</h4>
                 <CodeExample
                   language="bash"
-                  title="התקנת Android SDK Tools"
-                  code={`# ADB ו-Fastboot
+                  title="Installing Android SDK Tools"
+                  code={`# ADB and Fastboot
 sudo apt-get install android-tools-adb android-tools-fastboot
 
 # Android SDK
@@ -142,29 +142,29 @@ sdkmanager "platforms;android-33"`}
                 <h4 className="text-lg font-medium text-cybr-secondary">Frida Installation</h4>
                 <CodeExample
                   language="bash"
-                  title="התקנת Frida"
-                  code={`# התקנת Frida על המחשב
+                  title="Installing Frida"
+                  code={`# Install Frida on host machine
 pip install frida-tools
 
-# הורדת Frida Server למכשיר
+# Download Frida Server for device
 wget https://github.com/frida/frida/releases/download/16.0.8/frida-server-16.0.8-android-arm64.xz
 unxz frida-server-16.0.8-android-arm64.xz
 
-# העברה למכשיר
+# Transfer to device
 adb push frida-server-16.0.8-android-arm64 /data/local/tmp/frida-server
 adb shell "chmod 755 /data/local/tmp/frida-server"
 
-# הפעלת Frida Server
+# Start Frida Server
 adb shell "su -c '/data/local/tmp/frida-server &'"
 
-# בדיקת חיבור
+# Test connection
 frida-ps -U`}
                 />
 
-                <h4 className="text-lg font-medium text-cybr-secondary">כלי ניתוח נוספים</h4>
+                <h4 className="text-lg font-medium text-cybr-secondary">Additional Analysis Tools</h4>
                 <CodeExample
                   language="bash"
-                  title="התקנת כלים נוספים"
+                  title="Installing Additional Tools"
                   code={`# APKTool
 wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool
 wget https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.7.0.jar
@@ -189,30 +189,30 @@ pip install drozer`}
             </TabsContent>
 
             <TabsContent value="proxy-setup" className="space-y-4">
-              <h3 className="text-xl font-semibold text-cybr-primary">הגדרת Proxy ו-Certificate</h3>
+              <h3 className="text-xl font-semibold text-cybr-primary">Proxy and Certificate Setup</h3>
               
               <div className="space-y-4">
                 <h4 className="text-lg font-medium text-cybr-secondary">Burp Suite Setup</h4>
                 <CodeExample
                   language="bash"
-                  title="הגדרת Burp Proxy"
-                  code={`# הגדרת proxy בטלפון
+                  title="Configuring Burp Proxy"
+                  code={`# Set proxy on device
 adb shell settings put global http_proxy 192.168.1.100:8080
 
-# או דרך WiFi settings
+# Or through WiFi settings
 adb shell am start -a android.intent.action.MAIN -n com.android.settings/.wifi.WifiSettings
 
-# יצוא certificate מBurp
+# Export certificate from Burp
 # 1. Browse to http://burp in device browser
 # 2. Download CA Certificate
 # 3. Save as cacert.der
 
-# המרת certificate לפורמט נכון
+# Convert certificate to correct format
 openssl x509 -inform DER -in cacert.der -out cacert.pem
 openssl x509 -inform PEM -subject_hash_old -in cacert.pem | head -1
 cp cacert.pem 9a5ba575.0
 
-# העתקה למכשיר
+# Copy to device
 adb push 9a5ba575.0 /sdcard/
 adb shell "su -c 'mount -o remount,rw /system'"
 adb shell "su -c 'cp /sdcard/9a5ba575.0 /system/etc/security/cacerts/'"
@@ -223,7 +223,7 @@ adb shell "su -c 'reboot'"`}
                 <h4 className="text-lg font-medium text-cybr-secondary">Certificate Pinning Bypass</h4>
                 <CodeExample
                   language="javascript"
-                  title="Frida Script לbypass Certificate Pinning"
+                  title="Frida Script for Certificate Pinning Bypass"
                   code={`// Universal SSL Kill Switch
 Java.perform(function() {
     // TrustManager bypass
@@ -255,13 +255,13 @@ Java.perform(function() {
           </Tabs>
 
           <div className="mt-6 p-4 bg-cybr-muted/20 rounded-lg">
-            <h4 className="font-medium text-cybr-accent mb-2">טיפים חשובים</h4>
+            <h4 className="font-medium text-cybr-accent mb-2">Important Tips</h4>
             <ul className="list-disc pl-6 space-y-1 text-sm">
-              <li>השתמש בemulators עם Google APIs לפונקציות מתקדמות</li>
-              <li>ודא שיש לך מכשיר עם גישת root לבדיקות מתקדמות</li>
-              <li>התקן את Frida Server בכל הפעלה של המכשיר</li>
-              <li>בדוק את הגדרות ה-proxy לאחר כל reboot</li>
-              <li>שמור backup של המכשיר לפני התקנת root</li>
+              <li>Use emulators with Google APIs for advanced functionality</li>
+              <li>Ensure you have a rooted device for advanced testing</li>
+              <li>Install Frida Server on every device reboot</li>
+              <li>Check proxy settings after every reboot</li>
+              <li>Keep device backup before rooting</li>
             </ul>
           </div>
         </CardContent>

@@ -5,9 +5,12 @@ import { Smartphone, Settings, CheckCircle, Code, Shield, Database, Network, Key
 import { useActiveSection } from '@/hooks/useActiveSection';
 import SectionNavigation from '@/components/web-penetration-testing/advanced/SectionNavigation';
 
-// Import the new detailed components
+// Import the detailed components
 import AndroidEnvironmentSetup from './android/AndroidEnvironmentSetup';
 import AndroidMethodology from './android/AndroidMethodology';
+import AndroidStaticAnalysis from './android/AndroidStaticAnalysis';
+import AndroidDynamicAnalysis from './android/AndroidDynamicAnalysis';
+import AndroidNetworkAnalysis from './android/AndroidNetworkAnalysis';
 
 const AndroidSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState('environment-setup');
@@ -24,7 +27,9 @@ const AndroidSection: React.FC = () => {
     { id: 'auth-testing', title: 'Authentication Testing', icon: <Key className="h-4 w-4" /> },
     { id: 'crypto-analysis', title: 'Cryptography Analysis', icon: <Key className="h-4 w-4" /> },
     { id: 'anti-analysis', title: 'Anti-Analysis Bypass', icon: <Bug className="h-4 w-4" /> },
+    { id: 'privilege-escalation', title: 'Privilege Escalation', icon: <Shield className="h-4 w-4" /> },
     { id: 'exploitation', title: 'Exploitation Techniques', icon: <Bug className="h-4 w-4" /> },
+    { id: 'post-exploitation', title: 'Post-Exploitation', icon: <Terminal className="h-4 w-4" /> },
     { id: 'reporting', title: 'Reporting', icon: <FileText className="h-4 w-4" /> }
   ];
 
@@ -49,11 +54,11 @@ const AndroidSection: React.FC = () => {
         <div className="mb-8">
           <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
             <Smartphone className="text-cybr-primary" />
-            Android Penetration Testing - המדריך המקיף
+            Android Penetration Testing - Comprehensive Guide
           </h2>
           <p className="text-xl mb-6 text-cybr-foreground/80">
-            מדריך מקיף ומפורט לבדיקות אבטחה של אפליקציות Android, כולל הכנת סביבה, מתודולוגיה, 
-            ניתוח קוד, בדיקות דינמיות, וטכניקות ניצול מתקדמות.
+            A comprehensive and detailed guide to Android application security testing, including environment setup, 
+            methodology, code analysis, dynamic testing, and advanced exploitation techniques.
           </p>
         </div>
 
@@ -94,25 +99,61 @@ const AndroidSection: React.FC = () => {
           </TabsContent>
 
           <TabsContent value="static-analysis" id="static-analysis" className="scroll-mt-20">
-            <div className="text-center py-12">
-              <Code className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-2">Static Analysis</h3>
-              <p className="text-cybr-foreground/70">This section is under development</p>
-            </div>
+            <AndroidStaticAnalysis />
           </TabsContent>
 
           <TabsContent value="dynamic-analysis" id="dynamic-analysis" className="scroll-mt-20">
+            <AndroidDynamicAnalysis />
+          </TabsContent>
+
+          <TabsContent value="network-analysis" id="network-analysis" className="scroll-mt-20">
+            <AndroidNetworkAnalysis />
+          </TabsContent>
+
+          <TabsContent value="storage-analysis" id="storage-analysis" className="scroll-mt-20">
             <div className="text-center py-12">
-              <Terminal className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-2">Dynamic Analysis</h3>
+              <Database className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Storage Analysis</h3>
               <p className="text-cybr-foreground/70">This section is under development</p>
             </div>
           </TabsContent>
 
-          <TabsContent value="network-analysis" id="network-analysis" className="scroll-mt-20">
+          <TabsContent value="ipc-analysis" id="ipc-analysis" className="scroll-mt-20">
             <div className="text-center py-12">
-              <Network className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-2">Network Analysis</h3>
+              <Shield className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">IPC Analysis</h3>
+              <p className="text-cybr-foreground/70">This section is under development</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="auth-testing" id="auth-testing" className="scroll-mt-20">
+            <div className="text-center py-12">
+              <Key className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Authentication Testing</h3>
+              <p className="text-cybr-foreground/70">This section is under development</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="crypto-analysis" id="crypto-analysis" className="scroll-mt-20">
+            <div className="text-center py-12">
+              <Key className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Cryptography Analysis</h3>
+              <p className="text-cybr-foreground/70">This section is under development</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="anti-analysis" id="anti-analysis" className="scroll-mt-20">
+            <div className="text-center py-12">
+              <Bug className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Anti-Analysis Bypass</h3>
+              <p className="text-cybr-foreground/70">This section is under development</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="privilege-escalation" id="privilege-escalation" className="scroll-mt-20">
+            <div className="text-center py-12">
+              <Shield className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Privilege Escalation</h3>
               <p className="text-cybr-foreground/70">This section is under development</p>
             </div>
           </TabsContent>
@@ -121,6 +162,22 @@ const AndroidSection: React.FC = () => {
             <div className="text-center py-12">
               <Bug className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Exploitation Techniques</h3>
+              <p className="text-cybr-foreground/70">This section is under development</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="post-exploitation" id="post-exploitation" className="scroll-mt-20">
+            <div className="text-center py-12">
+              <Terminal className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Post-Exploitation</h3>
+              <p className="text-cybr-foreground/70">This section is under development</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="reporting" id="reporting" className="scroll-mt-20">
+            <div className="text-center py-12">
+              <FileText className="h-16 w-16 text-cybr-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Reporting</h3>
               <p className="text-cybr-foreground/70">This section is under development</p>
             </div>
           </TabsContent>
