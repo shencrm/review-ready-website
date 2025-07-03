@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -525,8 +526,8 @@ ACTIONS=(
 
 for action in "\${ACTIONS[@]}"; do
     for payload in "\${PAYLOADS[@]}"; do
-        echo "Testing action: \$action with payload: \$payload"
-        adb shell am broadcast -a "\$action" --es "data" "\$payload"
+        echo "Testing action: $action with payload: $payload"
+        adb shell am broadcast -a "$action" --es "data" "$payload"
         sleep 1
     done
 done`)}
@@ -552,10 +553,10 @@ ACTIONS=(
     "com.app.CUSTOM_ACTION"
 )
 
-for action in "\${ACTIONS[@]}"; do
-    for payload in "\${PAYLOADS[@]}"; do
-        echo "Testing: \$action with \$payload"
-        adb shell am broadcast -a "\$action" --es "data" "\$payload"
+for action in "\\${ACTIONS[@]}"; do
+    for payload in "\\${PAYLOADS[@]}"; do
+        echo "Testing: \\$action with \\$payload"
+        adb shell am broadcast -a "\\$action" --es "data" "\\$payload"
     done
 done`}
                     </pre>
