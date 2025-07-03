@@ -62,9 +62,6 @@ apktool d app.apk -o decoded_app
 # Decode with no resources (faster)
 apktool d --no-res app.apk -o decoded_app_no_res
 
-# Force decode (ignore errors)
-apktool d --force app.apk -o decoded_app_force
-
 # Decode with custom framework
 apktool d -f app.apk -o decoded_app_custom
 
@@ -91,7 +88,7 @@ jad -r -d output_dir app.jar
 # Batch decompilation
 for file in *.apk; do
     echo "Processing $file"
-    d2j-dex2jar "$file" -o "${file%.apk}.jar"
+    d2j-dex2jar "$file" -o "\${file%.apk}.jar"
 done`}
                 />
               </div>
@@ -223,7 +220,7 @@ grep -r "checkServerTrusted\\|verify" . --include="*.java" --include="*.kt"
 grep -r "KeyStore\\|SharedPreferences.*KEY" . --include="*.java" --include="*.kt"`}
                 />
 
-                <h4 className="text-lg font-medium text-cybr-security">Insecure Practices Detection</h4>
+                <h4 className="text-lg font-medium text-cybr-secondary">Insecure Practices Detection</h4>
                 <CodeExample
                   language="bash"
                   title="Common Security Anti-patterns"
@@ -421,8 +418,8 @@ def analyze_manifest(manifest_content):
 def find_sensitive_files(file_list):
     """Find potentially sensitive files"""
     sensitive_patterns = [
-        r'.*\.key$', r'.*\.pem$', r'.*\.p12$',
-        r'.*\.jks$', r'.*\.db$', r'.*config.*',
+        r'.*\\.key$', r'.*\\.pem$', r'.*\\.p12$',
+        r'.*\\.jks$', r'.*\\.db$', r'.*config.*',
         r'.*secret.*', r'.*password.*'
     ]
     
